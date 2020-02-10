@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/d20"
+            android:background="@drawable/card"
+            android:paddingTop="@dimen/d15"
+            android:paddingBottom="@dimen/d15"
+            android:paddingLeft="@dimen/d25"
+            android:paddingRight="@dimen/d25"
+            >
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textNormal20"
+                />
+
+
+            <LinearLayout
+                android:id="@+id/phone_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/user_name"
+                android:layout_marginTop="@dimen/d5"
+                android:gravity="center_vertical"
+                >
+
+                <ImageView
+                    android:id="@+id/phone_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/phone"
+                    android:layout_marginRight="@dimen/d5"
+                    />
+
+                <TextView
+                    android:id="@+id/phone_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1234567"
+                    android:textColor="@color/white"
+                    android:enabled="true"
+                    android:textIsSelectable="true"
+                    android:focusable="true"
+                    android:longClickable="true"
+                    />
+
+                <ImageView
+                    android:id="@+id/call_phone_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/dianhua_white2"
+                    android:layout_marginLeft="@dimen/d10"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d1"
+                android:layout_marginTop="@dimen/d10"
+                android:background="@color/line_background"
+                android:layout_below="@id/phone_layout"
+                />
+
+
+            <RelativeLayout
+                android:id="@+id/zidingyi_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/line1"
+                android:layout_marginTop="@dimen/d10"
+                >
+
+                <TextView
+                    android:id="@+id/jpkh_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    />
+
+                <TextView
+                    android:id="@+id/wly_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_below="@id/jpkh_text_view"
+                    android:layout_marginTop="@dimen/d5"
+                    />
+
+                <TextView
+                    android:id="@+id/address_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_below="@id/wly_text_view"
+                    android:layout_marginTop="@dimen/d5"
+                    />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/info"
+                    />
+
+            </RelativeLayout>
+
+
+            <com.flyco.roundview.RoundTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:rv_backgroundColor="@color/c_3586f1"
+                android:layout_below="@id/zidingyi_layout"
+                android:layout_marginTop="@dimen/d13"
+                android:padding="@dimen/d10"
+                app:rv_cornerRadius="@dimen/d5"
+                android:textColor="@color/white"
+                />
+
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/go_to_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/edit"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/d15"
+            android:layout_marginTop="@dimen/d40"
+            />
+
+    </RelativeLayout>
+
+
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d40"
+        android:background="@color/white"
+        app:tl_indicator_color="@color/c_42A6FE"
+        app:tl_indicator_height="@dimen/d3"
+        app:tl_indicator_width="@dimen/d20"
+        app:tl_tab_space_equal="true"
+        app:tl_textsize="@dimen/textNormal16"
+        app:tl_textBold="BOTH"
+        app:tl_textSelectColor="@color/black"
+        app:tl_textUnselectColor="#66000000"
+        />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

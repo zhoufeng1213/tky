@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">天客云</string>
+    <string name="login_exit_msg">再次点击退出</string>
+    <string name="lishitonghua">历史通话</string>
+    <string name="kehuziliao">我的客户</string>
+    <string name="apk_updating">更新中...</string>
+    <string name="find_new_version">发现新版本</string>
+</resources>

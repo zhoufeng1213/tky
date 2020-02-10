@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/d20"
+        android:layout_marginRight="@dimen/d20"
+        android:layout_marginTop="@dimen/d20"
+        app:cardCornerRadius="@dimen/d10"
+        app:cardElevation="0.5dp"
+        app:cardUseCompatPadding="false"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/d20"
+            >
+
+            <ImageView
+                android:id="@+id/image_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/success"
+                android:layout_marginRight="@dimen/d20"
+                android:layout_centerVertical="true"
+                />
+
+
+            <TextView
+                android:id="@+id/time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="03-05 20:28:52"
+                android:layout_toRightOf="@id/image_tag"
+                android:textColor="@color/c_3D4249"
+                />
+
+            <TextView
+                android:id="@+id/content_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="在化工厂上班,想自己开公司演金短缺,有成熟的项目规划,愿向强,预约4月23号见面海通合同事宜,建议每个月都在打电话进下。"
+                android:layout_toRightOf="@id/image_tag"
+                android:layout_below="@id/time_text"
+                android:layout_marginTop="@dimen/d8"
+                android:textColor="@color/c_3D4249"
+                android:textSize="@dimen/textNormal11"
+                />
+
+            <TextView
+                android:id="@+id/time_duration_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="通话时长："
+                android:layout_toRightOf="@id/image_tag"
+                android:layout_below="@id/content_text"
+                android:layout_marginTop="@dimen/d8"
+                android:textColor="@color/c_8C9BB4"
+                />
+
+            <TextView
+                android:id="@+id/time_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00:34"
+                android:layout_toRightOf="@id/time_duration_tag"
+                android:layout_below="@id/content_text"
+                android:layout_marginTop="@dimen/d8"
+                android:textColor="@color/c_FFB207"
+                />
+
+
+            <ImageView
+                android:id="@+id/edit_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/edit_record"
+                android:layout_alignParentRight="true"
+                />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

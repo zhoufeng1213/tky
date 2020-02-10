@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+
+    <!--<com.flyco.roundview.RoundTextView-->
+        <!--android:id="@+id/search_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/d45"-->
+        <!--android:layout_marginLeft="@dimen/d15"-->
+        <!--android:layout_marginRight="@dimen/d15"-->
+        <!--android:layout_marginTop="@dimen/d10"-->
+        <!--android:layout_marginBottom="@dimen/d10"-->
+        <!--android:drawableLeft="@drawable/fenxiang"-->
+        <!--android:paddingLeft="@dimen/d15"-->
+        <!--android:text="搜索"-->
+        <!--android:drawablePadding="@dimen/d15"-->
+        <!--android:gravity="center_vertical"-->
+        <!--app:rv_cornerRadius="@dimen/d5"-->
+        <!--app:rv_strokeColor="@color/line_background"-->
+        <!--app:rv_strokeWidth="@dimen/view_line_height"-->
+        <!--&gt;-->
+
+
+    <!--</com.flyco.roundview.RoundTextView>-->
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d40"
+        android:layout_marginLeft="@dimen/d15"
+        android:layout_marginRight="@dimen/d15"
+        android:layout_marginTop="@dimen/d10"
+        android:layout_marginBottom="@dimen/d10"
+        android:gravity="center_vertical"
+        app:rv_cornerRadius="@dimen/d5"
+        app:rv_strokeColor="@color/line_background"
+        app:rv_strokeWidth="@dimen/view_line_height"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fenxiang"
+            android:layout_marginLeft="@dimen/d15"
+            />
+
+
+        <com.xw.repo.XEditText
+            android:id="@+id/search_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginTop="@dimen/d5"
+            android:layout_marginBottom="@dimen/d5"
+            android:hint="搜索"
+            android:focusable="false"
+            android:textSize="@dimen/textNormal14"
+            />
+
+    </com.flyco.roundview.RoundLinearLayout>
+
+
+
+    <!--<com.lqr.recyclerview.LQRRecyclerView-->
+        <!--android:id="@+id/rvContacts"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@id/search_layout"-->
+        <!--app:rv_divider_color="@color/line_background"-->
+        <!--app:rv_divider_size="1px"-->
+        <!--/>-->
+
+    <com.lqr.recyclerview.LQRRecyclerView
+        android:id="@+id/rvContacts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_layout"
+        />
+
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/rvContacts"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@id/search_layout"-->
+        <!--/>-->
+
+    <com.xxxx.tky.widget.QuickIndexBar
+        android:id="@+id/qib"
+        android:layout_width="40px"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/search_layout"
+        android:layout_marginRight="@dimen/d5"
+        />
+
+    <!--字母对话框-->
+    <TextView
+        android:id="@+id/tvLetter"
+        android:layout_width="@dimen/d80"
+        android:layout_height="@dimen/d80"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_contact_letter_bg"
+        android:gravity="center"
+        android:text="A"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone"/>
+
+</RelativeLayout>

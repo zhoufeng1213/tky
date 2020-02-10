@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:id="@+id/layout_play_voice"
+        android:layout_width="match_parent"
+        android:layout_height="90dp">
+
+        <View
+            android:background="#F0F0F0"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+        <LinearLayout
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="28dp">
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:textSize="14sp"
+                android:layout_weight="1"
+                android:textColor="#383838"
+                android:text="5月20日 22:33 通话录音"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/iv_close_bottom"
+                android:layout_width="16dp"
+                android:src="@mipmap/ic_light_close"
+                android:layout_height="16dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_bottom_play"
+                android:layout_width="30dp"
+                android:src="@drawable/ic_svg_voice_play"
+                android:layout_height="30dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--<ProgressBar-->
+                <!--android:id="@+id/pb_play"-->
+                <!--style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="4dp"-->
+                <!--android:max="100"-->
+                <!--android:progress="0"-->
+                <!--android:progressDrawable="@drawable/progress_blue"/>-->
+
+                <SeekBar
+                    android:layout_height="wrap_content"
+                    android:id="@+id/seekBar"
+                    android:focusable="true"
+                    android:maxHeight="4dp"
+                    android:layout_width="match_parent"
+                    android:progressDrawable="@drawable/pregress_seekbar"
+                    android:thumb="@drawable/seekbar_round"
+                    android:minHeight="2dp"/>
+
+                <RelativeLayout
+                    android:layout_marginTop="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="0:06"
+                        android:id="@+id/tv_current_progress"
+                        android:layout_width="wrap_content"
+                        android:textSize="13sp"
+                        android:textColor="#494949"
+                        android:layout_alignParentStart="true"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/tv_less_date"
+                        android:textColor="#494949"
+                        android:textSize="13sp"
+                        android:text="-2:59"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>

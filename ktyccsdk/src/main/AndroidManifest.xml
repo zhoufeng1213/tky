@@ -1,0 +1,36 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xxxx.cc">
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:hardwareAccelerated="true"
+        android:name="com.xxxx.cc.global.GlobalApplication"
+        android:theme="@style/AppTheme">
+
+        <activity android:name="com.xxxx.cc.ui.CallActivity" android:screenOrientation="portrait"
+            android:launchMode="singleInstance" />
+        <activity android:name="com.xxxx.cc.ui.HistoryActivity" android:screenOrientation="portrait"  />
+        <activity android:name="com.xxxx.cc.ui.CommunicationDetailActivity" android:screenOrientation="portrait"  />
+        <service
+            android:name="com.xxxx.cc.service.LinphoneService"
+            android:enabled="true"
+            android:exported="false"
+            />
+        <service android:name="com.xxxx.cc.service.FloatingImageDisplayService" />
+    </application>
+
+
+</manifest>

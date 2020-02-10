@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="联系人:"/>
+
+        <EditText
+            android:id="@+id/home_et_contact_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="张三"
+
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="号    码:"/>
+
+        <EditText
+            android:id="@+id/home_et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入正确格式的电话号码"
+            android:text=""
+            android:inputType="phone"
+            />
+
+    </LinearLayout>
+
+
+    <com.flyco.roundview.RoundTextView
+        android:id="@+id/home_tv_call"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d45"
+        android:layout_marginRight="@dimen/d15"
+        android:layout_marginLeft="@dimen/d25"
+        android:layout_marginTop="@dimen/d30"
+        app:rv_isRadiusHalfHeight="true"
+        android:gravity="center"
+        android:text="拨打"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textNormal16"
+        app:rv_backgroundColor="@color/c_039fd9"
+        app:rv_cornerRadius="@dimen/d5" />
+
+
+
+
+
+</LinearLayout>

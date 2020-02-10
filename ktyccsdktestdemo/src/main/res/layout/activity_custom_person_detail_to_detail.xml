@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/c_a3d4ef"
+        android:paddingBottom="@dimen/d20"
+        android:paddingTop="@dimen/d30"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d15"
+            >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客户详情"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textNormal16"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            />
+
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/fangqi_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="放弃"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/d15"
+                app:rv_cornerRadius="@dimen/d5"
+                app:rv_backgroundColor="@color/color_main_bule"
+                app:rv_backgroundPressColor="@color/c_039fd9"
+                android:textColor="@color/white"
+                android:paddingTop="@dimen/d5"
+                android:paddingBottom="@dimen/d5"
+                android:paddingLeft="@dimen/d12"
+                android:paddingRight="@dimen/d12"
+                />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/d20"
+            >
+
+
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/name_letter"
+                android:layout_width="@dimen/d60"
+                android:layout_height="@dimen/d60"
+                app:rv_isRadiusHalfHeight="true"
+                app:rv_backgroundColor="@color/c_fd8645"
+                android:text="1"
+                android:textSize="@dimen/textNormal18"
+                android:gravity="center"
+                android:textColor="@color/white"
+                />
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/d40"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客户姓名"
+            android:layout_marginLeft="@dimen/d15"
+            />
+
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/d15"
+            android:text="123"
+            />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/line_background"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/d40"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号码"
+            android:layout_marginLeft="@dimen/d15"
+            />
+
+
+        <TextView
+            android:id="@+id/user_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/d15"
+            android:text="123"
+            android:layout_toLeftOf="@id/call_phone_btn"
+            android:enabled="true"
+            android:textIsSelectable="true"
+            android:focusable="true"
+            android:longClickable="true"
+            />
+
+        <ImageView
+            android:id="@+id/call_phone_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dianhua_detail"
+            android:layout_alignParentRight="true"
+            android:paddingRight="@dimen/d15"
+            />
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/line_background"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/d40"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="备注"
+            android:layout_marginLeft="@dimen/d15"
+            />
+
+
+        <TextView
+            android:id="@+id/user_beizhu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/d15"
+            />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/line_background"
+        />
+
+
+</LinearLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
+    >
+
+    <LinearLayout
+        android:id="@+id/letter_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/d5"
+        android:layout_marginBottom="@dimen/d5"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/search_letter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A"
+            android:textSize="@dimen/textNormal16"
+            android:textStyle="bold"
+            android:paddingLeft="@dimen/d15"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/line_background"
+            android:layout_marginTop="@dimen/d5"
+            android:layout_marginRight="@dimen/d25"
+            />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/contact_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/d15"
+        android:paddingRight="@dimen/d15"
+        android:paddingTop="@dimen/d5"
+        android:paddingBottom="@dimen/d5"
+        >
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/name_letter"
+            android:layout_width="@dimen/d35"
+            android:layout_height="@dimen/d35"
+            app:rv_isRadiusHalfHeight="true"
+            app:rv_backgroundColor="@color/color_main_bule"
+            android:text="1"
+            android:textSize="@dimen/textNormal16"
+            android:gravity="center"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="123"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@id/name_letter"
+            android:layout_alignBaseline="@id/name_letter"
+            android:layout_marginLeft="@dimen/d15"
+            />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

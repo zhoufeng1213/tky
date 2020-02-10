@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/c_77B2FD"
+        android:paddingBottom="@dimen/d20"
+        android:paddingTop="@dimen/d30"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="客户详情"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textNormal16"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/d15"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/d20"
+            >
+
+            <com.flyco.roundview.RoundLinearLayout
+                android:id="@+id/show_detail_btn"
+                android:layout_width="@dimen/d35"
+                android:layout_height="@dimen/d35"
+                app:rv_isRadiusHalfHeight="true"
+                app:rv_backgroundColor="@color/c_6fdbf8"
+                android:gravity="center"
+                android:layout_marginRight="@dimen/d20"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/xiangqing"
+                    />
+
+            </com.flyco.roundview.RoundLinearLayout>
+
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/name_letter"
+            android:layout_width="@dimen/d60"
+            android:layout_height="@dimen/d60"
+            app:rv_isRadiusHalfHeight="true"
+            app:rv_backgroundColor="@color/c_fd8645"
+            android:text="1"
+            android:textSize="@dimen/textNormal18"
+            android:gravity="center"
+            android:textColor="@color/white"
+            />
+
+            <com.flyco.roundview.RoundLinearLayout
+                android:id="@+id/show_edit_btn"
+                android:layout_width="@dimen/d35"
+                android:layout_height="@dimen/d35"
+                app:rv_isRadiusHalfHeight="true"
+                app:rv_backgroundColor="@color/c_6fdbf8"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/d20"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bianji"
+                    />
+
+            </com.flyco.roundview.RoundLinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/d40"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客户姓名"
+            android:layout_marginLeft="@dimen/d15"
+            />
+
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/d15"
+            android:text="123"
+            />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/line_background"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/d40"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号码"
+            android:layout_marginLeft="@dimen/d15"
+            />
+
+
+        <TextView
+            android:id="@+id/user_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/d15"
+            android:text="123"
+            android:layout_toLeftOf="@id/call_phone_btn"
+            android:enabled="true"
+            android:textIsSelectable="true"
+            android:focusable="true"
+            android:longClickable="true"
+            />
+
+        <ImageView
+            android:id="@+id/call_phone_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dianhua_detail"
+            android:layout_alignParentRight="true"
+            android:paddingRight="@dimen/d15"
+            />
+
+
+    </RelativeLayout>
+
+
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d40"
+        android:background="@color/white"
+        app:tl_indicator_color="@color/c_42A6FE"
+        app:tl_indicator_height="@dimen/d3"
+        app:tl_indicator_width="@dimen/d20"
+        app:tl_tab_space_equal="true"
+        app:tl_textsize="@dimen/textNormal16"
+        app:tl_textBold="BOTH"
+        app:tl_textSelectColor="@color/black"
+        app:tl_textUnselectColor="#66000000"
+        />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

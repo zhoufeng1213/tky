@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/d65"
+    android:orientation="vertical"
+    tools:ignore="InOrMmUsage">
+
+
+    <ImageView
+        android:id="@+id/head_img"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:src="@mipmap/default_head" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/d10"
+        android:layout_toRightOf="@id/head_img">
+
+        <TextView
+            android:id="@+id/phone_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12345677888"
+            android:textColor="#383838"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@id/phone_num"
+            android:text="(张三)"
+            android:textColor="#383838"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/phone_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phone_num"
+            android:layout_marginTop="5dp"
+            android:text="江苏 苏州市"
+            android:layout_marginEnd="@dimen/d10"
+            android:textColor="#A0A0A0"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phone_num"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/phone_area"
+            android:text="2天前"
+            android:textColor="#A0A0A0"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingRight="@dimen/d15"
+        android:paddingLeft="@dimen/d15"
+        android:src="@drawable/ic_svg_more"
+        android:contentDescription="@string/app_name"
+        />
+
+
+</RelativeLayout>

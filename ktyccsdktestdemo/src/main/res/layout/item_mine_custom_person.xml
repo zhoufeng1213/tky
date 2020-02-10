@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/d13"
+    android:paddingLeft="@dimen/d20"
+    >
+
+    <TextView
+        android:id="@+id/tvLetter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A"
+        android:textSize="@dimen/textNormal18"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        />
+
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="醉人"
+        android:layout_toRightOf="@id/tvLetter"
+        android:layout_marginLeft="@dimen/d20"
+        android:textColor="@color/black"
+        />
+
+
+    <TextView
+        android:id="@+id/update_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="02-07 15:21:52"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/c_BEC2CA"
+        android:layout_marginRight="@dimen/d45"
+        android:textSize="@dimen/textNormal10"
+        />
+
+    <TextView
+        android:id="@+id/phone_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12121212512"
+        android:textColor="@color/c_BEC2CA"
+        android:layout_below="@id/user_name"
+        android:layout_toRightOf="@id/tvLetter"
+        android:layout_marginLeft="@dimen/d20"
+        android:layout_marginTop="@dimen/d6"
+        android:textSize="@dimen/textNormal12"
+        />
+
+    <TextView
+        android:id="@+id/user_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="叹为观止，高山仰止"
+        android:textColor="@color/c_BEC2CA"
+        android:layout_below="@id/phone_num"
+        android:layout_toRightOf="@id/tvLetter"
+        android:layout_marginLeft="@dimen/d20"
+        android:layout_marginTop="@dimen/d6"
+        android:textSize="@dimen/textNormal12"
+        android:visibility="gone"
+        />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/line_background"
+        android:layout_marginRight="@dimen/d45"
+        android:layout_below="@id/user_desc"
+        android:layout_marginTop="@dimen/d20"
+        android:layout_toRightOf="@id/tvLetter"
+        android:layout_marginLeft="@dimen/d20"
+        />
+
+</RelativeLayout>

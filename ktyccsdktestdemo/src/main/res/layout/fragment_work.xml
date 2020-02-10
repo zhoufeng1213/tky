@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+
+    <LinearLayout
+        android:id="@+id/lishitonghua_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/d20"
+        android:layout_marginLeft="@dimen/d20"
+        >
+        <com.flyco.roundview.RoundLinearLayout
+            android:layout_width="@dimen/d60"
+            android:layout_height="@dimen/d60"
+            app:rv_backgroundColor="@color/c_f88f1f"
+            app:rv_backgroundPressColor="@color/c_efcc86"
+            app:rv_isRadiusHalfHeight="true"
+
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lishishuju"
+                />
+
+
+        </com.flyco.roundview.RoundLinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lishitonghua"
+            android:layout_marginTop="@dimen/d5"
+            />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/kehuziliao_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/d20"
+        android:layout_marginLeft="@dimen/d20"
+        >
+        <com.flyco.roundview.RoundLinearLayout
+            android:layout_width="@dimen/d60"
+            android:layout_height="@dimen/d60"
+            app:rv_backgroundColor="@color/c_e8e8e8"
+            app:rv_backgroundPressColor="@color/c_289CFE"
+            app:rv_isRadiusHalfHeight="true"
+
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/gerenxinxi"
+                />
+
+
+        </com.flyco.roundview.RoundLinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kehuziliao"
+            android:layout_marginTop="@dimen/d5"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
