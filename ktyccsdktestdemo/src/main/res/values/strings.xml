@@ -5,4 +5,9 @@
     <string name="kehuziliao">我的客户</string>
     <string name="apk_updating">更新中...</string>
     <string name="find_new_version">发现新版本</string>
+    <string name="text_call_system">呼叫中心系统</string>
+    <string name="input_username">请输入账号</string>
+    <string name="input_password">请输入密码</string>
+    <string name="text_username">账号</string>
+    <string name="text_password">密码</string>
 </resources>

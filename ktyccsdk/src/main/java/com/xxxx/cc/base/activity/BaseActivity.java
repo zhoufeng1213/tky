@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.kty.mars.baselibrary.util.StatusBarUtil;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.xxxx.cc.R;
 import com.xxxx.cc.base.widget.LoadingDialog;
@@ -30,15 +31,27 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setContentView(getLayoutViewId());
         ButterKnife.bind(this);
         mContext = this;
-        initToolbar();
-        if(isAddImmersionBar()){
-            ImmersionBar.with(this).statusBarDarkFont(true).barColor(R.color.white).fitsSystemWindows(true)
-                    .init();
-        }
+//        initToolbar();
+//        if(isAddImmersionBar()){
+//            ImmersionBar.with(this).statusBarDarkFont(true).barColor(R.color.white).fitsSystemWindows(true)
+//                    .init();
+//        }
+        setStatusBar();
+
         initView(savedInstanceState);
     }
 
-    public boolean isAddImmersionBar(){
+    protected void setStatusBar() {
+
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
+        StatusBarUtil.setTranslucentStatus(this);
+        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
+            StatusBarUtil.setStatusBarColor(this, 1426063360);
+        }
+
+    }
+
+    public boolean isAddImmersionBar() {
         return true;
     }
 
@@ -49,11 +62,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     public abstract int getLayoutViewId();
 
-    public  Toolbar getToolbar(){
-        return  null;
+    public Toolbar getToolbar() {
+        return null;
     }
 
-    public  String getToolBarTitle(){
+    public String getToolBarTitle() {
         return "";
     }
 
@@ -160,7 +173,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onDestroy() {
         dismissDialog();
-        if(isAddImmersionBar()){
+        if (isAddImmersionBar()) {
             ImmersionBar.with(this).destroy();
         }
         super.onDestroy();

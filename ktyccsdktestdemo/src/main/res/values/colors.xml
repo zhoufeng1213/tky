@@ -160,4 +160,7 @@
     <!--快速索引bar颜色-->
     <color name="side_bar">#919091</color>
     <color name="side_bar_pressed">#BFBFBF</color>
+
+    <color name="p70_white">#4DFFFFFF</color>
+    <color name="p100_light_black">#ff3d4249</color>
 </resources>
