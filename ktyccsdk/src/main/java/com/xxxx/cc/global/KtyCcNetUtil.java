@@ -123,9 +123,9 @@ public class KtyCcNetUtil {
                 e.printStackTrace();
             }
         }else{
-            //找到当前时间的前三个月的时间当做开始时间
+            //找到当前时间的前40天的时间当做开始时间
             Calendar cl = Calendar.getInstance();
-            cl.add(Calendar.MONTH,-3);
+            cl.add(Calendar.DATE,-40);
             Date date = cl.getTime();
             beginTime = date.getTime();
         }
@@ -147,9 +147,9 @@ public class KtyCcNetUtil {
                 e.printStackTrace();
             }
         }else{
-            //找到当前时间的前三个月的时间当做开始时间
+            //找到当前时间的前40天的时间当做开始时间
             Calendar cl = Calendar.getInstance();
-            cl.add(Calendar.MONTH,-3);
+            cl.add(Calendar.DATE,-40);
             Date date = cl.getTime();
             beginTime = date.getTime();
         }

@@ -5,6 +5,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <RelativeLayout  android:layout_width="match_parent"
+        android:layout_height="@dimen/d44"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/d24"
+        >
+
+
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fanhui_white"
+            android:paddingLeft="@dimen/d15"
+            android:paddingRight="@dimen/d15"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="通话记录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textNormal16"
+            />
+
+    </RelativeLayout>
     <com.lqr.recyclerview.LQRRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +57,7 @@ public class HomeActivity extends BaseTransitionActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        tabMainIndicator.setOnTransitionListener(new OnTransitionTextListener().setColor(getResources().getColor(R.color.f_55A949), Color.GRAY));
+        tabMainIndicator.setOnTransitionListener(new OnTransitionTextListener().setColor(getResources().getColor(R.color.f_f2a79fc), Color.GRAY));
 
         indicatorViewPager = new IndicatorViewPager(tabMainIndicator, tabMainViewPager);
         indicatorViewPager.setAdapter(new MyAdapter(getSupportFragmentManager(),mContext));
@@ -63,6 +65,8 @@ public class HomeActivity extends BaseTransitionActivity {
         tabMainViewPager.setCanScroll(false);
         // 设置viewpager保留界面不重新加载的页面数量
         tabMainViewPager.setOffscreenPageLimit(4);
+
+
     }
 
 

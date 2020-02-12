@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Allow for custom attribs to be added to a image text button -->
+    <declare-styleable name="CarImageTextButton">
+        <!-- icon to be rendered (drawable) -->
+        <attr name="icon" format="reference"/>
+        <attr name="text" format="string"/>
+        <attr name="text_state" format="string"/>
+    </declare-styleable>
+
+</resources>
