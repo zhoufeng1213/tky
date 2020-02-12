@@ -3,85 +3,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:focusable="true"
-    android:focusableInTouchMode="true"
-    >
-
-    <LinearLayout
-        android:id="@+id/lishitonghua_layout"
+    android:background="@color/f_7F4F8"
+    android:focusableInTouchMode="true">
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/d20"
-        android:layout_marginLeft="@dimen/d20"
-        >
-        <com.flyco.roundview.RoundLinearLayout
-            android:layout_width="@dimen/d60"
-            android:layout_height="@dimen/d60"
-            app:rv_backgroundColor="@color/c_f88f1f"
-            app:rv_backgroundPressColor="@color/c_efcc86"
-            app:rv_isRadiusHalfHeight="true"
-
-            android:gravity="center"
-            >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/lishishuju"
-                />
-
-
-        </com.flyco.roundview.RoundLinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lishitonghua"
-            android:layout_marginTop="@dimen/d5"
-            />
-
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:id="@+id/kehuziliao_layout"
+        android:text="工作台"
+        android:textColor="#ff333333"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="43.67dp"
+        android:layout_marginBottom="19.33dp"
+        />
+    <ImageView
+        android:id="@+id/guide_banner_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/d20"
-        android:layout_marginLeft="@dimen/d20"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/banner"
         >
-        <com.flyco.roundview.RoundLinearLayout
-            android:layout_width="@dimen/d60"
-            android:layout_height="@dimen/d60"
-            app:rv_backgroundColor="@color/c_e8e8e8"
-            app:rv_backgroundPressColor="@color/c_289CFE"
-            app:rv_isRadiusHalfHeight="true"
 
-            android:gravity="center"
-            >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/gerenxinxi"
-                />
+    </ImageView>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
 
 
-        </com.flyco.roundview.RoundLinearLayout>
-
-        <TextView
+        <com.xxxx.tky.view.ImageTextButton
+            android:id="@+id/recent_call_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/kehuziliao"
-            android:layout_marginTop="@dimen/d5"
-            />
+            app:icon="@mipmap/call_icon"
+            app:text="通话记录"
+            android:layout_marginTop="@dimen/d10"
+            app:text_state="让沟通信息更简洁" />
+        <com.xxxx.tky.view.ImageTextButton
+            android:id="@+id/customer_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d10"
+            android:layout_marginTop="@dimen/d10"
+            app:icon="@mipmap/customer_icon"
+            app:text="我的客户"
+            app:text_state="让本人客户安全放心" />
+        <com.xxxx.tky.view.ImageTextButton
+            android:id="@+id/_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d10"
+            android:layout_marginTop="@dimen/d10"
+            app:icon="@mipmap/customer_icon"
+            android:visibility="invisible"
+            app:text="我的客户"
+            app:text_state="让本人客户安全放心" />
 
-    </LinearLayout>
-
-
+</LinearLayout>
 
 </LinearLayout>

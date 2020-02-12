@@ -38,6 +38,7 @@
 
         <activity android:name="com.xxxx.tky.activity.CallHistoryFragmentActivity" />
         <activity android:name="com.xxxx.tky.activity.HomeActivity" />
+        <activity android:name="com.xxxx.tky.activity.GuideActivity" />
         <activity android:name="com.xxxx.tky.activity.ContactDetailActivity" />
         <activity android:name="com.xxxx.tky.activity.CustomPersonActivity" />
         <activity android:name="com.xxxx.tky.activity.SearchPersonActivity" />
