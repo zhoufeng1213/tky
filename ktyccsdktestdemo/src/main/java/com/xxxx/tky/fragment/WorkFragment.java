@@ -5,7 +5,6 @@ import android.view.View;
 import com.xxxx.cc.base.fragment.BaseFragment;
 import com.xxxx.tky.R;
 import com.xxxx.tky.activity.CallHistoryFragmentActivity;
-import com.xxxx.tky.activity.CustomPersonActivity;
 import com.xxxx.tky.activity.MineCustomPersonActivity;
 import com.xxxx.tky.util.AntiShakeUtils;
 
@@ -45,7 +44,6 @@ public class WorkFragment extends BaseFragment {
         }
         startActivity(MineCustomPersonActivity.class);
     }
-
 
 
 }

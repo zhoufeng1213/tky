@@ -10,4 +10,5 @@
     <string name="input_password">请输入密码</string>
     <string name="text_username">账号</string>
     <string name="text_password">密码</string>
+    <string name="text_history_call">历史通话</string>
 </resources>

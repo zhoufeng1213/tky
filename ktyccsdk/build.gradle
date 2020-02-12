@@ -82,7 +82,9 @@ dependencies {
 
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation(name: 'baselibrary-1.0.0', ext: 'aar')
+//    implementation(name: 'baselibrary-1.0.0', ext: 'aar')
+    implementation 'com.kty.sdk:baselibrary:0.2.4'
+
 
 
     //http

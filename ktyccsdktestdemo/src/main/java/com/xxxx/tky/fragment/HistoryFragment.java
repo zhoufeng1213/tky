@@ -1,4 +1,4 @@
-package com.xxxx.cc.ui.fragment;
+package com.xxxx.tky.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -21,7 +20,6 @@ import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.xxxx.cc.R;
 import com.xxxx.cc.base.fragment.BaseHttpRequestFragment;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.KtyCcSdkTool;
@@ -32,11 +30,11 @@ import com.xxxx.cc.model.HistoryResponseBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.ui.CommunicationDetailActivity;
 import com.xxxx.cc.ui.adapter.HistoryAdapter;
-import com.xxxx.cc.ui.widget.CustomPopWindow;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.ThreadTask;
 import com.xxxx.cc.util.db.DbUtil;
+import com.xxxx.tky.R;
 
 import java.util.ArrayList;
 import java.util.List;
