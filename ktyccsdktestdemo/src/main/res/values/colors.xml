@@ -11,6 +11,9 @@
     <color name="f_55A949">#55A949</color>
     <color name="f_f03535">#f03535</color>
     <color name="f_303030">#303030</color>
+    <color name="f_7F4F8">#F7F4F8</color>
+    <color name="f_f2a79fc">#ff2a79fc</color>
+    #
     <color name="color_divide">#e8e8e8</color><!--分割线-->
     <color name="color_text_main">#333333</color><!--主要文字，标题，小标题-->
     <color name="color_text_describe">#999999</color><!--描述性文字-->
