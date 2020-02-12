@@ -113,7 +113,7 @@ public class LoginActivity extends BaseHttpRequestActivity {
 
         //先检测更新
         baseGetPresenter.presenterBusiness(
-                HttpRequest.Version.checkVersion + BuildConfig.VERSION_NAME,false);
+                HttpRequest.Version.checkVersion + BuildConfig.VERSION_NAME, false);
 
 //        if (!TextUtils.isEmpty(phoneNum) && !TextUtils.isEmpty(pwd)) {
 //            login();
@@ -229,7 +229,7 @@ public class LoginActivity extends BaseHttpRequestActivity {
                 UpdateAppUtils
                         .getInstance()
                         .apkUrl(versionBean.getDownloadUrl())
-                        .updateTitle(getString(R.string.find_new_version))
+                        .updateTitle(getString(R.string.find_new_version) + "(" + versionBean.getNewVersion() + ")")
                         .updateContent(versionBean.getComment())
                         .uiConfig(uiConfig)
                         .updateConfig(updateConfig)
@@ -256,7 +256,7 @@ public class LoginActivity extends BaseHttpRequestActivity {
                             }
                         })
                         .update();
-            }else{
+            } else {
                 if (!TextUtils.isEmpty(phoneNumEdit.getText().toString().trim()) && !TextUtils.isEmpty(pwdEdit.getText().toString().trim())) {
                     login();
                 }
