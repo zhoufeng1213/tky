@@ -9,14 +9,43 @@ android {
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
+
+    signingConfigs {
+        debug {
+            storeFile file('./assets/tky.jks')
+            storePassword 'android'
+            keyAlias 'android'
+            keyPassword 'android'
+        }
         release {
+            storeFile file('./assets/tky.jks')
+            storePassword 'android'
+            keyAlias 'android'
+            keyPassword 'android'
+        }
+    }
+
+    buildTypes {
+        debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+            shrinkResources false
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+
+        }
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
