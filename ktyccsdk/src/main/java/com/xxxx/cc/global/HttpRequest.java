@@ -21,6 +21,7 @@ public class HttpRequest {
         public static String update = "/sdk/api/v1/contacts/update/";
         public static String back = "/sdk/api/v1/contacts/back/";
         public static String saveSummary = "/sdk/api/v1/summary/save";
+        public static String selfdefinedContacts = "/sdk/api/v1/selfdefined/contacts/all";
     }
 
     public static class Version {

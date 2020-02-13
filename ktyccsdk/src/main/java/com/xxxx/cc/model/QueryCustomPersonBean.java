@@ -388,5 +388,6 @@ public class QueryCustomPersonBean {
     public void setLetters(String letters) {
         this.letters = letters;
     }
+
 }
 
