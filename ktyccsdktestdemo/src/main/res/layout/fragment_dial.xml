@@ -1,111 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 
-    <TextView
+    <EditText
         android:id="@+id/phone_num_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/d60"
-        android:textSize="@dimen/textNormal30"
-        android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/d15"
-        android:layout_marginRight="@dimen/d15"
         android:layout_marginTop="@dimen/d10"
+        android:layout_marginRight="@dimen/d15"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/d60"
         android:textColor="@color/black"
-        />
+        android:textIsSelectable="true"
+        android:textSize="@dimen/textNormal30" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/person_list_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/phone_num_text_view"
         android:layout_above="@id/dial_layout"
-        />
+        android:layout_below="@id/phone_num_text_view" />
 
     <LinearLayout
         android:id="@+id/dial_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:background="@color/c_3d505f"
-        android:paddingBottom="@dimen/d10"
-        >
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/d10">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/d60"
-        android:orientation="horizontal"
-        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d60"
+            android:orientation="horizontal">
 
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/button1"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="1"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textNormal20"
-            android:gravity="center"
-            app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-            />
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/button1"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textNormal20"
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray" />
 
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/button2"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="2"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textNormal20"
-            android:gravity="center"
-             app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-           
-            />
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/button2"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textNormal20"
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray"
 
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/button3"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="3"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textNormal20"
-            android:gravity="center"
-             app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-           
-            />
+                />
 
-    </LinearLayout>
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/button3"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textNormal20"
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray"
 
+                />
 
+        </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/d60"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <com.flyco.roundview.RoundTextView
                 android:id="@+id/button4"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="4"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textNormal20"
-                android:gravity="center"
-                 app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-           
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray"
+
                 />
 
             <com.flyco.roundview.RoundTextView
@@ -113,13 +107,13 @@
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="5"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textNormal20"
-                android:gravity="center"
-                 app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-           
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray"
+
                 />
 
             <com.flyco.roundview.RoundTextView
@@ -127,37 +121,35 @@
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="6"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textNormal20"
-                android:gravity="center"
-                 app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-           
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray"
+
                 />
 
         </LinearLayout>
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/d60"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <com.flyco.roundview.RoundTextView
                 android:id="@+id/button7"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="7"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textNormal20"
-                android:gravity="center"
-                 app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-           
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray"
+
                 />
 
             <com.flyco.roundview.RoundTextView
@@ -165,13 +157,13 @@
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="8"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textNormal20"
-                android:gravity="center"
-                 app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-           
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray"
+
                 />
 
             <com.flyco.roundview.RoundTextView
@@ -179,13 +171,13 @@
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="9"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textNormal20"
-                android:gravity="center"
-                 app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-           
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray"
+
                 />
 
         </LinearLayout>
@@ -194,21 +186,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/d60"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <com.flyco.roundview.RoundTextView
                 android:id="@+id/button_xing"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="*"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textNormal20"
-                android:gravity="center"
-                 app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-           
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray"
+
                 />
 
             <com.flyco.roundview.RoundTextView
@@ -216,13 +207,13 @@
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="0"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textNormal20"
-                android:gravity="center"
-                 app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-           
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray"
+
                 />
 
             <com.flyco.roundview.RoundTextView
@@ -230,13 +221,13 @@
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="#"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textNormal20"
-                android:gravity="center"
-                 app:rv_backgroundColor="@color/c_3d505f"
-            app:rv_backgroundPressColor="@color/bg_gray"
-           
+                app:rv_backgroundColor="@color/c_3d505f"
+                app:rv_backgroundPressColor="@color/bg_gray"
+
                 />
 
         </LinearLayout>
@@ -244,41 +235,36 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/d60"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
-            >
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/hide_key_image"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/hide_keyboard"
-                />
+                android:src="@drawable/hide_keyboard" />
 
             <LinearLayout
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
 
                 <com.flyco.roundview.RoundLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:rv_backgroundColor="@color/c_2bbe2b"
-                    app:rv_backgroundPressColor="@color/f_44a845"
-                    app:rv_isRadiusHalfHeight="true"
+                    android:gravity="center"
                     android:paddingTop="@dimen/d10"
                     android:paddingBottom="@dimen/d10"
-                    android:gravity="center"
-                    >
+                    app:rv_backgroundColor="@color/c_2bbe2b"
+                    app:rv_backgroundPressColor="@color/f_44a845"
+                    app:rv_isRadiusHalfHeight="true">
 
                     <ImageView
                         android:id="@+id/call_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/dianhua_white"
-                        />
+                        android:src="@drawable/dianhua_white" />
 
 
                 </com.flyco.roundview.RoundLinearLayout>
@@ -291,12 +277,9 @@
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/delete"
-                />
+                android:src="@drawable/delete" />
 
         </LinearLayout>
-
-
 
 
     </LinearLayout>
@@ -306,24 +289,22 @@
         android:id="@+id/open_key_image_layout"
         android:layout_width="@dimen/d60"
         android:layout_height="@dimen/d60"
-        app:rv_backgroundColor="@color/c_2bbe2b"
-        app:rv_backgroundPressColor="@color/f_44a845"
-        app:rv_isRadiusHalfHeight="true"
-        android:gravity="center"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="@dimen/d25"
         android:layout_marginBottom="@dimen/d25"
+        android:gravity="center"
         android:visibility="gone"
-        >
+        app:rv_backgroundColor="@color/c_2bbe2b"
+        app:rv_backgroundPressColor="@color/f_44a845"
+        app:rv_isRadiusHalfHeight="true">
 
-    <ImageView
+        <ImageView
 
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/hide_keyboard"
-        />
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/hide_keyboard" />
 
     </com.flyco.roundview.RoundLinearLayout>
 </RelativeLayout>

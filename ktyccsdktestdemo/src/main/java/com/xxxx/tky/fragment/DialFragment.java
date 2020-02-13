@@ -8,11 +8,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.roundview.RoundLinearLayout;
@@ -44,7 +46,7 @@ import butterknife.OnClick;
 public class DialFragment extends BaseFragment {
 
     @BindView(R.id.phone_num_text_view)
-    TextView phoneNumTextView;
+    EditText phoneNumTextView;
     @BindView(R.id.button1)
     RoundTextView button1;
     @BindView(R.id.button2)
@@ -95,6 +97,7 @@ public class DialFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         delete.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -108,6 +111,7 @@ public class DialFragment extends BaseFragment {
                 return false;
             }
         });
+        phoneNumTextView.setInputType(InputType.TYPE_NULL);
     }
 
     @Override

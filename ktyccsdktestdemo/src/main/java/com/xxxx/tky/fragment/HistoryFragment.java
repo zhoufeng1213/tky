@@ -1,5 +1,6 @@
 package com.xxxx.tky.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -63,6 +65,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
     private boolean isFirstRefrush = true;
     private long endTime = System.currentTimeMillis();
     private long beginTime = 0;
+    private ImageView mIvBack;
 
     @Override
     public int getContentViewId() {
@@ -77,15 +80,26 @@ public class HistoryFragment extends BaseHttpRequestFragment {
         recycler = view.findViewById(R.id.recycler);
         srlRefresh = view.findViewById(R.id.srl_refresh);
         lMainContainer = view.findViewById(R.id.ll_main_container);
+        mIvBack = view.findViewById(R.id.iv_close);
 
         srlRefresh.setEnableLoadMore(true);
         srlRefresh.setEnableRefresh(true);
         srlRefresh.setEnableLoadMoreWhenContentNotFull(false);
 
         init();
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Activity activity = getActivity();
+                if (null != activity) {
+                    activity.finish();
+                }
+
+            }
+        });
     }
 
-    private void init(){
+    private void init() {
         try {
             Object objectBean = SharedPreferencesUtil.getObjectBean(mContext, USERBEAN_SAVE_TAG, UserBean.class);
             if (objectBean != null) {
@@ -99,7 +113,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                         //拨打电话
                         ContentBean contentBean = historyResponseBeanList.get(position);
-                        KtyCcSdkTool.getInstance().callPhone(mContext,contentBean.getDnis(),
+                        KtyCcSdkTool.getInstance().callPhone(mContext, contentBean.getDnis(),
                                 contentBean.getContactName(),
                                 ""
                         );
@@ -120,13 +134,13 @@ public class HistoryFragment extends BaseHttpRequestFragment {
                     @Override
                     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                         page++;
-                        List<ContentBean> list = DbUtil.queryPhoneRecordList(cacheUserBean.getUserId(),page);
-                        if(list != null && list.size() > 0){
+                        List<ContentBean> list = DbUtil.queryPhoneRecordList(cacheUserBean.getUserId(), page);
+                        if (list != null && list.size() > 0) {
                             srlRefresh.finishLoadMore();
                             srlRefresh.finishRefresh();
                             historyResponseBeanList.addAll(list);
                             historyAdapter.notifyDataSetChanged();
-                        }else{
+                        } else {
                             basePostPresenter.presenterBusinessByHeader(
                                     HttpRequest.CallHistory.callHistory,
                                     false,
@@ -139,7 +153,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
                     @Override
                     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                         page = 0;
-                        if(!isFirstRefrush){
+                        if (!isFirstRefrush) {
                             endTime = System.currentTimeMillis();
                             historyResponseBeanList.clear();
                             historyAdapter.notifyDataSetChanged();
@@ -166,20 +180,20 @@ public class HistoryFragment extends BaseHttpRequestFragment {
         }
     }
 
-    private void loadData(){
+    private void loadData() {
         //判断是否存在begin
-        String beginStr = SharedPreferencesUtil.getValue(mContext,KTY_CC_BEGIN);
-        if(!TextUtils.isEmpty(beginStr)){
+        String beginStr = SharedPreferencesUtil.getValue(mContext, KTY_CC_BEGIN);
+        if (!TextUtils.isEmpty(beginStr)) {
             try {
                 beginTime = Long.valueOf(beginStr);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        if(beginTime >0){
+        if (beginTime > 0) {
             //先把本地数据查询出来
-            List<ContentBean> list = DbUtil.queryPhoneRecordList(cacheUserBean.getUserId(),page);
-            if(list != null && list.size() > 0){
+            List<ContentBean> list = DbUtil.queryPhoneRecordList(cacheUserBean.getUserId(), page);
+            if (list != null && list.size() > 0) {
                 historyResponseBeanList.addAll(list);
                 historyAdapter.notifyDataSetChanged();
             }
@@ -273,14 +287,14 @@ public class HistoryFragment extends BaseHttpRequestFragment {
                             historyResponseBean.getPage() != null &&
                             historyResponseBean.getPage().getContent() != null
                             && historyResponseBean.getPage().getContent().size() > 0) {
-                        SharedPreferencesUtil.save(mContext,KTY_CC_BEGIN,String.valueOf(endTime));
+                        SharedPreferencesUtil.save(mContext, KTY_CC_BEGIN, String.valueOf(endTime));
                         SharedPreferencesUtil.save(mContext, VOICE_RECORD_PREFIX, historyResponseBean.getRecordPrefix());
                         //把查询到的直接添加到数据库
                         saveData(historyResponseBean.getPage().getContent());
                         LogUtils.e(historyResponseBean.getPage().getContent().toString());
-                        if(page == 0){
-                            historyResponseBeanList.addAll(0,historyResponseBean.getPage().getContent());
-                        }else{
+                        if (page == 0) {
+                            historyResponseBeanList.addAll(0, historyResponseBean.getPage().getContent());
+                        } else {
                             historyResponseBeanList.addAll(historyResponseBean.getPage().getContent());
                         }
 
@@ -298,7 +312,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
         return fragment;
     }
 
-    private void saveData(List<ContentBean> list){
+    private void saveData(List<ContentBean> list) {
         ThreadTask.getInstance().executorDBThread(new Runnable() {
             @Override
             public void run() {

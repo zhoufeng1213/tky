@@ -25,15 +25,22 @@ import com.bumptech.glide.request.RequestOptions;
 import com.gyf.barlibrary.ImmersionBar;
 import com.xxxx.cc.R;
 import com.xxxx.cc.base.activity.BaseActivity;
+import com.xxxx.cc.base.presenter.MyStringCallback;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.FloatingImageDisplayService;
 import com.xxxx.cc.util.LinServiceManager;
 import com.xxxx.cc.util.LogUtils;
+import com.xxxx.cc.util.NetUtil;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.cc.util.rom.FloatWindowManager;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.builder.GetBuilder;
 
 import org.greenrobot.greendao.annotation.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.linphone.core.Call;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
@@ -58,11 +65,15 @@ public class CallActivity extends BaseActivity {
     LinearLayout llContainer;
     LinearLayout onHook;
     TextView communicationStatus;
+    LinearLayout layoutPhoneAddress;
+    TextView tvPhoneAddress;
 
     private boolean hook;
     private String phoneNum;
     private boolean isNeedRequestPermission;
     private String userContactName;
+    static final String check_phone_url = "http://mobsec-dianhua.baidu.com/dianhua_api/open/location";
+    private static final String TAG = "CallActivity";
 
     @Override
     public int getLayoutViewId() {
@@ -80,7 +91,7 @@ public class CallActivity extends BaseActivity {
     }
 
     @Override
-    public boolean isAddImmersionBar(){
+    public boolean isAddImmersionBar() {
         return false;
     }
 
@@ -97,6 +108,8 @@ public class CallActivity extends BaseActivity {
         llContainer = this.findViewById(R.id.ll_container);
         onHook = this.findViewById(R.id.on_hook);
         communicationStatus = this.findViewById(R.id.communication_status);
+        layoutPhoneAddress = this.findViewById(R.id.layout_phone_address);
+        tvPhoneAddress = findViewById(R.id.phone_address);
     }
 
     private void initListener() {
@@ -129,6 +142,7 @@ public class CallActivity extends BaseActivity {
         ImmersionBar.with(this).init();
         findView();
         initListener();
+
         boolean linPhoneRegistStatus = getIntent().getBooleanExtra("linPhoneRegistStatus", false);
         phoneNum = getIntent().getStringExtra("phoneNum");
         if (linPhoneRegistStatus && !TextUtils.isEmpty(phoneNum)) {
@@ -137,16 +151,69 @@ public class CallActivity extends BaseActivity {
             Glide.with(mContext).load(headUrl)
                     .apply(new RequestOptions().centerCrop().circleCrop().error(R.mipmap.default_head))
                     .into(headImg);
-            nameTextView.setText(TextUtils.isEmpty(userContactName) ? "":userContactName);
+            nameTextView.setText(TextUtils.isEmpty(userContactName) ? "" : userContactName);
             phoneNumTextView.setText(phoneNum);
             //先请求权限
             requestPermission(phoneNum);
 //            callPhone(phoneNum);
+            getPhoneAddress();
         } else {
             LogUtils.e("呼叫失败1");
             showToast("呼叫失败");
             finish();
         }
+    }
+
+    private void getPhoneAddress() {
+        //判断网络是否可用
+        if (!NetUtil.isNetworkConnected(this)) {
+            return;
+        }
+        GetBuilder okHttpUtils = OkHttpUtils.get();
+        okHttpUtils.url(check_phone_url);
+        okHttpUtils.addParams("tel", phoneNum);
+        okHttpUtils.build()
+                .execute(new MyStringCallback() {
+                    @Override
+                    public void onError(okhttp3.Call call, Exception e, int id) {
+                        layoutPhoneAddress.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        layoutPhoneAddress.setVisibility(View.GONE);
+                        LogUtils.i(TAG, response);
+                        if (!TextUtils.isEmpty(response)) {
+                            try {
+                                JSONObject json = new JSONObject(response);
+                                JSONObject phoneDetail = json.optJSONObject("response").optJSONObject(phoneNum).optJSONObject("detail");
+                                String province = phoneDetail.optString("province");
+                                JSONArray area = phoneDetail.optJSONArray("area");
+                                String city = "";
+                                String showText = "";
+                                if (null != area && area.length() > 0) {
+                                    city = area.getJSONObject(0).optString("city");
+                                }
+                                if (!TextUtils.isEmpty(province)) {
+                                    showText = province + " " + city;
+                                } else {
+                                    showText = city;
+                                }
+
+                                if (!TextUtils.isEmpty(showText)) {
+                                    layoutPhoneAddress.setVisibility(View.VISIBLE);
+                                    tvPhoneAddress.setText(showText);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    }
+                });
+
     }
 
     private String[] needPermissions = {
@@ -205,9 +272,9 @@ public class CallActivity extends BaseActivity {
             if (objectBean != null) {
                 UserBean userBean = (UserBean) objectBean;
 //                Call call = LinServiceManager.callPhone(phoenNum, userBean.getCcUserInfo().getExtensionNo());
-                Call call = LinServiceManager.callPhone(phoenNum, TextUtils.isEmpty(userContactName) ? "":userContactName);
+                Call call = LinServiceManager.callPhone(phoenNum, TextUtils.isEmpty(userContactName) ? "" : userContactName);
                 if (call != null) {
-                    LinServiceManager.switchAudio(mContext,false);
+                    LinServiceManager.switchAudio(mContext, false);
                     Message msg = new Message();
                     msg.what = 1;
                     handler.sendMessage(msg);
@@ -305,7 +372,7 @@ public class CallActivity extends BaseActivity {
 
     public void clickLlMianti() {
         isMiantiClicked = !isMiantiClicked;
-        LinServiceManager.switchAudio(mContext,isMiantiClicked);
+        LinServiceManager.switchAudio(mContext, isMiantiClicked);
         if (isMiantiClicked) {
             llMianti.setBackgroundResource(R.drawable.selected_container);
         } else {
@@ -358,7 +425,7 @@ public class CallActivity extends BaseActivity {
         }
         if (!hook) {
             LogUtils.e("onPause   ------ > bindFloatService");
-            if(!isNeedRequestPermission){
+            if (!isNeedRequestPermission) {
                 bindFloatService();
             }
         }

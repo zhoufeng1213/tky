@@ -3,7 +3,6 @@ package com.xxxx.cc.base.activity;
 import android.os.Bundle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.kty.mars.baselibrary.util.StatusBarUtil;
 import com.xxxx.cc.base.presenter.BaseGetPresenter;
 import com.xxxx.cc.base.presenter.BasePostPresenter;
 import com.xxxx.cc.model.BaseBean;

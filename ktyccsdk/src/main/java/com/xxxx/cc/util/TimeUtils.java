@@ -14,6 +14,7 @@ public class TimeUtils {
     private static String MD_HM = "M月d日 HH:mm";
     private static String MD_HMS = "MM-dd HH:mm:ss";
     private static String YMD_HMS = "yyyy-MM-dd HH:mm:ss";
+    private static String HM_MD = "MM-dd HH:mm";
 
     public static String dateToStamp(String str) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -81,20 +82,39 @@ public class TimeUtils {
         return times;
     }
 
+    public static String getWatchTime1(int second) {
+        String times = "";
+        if (second < 60) {
+            times = "00:00:" + getSecondTime(second);
+        } else if (second <= 3600) {
+            int minute = second / 60;
+            int seconds = second % 60;
+            times = "00:" + getSecondTime(minute) + ":" + getSecondTime(seconds);
+        } else if (second <= 3600 * 24) {
+            int hour = second / 3600;
+            int minuteTime = second % 3600;
+            int minute = minuteTime / 60;
+            int seconds = minuteTime % 60;
+            times = getSecondTime(hour)+ ":"  + getSecondTime(minute) + ":" + getSecondTime(seconds);
+
+        }
+        return times;
+    }
+
 
     public static String getDurationTime(int second) {
         String times = "";
         if (second < 60) {
-            times = second +"秒";
+            times = second + "秒";
         } else if (second <= 3600) {
             int minute = second / 60;
             int seconds = second % 60;
-            times = minute + "分" + seconds+"秒";
-        }else{
+            times = minute + "分" + seconds + "秒";
+        } else {
             int hour = second / 60 / 60;
             int minute = second / 60;
             int seconds = second % 60;
-            times = hour + "时"+ minute + "分" + seconds+"秒";
+            times = hour + "时" + minute + "分" + seconds + "秒";
         }
         return times;
     }
@@ -116,8 +136,8 @@ public class TimeUtils {
      * @return
      * @throws Exception
      */
-    public static String stringToDate_MD_HM(String date) {
-        SimpleDateFormat format = new SimpleDateFormat(MD_HM);
+    public static String stringToDate_HM_MD(String date) {
+        SimpleDateFormat format = new SimpleDateFormat(HM_MD);
         Date date1 = stringToDate(date);
         String datetime = "";
         try {
@@ -139,6 +159,26 @@ public class TimeUtils {
      */
     public static String stringToDate_MD_HMS(String date) {
         SimpleDateFormat format = new SimpleDateFormat(MD_HMS);
+        Date date1 = stringToDate(date);
+        String datetime = "";
+        try {
+            datetime = format.format(date1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return datetime;
+    }
+
+    /**
+     * 字符串转Date
+     *
+     * @param date
+     * @return
+     * @throws Exception
+     */
+    public static String stringToDate_MD_HM(String date) {
+        SimpleDateFormat format = new SimpleDateFormat(MD_HM);
         Date date1 = stringToDate(date);
         String datetime = "";
         try {

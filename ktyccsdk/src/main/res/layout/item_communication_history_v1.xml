@@ -4,69 +4,90 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:ignore="InOrMmUsage">
 
-
-    <ImageView
-        android:id="@+id/head_img"
-        android:layout_width="@dimen/d60"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="@dimen/d60"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/d20"
-        android:layout_marginTop="@dimen/d20"
+        android:layout_marginTop="@dimen/d15"
         android:layout_marginBottom="@dimen/d10"
-        android:src="@mipmap/icon_call_ok" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_call_photo"
+            android:layout_width="@dimen/d60"
+            android:layout_height="@dimen/d60"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/d20"
+            android:src="@mipmap/icon_call_ok" />
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/d10"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_call_name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="张三"
-            android:textColor="@color/c_3D4249"
-            android:textSize="@dimen/textNormal14" />
+            android:layout_marginLeft="@dimen/d10"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_call_phone"
+            <TextView
+                android:id="@+id/tv_call_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张三"
+                android:textColor="@color/c_3D4249"
+                android:textSize="@dimen/textNormal14" />
+
+            <TextView
+                android:id="@+id/tv_call_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:text="12345677888"
+                android:textColor="@color/c_BEC2CA"
+                android:textSize="@dimen/textNormal16" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/d10"
-            android:text="12345677888"
-            android:textColor="@color/c_BEC2CA"
-            android:textSize="@dimen/textNormal16" />
+            android:layout_marginLeft="@dimen/d10"
+            android:layout_marginRight="@dimen/d20"
+            android:gravity="right"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/icon_call_time"
+                android:drawablePadding="@dimen/d3"
+                android:text="09:00 12-20"
+                android:textColor="@color/c_BEC2CA"
+                android:textSize="@dimen/textNormal10" />
+
+            <TextView
+                android:id="@+id/tv_call_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d15"
+                android:text="通话时长  08:45:21"
+                android:textColor="@color/c_42A6FE"
+                android:textSize="@dimen/textNormal10" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_start_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="09:00 12-20"
-            android:textColor="@color/c_BEC2CA"
-            android:textSize="@dimen/textNormal10" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/textNormal10"
-            android:textColor="@color/c_42A6FE"/>
-
-
-    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="91dp"
+        android:background="#EBEBEB" />
 
 
 </LinearLayout>

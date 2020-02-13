@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,9 +14,9 @@
         android:layout_height="26dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
+        android:src="@drawable/ic_svg_shrink_communication"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_svg_shrink_communication"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/head_img"
@@ -27,7 +26,7 @@
         android:src="@mipmap/default_head"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/name"
@@ -39,19 +38,55 @@
         android:textSize="24dp"
         app:layout_constraintLeft_toLeftOf="@id/head_img"
         app:layout_constraintRight_toRightOf="@id/head_img"
-        app:layout_constraintTop_toBottomOf="@id/head_img"/>
+        app:layout_constraintTop_toBottomOf="@id/head_img" />
 
-    <TextView
-        android:id="@+id/phone_num"
+    <LinearLayout
+        android:id="@+id/layout_phone_num"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         android:layout_marginTop="4dp"
-        android:text="18664991202"
-        android:textColor="#fff"
-        android:textSize="17dp"
+        android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="@id/name"
         app:layout_constraintRight_toRightOf="@id/name"
-        app:layout_constraintTop_toBottomOf="@id/name"/>
+        app:layout_constraintTop_toBottomOf="@id/name">
+
+        <TextView
+            android:id="@+id/phone_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18664991202"
+            android:textColor="#fff"
+            android:textSize="17dp" />
+
+        <LinearLayout
+            android:id="@+id/layout_phone_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:background="@color/c_A0A0A0" />
+
+            <TextView
+                android:id="@+id/phone_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="广东深圳"
+                android:textColor="#fff"
+                android:textSize="17dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 
     <!--保持中  通话时间-->
     <TextView
@@ -65,20 +100,20 @@
         android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phone_num"/>
+        app:layout_constraintTop_toBottomOf="@id/layout_phone_num" />
 
     <TextView
+        android:id="@+id/communication_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:id="@+id/communication_time"
         android:text="111"
         android:textColor="#fff"
         android:textSize="15dp"
         android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phone_status"/>
+        app:layout_constraintTop_toBottomOf="@id/phone_status" />
 
     <LinearLayout
         android:id="@+id/ll_container"
@@ -88,7 +123,7 @@
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/phone_num">
+        app:layout_constraintTop_toBottomOf="@id/layout_phone_num">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -108,7 +143,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_svg_silence"/>
+                    android:src="@drawable/ic_svg_silence" />
 
             </LinearLayout>
 
@@ -119,15 +154,15 @@
                 android:layout_marginTop="12dp"
                 android:text="静音"
                 android:textColor="#fff"
-                android:textSize="13dp"/>
+                android:textSize="13dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:visibility="invisible"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:id="@+id/ll_keep_communication"
@@ -141,7 +176,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_svg_keep_communication"/>
+                    android:src="@drawable/ic_svg_keep_communication" />
 
 
             </LinearLayout>
@@ -153,7 +188,7 @@
                 android:layout_marginTop="12dp"
                 android:text="保持"
                 android:textColor="#fff"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -174,7 +209,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_svg_mianti"/>
+                    android:src="@drawable/ic_svg_mianti" />
 
             </LinearLayout>
 
@@ -185,7 +220,7 @@
                 android:layout_marginTop="12dp"
                 android:text="免提"
                 android:textColor="#fff"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -195,17 +230,17 @@
         android:id="@+id/on_hook"
         android:layout_width="72dp"
         android:layout_height="72dp"
+        android:layout_marginBottom="75dp"
         android:background="@drawable/on_hook"
         android:gravity="center"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_svg_onhook"/>
+            android:src="@drawable/ic_svg_onhook" />
 
     </LinearLayout>
 
@@ -220,7 +255,7 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@id/on_hook"
         app:layout_constraintLeft_toLeftOf="@id/on_hook"
-        app:layout_constraintRight_toRightOf="@id/on_hook"/>
+        app:layout_constraintRight_toRightOf="@id/on_hook" />
 
 
 </android.support.constraint.ConstraintLayout>
