@@ -85,18 +85,6 @@
             android:layout_below="@id/dialog_content"
             android:gravity="center">
 
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/dialog_confirm"
-                android:layout_width="@dimen/d100"
-                android:layout_height="match_parent"
-                android:minHeight="@dimen/d30"
-                android:layout_margin="@dimen/d10"
-                android:gravity="center"
-                android:text="保存"
-                android:textColor="@color/white"
-                app:rv_cornerRadius="@dimen/d4"
-                app:rv_backgroundColor="@color/c_2f9cf6" />
-
 
             <com.flyco.roundview.RoundTextView
                 android:id="@+id/dialog_cancel"
@@ -109,6 +97,17 @@
                 android:textColor="@color/white"
                 app:rv_cornerRadius="@dimen/d4"
                 app:rv_backgroundColor="@color/c_f23b3b" />
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/dialog_confirm"
+                android:layout_width="@dimen/d100"
+                android:layout_height="match_parent"
+                android:minHeight="@dimen/d30"
+                android:layout_margin="@dimen/d10"
+                android:gravity="center"
+                android:text="保存"
+                android:textColor="@color/white"
+                app:rv_cornerRadius="@dimen/d4"
+                app:rv_backgroundColor="@color/c_2f9cf6" />
 
         </LinearLayout>
 

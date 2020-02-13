@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -63,7 +64,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
 
     private UserBean cacheUserBean;
     private QueryCustomPersonBean queryCustomPersonBean;
-    private CommunicationRecordResponseBean selectCommunicationRecordResponseBean;
+    public CommunicationRecordResponseBean selectCommunicationRecordResponseBean;
 
     public static CommunicationRecordFragment newInstance(String data) {
         CommunicationRecordFragment fragment = new CommunicationRecordFragment();
@@ -108,7 +109,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                                     if(R.id.edit_record == view.getId()){
                                         //弹出修改框
                                         selectCommunicationRecordResponseBean = contentBeanList.get(position);
-                                        showEditDialog();
+                                        showEditDialog(false);
                                     }
                                 }
                             });
@@ -144,7 +145,8 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
 
     private SweetAlertDialog sweetAlertDialog;
     private EditText userMeno;
-    private void showEditDialog(){
+
+    public void showEditDialog(Boolean isNew) {
         sweetAlertDialog = new SweetAlertDialog(mContext);
         View dialogView = LayoutInflater.from(mContext)
                 .inflate(R.layout.dialog_edit, null, false);
@@ -154,7 +156,8 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
         RoundTextView dialogCancel = dialogView.findViewById(R.id.dialog_cancel);
         ImageView ivClose = dialogView.findViewById(R.id.iv_close);
         userMeno = dialogView.findViewById(R.id.user_meno);
-        if(selectCommunicationRecordResponseBean != null && !TextUtils.isEmpty(selectCommunicationRecordResponseBean.getCommRecoeds())){
+
+        if (!isNew && selectCommunicationRecordResponseBean != null && !TextUtils.isEmpty(selectCommunicationRecordResponseBean.getCommRecoeds())) {
             userMeno.setText(selectCommunicationRecordResponseBean.getCommRecoeds());
             userMeno.setSelection(selectCommunicationRecordResponseBean.getCommRecoeds().length());
         }
@@ -174,6 +177,10 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                     sweetAlertDialog.dismiss();
                 }
                 if(cacheUserBean != null){
+                    Log.e("lxl", "cacheUserBean add");
+                    if (isNew) {
+                        selectCommunicationRecordResponseBean = selectCommunicationRecordResponseBean = contentBeanList.get(0);
+                    }
                     basePostPresenter.presenterBusinessByHeader(HttpRequest.Contant.saveSummary,true,
                             "token",cacheUserBean.getToken());
                 }
@@ -223,6 +230,16 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        basePostPresenter.presenterBusinessByHeader(
+                HttpRequest.Contant.communicationRecord,
+                false,
+                "token", cacheUserBean.getToken(),
+                "Content-Type", "application/json"
+        );
+    }
+    @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
         if (HttpRequest.Contant.communicationRecord.equals(moduleName)) {
             srlRefresh.finishLoadMore();
@@ -234,6 +251,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                     if (historyResponseBean.getPage() != null &&
                             historyResponseBean.getPage().getContent() != null
                             && historyResponseBean.getPage().getContent().size() > 0) {
+                        contentBeanList.clear();
                         contentBeanList.addAll(historyResponseBean.getPage().getContent());
                         communicationRecordAdapter.notifyDataSetChanged();
                     }

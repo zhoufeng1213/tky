@@ -155,7 +155,18 @@ public class KtyCcSdkTool {
 
     }
 
-    private static void goToCallActivity(Context mContext, String phoneNum, String userName, String headUrl){
+    public interface CallPhoneInterface {
+        void goToCall();
+    }
+
+    public CallPhoneInterface mDemoInterface;
+
+    public void setmCallPhoneInterface(CallPhoneInterface callPhoneInterface) {
+        mDemoInterface = callPhoneInterface;
+    }
+
+    private void goToCallActivity(Context mContext, String phoneNum, String userName, String headUrl) {
+
         //开始拨打电话
         Intent intent = new Intent(mContext, CallActivity.class);
         intent.putExtra("phoneNum", phoneNum);
@@ -163,6 +174,9 @@ public class KtyCcSdkTool {
         intent.putExtra("headUrl", headUrl);
         intent.putExtra("linPhoneRegistStatus", true);
         mContext.startActivity(intent);
+        if (mDemoInterface != null) {
+            mDemoInterface.goToCall();
+        }
     }
 
 
