@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.tky.R;
 import com.xxxx.cc.model.CommunicationRecordResponseBean;
@@ -34,12 +35,23 @@ public class CommunicationRecordAdapter extends BaseQuickAdapter<CommunicationRe
         }
         helper.setText(R.id.time_text, createTime);
         helper.setText(R.id.content_text, bean.getCommRecoeds());
-        helper.setText(R.id.time_duration, TimeUtils.getWatchTime(bean.getBillingInSec()));
+        if (bean.getBillingInSec() < 0) {
+            helper.setText(R.id.time_duration, "呼叫中");
+        } else {
+            helper.setText(R.id.time_duration, TimeUtils.getWatchTime(bean.getBillingInSec()));
+        }
 //        helper.setGone(R.id.edit_record,!TextUtils.isEmpty(bean.getBlegUuid()));
         ImageView imageView = helper.getView(R.id.image_tag);
-        imageView.setImageResource(bean.getBillingInSec() == 0?R.drawable.notification:R.drawable.success);
+        if (bean.getBillingInSec() == 0) {
+            imageView.setImageResource(R.drawable.notification);
+        } else if (bean.getBillingInSec() <= 0) {
+            imageView.setImageResource(R.drawable.ic_svg_xuanfuchuang);
+        } else {
+            imageView.setImageResource(R.drawable.success);
+        }
         helper.addOnClickListener(R.id.edit_record);
     }
+
 
 }
 

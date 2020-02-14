@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xxxx.cc.base.presenter.BaseFragmentPresenter;
+import com.xxxx.cc.base.presenter.BaseGetPresenter;
 import com.xxxx.cc.model.BaseBean;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.Map;
 public abstract class BaseHttpRequestFragment extends BaseFragment {
 
     public BaseFragmentPresenter basePostPresenter;
+    public BaseGetPresenter baseGetPresenter;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

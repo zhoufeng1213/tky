@@ -2,6 +2,7 @@ package com.xxxx.cc.base.presenter;
 
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.xxxx.cc.base.fragment.BaseHttpRequestFragment;
