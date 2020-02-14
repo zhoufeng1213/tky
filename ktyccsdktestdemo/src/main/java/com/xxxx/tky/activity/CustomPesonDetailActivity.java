@@ -111,7 +111,6 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
             if (!TextUtils.isEmpty(personBeanData)) {
                 mFragments.add(CommunicationRecordFragment.newInstance(personBeanData));
                 mFragments.add(ContactHistoryFragment.newInstance(personBeanData));
-                Log.e("lxl", "客户信息：" + personBeanData);
                 queryCustomPersonBean = JSON.parseObject(personBeanData, QueryCustomPersonBean.class);
                 if (queryCustomPersonBean != null) {
                     setViewData();
@@ -195,7 +194,6 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
             return;
         }
         if (queryCustomPersonBean != null && !TextUtils.isEmpty(queryCustomPersonBean.getRealMobileNumber())) {
-            Log.e("lxl", "callPhone");
             KtyCcSdkTool.getInstance().callPhone(mContext, queryCustomPersonBean.getRealMobileNumber(),
                     queryCustomPersonBean.getName(),
                     ""
@@ -209,7 +207,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                ((CommunicationRecordFragment) mFragments.get(0)).showEditDialog(true);
+                ((CommunicationRecordFragment) mFragments.get(0)).showEditDialog();
             }
         }, 1000);
 

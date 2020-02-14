@@ -13,6 +13,7 @@ public class HttpRequest {
 
     public static class CallHistory {
         public static String callHistory = "/sdk/api/v1/callHistory";
+        public static String currentCalls = "/sdk/api/v1/callHistory/currentCalls/";
     }
 
     public static class Contant {
@@ -22,6 +23,7 @@ public class HttpRequest {
         public static String back = "/sdk/api/v1/contacts/back/";
         public static String saveSummary = "/sdk/api/v1/summary/save";
         public static String selfdefinedContacts = "/sdk/api/v1/selfdefined/contacts/all";
+
     }
 
     public static class Version {
