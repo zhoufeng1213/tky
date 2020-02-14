@@ -88,7 +88,7 @@ public class CustomPersonActivity extends BaseHttpRequestActivity {
     }
 
 
-    private void init(){
+    private void init() {
         try {
             Object objectBean = SharedPreferencesUtil.getObjectBean(mContext, USERBEAN_SAVE_TAG, UserBean.class);
             if (objectBean != null) {
@@ -108,7 +108,7 @@ public class CustomPersonActivity extends BaseHttpRequestActivity {
 //                                    ""
 //                            );
 //                        }
-                        startActivity(CustomPesonDetailActivity.class,"data",JSON.toJSON(historyResponseBeanList.get(position)));
+                        startActivity(CustomPesonDetailActivity.class, "data", JSON.toJSON(historyResponseBeanList.get(position)));
                     }
                 });
                 recycler.setAdapter(historyAdapter);
@@ -119,12 +119,12 @@ public class CustomPersonActivity extends BaseHttpRequestActivity {
                     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                         page++;
                         List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanList(page);
-                        if(list != null && list.size() > 0){
+                        if (list != null && list.size() > 0) {
                             srlRefresh.finishLoadMore();
                             srlRefresh.finishRefresh();
                             historyResponseBeanList.addAll(list);
                             historyAdapter.notifyDataSetChanged();
-                        }else{
+                        } else {
                             baseGetPresenter.presenterBusinessByHeader(
                                     HttpRequest.Contant.mineContacts,
                                     false,
@@ -137,10 +137,10 @@ public class CustomPersonActivity extends BaseHttpRequestActivity {
                     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                         page = 0;
 //                        if(!isFirstRefrush){
-                            endTime = System.currentTimeMillis();
-                            historyResponseBeanList.clear();
-                            historyAdapter.notifyDataSetChanged();
-                            loadData();
+                        endTime = System.currentTimeMillis();
+                        historyResponseBeanList.clear();
+                        historyAdapter.notifyDataSetChanged();
+                        loadData();
 //                        }
 
                         isFirstRefrush = false;
@@ -162,20 +162,20 @@ public class CustomPersonActivity extends BaseHttpRequestActivity {
         }
     }
 
-    private void loadData(){
+    private void loadData() {
         //判断是否存在begin
-        String beginStr = SharedPreferencesUtil.getValue(mContext,KTY_CUSTOM_BEGIN);
-        if(!TextUtils.isEmpty(beginStr)){
+        String beginStr = SharedPreferencesUtil.getValue(mContext, KTY_CUSTOM_BEGIN);
+        if (!TextUtils.isEmpty(beginStr)) {
             try {
                 beginTime = Long.valueOf(beginStr);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        if(beginTime >0){
+        if (beginTime > 0) {
             //先把本地数据查询出来
             List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanList(page);
-            if(list != null && list.size() > 0){
+            if (list != null && list.size() > 0) {
                 historyResponseBeanList.addAll(list);
                 historyAdapter.notifyDataSetChanged();
             }
@@ -206,6 +206,7 @@ public class CustomPersonActivity extends BaseHttpRequestActivity {
 
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
+        LogUtils.i("zwmn", "CustomPersonActivity 请求数据 " + response);
         if (HttpRequest.Contant.mineContacts.equals(moduleName)) {
             srlRefresh.finishLoadMore();
             srlRefresh.finishRefresh();
@@ -216,20 +217,20 @@ public class CustomPersonActivity extends BaseHttpRequestActivity {
                             historyResponseBean.getPage() != null &&
                             historyResponseBean.getPage().getContent() != null
                             && historyResponseBean.getPage().getContent().size() > 0) {
-                        SharedPreferencesUtil.save(mContext,KTY_CC_BEGIN,String.valueOf(endTime));
-                       //把查询到的直接添加到数据库
+                        SharedPreferencesUtil.save(mContext, KTY_CC_BEGIN, String.valueOf(endTime));
+                        //把查询到的直接添加到数据库
 //                        saveData(historyResponseBean.getPage().getContent());
                         DbUtil.saveCustomPersonListOrUpdate(historyResponseBean.getPage().getContent());
 //                        LogUtils.e(historyResponseBean.getPage().getContent().get(0).getName().toString());
-                        if(page == 0){
+                        if (page == 0) {
                             //直接去数据库重新查找数据
                             List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanList(page);
                             historyResponseBeanList.clear();
                             historyAdapter.notifyDataSetChanged();
-                            if(list != null && list.size() > 0){
+                            if (list != null && list.size() > 0) {
                                 historyResponseBeanList.addAll(list);
                             }
-                        }else{
+                        } else {
                             historyResponseBeanList.addAll(historyResponseBean.getPage().getContent());
                         }
 
@@ -242,8 +243,7 @@ public class CustomPersonActivity extends BaseHttpRequestActivity {
     }
 
 
-
-    private void saveData(List<QueryCustomPersonBean> list){
+    private void saveData(List<QueryCustomPersonBean> list) {
         ThreadTask.getInstance().executorDBThread(new Runnable() {
             @Override
             public void run() {

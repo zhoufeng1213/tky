@@ -18,7 +18,7 @@
     <color name="color_text_main">#333333</color><!--主要文字，标题，小标题-->
     <color name="color_text_describe">#999999</color><!--描述性文字-->
     <color name="color_main_bule">#1a96fe</color><!--主色，部分标题栏，按钮背景-->
-    <color name="line_background">#E5E5E5</color>
+    <color name="line_background">#EBEBEB</color>
     <color name="bg_gray">#f9f8f8</color>
 
     <color name="c_039fd9">#039fd9</color>
@@ -159,11 +159,13 @@
     <color name="c_BEC2CA">#BEC2CA</color>
     <color name="c_FAFAFA">#FAFAFA</color>
     <color name="c_999999">#999999</color>
+    <color name="p50_white">#80FFFFFF</color>
+    <color name="p70_white">#B3FFFFFF</color>
+    <color name="p40_white">#66FFFFFF</color>
 
     <!--快速索引bar颜色-->
     <color name="side_bar">#919091</color>
     <color name="side_bar_pressed">#BFBFBF</color>
 
-    <color name="p70_white">#4DFFFFFF</color>
     <color name="p100_light_black">#ff3d4249</color>
 </resources>

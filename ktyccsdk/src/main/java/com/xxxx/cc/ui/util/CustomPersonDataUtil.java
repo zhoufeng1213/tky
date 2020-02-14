@@ -40,14 +40,14 @@ public class CustomPersonDataUtil {
     private static volatile CustomPersonDataUtil httpCacheDataUtil;
     private Context mContext;
 
-    private CustomPersonDataUtil(Context context){
+    private CustomPersonDataUtil(Context context) {
         this.mContext = context;
     }
 
-    public static CustomPersonDataUtil getInstance(Context context){
-        if(httpCacheDataUtil == null){
-            synchronized (CustomPersonDataUtil.class){
-                if(httpCacheDataUtil == null){
+    public static CustomPersonDataUtil getInstance(Context context) {
+        if (httpCacheDataUtil == null) {
+            synchronized (CustomPersonDataUtil.class) {
+                if (httpCacheDataUtil == null) {
                     httpCacheDataUtil = new CustomPersonDataUtil(context);
                 }
             }
@@ -66,12 +66,12 @@ public class CustomPersonDataUtil {
         this.token = token;
     }
 
-    public void loadAllNetData(){
-        if(!TextUtils.isEmpty(token)){
+    public void loadAllNetData() {
+        if (!TextUtils.isEmpty(token)) {
             ThreadTask.getInstance().executorNetThread(new Runnable() {
                 @Override
                 public void run() {
-                    LogUtils.e("客户资料--》正在加载数据"+loadPage);
+                    LogUtils.e("客户资料--》正在加载数据" + loadPage);
                     requestPost();
                 }
             }, 10);
@@ -79,7 +79,7 @@ public class CustomPersonDataUtil {
     }
 
 
-    private void requestPost(){
+    private void requestPost() {
         GetBuilder okHttpUtils = OkHttpUtils.get();
         okHttpUtils.url(Constans.BASE_URL + HttpRequest.Contant.mineContacts);
         //添加header
@@ -88,7 +88,7 @@ public class CustomPersonDataUtil {
         Map mapParam = JSON.parseObject(getHttpRequestParams().toJSONString(),
                 Map.class);
         for (Object key : mapParam.keySet()) {
-            okHttpUtils.addParams( (String) key, mapParam.get(key)==null?"":String.valueOf(mapParam.get(key)));
+            okHttpUtils.addParams((String) key, mapParam.get(key) == null ? "" : String.valueOf(mapParam.get(key)));
         }
 
         okHttpUtils
@@ -98,6 +98,7 @@ public class CustomPersonDataUtil {
                     public void onError(Call call, Exception e, int id) {
                         LogUtils.e("加载失败");
                     }
+
                     @Override
                     public void onResponse(String response, int id) {
                         dealResult(response);
@@ -105,7 +106,7 @@ public class CustomPersonDataUtil {
                 });
     }
 
-    private void dealResult(String response){
+    private void dealResult(String response) {
         if (!TextUtils.isEmpty(response)) {
 //            LogUtils.e(response);
             CustomPersonReturnResultBean historyResponseBean = (new Gson()).fromJson(response, CustomPersonReturnResultBean.class);
@@ -113,12 +114,12 @@ public class CustomPersonDataUtil {
 
                 if (historyResponseBean.getPage() != null) {
                     int totalPage = historyResponseBean.getPage().getTotalPages();
-                    if( historyResponseBean.getPage().getContent() != null && historyResponseBean.getPage().getContent().size()>0){
+                    if (historyResponseBean.getPage().getContent() != null && historyResponseBean.getPage().getContent().size() > 0) {
                         //把查询到的直接添加到数据库
                         //循环吧拼音放进去
                         List<QueryCustomPersonBean> tempList = new ArrayList<>();
-                        for(QueryCustomPersonBean bean:historyResponseBean.getPage().getContent()){
-                            if(bean != null){
+                        for (QueryCustomPersonBean bean : historyResponseBean.getPage().getContent()) {
+                            if (bean != null) {
                                 bean.setLetters(TextUtil.getNameFirstChar(bean.getName()));
                                 bean.setDisplayNameSpelling(TextUtil.getNameToPinyin(bean.getName()));
                                 tempList.add(bean);
@@ -126,10 +127,10 @@ public class CustomPersonDataUtil {
                         }
                         saveCacheData(tempList);
                     }
-                    if(loadPage >= totalPage){
+                    if (loadPage >= totalPage) {
                         LogUtils.e("客户资料--》缓存数据成功");
-                        SharedPreferencesUtil.save(mContext,KTY_CUSTOM_BEGIN,String.valueOf(endTime));
-                    }else{
+                        SharedPreferencesUtil.save(mContext, KTY_CUSTOM_BEGIN, String.valueOf(endTime));
+                    } else {
                         loadPage++;
                         loadAllNetData();
                     }
@@ -140,7 +141,7 @@ public class CustomPersonDataUtil {
     }
 
 
-    private void saveCacheData(List<QueryCustomPersonBean> list){
+    private void saveCacheData(List<QueryCustomPersonBean> list) {
         ThreadTask.getInstance().executorDBThread(new Runnable() {
             @Override
             public void run() {
@@ -158,6 +159,7 @@ public class CustomPersonDataUtil {
         requestBean.setStarttime(beginTime);
         requestBean.setEndtime(endTime);
         jsonObject = JSONObject.parseObject(new Gson().toJson(requestBean));
+        LogUtils.i("zwmn", jsonObject.toString());
         return jsonObject;
     }
 

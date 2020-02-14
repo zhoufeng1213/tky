@@ -93,17 +93,39 @@ public class QueryCustomPersonBean {
     private String shares;
     private String letters;
     private String displayNameSpelling;
+    private String number_1;
+    private String number_2;
+    private String number_3;
+    private String number_4;
+    private String number_5;
+    private String time_1;
+    private String time_2;
+    private String time_3;
+    private String time_4;
+    private String time_5;
+    private String custom_1;
+    private String custom_2;
+    private String custom_3;
+    private String custom_4;
+    private String custom_5;
+    private String custom_6;
+    private String custom_7;
+    private String custom_8;
+    private String custom_9;
+    private String datetime_1;
 
-    @Generated(hash = 1490741814)
-    public QueryCustomPersonBean(Long queryCustomId, String ckind, String creater,
-            String createrName, String createtime, boolean datastatus,
-            String email, String id, String mobile, String name, String organ,
-            String orgi, String owner, String ownerName, String phone,
-            String pinyin, String realMobileNumber, int statusInSeas,
-            String updatetime, String updateusername, String username,
-            String address, String company, String department, String duty,
-            String gender, String memo, String shares, String letters,
-            String displayNameSpelling) {
+
+    @Generated(hash = 1962980795)
+    public QueryCustomPersonBean(Long queryCustomId, String ckind, String creater, String createrName,
+            String createtime, boolean datastatus, String email, String id, String mobile, String name,
+            String organ, String orgi, String owner, String ownerName, String phone, String pinyin,
+            String realMobileNumber, int statusInSeas, String updatetime, String updateusername,
+            String username, String address, String company, String department, String duty,
+            String gender, String memo, String shares, String letters, String displayNameSpelling,
+            String number_1, String number_2, String number_3, String number_4, String number_5,
+            String time_1, String time_2, String time_3, String time_4, String time_5, String custom_1,
+            String custom_2, String custom_3, String custom_4, String custom_5, String custom_6,
+            String custom_7, String custom_8, String custom_9, String datetime_1) {
         this.queryCustomId = queryCustomId;
         this.ckind = ckind;
         this.creater = creater;
@@ -134,6 +156,26 @@ public class QueryCustomPersonBean {
         this.shares = shares;
         this.letters = letters;
         this.displayNameSpelling = displayNameSpelling;
+        this.number_1 = number_1;
+        this.number_2 = number_2;
+        this.number_3 = number_3;
+        this.number_4 = number_4;
+        this.number_5 = number_5;
+        this.time_1 = time_1;
+        this.time_2 = time_2;
+        this.time_3 = time_3;
+        this.time_4 = time_4;
+        this.time_5 = time_5;
+        this.custom_1 = custom_1;
+        this.custom_2 = custom_2;
+        this.custom_3 = custom_3;
+        this.custom_4 = custom_4;
+        this.custom_5 = custom_5;
+        this.custom_6 = custom_6;
+        this.custom_7 = custom_7;
+        this.custom_8 = custom_8;
+        this.custom_9 = custom_9;
+        this.datetime_1 = datetime_1;
     }
 
     @Generated(hash = 1961341732)
@@ -212,7 +254,6 @@ public class QueryCustomPersonBean {
     public void setName(String name) {
         this.name = name;
     }
-
 
 
     public String getOrgan() {
@@ -387,6 +428,166 @@ public class QueryCustomPersonBean {
 
     public void setLetters(String letters) {
         this.letters = letters;
+    }
+
+    public String getCustom_9() {
+        return this.custom_9;
+    }
+
+    public void setCustom_9(String custom_9) {
+        this.custom_9 = custom_9;
+    }
+
+    public String getCustom_8() {
+        return this.custom_8;
+    }
+
+    public void setCustom_8(String custom_8) {
+        this.custom_8 = custom_8;
+    }
+
+    public String getCustom_7() {
+        return this.custom_7;
+    }
+
+    public void setCustom_7(String custom_7) {
+        this.custom_7 = custom_7;
+    }
+
+    public String getCustom_6() {
+        return this.custom_6;
+    }
+
+    public void setCustom_6(String custom_6) {
+        this.custom_6 = custom_6;
+    }
+
+    public String getCustom_5() {
+        return this.custom_5;
+    }
+
+    public void setCustom_5(String custom_5) {
+        this.custom_5 = custom_5;
+    }
+
+    public String getCustom_4() {
+        return this.custom_4;
+    }
+
+    public void setCustom_4(String custom_4) {
+        this.custom_4 = custom_4;
+    }
+
+    public String getCustom_3() {
+        return this.custom_3;
+    }
+
+    public void setCustom_3(String custom_3) {
+        this.custom_3 = custom_3;
+    }
+
+    public String getCustom_2() {
+        return this.custom_2;
+    }
+
+    public void setCustom_2(String custom_2) {
+        this.custom_2 = custom_2;
+    }
+
+    public String getCustom_1() {
+        return this.custom_1;
+    }
+
+    public void setCustom_1(String custom_1) {
+        this.custom_1 = custom_1;
+    }
+
+    public String getTime_5() {
+        return this.time_5;
+    }
+
+    public void setTime_5(String time_5) {
+        this.time_5 = time_5;
+    }
+
+    public String getTime_4() {
+        return this.time_4;
+    }
+
+    public void setTime_4(String time_4) {
+        this.time_4 = time_4;
+    }
+
+    public String getTime_3() {
+        return this.time_3;
+    }
+
+    public void setTime_3(String time_3) {
+        this.time_3 = time_3;
+    }
+
+    public String getTime_2() {
+        return this.time_2;
+    }
+
+    public void setTime_2(String time_2) {
+        this.time_2 = time_2;
+    }
+
+    public String getTime_1() {
+        return this.time_1;
+    }
+
+    public void setTime_1(String time_1) {
+        this.time_1 = time_1;
+    }
+
+    public String getNumber_5() {
+        return this.number_5;
+    }
+
+    public void setNumber_5(String number_5) {
+        this.number_5 = number_5;
+    }
+
+    public String getNumber_4() {
+        return this.number_4;
+    }
+
+    public void setNumber_4(String number_4) {
+        this.number_4 = number_4;
+    }
+
+    public String getNumber_3() {
+        return this.number_3;
+    }
+
+    public void setNumber_3(String number_3) {
+        this.number_3 = number_3;
+    }
+
+    public String getNumber_2() {
+        return this.number_2;
+    }
+
+    public void setNumber_2(String number_2) {
+        this.number_2 = number_2;
+    }
+
+    public String getNumber_1() {
+        return this.number_1;
+    }
+
+    public void setNumber_1(String number_1) {
+        this.number_1 = number_1;
+    }
+
+    public String getDatetime_1() {
+        return this.datetime_1;
+    }
+
+    public void setDatetime_1(String datetime_1) {
+        this.datetime_1 = datetime_1;
     }
 
 }

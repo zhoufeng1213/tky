@@ -54,6 +54,26 @@ public class QueryCustomPersonBeanDao extends AbstractDao<QueryCustomPersonBean,
         public final static Property Shares = new Property(27, String.class, "shares", false, "SHARES");
         public final static Property Letters = new Property(28, String.class, "letters", false, "LETTERS");
         public final static Property DisplayNameSpelling = new Property(29, String.class, "displayNameSpelling", false, "DISPLAY_NAME_SPELLING");
+        public final static Property Number_1 = new Property(30, String.class, "number_1", false, "NUMBER_1");
+        public final static Property Number_2 = new Property(31, String.class, "number_2", false, "NUMBER_2");
+        public final static Property Number_3 = new Property(32, String.class, "number_3", false, "NUMBER_3");
+        public final static Property Number_4 = new Property(33, String.class, "number_4", false, "NUMBER_4");
+        public final static Property Number_5 = new Property(34, String.class, "number_5", false, "NUMBER_5");
+        public final static Property Time_1 = new Property(35, String.class, "time_1", false, "TIME_1");
+        public final static Property Time_2 = new Property(36, String.class, "time_2", false, "TIME_2");
+        public final static Property Time_3 = new Property(37, String.class, "time_3", false, "TIME_3");
+        public final static Property Time_4 = new Property(38, String.class, "time_4", false, "TIME_4");
+        public final static Property Time_5 = new Property(39, String.class, "time_5", false, "TIME_5");
+        public final static Property Custom_1 = new Property(40, String.class, "custom_1", false, "CUSTOM_1");
+        public final static Property Custom_2 = new Property(41, String.class, "custom_2", false, "CUSTOM_2");
+        public final static Property Custom_3 = new Property(42, String.class, "custom_3", false, "CUSTOM_3");
+        public final static Property Custom_4 = new Property(43, String.class, "custom_4", false, "CUSTOM_4");
+        public final static Property Custom_5 = new Property(44, String.class, "custom_5", false, "CUSTOM_5");
+        public final static Property Custom_6 = new Property(45, String.class, "custom_6", false, "CUSTOM_6");
+        public final static Property Custom_7 = new Property(46, String.class, "custom_7", false, "CUSTOM_7");
+        public final static Property Custom_8 = new Property(47, String.class, "custom_8", false, "CUSTOM_8");
+        public final static Property Custom_9 = new Property(48, String.class, "custom_9", false, "CUSTOM_9");
+        public final static Property Datetime_1 = new Property(49, String.class, "datetime_1", false, "DATETIME_1");
     }
 
 
@@ -98,7 +118,27 @@ public class QueryCustomPersonBeanDao extends AbstractDao<QueryCustomPersonBean,
                 "\"MEMO\" TEXT," + // 26: memo
                 "\"SHARES\" TEXT," + // 27: shares
                 "\"LETTERS\" TEXT," + // 28: letters
-                "\"DISPLAY_NAME_SPELLING\" TEXT);"); // 29: displayNameSpelling
+                "\"DISPLAY_NAME_SPELLING\" TEXT," + // 29: displayNameSpelling
+                "\"NUMBER_1\" TEXT," + // 30: number_1
+                "\"NUMBER_2\" TEXT," + // 31: number_2
+                "\"NUMBER_3\" TEXT," + // 32: number_3
+                "\"NUMBER_4\" TEXT," + // 33: number_4
+                "\"NUMBER_5\" TEXT," + // 34: number_5
+                "\"TIME_1\" TEXT," + // 35: time_1
+                "\"TIME_2\" TEXT," + // 36: time_2
+                "\"TIME_3\" TEXT," + // 37: time_3
+                "\"TIME_4\" TEXT," + // 38: time_4
+                "\"TIME_5\" TEXT," + // 39: time_5
+                "\"CUSTOM_1\" TEXT," + // 40: custom_1
+                "\"CUSTOM_2\" TEXT," + // 41: custom_2
+                "\"CUSTOM_3\" TEXT," + // 42: custom_3
+                "\"CUSTOM_4\" TEXT," + // 43: custom_4
+                "\"CUSTOM_5\" TEXT," + // 44: custom_5
+                "\"CUSTOM_6\" TEXT," + // 45: custom_6
+                "\"CUSTOM_7\" TEXT," + // 46: custom_7
+                "\"CUSTOM_8\" TEXT," + // 47: custom_8
+                "\"CUSTOM_9\" TEXT," + // 48: custom_9
+                "\"DATETIME_1\" TEXT);"); // 49: datetime_1
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_QUERY_CUSTOM_PERSON_BEAN_ID ON QUERY_CUSTOM_PERSON_BEAN" +
                 " (\"ID\" ASC);");
@@ -255,6 +295,106 @@ public class QueryCustomPersonBeanDao extends AbstractDao<QueryCustomPersonBean,
         if (displayNameSpelling != null) {
             stmt.bindString(30, displayNameSpelling);
         }
+ 
+        String number_1 = entity.getNumber_1();
+        if (number_1 != null) {
+            stmt.bindString(31, number_1);
+        }
+ 
+        String number_2 = entity.getNumber_2();
+        if (number_2 != null) {
+            stmt.bindString(32, number_2);
+        }
+ 
+        String number_3 = entity.getNumber_3();
+        if (number_3 != null) {
+            stmt.bindString(33, number_3);
+        }
+ 
+        String number_4 = entity.getNumber_4();
+        if (number_4 != null) {
+            stmt.bindString(34, number_4);
+        }
+ 
+        String number_5 = entity.getNumber_5();
+        if (number_5 != null) {
+            stmt.bindString(35, number_5);
+        }
+ 
+        String time_1 = entity.getTime_1();
+        if (time_1 != null) {
+            stmt.bindString(36, time_1);
+        }
+ 
+        String time_2 = entity.getTime_2();
+        if (time_2 != null) {
+            stmt.bindString(37, time_2);
+        }
+ 
+        String time_3 = entity.getTime_3();
+        if (time_3 != null) {
+            stmt.bindString(38, time_3);
+        }
+ 
+        String time_4 = entity.getTime_4();
+        if (time_4 != null) {
+            stmt.bindString(39, time_4);
+        }
+ 
+        String time_5 = entity.getTime_5();
+        if (time_5 != null) {
+            stmt.bindString(40, time_5);
+        }
+ 
+        String custom_1 = entity.getCustom_1();
+        if (custom_1 != null) {
+            stmt.bindString(41, custom_1);
+        }
+ 
+        String custom_2 = entity.getCustom_2();
+        if (custom_2 != null) {
+            stmt.bindString(42, custom_2);
+        }
+ 
+        String custom_3 = entity.getCustom_3();
+        if (custom_3 != null) {
+            stmt.bindString(43, custom_3);
+        }
+ 
+        String custom_4 = entity.getCustom_4();
+        if (custom_4 != null) {
+            stmt.bindString(44, custom_4);
+        }
+ 
+        String custom_5 = entity.getCustom_5();
+        if (custom_5 != null) {
+            stmt.bindString(45, custom_5);
+        }
+ 
+        String custom_6 = entity.getCustom_6();
+        if (custom_6 != null) {
+            stmt.bindString(46, custom_6);
+        }
+ 
+        String custom_7 = entity.getCustom_7();
+        if (custom_7 != null) {
+            stmt.bindString(47, custom_7);
+        }
+ 
+        String custom_8 = entity.getCustom_8();
+        if (custom_8 != null) {
+            stmt.bindString(48, custom_8);
+        }
+ 
+        String custom_9 = entity.getCustom_9();
+        if (custom_9 != null) {
+            stmt.bindString(49, custom_9);
+        }
+ 
+        String datetime_1 = entity.getDatetime_1();
+        if (datetime_1 != null) {
+            stmt.bindString(50, datetime_1);
+        }
     }
 
     @Override
@@ -402,6 +542,106 @@ public class QueryCustomPersonBeanDao extends AbstractDao<QueryCustomPersonBean,
         if (displayNameSpelling != null) {
             stmt.bindString(30, displayNameSpelling);
         }
+ 
+        String number_1 = entity.getNumber_1();
+        if (number_1 != null) {
+            stmt.bindString(31, number_1);
+        }
+ 
+        String number_2 = entity.getNumber_2();
+        if (number_2 != null) {
+            stmt.bindString(32, number_2);
+        }
+ 
+        String number_3 = entity.getNumber_3();
+        if (number_3 != null) {
+            stmt.bindString(33, number_3);
+        }
+ 
+        String number_4 = entity.getNumber_4();
+        if (number_4 != null) {
+            stmt.bindString(34, number_4);
+        }
+ 
+        String number_5 = entity.getNumber_5();
+        if (number_5 != null) {
+            stmt.bindString(35, number_5);
+        }
+ 
+        String time_1 = entity.getTime_1();
+        if (time_1 != null) {
+            stmt.bindString(36, time_1);
+        }
+ 
+        String time_2 = entity.getTime_2();
+        if (time_2 != null) {
+            stmt.bindString(37, time_2);
+        }
+ 
+        String time_3 = entity.getTime_3();
+        if (time_3 != null) {
+            stmt.bindString(38, time_3);
+        }
+ 
+        String time_4 = entity.getTime_4();
+        if (time_4 != null) {
+            stmt.bindString(39, time_4);
+        }
+ 
+        String time_5 = entity.getTime_5();
+        if (time_5 != null) {
+            stmt.bindString(40, time_5);
+        }
+ 
+        String custom_1 = entity.getCustom_1();
+        if (custom_1 != null) {
+            stmt.bindString(41, custom_1);
+        }
+ 
+        String custom_2 = entity.getCustom_2();
+        if (custom_2 != null) {
+            stmt.bindString(42, custom_2);
+        }
+ 
+        String custom_3 = entity.getCustom_3();
+        if (custom_3 != null) {
+            stmt.bindString(43, custom_3);
+        }
+ 
+        String custom_4 = entity.getCustom_4();
+        if (custom_4 != null) {
+            stmt.bindString(44, custom_4);
+        }
+ 
+        String custom_5 = entity.getCustom_5();
+        if (custom_5 != null) {
+            stmt.bindString(45, custom_5);
+        }
+ 
+        String custom_6 = entity.getCustom_6();
+        if (custom_6 != null) {
+            stmt.bindString(46, custom_6);
+        }
+ 
+        String custom_7 = entity.getCustom_7();
+        if (custom_7 != null) {
+            stmt.bindString(47, custom_7);
+        }
+ 
+        String custom_8 = entity.getCustom_8();
+        if (custom_8 != null) {
+            stmt.bindString(48, custom_8);
+        }
+ 
+        String custom_9 = entity.getCustom_9();
+        if (custom_9 != null) {
+            stmt.bindString(49, custom_9);
+        }
+ 
+        String datetime_1 = entity.getDatetime_1();
+        if (datetime_1 != null) {
+            stmt.bindString(50, datetime_1);
+        }
     }
 
     @Override
@@ -441,7 +681,27 @@ public class QueryCustomPersonBeanDao extends AbstractDao<QueryCustomPersonBean,
             cursor.isNull(offset + 26) ? null : cursor.getString(offset + 26), // memo
             cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27), // shares
             cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28), // letters
-            cursor.isNull(offset + 29) ? null : cursor.getString(offset + 29) // displayNameSpelling
+            cursor.isNull(offset + 29) ? null : cursor.getString(offset + 29), // displayNameSpelling
+            cursor.isNull(offset + 30) ? null : cursor.getString(offset + 30), // number_1
+            cursor.isNull(offset + 31) ? null : cursor.getString(offset + 31), // number_2
+            cursor.isNull(offset + 32) ? null : cursor.getString(offset + 32), // number_3
+            cursor.isNull(offset + 33) ? null : cursor.getString(offset + 33), // number_4
+            cursor.isNull(offset + 34) ? null : cursor.getString(offset + 34), // number_5
+            cursor.isNull(offset + 35) ? null : cursor.getString(offset + 35), // time_1
+            cursor.isNull(offset + 36) ? null : cursor.getString(offset + 36), // time_2
+            cursor.isNull(offset + 37) ? null : cursor.getString(offset + 37), // time_3
+            cursor.isNull(offset + 38) ? null : cursor.getString(offset + 38), // time_4
+            cursor.isNull(offset + 39) ? null : cursor.getString(offset + 39), // time_5
+            cursor.isNull(offset + 40) ? null : cursor.getString(offset + 40), // custom_1
+            cursor.isNull(offset + 41) ? null : cursor.getString(offset + 41), // custom_2
+            cursor.isNull(offset + 42) ? null : cursor.getString(offset + 42), // custom_3
+            cursor.isNull(offset + 43) ? null : cursor.getString(offset + 43), // custom_4
+            cursor.isNull(offset + 44) ? null : cursor.getString(offset + 44), // custom_5
+            cursor.isNull(offset + 45) ? null : cursor.getString(offset + 45), // custom_6
+            cursor.isNull(offset + 46) ? null : cursor.getString(offset + 46), // custom_7
+            cursor.isNull(offset + 47) ? null : cursor.getString(offset + 47), // custom_8
+            cursor.isNull(offset + 48) ? null : cursor.getString(offset + 48), // custom_9
+            cursor.isNull(offset + 49) ? null : cursor.getString(offset + 49) // datetime_1
         );
         return entity;
     }
@@ -478,6 +738,26 @@ public class QueryCustomPersonBeanDao extends AbstractDao<QueryCustomPersonBean,
         entity.setShares(cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27));
         entity.setLetters(cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28));
         entity.setDisplayNameSpelling(cursor.isNull(offset + 29) ? null : cursor.getString(offset + 29));
+        entity.setNumber_1(cursor.isNull(offset + 30) ? null : cursor.getString(offset + 30));
+        entity.setNumber_2(cursor.isNull(offset + 31) ? null : cursor.getString(offset + 31));
+        entity.setNumber_3(cursor.isNull(offset + 32) ? null : cursor.getString(offset + 32));
+        entity.setNumber_4(cursor.isNull(offset + 33) ? null : cursor.getString(offset + 33));
+        entity.setNumber_5(cursor.isNull(offset + 34) ? null : cursor.getString(offset + 34));
+        entity.setTime_1(cursor.isNull(offset + 35) ? null : cursor.getString(offset + 35));
+        entity.setTime_2(cursor.isNull(offset + 36) ? null : cursor.getString(offset + 36));
+        entity.setTime_3(cursor.isNull(offset + 37) ? null : cursor.getString(offset + 37));
+        entity.setTime_4(cursor.isNull(offset + 38) ? null : cursor.getString(offset + 38));
+        entity.setTime_5(cursor.isNull(offset + 39) ? null : cursor.getString(offset + 39));
+        entity.setCustom_1(cursor.isNull(offset + 40) ? null : cursor.getString(offset + 40));
+        entity.setCustom_2(cursor.isNull(offset + 41) ? null : cursor.getString(offset + 41));
+        entity.setCustom_3(cursor.isNull(offset + 42) ? null : cursor.getString(offset + 42));
+        entity.setCustom_4(cursor.isNull(offset + 43) ? null : cursor.getString(offset + 43));
+        entity.setCustom_5(cursor.isNull(offset + 44) ? null : cursor.getString(offset + 44));
+        entity.setCustom_6(cursor.isNull(offset + 45) ? null : cursor.getString(offset + 45));
+        entity.setCustom_7(cursor.isNull(offset + 46) ? null : cursor.getString(offset + 46));
+        entity.setCustom_8(cursor.isNull(offset + 47) ? null : cursor.getString(offset + 47));
+        entity.setCustom_9(cursor.isNull(offset + 48) ? null : cursor.getString(offset + 48));
+        entity.setDatetime_1(cursor.isNull(offset + 49) ? null : cursor.getString(offset + 49));
      }
     
     @Override

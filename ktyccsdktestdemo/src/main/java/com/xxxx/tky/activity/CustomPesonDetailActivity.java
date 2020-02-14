@@ -1,5 +1,6 @@
 package com.xxxx.tky.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -9,33 +10,34 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.flyco.roundview.RoundLinearLayout;
-import com.flyco.roundview.RoundTextView;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.gyf.barlibrary.ImmersionBar;
-import com.xxxx.cc.base.activity.BaseActivity;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.KtyCcSdkTool;
+import com.xxxx.cc.model.BaseBean;
+import com.xxxx.cc.model.CustomDefinedBean;
 import com.xxxx.cc.model.QueryCustomPersonBean;
 import com.xxxx.cc.model.UserBean;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
+import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.cc.util.db.DbUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.fragment.CommunicationRecordFragment;
 import com.xxxx.tky.fragment.ContactHistoryFragment;
 import com.xxxx.tky.util.AntiShakeUtils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
@@ -67,17 +69,28 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
     View line1;
     @BindView(R.id.jpkh_text_view)
     TextView jpkhTextView;
+    @BindView(R.id.jpkh_text_view_value)
+    TextView jpkhTvValue;
     @BindView(R.id.wly_text_view)
     TextView wlyTextView;
+    @BindView(R.id.wly_text_view_value)
+    TextView wlyTvValue;
     @BindView(R.id.address_text_view)
     TextView addressTextView;
+    @BindView(R.id.address_text_view_value)
+    TextView addressTvValue;
+    @BindView(R.id.rtv_zy_text_view)
+    TextView zyTextView;
+    @BindView(R.id.rtv_zy_text_view_value)
+    TextView zyTvValue;
     @BindView(R.id.zidingyi_layout)
-    RelativeLayout zidingyiLayout;
+    LinearLayout zidingyiLayout;
 
     private QueryCustomPersonBean queryCustomPersonBean;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String personBeanData;
     private UserBean cacheUserBean;
+    private List<CustomDefinedBean> customDefinedBeans = new ArrayList<>();
 
     @Override
     public int getLayoutViewId() {
@@ -116,29 +129,38 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
     }
 
 
-    public void setViewData(){
+    public void setViewData() {
         if (!TextUtils.isEmpty(queryCustomPersonBean.getName())) {
             userName.setText(queryCustomPersonBean.getName());
         }
         phoneNum.setText(queryCustomPersonBean.getRealMobileNumber());
         addressTextView.setText(queryCustomPersonBean.getAddress());
 
+        getDefinedMessage();
+
+
+    }
+
+    private void getDefinedMessage() {
+        baseGetPresenter.presenterBusinessByHeader(HttpRequest.Contant.selfdefinedContacts, false, "token", cacheUserBean.getToken());
+
     }
 
     boolean isFirstLoad = true;
+
     @Override
     protected void onResume() {
         super.onResume();
         //查找本地的数据库
-        if(isFirstLoad){
+        if (isFirstLoad) {
             isFirstLoad = false;
-        }else{
-            if(queryCustomPersonBean != null){
+        } else {
+            if (queryCustomPersonBean != null) {
                 QueryCustomPersonBean tempBean = DbUtil.queryCustomPersonBeanById(queryCustomPersonBean.getId());
-                if(tempBean != null){
+                if (tempBean != null) {
                     queryCustomPersonBean = tempBean;
                     setViewData();
-                }else{
+                } else {
                     finish();
                 }
             }
@@ -150,7 +172,11 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
         if (AntiShakeUtils.isInvalidClick(view)) {
             return;
         }
-        startActivity(CustomPersonDetailToDetailActivity.class, "data", personBeanData);
+        Intent intent = new Intent(this, CustomPersonDetailToDetailActivity.class);
+        intent.putExtra("data", personBeanData);
+        intent.putExtra("definedData", (Serializable) customDefinedBeans);
+        startActivity(intent);
+//        startActivity(CustomPersonDetailToDetailActivity.class, "data", personBeanData,"definedData",customDefinedBeans);
 
     }
 
@@ -211,5 +237,91 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
 //            );
 //        }
 //    }
+
+
+    @Override
+    public void dealHttpRequestFail(String moduleName, BaseBean result) {
+        super.dealHttpRequestFail(moduleName, result);
+
+    }
+
+    @Override
+    public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
+        super.dealHttpRequestResult(moduleName, result, response);
+        LogUtils.i("zwmn", moduleName + " >> " + result + " >> " + response);
+        if (!TextUtils.isEmpty(response)) {
+            try {
+                JSONObject json = new JSONObject(response);
+                JSONArray dataList = json.optJSONArray("data");
+                if (null != dataList && dataList.length() > 0) {
+                    customDefinedBeans.clear();
+                    for (int i = 0; i < dataList.length(); i++) {
+                        JSONObject item = dataList.getJSONObject(i);
+                        if (item.optBoolean("showInPage")) {
+                            CustomDefinedBean bean = new CustomDefinedBean();
+                            bean.setName(item.optString("name"));
+                            bean.setField(item.optString("field"));
+                            bean.setType(item.optString("type"));
+                            if (!TextUtils.isEmpty(personBeanData)) {
+                                JSONObject personJson = new JSONObject(personBeanData);
+                                String value = personJson.optString(bean.getField());
+                                String type = item.optString("type");
+                                if ("time".equals(type)) {
+                                    value = TimeUtils.getWatchTime1(Integer.parseInt(value));
+
+                                }
+                                bean.setValue(value);
+                            }
+                            customDefinedBeans.add(bean);
+                        }
+                    }
+
+                    setCustomDefinedView();
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    private void setCustomDefinedView() {
+        jpkhTextView.setVisibility(View.GONE);
+        wlyTextView.setVisibility(View.GONE);
+        addressTextView.setVisibility(View.GONE);
+        if (null != customDefinedBeans && customDefinedBeans.size() > 0) {
+            for (int i = 0; i < customDefinedBeans.size() && i < 4; i++) {
+                CustomDefinedBean bean = customDefinedBeans.get(i);
+                if (i == 0) {
+                    jpkhTextView.setVisibility(View.VISIBLE);
+                    jpkhTextView.setText(bean.getName() + " : ");
+                    jpkhTvValue.setText(bean.getValue());
+
+                }
+                if (i == 1) {
+                    wlyTextView.setVisibility(View.VISIBLE);
+                    wlyTextView.setText(bean.getName() + " : ");
+                    wlyTvValue.setText(bean.getValue());
+
+                }
+                if (i == 2) {
+                    addressTextView.setVisibility(View.VISIBLE);
+                    addressTextView.setText(bean.getName() + " : ");
+                    addressTvValue.setText(bean.getValue());
+                }
+
+                if (i == 3) {
+                    zyTextView.setText(bean.getName() + " : ");
+                    zyTvValue.setText(bean.getValue());
+                }
+            }
+
+
+        }
+
+    }
+
 
 }

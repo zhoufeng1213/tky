@@ -15,20 +15,19 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
-
     <application
+        android:name="com.xxxx.tky.MyApplicaiton"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name="com.xxxx.tky.MyApplicaiton"
-        tools:replace="android:name,android:icon"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:hardwareAccelerated="true"
-        android:theme="@style/AppTheme">
-        <activity android:name="com.xxxx.tky.activity.LoginActivity"
-            android:theme="@style/LaunchTheme"
-            >
+        tools:replace="android:name,android:icon">
+        <activity
+            android:name="com.xxxx.tky.activity.LoginActivity"
+            android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,7 +42,9 @@
         <activity android:name="com.xxxx.tky.activity.CustomPersonActivity" />
         <activity android:name="com.xxxx.tky.activity.SearchPersonActivity" />
         <activity android:name="com.xxxx.tky.activity.CustomPesonDetailActivity" />
-        <activity android:name="com.xxxx.tky.activity.CustomPersonDetailToDetailActivity" />
+        <activity
+            android:name="com.xxxx.tky.activity.CustomPersonDetailToDetailActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name="com.xxxx.tky.activity.MineCustomPersonActivity" />
 
     </application>
