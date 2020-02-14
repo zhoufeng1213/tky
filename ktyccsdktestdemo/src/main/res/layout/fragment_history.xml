@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/d44"
-        android:layout_marginTop="@dimen/d30"
+        android:layout_marginTop="@dimen/d24"
         android:orientation="vertical">
 
 

@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/c_42A6FE">
+    android:background="@color/c_42A6FE"
+    android:orientation="vertical">
 
 
-    <RelativeLayout  android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="@dimen/d44"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/d24"
-        >
-
+        android:orientation="vertical">
 
 
         <ImageView
             android:id="@+id/iv_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/fanhui_white"
-            android:paddingLeft="@dimen/d15"
-            android:paddingRight="@dimen/d15"
             android:layout_centerVertical="true"
             android:contentDescription="@string/app_name"
-            />
+            android:paddingLeft="@dimen/d15"
+            android:paddingRight="@dimen/d15"
+            android:src="@drawable/fanhui_white" />
 
 
         <TextView
@@ -34,53 +31,48 @@
             android:gravity="center"
             android:text="我的客户"
             android:textColor="@color/white"
-            android:textSize="@dimen/textNormal16"
-            />
+            android:textSize="@dimen/textNormal16" />
 
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/add_custom"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/d20"
-            />
+            android:src="@drawable/add_custom" />
     </RelativeLayout>
 
 
     <com.flyco.roundview.RoundRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/d36"
-        android:layout_marginTop="@dimen/d15"
         android:layout_marginLeft="@dimen/d20"
+        android:layout_marginTop="@dimen/d15"
         android:layout_marginRight="@dimen/d20"
-        app:rv_strokeColor="@color/white"
         app:rv_cornerRadius="@dimen/d5"
-        app:rv_strokeWidth="0.3dp"
-        >
+        app:rv_strokeColor="@color/white"
+        app:rv_strokeWidth="0.3dp">
 
         <EditText
             android:id="@+id/search_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/d13"
             android:background="@null"
             android:hint="搜索联系人"
-            android:textSize="@dimen/textNormal12"
-            android:layout_marginLeft="@dimen/d13"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            />
+            android:textSize="@dimen/textNormal12" />
 
         <ImageView
             android:id="@+id/search_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/search"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/d13"
-            />
+            android:src="@drawable/search" />
 
     </com.flyco.roundview.RoundRelativeLayout>
 
@@ -88,22 +80,20 @@
     <com.flyco.roundview.RoundRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:rv_backgroundColor="@color/white"
-        app:rv_cornerRadius_TL="@dimen/d40"
-        app:rv_cornerRadius_TR="@dimen/d40"
         android:layout_marginTop="@dimen/d20"
         android:paddingTop="@dimen/d20"
-        >
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius_TL="@dimen/d40"
+        app:rv_cornerRadius_TR="@dimen/d40">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/srl_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <com.scwang.smartrefresh.header.MaterialHeader
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <!--<android.support.v7.widget.RecyclerView-->
             <!--android:id="@+id/recycler"-->
@@ -114,12 +104,11 @@
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/d30"
-                />
+                android:layout_marginRight="@dimen/d30" />
 
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
@@ -127,11 +116,10 @@
             android:id="@+id/qib"
             android:layout_width="40px"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
             android:layout_below="@id/search_layout"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/d5"
-            android:layout_marginBottom="@dimen/d5"
-            />
+            android:layout_marginBottom="@dimen/d5" />
 
         <!--字母对话框-->
         <TextView
@@ -144,7 +132,7 @@
             android:text="A"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </com.flyco.roundview.RoundRelativeLayout>
 
