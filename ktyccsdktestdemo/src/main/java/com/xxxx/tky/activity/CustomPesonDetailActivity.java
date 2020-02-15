@@ -29,6 +29,7 @@ import com.xxxx.tky.R;
 import com.xxxx.tky.fragment.CommunicationRecordFragment;
 import com.xxxx.tky.fragment.ContactHistoryFragment;
 import com.xxxx.tky.util.AntiShakeUtils;
+import com.xxxx.tky.util.CallPhoneTool;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -194,9 +195,8 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
             return;
         }
         if (queryCustomPersonBean != null && !TextUtils.isEmpty(queryCustomPersonBean.getRealMobileNumber())) {
-            KtyCcSdkTool.getInstance().callPhone(mContext, queryCustomPersonBean.getRealMobileNumber(),
-                    queryCustomPersonBean.getName(),
-                    ""
+            CallPhoneTool.getInstance().callPhone(mContext, queryCustomPersonBean.getRealMobileNumber(),
+                    queryCustomPersonBean.getName()
             );
         }
 
@@ -229,7 +229,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
 //            return;
 //        }
 //        if (queryCustomPersonBean != null && !TextUtils.isEmpty(queryCustomPersonBean.getRealMobileNumber())) {
-//            KtyCcSdkTool.getInstance().callPhone(mContext, queryCustomPersonBean.getRealMobileNumber(),
+//              CallPhoneTool.getInstance().callPhone(mContext, queryCustomPersonBean.getRealMobileNumber(),
 //                    queryCustomPersonBean.getName(),
 //                    ""
 //            );

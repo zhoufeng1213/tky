@@ -1,6 +1,5 @@
 package com.xxxx.cc.model;
 
-import java.util.List;
 
 /**
  * @author xiuli.liu

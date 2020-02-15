@@ -29,4 +29,6 @@ public class HttpRequest {
     public static class Version {
         public static String checkVersion = "/sdk/api/v1/version/android/";
     }
+
+    public static String makecall = "/sdk/api/v1/makecall/external";
 }

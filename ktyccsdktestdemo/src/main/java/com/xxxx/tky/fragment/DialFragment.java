@@ -28,6 +28,7 @@ import com.xxxx.tky.adapter.SearchPersonAdapter;
 import com.xxxx.tky.contant.Contant;
 import com.xxxx.tky.model.ContactUserName;
 import com.xxxx.tky.util.AntiShakeUtils;
+import com.xxxx.tky.util.CallPhoneTool;
 import com.xxxx.tky.util.MobilePhoneUtil;
 
 import java.util.ArrayList;
@@ -143,7 +144,7 @@ public class DialFragment extends BaseFragment {
                     return;
                 }
 //                if (userNameList.get(position) != null && !TextUtils.isEmpty(userNameList.get(position).getPhoneNumber())) {
-//                    KtyCcSdkTool.getInstance().callPhone(mContext, userNameList.get(position).getPhoneNumber(),
+//                      CallPhoneTool.getInstance().callPhone(mContext, userNameList.get(position).getPhoneNumber(),
 //                            userNameList.get(position).getName(),
 //                            ""
 //                    );
@@ -197,8 +198,7 @@ public class DialFragment extends BaseFragment {
             return;
         }
         if (!TextUtils.isEmpty(phoneNumTextView.getText().toString().trim())) {
-            KtyCcSdkTool.getInstance().callPhone(mContext, phoneNumTextView.getText().toString().trim(),
-                    "",
+            CallPhoneTool.getInstance().callPhone(mContext, phoneNumTextView.getText().toString().trim(),
                     ""
             );
         } else {

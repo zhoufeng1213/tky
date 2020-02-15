@@ -13,6 +13,7 @@ import com.xxxx.cc.global.KtyCcNetUtil;
 import com.xxxx.cc.global.KtyCcOptionsUtil;
 import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.tky.R;
+import com.xxxx.tky.util.CallPhoneTool;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,9 +95,8 @@ public class MainActivity extends AppCompatActivity {
 //            Toast.makeText(MainActivity.this,"请输入姓名",Toast.LENGTH_SHORT).show();
 //            return;
 //        }
-        KtyCcSdkTool.getInstance().callPhone(this,homeEtPhone.getText().toString().trim(),
-                homeEtContactName.getText().toString().trim(),
-                "http://img.mp.itc.cn/upload/20161020/e81dd51cb7ab4695bde800d1b001ba14_th.jpeg"
+        CallPhoneTool.getInstance().callPhone(this, homeEtPhone.getText().toString().trim(),
+                homeEtContactName.getText().toString().trim()
                 );
     }
 

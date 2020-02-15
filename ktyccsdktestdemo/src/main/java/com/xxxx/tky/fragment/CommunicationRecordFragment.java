@@ -3,11 +3,9 @@ package com.xxxx.tky.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -19,14 +17,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.fly.sweet.dialog.SweetAlertDialog;
 import com.flyco.roundview.RoundTextView;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.xxxx.cc.base.fragment.BaseHttpRequestFragment;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.model.BaseBean;
-import com.xxxx.cc.model.BaseContactBean;
 import com.xxxx.cc.model.CommunicationRecordReturnResultBean;
 import com.xxxx.cc.model.CurrentCallsReturnResultBean;
 import com.xxxx.cc.model.QueryCustomPersonBean;
@@ -37,7 +33,6 @@ import com.xxxx.tky.R;
 import com.xxxx.tky.adapter.CommunicationRecordAdapter;
 import com.xxxx.tky.model.CommunicationRecordRequestBean;
 import com.xxxx.cc.model.CommunicationRecordResponseBean;
-import com.xxxx.tky.model.CurrentCallsBean;
 import com.xxxx.tky.model.SaveSummaryBean;
 
 import java.util.ArrayList;
@@ -179,9 +174,11 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                 if(sweetAlertDialog != null){
                     sweetAlertDialog.dismiss();
                 }
-                if(cacheUserBean != null){
+                if (cacheUserBean != null && selectCommunicationRecordResponseBean != null && selectCommunicationRecordResponseBean.getCallId() != null) {
                     basePostPresenter.presenterBusinessByHeader(HttpRequest.Contant.saveSummary,true,
                             "token",cacheUserBean.getToken());
+                } else {
+                    showToast("未能查询到您的本次通话记录，保存沟通记录失败");
                 }
             }
         });
@@ -244,15 +241,17 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
     @Override
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
-        srlRefresh.finishLoadMore();
-        srlRefresh.finishRefresh();
         if ((HttpRequest.CallHistory.currentCalls + queryCustomPersonBean.getRealMobileNumber()).equals(moduleName)) {
+            LogUtils.e("Code:" + result.getCode());
             if (contentBeanList.contains(currentCallsCommunicationRecordResponseBean)) {
                 contentBeanList.remove(currentCallsCommunicationRecordResponseBean);
                 communicationRecordAdapter.notifyDataSetChanged();
             }
             isCall = false;
             currentCallsCommunicationRecordResponseBean = null;
+        } else {
+            srlRefresh.finishLoadMore();
+            srlRefresh.finishRefresh();
         }
     }
 
@@ -272,6 +271,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                             && historyResponseBean.getPage().getContent().size() > 0) {
                         contentBeanList.clear();
                         contentBeanList.addAll(historyResponseBean.getPage().getContent());
+                        LogUtils.e("isCall:" + isCall);
                         if (isCall && currentCallsCommunicationRecordResponseBean != null) {
                             contentBeanList.add(0, currentCallsCommunicationRecordResponseBean);
                         }
@@ -281,6 +281,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
             }
 
         } else if ((HttpRequest.CallHistory.currentCalls + queryCustomPersonBean.getRealMobileNumber()).equals(moduleName)) {
+            LogUtils.e("currentCalls:" + response);
             if (!TextUtils.isEmpty(response)) {
                 CurrentCallsReturnResultBean currentCallsReturnResultBean = (new Gson()).fromJson(response, CurrentCallsReturnResultBean.class);
                 if (currentCallsReturnResultBean.getCode() == 0) {

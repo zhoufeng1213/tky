@@ -103,7 +103,7 @@ public class CustomPersonActivity extends BaseHttpRequestActivity {
                         //拨打电话
 //                        if(!TextUtils.isEmpty(historyResponseBeanList.get(position).getName()) &&
 //                                        !TextUtils.isEmpty(historyResponseBeanList.get(position).getRealMobileNumber())){
-//                            KtyCcSdkTool.getInstance().callPhone(mContext, historyResponseBeanList.get(position).getRealMobileNumber(),
+//                              CallPhoneTool.getInstance().callPhone(mContext, historyResponseBeanList.get(position).getRealMobileNumber(),
 //                                    historyResponseBeanList.get(position).getName(),
 //                                    ""
 //                            );

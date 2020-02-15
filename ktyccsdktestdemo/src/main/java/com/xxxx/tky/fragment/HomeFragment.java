@@ -12,6 +12,7 @@ import com.flyco.roundview.RoundTextView;
 import com.xxxx.cc.base.fragment.BaseFragment;
 import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.tky.R;
+import com.xxxx.tky.util.CallPhoneTool;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,14 +55,13 @@ public class HomeFragment extends BaseFragment {
             Toast.makeText(mContext, "请输入姓名", Toast.LENGTH_SHORT).show();
             return;
         }
-//        KtyCcSdkTool.getInstance().callPhone(mContext, homeEtPhone.getText().toString().trim(),
+//          CallPhoneTool.getInstance().callPhone(mContext, homeEtPhone.getText().toString().trim(),
 //                homeEtContactName.getText().toString().trim(),
 //                "http://img.mp.itc.cn/upload/20161020/e81dd51cb7ab4695bde800d1b001ba14_th.jpeg"
 //        );
 
-        KtyCcSdkTool.getInstance().callPhone(mContext, homeEtPhone.getText().toString().trim(),
-                homeEtContactName.getText().toString().trim(),
-                ""
+        CallPhoneTool.getInstance().callPhone(mContext, homeEtPhone.getText().toString().trim(),
+                homeEtContactName.getText().toString().trim()
         );
     }
 

@@ -37,6 +37,7 @@ import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.ThreadTask;
 import com.xxxx.cc.util.db.DbUtil;
 import com.xxxx.tky.R;
+import com.xxxx.tky.util.CallPhoneTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,9 +114,8 @@ public class HistoryFragment extends BaseHttpRequestFragment {
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                         //拨打电话
                         ContentBean contentBean = historyResponseBeanList.get(position);
-                        KtyCcSdkTool.getInstance().callPhone(mContext, contentBean.getDnis(),
-                                contentBean.getContactName(),
-                                ""
+                        CallPhoneTool.getInstance().callPhone(mContext, contentBean.getDnis(),
+                                contentBean.getContactName()
                         );
                     }
                 });

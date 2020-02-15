@@ -13,6 +13,7 @@ import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.tky.R;
 import com.xxxx.tky.model.ContactUserName;
 import com.xxxx.tky.util.AntiShakeUtils;
+import com.xxxx.tky.util.CallPhoneTool;
 import com.xxxx.tky.util.TextUtil;
 
 import butterknife.BindView;
@@ -74,9 +75,8 @@ public class ContactDetailActivity extends BaseActivity {
                 !TextUtils.isEmpty(contactUserName.getName()) &&
                         !TextUtils.isEmpty(contactUserName.getPhoneNumber())
         ){
-            KtyCcSdkTool.getInstance().callPhone(mContext, contactUserName.getPhoneNumber(),
-                    contactUserName.getName(),
-                    ""
+            CallPhoneTool.getInstance().callPhone(mContext, contactUserName.getPhoneNumber(),
+                    contactUserName.getName()
             );
         }
     }

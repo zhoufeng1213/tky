@@ -29,6 +29,7 @@ public class UserBean {
     private String token;
     private String userId;
     private String username;
+    private String mobile;
     private List<String> sitePermisson;
     private List<String> userPermission;
 
@@ -86,6 +87,14 @@ public class UserBean {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public List<String> getSitePermisson() {
