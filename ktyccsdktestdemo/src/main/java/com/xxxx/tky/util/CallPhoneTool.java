@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -16,6 +17,7 @@ import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.model.UserBean;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.ToastUtil;
@@ -82,6 +84,11 @@ public class CallPhoneTool {
             @Override
             public void onClick(View view) {
                 dialog.cancel();
+                LogUtils.e("Mobile:" + cacheUserBean.getMobile());
+                if (cacheUserBean.getMobile() == null || cacheUserBean.getMobile().equals("")) {
+                    showToast("请联系管理员配置手机号");
+                    return;
+                }
                 doPostByHeaders(
                         HttpRequest.makecall,
                         "token", cacheUserBean.getToken(),
@@ -102,7 +109,6 @@ public class CallPhoneTool {
             baseBean.setMessage("无网络");
             showToast("请检查网络连接");
             dealHttpRequestFail(moduleName, baseBean);
-            Log.e("lxl", "无网络:");
             return;
         }
         PostStringBuilder okHttpUtils = OkHttpUtils.postString();
@@ -115,7 +121,6 @@ public class CallPhoneTool {
                 }
             }
         }
-        Log.e("lxl", "moduleName:" + getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -123,6 +128,7 @@ public class CallPhoneTool {
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
+                        LogUtils.e("onError:" + e.getMessage());
                         BaseBean baseBean = new BaseBean();
                         if (e != null) {
                             baseBean.setMessage(e.getMessage());
@@ -135,11 +141,13 @@ public class CallPhoneTool {
 
                     @Override
                     public void onResponse(String response, int id) {
+                        LogUtils.e("response:" + response);
                         try {
                             if (!TextUtils.isEmpty(response)) {
                                 BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
                                 if (baseBean.isOk()) {
                                     showToast("呼叫成功，请注意接听电话");
+
                                 } else {
                                     showToast("呼叫失败");
                                 }
