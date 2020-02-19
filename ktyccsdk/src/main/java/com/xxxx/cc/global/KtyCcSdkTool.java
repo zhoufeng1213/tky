@@ -1,7 +1,11 @@
 package com.xxxx.cc.global;
 
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.LinphoneService;
@@ -30,6 +34,7 @@ import static com.xxxx.cc.global.Constans.KTY_CC_BASE_URL;
 import static com.xxxx.cc.global.Constans.KTY_CC_BEGIN;
 import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
 import static com.xxxx.cc.global.Constans.VOICE_RECORD_PREFIX;
+import static java.lang.Thread.sleep;
 
 /**
  * @author zhoufeng
@@ -39,7 +44,11 @@ import static com.xxxx.cc.global.Constans.VOICE_RECORD_PREFIX;
 public class KtyCcSdkTool {
 
     private static volatile KtyCcSdkTool ktyCcSdkTool;
-
+    private Context mContext;
+    private String phoneNum;
+    private String userName;
+    private String headUrl;
+    UserBean cacheUserBean;
     private KtyCcSdkTool() {
 
     }
@@ -95,66 +104,68 @@ public class KtyCcSdkTool {
         DbUtil.clearDb();
     }
 
-
     /**
      * 拨打电话
      */
     public void callPhone(Context mContext, String phoneNum, String userName, String headUrl) {
-//        if (LinphoneService.isReady() && LinphoneService.getCore() != null && LinphoneService.isRegister()) {
-//            Intent intent = new Intent(mContext, CallActivity.class);
-//            intent.putExtra("phoneNum", phoneNum);
-//            intent.putExtra("name", userName);
-//            intent.putExtra("headUrl", headUrl);
-//            intent.putExtra("linPhoneRegistStatus", true);
-//            mContext.startActivity(intent);
-//        }else{
-//            ToastUtil.showToast(mContext, "请登录");
-//        }
-
+        this.mContext = mContext;
+        this.phoneNum = phoneNum;
+        this.userName = userName;
+        this.headUrl = headUrl;
         //先判断用户是否保存在了本地
+        LogUtils.e("callPhone");
         try {
             LinServiceManager.hookCall();
             Object objectBean = SharedPreferencesUtil.getObjectBean(mContext, USERBEAN_SAVE_TAG, UserBean.class);
             if (objectBean != null) {
-                UserBean cacheUserBean = (UserBean) objectBean;
+                cacheUserBean = (UserBean) objectBean;
                 //判断service是否已经起来了
-                if (LinphoneService.isReady()) {
-                    if (LinphoneService.getCore() != null) {
-                        if(LinphoneService.isRegister()){
-                            goToCallActivity(mContext,phoneNum,userName,headUrl);
-                        }else{
-                            LinphoneService.getCore().addListener(new CoreListenerStub() {
-                                @Override
-                                public void onRegistrationStateChanged(Core core, ProxyConfig cfg, RegistrationState
-                                        state, String message) {
-
-                                    if (state == RegistrationState.Ok) {
-                                        LinServiceManager.removeListener(this);
-                                        LinphoneService.setRegister(true);
-                                        goToCallActivity(mContext,phoneNum,userName,headUrl);
-                                    } else if (state == RegistrationState.Failed) {
-                                        LogUtils.e("注册失败了-----》" + state.name());
-                                        ToastUtil.showToast(mContext, "请登录");
-                                    }else{
-                                        LogUtils.e("注册失败了-----》" + state.name());
-                                    }
-                                }
-                            });
-                            LinServiceManager.setLinPhoneConfig(cacheUserBean);
-                        }
-                    } else {
-                        ToastUtil.showToast(mContext, "请登录");
-                    }
+                if (!LinphoneService.isReady()) {
+                    Intent intent = new Intent(mContext, LinphoneService.class);
+                    mContext.startService(intent);
+                    LogUtils.e("重新启动service");
                 }
+                linphoneServiceCall();
+
+
             } else {
-                ToastUtil.showToast(mContext, "请登录");
+                LogUtils.e("objectBean == null");
+                ToastUtil.showToast(mContext, "objectBean == null");
             }
         } catch (Exception e) {
-            ToastUtil.showToast(mContext, "请登录");
+            LogUtils.e("Exception：" + e.getMessage());
+            ToastUtil.showToast(mContext, e.getMessage());
         }
 
     }
 
+    private void linphoneServiceCall() {
+        if (LinphoneService.getCore() != null) {
+            if (LinphoneService.isRegister()) {
+                goToCallActivity(mContext, phoneNum, userName, headUrl);
+            } else {
+                LogUtils.e("注册 LinphoneService");
+                LinphoneService.getCore().addListener(new CoreListenerStub() {
+                    @Override
+                    public void onRegistrationStateChanged(Core core, ProxyConfig cfg, RegistrationState
+                            state, String message) {
+                        if (state == RegistrationState.Ok) {
+                            LinServiceManager.removeListener(this);
+                            LinphoneService.setRegister(true);
+                            goToCallActivity(mContext, phoneNum, userName, headUrl);
+                        } else if (state == RegistrationState.Failed) {
+                            LogUtils.e("注册失败了-----》" + state.name());
+                            ToastUtil.showToast(mContext, "LinphoneService注册失败");
+                        }
+                    }
+                });
+                LinServiceManager.setLinPhoneConfig(cacheUserBean);
+            }
+        } else {
+            LogUtils.e("LinphoneService .getCore() == nul");
+            ToastUtil.showToast(mContext, "LinphoneService .getCore() == nul");
+        }
+    }
     public interface CallPhoneInterface {
         void goToCall();
     }
@@ -166,7 +177,7 @@ public class KtyCcSdkTool {
     }
 
     private void goToCallActivity(Context mContext, String phoneNum, String userName, String headUrl) {
-
+        LogUtils.e("goToCallActivity");
         //开始拨打电话
         Intent intent = new Intent(mContext, CallActivity.class);
         intent.putExtra("phoneNum", phoneNum);
@@ -193,6 +204,4 @@ public class KtyCcSdkTool {
             ToastUtil.showToast(context, "请登录");
         }
     }
-
-
 }

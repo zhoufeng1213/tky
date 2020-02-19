@@ -321,5 +321,9 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        KtyCcSdkTool.getInstance().setmCallPhoneInterface(null);
+    }
 }

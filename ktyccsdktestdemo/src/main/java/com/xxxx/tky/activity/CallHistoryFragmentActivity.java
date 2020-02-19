@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 
-import com.kty.mars.baselibrary.base.BaseActivity;
+import com.xxxx.cc.base.activity.BaseActivity;
 import com.xxxx.cc.base.presenter.MyStringCallback;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
@@ -38,6 +38,11 @@ public class CallHistoryFragmentActivity extends BaseActivity {
         FragmentTransaction transaction = beginTransaction.replace(R.id.fragment_container,
                 new HistoryFragment());
         transaction.commit();
+    }
+
+    @Override
+    public int getLayoutViewId() {
+        return R.layout.activity_history_fragment;
     }
 
     private void getPhoneAddress() {

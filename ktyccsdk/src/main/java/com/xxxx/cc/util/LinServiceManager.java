@@ -62,14 +62,17 @@ public class LinServiceManager {
 
 
     public static Call callPhone(String phoenNum, String contactName) {
+        LogUtils.e("callPhone");
         Core core = LinphoneService.getCore();
         if(core != null){
+            LogUtils.e("core != null");
             Address addressToCall = core.interpretUrl(phoenNum);
             CallParams params = core.createCallParams(null);
             params.setAudioBandwidthLimit(0);
             params.enableVideo(false);
             params.addCustomHeader("X-ContactName", contactName);
             if (addressToCall != null) {
+                LogUtils.e("addressToCall != null");
                 setSpeaker(false);
                 return core.inviteAddressWithParams(addressToCall, params);
             }
@@ -143,7 +146,7 @@ public class LinServiceManager {
             mAccountCreator.setUsername(userBean.getCcUserInfo().getExtensionNo());
             mAccountCreator.setDomain(userBean.getCcUserInfo().getDomain());
             mAccountCreator.setPassword(userBean.getCcUserInfo().getExtensionPassword());
-            mAccountCreator.setTransport(TransportType.Udp);
+            mAccountCreator.setTransport(TransportType.Tcp);
 
             ProxyConfig cfg = mAccountCreator.createProxyConfig();
             String username = userBean.getCcUserInfo().getExtensionNo();

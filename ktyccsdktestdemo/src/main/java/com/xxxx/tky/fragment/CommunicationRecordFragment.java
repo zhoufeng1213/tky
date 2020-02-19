@@ -171,6 +171,10 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
         dialogConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (userMeno != null && userMeno.getText().toString().trim().equals("")) {
+                    showToast("保存的沟通记录不能为空");
+                    return;
+                }
                 if(sweetAlertDialog != null){
                     sweetAlertDialog.dismiss();
                 }
@@ -230,7 +234,8 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                 saveSummaryBean.setContactid(queryCustomPersonBean.getId());
                 saveSummaryBean.setPhonenumber(queryCustomPersonBean.getRealMobileNumber());
                 saveSummaryBean.setSummary(userMeno.getText().toString().trim());
-                currentCallsCommunicationRecordResponseBean.setCommRecoeds(userMeno.getText().toString().trim());
+                if (currentCallsCommunicationRecordResponseBean != null)
+                    currentCallsCommunicationRecordResponseBean.setCommRecoeds(userMeno.getText().toString().trim());
             }
             jsonObject = JSONObject.parseObject(new Gson().toJson(saveSummaryBean));
         }

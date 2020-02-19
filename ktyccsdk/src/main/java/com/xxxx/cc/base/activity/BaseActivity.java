@@ -12,6 +12,7 @@ import com.kty.mars.baselibrary.util.StatusBarUtil;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.xxxx.cc.R;
 import com.xxxx.cc.base.widget.LoadingDialog;
+import com.xxxx.cc.service.LinphoneService;
 import com.xxxx.cc.util.ToastUtil;
 
 import butterknife.ButterKnife;
@@ -39,6 +40,15 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setStatusBar();
 
         initView(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!LinphoneService.isReady()) {
+            Intent intent = new Intent(mContext, LinphoneService.class);
+            mContext.startService(intent);
+        }
     }
 
     protected void setStatusBar() {
