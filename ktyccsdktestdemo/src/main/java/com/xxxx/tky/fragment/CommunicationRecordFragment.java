@@ -208,13 +208,13 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                 "token", cacheUserBean.getToken(),
                 "Content-Type", "application/json"
         );
-        basePostPresenter.presenterBusinessByHeader(
-                HttpRequest.CallHistory.currentCalls + queryCustomPersonBean.getRealMobileNumber(),
-                false,
-                "token", cacheUserBean.getToken(),
-                "Accept", "application/json",
-                "Content-Type", "application/json"
-        );
+//        basePostPresenter.presenterBusinessByHeader(
+//                HttpRequest.CallHistory.currentCalls + queryCustomPersonBean.getRealMobileNumber(),
+//                false,
+//                "token", cacheUserBean.getToken(),
+//                "Accept", "application/json",
+//                "Content-Type", "application/json"
+//        );
 
     }
 
@@ -234,8 +234,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                 saveSummaryBean.setContactid(queryCustomPersonBean.getId());
                 saveSummaryBean.setPhonenumber(queryCustomPersonBean.getRealMobileNumber());
                 saveSummaryBean.setSummary(userMeno.getText().toString().trim());
-                if (currentCallsCommunicationRecordResponseBean != null)
-                    currentCallsCommunicationRecordResponseBean.setCommRecoeds(userMeno.getText().toString().trim());
+                selectCommunicationRecordResponseBean.setCommRecoeds(userMeno.getText().toString().trim());
             }
             jsonObject = JSONObject.parseObject(new Gson().toJson(saveSummaryBean));
         }
@@ -315,7 +314,6 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
             if(result != null && result.isOk()){
                 //刷新数据
                 showToast("保存成功");
-                selectCommunicationRecordResponseBean = null;
                 contentBeanList.clear();
                 communicationRecordAdapter.notifyDataSetChanged();
                 basePostPresenter.presenterBusinessByHeader(

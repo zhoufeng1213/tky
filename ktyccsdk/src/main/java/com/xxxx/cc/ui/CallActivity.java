@@ -32,7 +32,9 @@ import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.base.presenter.MyStringCallback;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.global.HttpRequest;
+import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.model.BaseBean;
+import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.model.MakecallBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.FloatingImageDisplayService;
@@ -82,11 +84,12 @@ public class CallActivity extends BaseHttpRequestActivity {
 
     private boolean hook;
     private String phoneNum;
-    private boolean isNeedRequestPermission;
     private String userContactName;
+    private boolean isNeedRequestPermission;
     static final String check_phone_url = "http://mobsec-dianhua.baidu.com/dianhua_api/open/location";
     private static final String TAG = "CallActivity";
     private UserBean cacheUserBean;
+    private CommunicationRecordResponseBean mCommunicationRecordResponseBean;
     @Override
     public int getLayoutViewId() {
         return R.layout.activity_communication;
@@ -322,6 +325,9 @@ public class CallActivity extends BaseHttpRequestActivity {
             Message msg = new Message();
             msg.what = 1;
             handler.sendMessage(msg);
+            mCommunicationRecordResponseBean = new CommunicationRecordResponseBean();
+            JSONObject json = (JSONObject) result.getData();
+            mCommunicationRecordResponseBean.setCallId(json.getString("uuid"));
         }
     }
 
@@ -458,6 +464,10 @@ public class CallActivity extends BaseHttpRequestActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        LogUtils.e("onPause ");
+        if (KtyCcSdkTool.getInstance().mDemoInterface != null && mCommunicationRecordResponseBean != null) {
+            KtyCcSdkTool.getInstance().mDemoInterface.goToCall(mCommunicationRecordResponseBean);
+        }
         if (mBound) {
             unbindService(conn);
             mBound = false;
@@ -484,6 +494,5 @@ public class CallActivity extends BaseHttpRequestActivity {
             mBound = false;
         }
     }
-
 
 }

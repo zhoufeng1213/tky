@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
+import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.LinphoneService;
 import com.xxxx.cc.ui.CallActivity;
@@ -167,7 +168,7 @@ public class KtyCcSdkTool {
         }
     }
     public interface CallPhoneInterface {
-        void goToCall();
+        void goToCall(CommunicationRecordResponseBean mCommunicationRecordResponseBean);
     }
 
     public CallPhoneInterface mDemoInterface;
@@ -185,9 +186,6 @@ public class KtyCcSdkTool {
         intent.putExtra("headUrl", headUrl);
         intent.putExtra("linPhoneRegistStatus", true);
         mContext.startActivity(intent);
-        if (mDemoInterface != null) {
-            mDemoInterface.goToCall();
-        }
     }
 
 
