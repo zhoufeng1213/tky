@@ -23,6 +23,8 @@ public class HttpRequest {
         public static String back = "/sdk/api/v1/contacts/back/";
         public static String saveSummary = "/sdk/api/v1/summary/save";
         public static String selfdefinedContacts = "/sdk/api/v1/selfdefined/contacts/all";
+        public static String getOneCustom = "/sdk/api/v1/contacts/getOne/";
+        public static String getSubItem = "/sdk/api/v1/selfdefined/contacts/item";
 
     }
 

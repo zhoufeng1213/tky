@@ -59,7 +59,7 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
     EditText phoneNum;
     @BindView(R.id.phone_detail_image)
     ImageView phoneDetailImage;
-//    @BindView(R.id.user_beizhu)
+    //    @BindView(R.id.user_beizhu)
 //    EditText userBeizhu;
     @BindView(R.id.layout_defined_message)
     LinearLayout definedLayout;
@@ -107,6 +107,15 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
             e.printStackTrace();
         }
 
+        getCustomDetail();
+
+
+    }
+
+    private void getCustomDetail() {
+        basePostPresenter.presenterBusinessByHeader(
+                HttpRequest.Contant.getOneCustom + queryCustomPersonBean.getId(),
+                "token", cacheUserBean.getToken());
 
     }
 
@@ -198,6 +207,14 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
             } else {
                 showToast("放弃失败");
             }
+        } else if ((HttpRequest.Contant.getOneCustom + queryCustomPersonBean.getId()).equals(moduleName)) {
+            if (result.isOk()) {
+                LogUtils.i("zwmn", "获取用户信息：" + response);
+
+            } else {
+                LogUtils.i("zwmn", "获取用户信息请求失败");
+            }
+
         }
     }
 
