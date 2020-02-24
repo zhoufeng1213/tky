@@ -90,7 +90,7 @@ public class CallPhoneTool {
                     return;
                 }
                 doPostByHeaders(
-                        HttpRequest.makecall,
+                        HttpRequest.makecallExternal,
                         "token", cacheUserBean.getToken(),
                         "Content-Type", "application/json"
                 );
@@ -173,6 +173,7 @@ public class CallPhoneTool {
         makecallBean.setCaller(cacheUserBean.getMobile());
         makecallBean.setCallee(phoneNum);
         makecallBean.setName(userName);
+        makecallBean.setAppname("android");
         jsonObject = JSONObject.parseObject(new Gson().toJson(makecallBean));
         return jsonObject;
     }

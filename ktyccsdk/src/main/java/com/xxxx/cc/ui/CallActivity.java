@@ -20,12 +20,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.xxxx.cc.R;
-import com.xxxx.cc.base.activity.BaseActivity;
+import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.base.presenter.MyStringCallback;
+import com.xxxx.cc.global.Constans;
+import com.xxxx.cc.global.HttpRequest;
+import com.xxxx.cc.global.KtyCcSdkTool;
+import com.xxxx.cc.model.BaseBean;
+import com.xxxx.cc.model.CommunicationRecordResponseBean;
+import com.xxxx.cc.model.MakecallBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.FloatingImageDisplayService;
 import com.xxxx.cc.util.LinServiceManager;
@@ -36,21 +46,25 @@ import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.cc.util.rom.FloatWindowManager;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.GetBuilder;
+import com.zhy.http.okhttp.builder.PostStringBuilder;
 
 import org.greenrobot.greendao.annotation.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.linphone.core.Call;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
+import okhttp3.MediaType;
 
-public class CallActivity extends BaseActivity {
+import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
+import static com.xxxx.cc.global.HttpRequest.makecallInternal;
+
+import com.alibaba.fastjson.JSONObject;
+
+public class CallActivity extends BaseHttpRequestActivity {
 
 
     ImageView shrink;
@@ -70,11 +84,12 @@ public class CallActivity extends BaseActivity {
 
     private boolean hook;
     private String phoneNum;
-    private boolean isNeedRequestPermission;
     private String userContactName;
+    private boolean isNeedRequestPermission;
     static final String check_phone_url = "http://mobsec-dianhua.baidu.com/dianhua_api/open/location";
     private static final String TAG = "CallActivity";
-
+    private UserBean cacheUserBean;
+    private CommunicationRecordResponseBean mCommunicationRecordResponseBean;
     @Override
     public int getLayoutViewId() {
         return R.layout.activity_communication;
@@ -167,6 +182,7 @@ public class CallActivity extends BaseActivity {
     private void getPhoneAddress() {
         //判断网络是否可用
         if (!NetUtil.isNetworkConnected(this)) {
+            LogUtils.e("没有网络");
             return;
         }
         GetBuilder okHttpUtils = OkHttpUtils.get();
@@ -176,23 +192,24 @@ public class CallActivity extends BaseActivity {
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(okhttp3.Call call, Exception e, int id) {
+                        LogUtils.e("Exception：" + e.getMessage());
                         layoutPhoneAddress.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
+                        LogUtils.e("response：" + response);
                         layoutPhoneAddress.setVisibility(View.GONE);
-                        LogUtils.i(TAG, response);
                         if (!TextUtils.isEmpty(response)) {
                             try {
-                                JSONObject json = new JSONObject(response);
-                                JSONObject phoneDetail = json.optJSONObject("response").optJSONObject(phoneNum).optJSONObject("detail");
-                                String province = phoneDetail.optString("province");
-                                JSONArray area = phoneDetail.optJSONArray("area");
+                                JSONObject json = JSON.parseObject(response);
+                                JSONObject phoneDetail = json.getJSONObject("response").getJSONObject(phoneNum).getJSONObject("detail");
+                                String province = phoneDetail.getString("province");
+                                JSONArray area = phoneDetail.getJSONArray("area");
                                 String city = "";
                                 String showText = "";
-                                if (null != area && area.length() > 0) {
-                                    city = area.getJSONObject(0).optString("city");
+                                if (null != area && area.size() > 0) {
+                                    city = area.getJSONObject(0).getString("city");
                                 }
                                 if (!TextUtils.isEmpty(province)) {
                                     showText = province + " " + city;
@@ -270,19 +287,14 @@ public class CallActivity extends BaseActivity {
         try {
             Object objectBean = SharedPreferencesUtil.getObjectBean(mContext, USERBEAN_SAVE_TAG, UserBean.class);
             if (objectBean != null) {
-                UserBean userBean = (UserBean) objectBean;
+                cacheUserBean = (UserBean) objectBean;
 //                Call call = LinServiceManager.callPhone(phoenNum, userBean.getCcUserInfo().getExtensionNo());
-                Call call = LinServiceManager.callPhone(phoenNum, TextUtils.isEmpty(userContactName) ? "" : userContactName);
-                if (call != null) {
-                    LinServiceManager.switchAudio(mContext, false);
-                    Message msg = new Message();
-                    msg.what = 1;
-                    handler.sendMessage(msg);
-                } else {
-                    LogUtils.e("呼叫失败1");
-                    showToast("呼叫失败");
-                    finish();
-                }
+//                Call call = LinServiceManager.callPhone(phoenNum, TextUtils.isEmpty(userContactName) ? "" : userContactName);
+                basePostPresenter.presenterBusinessByHeader(
+                        makecallInternal,
+                        "token", cacheUserBean.getToken(),
+                        "Content-Type", "application/json"
+                );
             } else {
                 LogUtils.e("呼叫失败2");
                 showToast("呼叫失败");
@@ -292,6 +304,39 @@ public class CallActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public JSONObject getHttpRequestParams(String moduleName) {
+        JSONObject jsonObject = new JSONObject();
+        MakecallBean makecallBean = new MakecallBean();
+        makecallBean.setCaller(cacheUserBean.getMobile());
+        makecallBean.setCallee(phoneNum);
+        makecallBean.setName(userContactName);
+        makecallBean.setAppname("android");
+        jsonObject = JSONObject.parseObject(new Gson().toJson(makecallBean));
+        return jsonObject;
+    }
+
+    @Override
+    public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
+        if (!TextUtils.isEmpty(response)) {
+            LinServiceManager.switchAudio(mContext, false);
+            Message msg = new Message();
+            msg.what = 1;
+            handler.sendMessage(msg);
+            mCommunicationRecordResponseBean = new CommunicationRecordResponseBean();
+            JSONObject json = (JSONObject) result.getData();
+            mCommunicationRecordResponseBean.setCallId(json.getString("uuid"));
+        }
+    }
+
+    @Override
+    public void dealHttpRequestFail(String moduleName, BaseBean result) {
+        super.dealHttpRequestFail(moduleName, result);
+        LogUtils.e("呼叫失败1：" + result.getMessage());
+        showToast("呼叫失败1");
+        finish();
     }
 
     public void hookCall() {
@@ -419,6 +464,10 @@ public class CallActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        LogUtils.e("onPause ");
+        if (KtyCcSdkTool.getInstance().mDemoInterface != null && mCommunicationRecordResponseBean != null) {
+            KtyCcSdkTool.getInstance().mDemoInterface.goToCall(mCommunicationRecordResponseBean);
+        }
         if (mBound) {
             unbindService(conn);
             mBound = false;
@@ -445,6 +494,5 @@ public class CallActivity extends BaseActivity {
             mBound = false;
         }
     }
-
 
 }

@@ -1,4 +1,4 @@
-package com.xxxx.tky.model;
+package com.xxxx.cc.model;
 
 /**
  * @author xiuli.liu
@@ -42,7 +42,6 @@ public class MakecallBean {
     public void setAppname(String appname) {
         this.appname = appname;
     }
-
 
 
 }

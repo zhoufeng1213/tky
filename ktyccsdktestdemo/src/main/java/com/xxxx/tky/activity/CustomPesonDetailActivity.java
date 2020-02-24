@@ -18,6 +18,7 @@ import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.model.BaseBean;
+import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.model.CustomDefinedBean;
 import com.xxxx.cc.model.QueryCustomPersonBean;
 import com.xxxx.cc.model.UserBean;
@@ -203,13 +204,9 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
     }
 
     @Override
-    public void goToCall() {
-
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                ((CommunicationRecordFragment) mFragments.get(0)).showEditDialog();
-            }
-        }, 1000);
+    public void goToCall(CommunicationRecordResponseBean selectCommunicationRecordResponseBean) {
+        ((CommunicationRecordFragment) mFragments.get(0)).selectCommunicationRecordResponseBean = selectCommunicationRecordResponseBean;
+        ((CommunicationRecordFragment) mFragments.get(0)).showEditDialog();
 
     }
 
@@ -321,5 +318,9 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        KtyCcSdkTool.getInstance().setmCallPhoneInterface(null);
+    }
 }

@@ -7,8 +7,10 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.xxxx.cc.R;
+import com.xxxx.cc.util.LogUtils;
 
 import org.linphone.core.Call;
+import org.linphone.core.CallParams;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.Factory;
@@ -85,9 +87,9 @@ public class LinphoneService extends Service {
             @Override
             public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
                 if (state == Call.State.IncomingReceived) {
-//                    CallParams params = getCore().createCallParams(call);
-//                    params.enableVideo(true);
-//                    call.acceptWithParams(params);
+                    CallParams params = getCore().createCallParams(call);
+                    params.enableVideo(true);
+                    call.acceptWithParams(params);
                 } else if (state == Call.State.Connected) {
 
                 }
@@ -112,13 +114,12 @@ public class LinphoneService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-
+        LogUtils.e("service onStartCommand");
         if (sInstance != null) {
             return START_STICKY;
         }
 
         sInstance = this;
-
         mCore.start();
         TimerTask lTask =
                 new TimerTask() {
@@ -143,7 +144,7 @@ public class LinphoneService extends Service {
 
     @Override
     public void onDestroy() {
-
+        LogUtils.e("onDestroy");
         if (mTimer != null) {
             mTimer.cancel();
         }

@@ -114,7 +114,6 @@ public class QueryCustomPersonBean {
     private String custom_9;
     private String datetime_1;
 
-
     @Generated(hash = 1962980795)
     public QueryCustomPersonBean(Long queryCustomId, String ckind, String creater, String createrName,
             String createtime, boolean datastatus, String email, String id, String mobile, String name,
@@ -590,5 +589,60 @@ public class QueryCustomPersonBean {
         this.datetime_1 = datetime_1;
     }
 
+    @Override
+    public String toString() {
+        return "QueryCustomPersonBean{" +
+                "queryCustomId=" + queryCustomId +
+                ", ckind='" + ckind + '\'' +
+                ", creater='" + creater + '\'' +
+                ", createrName='" + createrName + '\'' +
+                ", createtime='" + createtime + '\'' +
+                ", datastatus=" + datastatus +
+                ", email='" + email + '\'' +
+                ", id='" + id + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", name='" + name + '\'' +
+                ", organ='" + organ + '\'' +
+                ", orgi='" + orgi + '\'' +
+                ", owner='" + owner + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", pinyin='" + pinyin + '\'' +
+                ", realMobileNumber='" + realMobileNumber + '\'' +
+                ", statusInSeas=" + statusInSeas +
+                ", updatetime='" + updatetime + '\'' +
+                ", updateusername='" + updateusername + '\'' +
+                ", username='" + username + '\'' +
+                ", address='" + address + '\'' +
+                ", company='" + company + '\'' +
+                ", department='" + department + '\'' +
+                ", duty='" + duty + '\'' +
+                ", gender='" + gender + '\'' +
+                ", memo='" + memo + '\'' +
+                ", shares='" + shares + '\'' +
+                ", letters='" + letters + '\'' +
+                ", displayNameSpelling='" + displayNameSpelling + '\'' +
+                ", number_1='" + number_1 + '\'' +
+                ", number_2='" + number_2 + '\'' +
+                ", number_3='" + number_3 + '\'' +
+                ", number_4='" + number_4 + '\'' +
+                ", number_5='" + number_5 + '\'' +
+                ", time_1='" + time_1 + '\'' +
+                ", time_2='" + time_2 + '\'' +
+                ", time_3='" + time_3 + '\'' +
+                ", time_4='" + time_4 + '\'' +
+                ", time_5='" + time_5 + '\'' +
+                ", custom_1='" + custom_1 + '\'' +
+                ", custom_2='" + custom_2 + '\'' +
+                ", custom_3='" + custom_3 + '\'' +
+                ", custom_4='" + custom_4 + '\'' +
+                ", custom_5='" + custom_5 + '\'' +
+                ", custom_6='" + custom_6 + '\'' +
+                ", custom_7='" + custom_7 + '\'' +
+                ", custom_8='" + custom_8 + '\'' +
+                ", custom_9='" + custom_9 + '\'' +
+                ", datetime_1='" + datetime_1 + '\'' +
+                '}';
+    }
 }
 

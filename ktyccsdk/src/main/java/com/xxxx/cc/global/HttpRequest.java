@@ -25,12 +25,13 @@ public class HttpRequest {
         public static String selfdefinedContacts = "/sdk/api/v1/selfdefined/contacts/all";
         public static String getOneCustom = "/sdk/api/v1/contacts/getOne/";
         public static String getSubItem = "/sdk/api/v1/selfdefined/contacts/item";
-
     }
 
     public static class Version {
         public static String checkVersion = "/sdk/api/v1/version/android/";
     }
 
-    public static String makecall = "/sdk/api/v1/makecall/external";
+    public static String makecallExternal = "/sdk/api/v1/makecall/external";
+    public static String makecallInternal = "/sdk/api/v1/makecall/internal";
 }
+
