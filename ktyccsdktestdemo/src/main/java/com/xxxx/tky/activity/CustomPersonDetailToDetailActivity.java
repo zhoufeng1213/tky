@@ -17,11 +17,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.fly.sweet.dialog.SweetAlertDialog;
 import com.google.gson.Gson;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
+import com.xxxx.cc.dialog.BusinessDialog;
+import com.xxxx.cc.dialog.DialogClickListener;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.model.CustomDefinedBean;
 import com.xxxx.cc.model.QueryCustomPersonBean;
 import com.xxxx.cc.model.UserBean;
+import com.xxxx.cc.parse.CustomItemParse;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.db.DbUtil;
@@ -29,6 +32,8 @@ import com.xxxx.tky.R;
 import com.xxxx.tky.model.UpdateUserBean;
 import com.xxxx.tky.util.AntiShakeUtils;
 import com.xxxx.tky.util.TextUtil;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -119,23 +124,54 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
 
     }
 
+
     private void setDefinedView() {
         if (customDefinedBeans != null && customDefinedBeans.size() > 0) {
             definedLayout.setVisibility(View.VISIBLE);
             for (int i = 0; i < customDefinedBeans.size(); i++) {
                 CustomDefinedBean bean = customDefinedBeans.get(i);
-                View view = LayoutInflater.from(this).inflate(R.layout.view_edit_message_layout, null, false);
-                TextView tvName = view.findViewById(R.id.tv_defined_name);
-                EditText etValue = view.findViewById(R.id.et_defined_value);
+                View itemView = LayoutInflater.from(this).inflate(R.layout.view_edit_message_layout, null, false);
+                TextView tvName = itemView.findViewById(R.id.tv_defined_name);
+                EditText etValue = itemView.findViewById(R.id.et_defined_value);
                 tvName.setText(bean.getName());
                 etValue.setText(bean.getValue());
                 etValue.setEnabled(false);
-                definedLayout.addView(view);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setItemClick(bean);
+                    }
+                });
+                definedLayout.addView(itemView);
             }
 
         } else {
             definedLayout.setVisibility(View.GONE);
         }
+
+    }
+
+    private void setItemClick(CustomDefinedBean bean) {
+        if ("select".equals(bean.getType())) {
+            JSONArray items = CustomItemParse.parseItem(getApplicationContext(), bean.getId());
+            BusinessDialog.showSelectDialog(this, items, new DialogClickListener() {
+                @Override
+                public void onCommitClick(Object object) {
+
+                }
+
+                @Override
+                public void onCancelClick(Object object) {
+
+                }
+
+                @Override
+                public void onSiteClick(Object object) {
+
+                }
+            });
+        }
+
 
     }
 

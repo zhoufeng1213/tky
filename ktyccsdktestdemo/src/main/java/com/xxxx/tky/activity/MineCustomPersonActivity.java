@@ -3,11 +3,9 @@ package com.xxxx.tky.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -22,6 +20,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
+import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.model.CustomPersonRequestBean;
@@ -34,8 +33,6 @@ import com.xxxx.cc.util.TextUtil;
 import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.cc.util.db.DbUtil;
 import com.xxxx.tky.R;
-import com.xxxx.tky.adapter.CustomPersonAdapter;
-import com.xxxx.tky.model.ShowMineCustomPersonBean;
 import com.xxxx.tky.util.AntiShakeUtils;
 import com.xxxx.tky.widget.QuickIndexBar;
 
@@ -81,7 +78,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
     }
 
     private List<QueryCustomPersonBean> historyResponseBeanList = new ArrayList<>();
-//    private List<ShowMineCustomPersonBean> showMineCustomPersonBeanList = new ArrayList<>();
+    //    private List<ShowMineCustomPersonBean> showMineCustomPersonBeanList = new ArrayList<>();
     private int page;
 
     private UserBean cacheUserBean;
@@ -102,6 +99,14 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
         srlRefresh.setEnableLoadMoreWhenContentNotFull(false);
 
         init();
+        //获取客户可自定义项(所有客户相同)
+        getAllItems();
+    }
+
+    private void getAllItems() {
+        baseGetPresenter.presenterBusinessByHeader(
+                HttpRequest.Contant.getSubItem,
+                "token", cacheUserBean.getToken());
     }
 
 
@@ -149,13 +154,13 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                             showLetter(letter);
                             if ("#".equalsIgnoreCase(letter)) {
                                 recycler.moveToPosition(0);
-                            }else{
+                            } else {
                                 for (int i = 0; i < historyResponseBeanList.size(); i++) {
                                     QueryCustomPersonBean friend = historyResponseBeanList.get(i);
-                                    if(!TextUtils.isEmpty(friend.getDisplayNameSpelling())){
+                                    if (!TextUtils.isEmpty(friend.getDisplayNameSpelling())) {
                                         String c = friend.getDisplayNameSpelling().charAt(0) + "";
                                         if (c.equalsIgnoreCase(letter)) {
-                                            LogUtils.e("查找了----"+c);
+                                            LogUtils.e("查找了----" + c);
                                             recycler.moveToPosition(i);
                                             break;
                                         }
@@ -185,7 +190,8 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
 
 
     private LQRHeaderAndFooterAdapter mAdapter;
-    private void initAdapter(){
+
+    private void initAdapter() {
         LQRAdapterForRecyclerView adapter = new LQRAdapterForRecyclerView<QueryCustomPersonBean>(mContext,
                 historyResponseBeanList,
                 R.layout.item_mine_custom_person) {
@@ -226,7 +232,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
             if (AntiShakeUtils.isInvalidClick(view)) {
                 return;
             }
-            startActivity(CustomPesonDetailActivity.class,"data",JSON.toJSON(historyResponseBeanList.get(i)));
+            startActivity(CustomPesonDetailActivity.class, "data", JSON.toJSON(historyResponseBeanList.get(i)));
 
         });
 
@@ -292,8 +298,13 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
     @Override
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
-        srlRefresh.finishLoadMore();
-        srlRefresh.finishRefresh();
+        if (HttpRequest.Contant.getSubItem.equals(moduleName)) {
+//            SharedPreferencesUtil.save(getApplicationContext(), Constans.SP_DEFINED_ITEM_KEY, "");
+        } else {
+            srlRefresh.finishLoadMore();
+            srlRefresh.finishRefresh();
+        }
+
     }
 
     @Override
@@ -311,8 +322,8 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                         SharedPreferencesUtil.save(mContext, KTY_CC_BEGIN, String.valueOf(endTime));
 
                         List<QueryCustomPersonBean> tempList = new ArrayList<>();
-                        for(QueryCustomPersonBean bean:historyResponseBean.getPage().getContent()){
-                            if(bean != null){
+                        for (QueryCustomPersonBean bean : historyResponseBean.getPage().getContent()) {
+                            if (bean != null) {
                                 bean.setLetters(TextUtil.getNameFirstChar(bean.getName()));
                                 bean.setDisplayNameSpelling(TextUtil.getNameToPinyin(bean.getName()));
                                 tempList.add(bean);
@@ -339,6 +350,15 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                 }
             }
 
+        } else if (HttpRequest.Contant.getSubItem.equals(moduleName)) {
+            if (result.isOk()) {
+                LogUtils.i("zwmn", "获取items:" + response);
+                SharedPreferencesUtil.save(getApplicationContext(), Constans.SP_DEFINED_ITEM_KEY, response);
+
+            } else {
+                LogUtils.i("zwmn", "获取item失败");
+                SharedPreferencesUtil.save(getApplicationContext(), Constans.SP_DEFINED_ITEM_KEY, "");
+            }
         }
     }
 
@@ -365,18 +385,18 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
         if (AntiShakeUtils.isInvalidClick(view)) {
             return;
         }
-        if(!TextUtils.isEmpty(searchEdit.getText().toString().trim())){
+        if (!TextUtils.isEmpty(searchEdit.getText().toString().trim())) {
             List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllListByNameOrPhone(searchEdit.getText().toString().trim());
             if (list != null && list.size() > 0) {
                 historyResponseBeanList.clear();
                 mAdapter.notifyDataSetChanged();
                 historyResponseBeanList.addAll(list);
                 mAdapter.notifyDataSetChanged();
-            }else{
+            } else {
                 historyResponseBeanList.clear();
                 mAdapter.notifyDataSetChanged();
             }
-        }else{
+        } else {
             List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllList();
             if (list != null && list.size() > 0) {
                 historyResponseBeanList.clear();
@@ -388,27 +408,27 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
     }
 
 
-
     boolean isFirstLoad = true;
+
     @Override
     protected void onResume() {
         super.onResume();
         //查找本地的数据库
-        if(isFirstLoad){
+        if (isFirstLoad) {
             isFirstLoad = false;
-        }else{
-            if(!TextUtils.isEmpty(searchEdit.getText().toString().trim())){
+        } else {
+            if (!TextUtils.isEmpty(searchEdit.getText().toString().trim())) {
                 List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllListByNameOrPhone(searchEdit.getText().toString().trim());
                 if (list != null && list.size() > 0) {
                     historyResponseBeanList.clear();
                     mAdapter.notifyDataSetChanged();
                     historyResponseBeanList.addAll(list);
                     mAdapter.notifyDataSetChanged();
-                }else{
+                } else {
                     historyResponseBeanList.clear();
                     mAdapter.notifyDataSetChanged();
                 }
-            }else {
+            } else {
                 List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllList();
                 if (list != null && list.size() > 0) {
                     historyResponseBeanList.clear();
@@ -419,8 +439,6 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
             }
         }
     }
-
-
 
 
     @Override

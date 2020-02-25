@@ -29,4 +29,17 @@
         <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
     </style>
 
+    <style name="ScaleDialog.AnimationStyle" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/center_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/center_scale_out</item>
+    </style>
+
+    <style name="ScaleDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@style/ScaleDialog.AnimationStyle</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
 </resources>

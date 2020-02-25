@@ -17,5 +17,6 @@ public class Constans {
 
     public static final int COMMON_PAGE_SIZE = 20;
     public static final int COMMON_LOAD_PAGE_SIZE = 300;
+    public static final String SP_DEFINED_ITEM_KEY = "sp_defined_item_key";
 
 }

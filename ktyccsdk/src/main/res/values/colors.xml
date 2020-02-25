@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="transparent">#00000000</color>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
@@ -16,4 +17,5 @@
     <color name="c_3D4249">#3D4249</color>
     <color name="c_42A6FE">#42A6FE</color>
     <color name="c_FDB201">#FDB201</color>
+    <color name="p100_light_dark">#ff363435</color>
 </resources>
