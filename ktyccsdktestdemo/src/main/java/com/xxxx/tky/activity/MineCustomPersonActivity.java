@@ -310,6 +310,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
         if (HttpRequest.Contant.mineContacts.equals(moduleName)) {
+            LogUtils.i("zwmn", "所有客户信息：" + response);
             srlRefresh.finishLoadMore();
             srlRefresh.finishRefresh();
             if (!TextUtils.isEmpty(response)) {

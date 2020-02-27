@@ -2,11 +2,9 @@ package com.xxxx.tky.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +12,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.google.gson.Gson;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.KtyCcSdkTool;
@@ -160,6 +159,12 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
                 QueryCustomPersonBean tempBean = DbUtil.queryCustomPersonBeanById(queryCustomPersonBean.getId());
                 if (tempBean != null) {
                     queryCustomPersonBean = tempBean;
+                    try {
+                        personBeanData = com.alibaba.fastjson.JSONObject.parseObject((new Gson()).toJson(queryCustomPersonBean)).toJSONString();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     setViewData();
                 } else {
                     finish();
@@ -253,18 +258,15 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
                     for (int i = 0; i < dataList.length(); i++) {
                         JSONObject item = dataList.getJSONObject(i);
                         if (item.optBoolean("showInPage")) {
-                            CustomDefinedBean bean = new CustomDefinedBean();
-                            bean.setName(item.optString("name"));
-                            bean.setField(item.optString("field"));
-                            bean.setType(item.optString("type"));
+                            CustomDefinedBean bean = (new Gson()).fromJson(item.toString(), CustomDefinedBean.class);
                             if (!TextUtils.isEmpty(personBeanData)) {
                                 JSONObject personJson = new JSONObject(personBeanData);
                                 String value = personJson.optString(bean.getField());
                                 String type = item.optString("type");
                                 if ("time".equals(type)) {
                                     value = TimeUtils.getWatchTime1(Integer.parseInt(value));
-
                                 }
+
                                 bean.setValue(value);
                             }
                             customDefinedBeans.add(bean);

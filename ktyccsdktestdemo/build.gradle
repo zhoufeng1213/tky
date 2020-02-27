@@ -87,6 +87,8 @@ dependencies {
     implementation 'com.teprinciple:updateapputils:2.1.0'
     implementation 'com.fly.sweet.dialog:sweet-custom-dialog:1.0.0'
     implementation 'com.kty.sdk:baselibrary:0.2.4'
+    implementation project(path: ':pickerlibrary')
+//    implementation 'com.github.codbking:PickTime:v1.0.1'
 }
 
 configurations.all {

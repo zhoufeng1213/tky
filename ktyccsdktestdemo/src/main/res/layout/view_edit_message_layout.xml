@@ -11,7 +11,9 @@
         android:gravity="center_vertical"
         android:minHeight="@dimen/d50"
         android:paddingLeft="@dimen/d20"
-        android:paddingRight="@dimen/d20">
+        android:paddingTop="5dp"
+        android:paddingRight="@dimen/d20"
+        android:paddingBottom="5dp">
 
 
         <TextView
@@ -29,11 +31,26 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/d10"
             android:layout_weight="1"
-            android:background="@null"
+            android:background="@drawable/selector_input_gray_bg"
             android:gravity="right|center_vertical"
-            android:maxLines="2"
+            android:maxLines="1"
             android:paddingRight="@dimen/d5"
-            android:text="你是属牛啊"
+            android:text="哈哈"
+            android:textColor="@color/c_999999"
+            android:textSize="@dimen/textNormal14"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_defined_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d10"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="right|center_vertical"
+            android:maxLines="1"
+            android:paddingRight="@dimen/d5"
+            android:text="哈哈"
             android:textColor="@color/c_999999"
             android:textSize="@dimen/textNormal14" />
 

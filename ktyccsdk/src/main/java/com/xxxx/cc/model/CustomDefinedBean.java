@@ -31,6 +31,7 @@ public class CustomDefinedBean implements Serializable {
     private String updateuser;
     private String value;
 
+
     public String getValue() {
         return value;
     }
@@ -276,6 +277,7 @@ public class CustomDefinedBean implements Serializable {
                 ", typename='" + typename + '\'' +
                 ", updatetime='" + updatetime + '\'' +
                 ", updateuser='" + updateuser + '\'' +
+                ", value='" + value + '\'' +
                 '}';
     }
 }

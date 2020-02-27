@@ -67,12 +67,16 @@ public class CustomItemParse {
 
     public static JSONArray parseItem(Context context, String key) {
         String json = SharedPreferencesUtil.getValue(context, Constans.SP_DEFINED_ITEM_KEY);
-        if (TextUtils.isEmpty(json) || !json.contains(key)) {
+        if (TextUtils.isEmpty(json) || TextUtils.isEmpty(key)) {
+            return null;
+        }
+
+        if (!json.contains(key)) {
             return null;
         }
 
         try {
-            JSONObject jsonObject = new JSONObject(json);
+            JSONObject jsonObject = new JSONObject(json).optJSONObject("data");
             JSONArray items = jsonObject.optJSONArray(key);
             return items;
 

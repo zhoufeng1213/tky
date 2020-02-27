@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/dpi_22px">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/shape_login_white_bg"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dpi_30px"
-        android:layout_marginTop="@dimen/dpi_30px"
-        android:text="站点选择"
+        android:layout_marginLeft="@dimen/d20"
+        android:layout_marginTop="@dimen/d20"
+        android:text="请选择"
         android:textColor="@color/p100_light_dark"
-        android:textSize="@dimen/dpi_24px" />
+        android:textSize="@dimen/textNormal14" />
 
     <LinearLayout
-        android:id="@+id/layout_site_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dpi_10px"
-        android:layout_marginBottom="@dimen/dpi_44px"
-        android:orientation="vertical">
+        android:maxHeight="400dp">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d10"
+            android:layout_marginBottom="@dimen/d20">
+
+            <LinearLayout
+                android:id="@+id/layout_site_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </ScrollView>
     </LinearLayout>
 
 

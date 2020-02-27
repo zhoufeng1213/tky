@@ -20,6 +20,7 @@ public class HttpRequest {
         public static String mineContacts = "/sdk/api/v1/contacts/mine";
         public static String communicationRecord = "/sdk/api/v1/callHistory/commRecords";
         public static String update = "/sdk/api/v1/contacts/update/";
+        public static String updateAll = "/sdk/api/v1/contacts/updateAll/";
         public static String back = "/sdk/api/v1/contacts/back/";
         public static String saveSummary = "/sdk/api/v1/summary/save";
         public static String selfdefinedContacts = "/sdk/api/v1/selfdefined/contacts/all";

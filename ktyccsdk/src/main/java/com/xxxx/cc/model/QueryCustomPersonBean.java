@@ -53,11 +53,13 @@ public class QueryCustomPersonBean {
      * custom_5 :
      * custom_7 :
      * custom_9 :
+     * custom_10:
      * department :
      * duty :
      * gender : -1
      * memo :
      * shares : no
+     * cdate_1:2020-02-04
      */
 
     @Id(autoincrement = true)
@@ -112,19 +114,42 @@ public class QueryCustomPersonBean {
     private String custom_7;
     private String custom_8;
     private String custom_9;
-    private String datetime_1;
+    private String custom_10;
+    private String custom_11;
+    private String custom_12;
+    private String custom_13;
+    private String custom_14;
+    private String custom_15;
+    private String custom_16;
+    private String custom_17;
+    private String custom_18;
+    private String custom_19;
+    private String custom_20;
+    private String custom_21;
 
-    @Generated(hash = 1962980795)
-    public QueryCustomPersonBean(Long queryCustomId, String ckind, String creater, String createrName,
-            String createtime, boolean datastatus, String email, String id, String mobile, String name,
-            String organ, String orgi, String owner, String ownerName, String phone, String pinyin,
-            String realMobileNumber, int statusInSeas, String updatetime, String updateusername,
-            String username, String address, String company, String department, String duty,
-            String gender, String memo, String shares, String letters, String displayNameSpelling,
-            String number_1, String number_2, String number_3, String number_4, String number_5,
-            String time_1, String time_2, String time_3, String time_4, String time_5, String custom_1,
-            String custom_2, String custom_3, String custom_4, String custom_5, String custom_6,
-            String custom_7, String custom_8, String custom_9, String datetime_1) {
+
+    private String datetime_1;
+    private String datetime_2;
+    private String datetime_3;
+    private String datetime_4;
+
+    private String cdate_1;
+    private String cdate_2;
+    private String cdate_3;
+    private String cdate_4;
+    private String cdate_5;
+
+    @Generated(hash = 1826468955)
+    public QueryCustomPersonBean(Long queryCustomId, String ckind, String creater, String createrName, String createtime, boolean datastatus,
+            String email, String id, String mobile, String name, String organ, String orgi, String owner, String ownerName, String phone,
+            String pinyin, String realMobileNumber, int statusInSeas, String updatetime, String updateusername, String username,
+            String address, String company, String department, String duty, String gender, String memo, String shares, String letters,
+            String displayNameSpelling, String number_1, String number_2, String number_3, String number_4, String number_5, String time_1,
+            String time_2, String time_3, String time_4, String time_5, String custom_1, String custom_2, String custom_3, String custom_4,
+            String custom_5, String custom_6, String custom_7, String custom_8, String custom_9, String custom_10, String custom_11,
+            String custom_12, String custom_13, String custom_14, String custom_15, String custom_16, String custom_17, String custom_18,
+            String custom_19, String custom_20, String custom_21, String datetime_1, String datetime_2, String datetime_3, String datetime_4,
+            String cdate_1, String cdate_2, String cdate_3, String cdate_4, String cdate_5) {
         this.queryCustomId = queryCustomId;
         this.ckind = ckind;
         this.creater = creater;
@@ -174,7 +199,27 @@ public class QueryCustomPersonBean {
         this.custom_7 = custom_7;
         this.custom_8 = custom_8;
         this.custom_9 = custom_9;
+        this.custom_10 = custom_10;
+        this.custom_11 = custom_11;
+        this.custom_12 = custom_12;
+        this.custom_13 = custom_13;
+        this.custom_14 = custom_14;
+        this.custom_15 = custom_15;
+        this.custom_16 = custom_16;
+        this.custom_17 = custom_17;
+        this.custom_18 = custom_18;
+        this.custom_19 = custom_19;
+        this.custom_20 = custom_20;
+        this.custom_21 = custom_21;
         this.datetime_1 = datetime_1;
+        this.datetime_2 = datetime_2;
+        this.datetime_3 = datetime_3;
+        this.datetime_4 = datetime_4;
+        this.cdate_1 = cdate_1;
+        this.cdate_2 = cdate_2;
+        this.cdate_3 = cdate_3;
+        this.cdate_4 = cdate_4;
+        this.cdate_5 = cdate_5;
     }
 
     @Generated(hash = 1961341732)
@@ -643,6 +688,166 @@ public class QueryCustomPersonBean {
                 ", custom_9='" + custom_9 + '\'' +
                 ", datetime_1='" + datetime_1 + '\'' +
                 '}';
+    }
+
+    public String getCustom_21() {
+        return this.custom_21;
+    }
+
+    public void setCustom_21(String custom_21) {
+        this.custom_21 = custom_21;
+    }
+
+    public String getCustom_20() {
+        return this.custom_20;
+    }
+
+    public void setCustom_20(String custom_20) {
+        this.custom_20 = custom_20;
+    }
+
+    public String getCustom_19() {
+        return this.custom_19;
+    }
+
+    public void setCustom_19(String custom_19) {
+        this.custom_19 = custom_19;
+    }
+
+    public String getCustom_18() {
+        return this.custom_18;
+    }
+
+    public void setCustom_18(String custom_18) {
+        this.custom_18 = custom_18;
+    }
+
+    public String getCustom_17() {
+        return this.custom_17;
+    }
+
+    public void setCustom_17(String custom_17) {
+        this.custom_17 = custom_17;
+    }
+
+    public String getCustom_16() {
+        return this.custom_16;
+    }
+
+    public void setCustom_16(String custom_16) {
+        this.custom_16 = custom_16;
+    }
+
+    public String getCustom_15() {
+        return this.custom_15;
+    }
+
+    public void setCustom_15(String custom_15) {
+        this.custom_15 = custom_15;
+    }
+
+    public String getCustom_14() {
+        return this.custom_14;
+    }
+
+    public void setCustom_14(String custom_14) {
+        this.custom_14 = custom_14;
+    }
+
+    public String getCustom_13() {
+        return this.custom_13;
+    }
+
+    public void setCustom_13(String custom_13) {
+        this.custom_13 = custom_13;
+    }
+
+    public String getCustom_12() {
+        return this.custom_12;
+    }
+
+    public void setCustom_12(String custom_12) {
+        this.custom_12 = custom_12;
+    }
+
+    public String getCustom_11() {
+        return this.custom_11;
+    }
+
+    public void setCustom_11(String custom_11) {
+        this.custom_11 = custom_11;
+    }
+
+    public String getCustom_10() {
+        return this.custom_10;
+    }
+
+    public void setCustom_10(String custom_10) {
+        this.custom_10 = custom_10;
+    }
+
+    public String getCdate_5() {
+        return this.cdate_5;
+    }
+
+    public void setCdate_5(String cdate_5) {
+        this.cdate_5 = cdate_5;
+    }
+
+    public String getCdate_4() {
+        return this.cdate_4;
+    }
+
+    public void setCdate_4(String cdate_4) {
+        this.cdate_4 = cdate_4;
+    }
+
+    public String getCdate_3() {
+        return this.cdate_3;
+    }
+
+    public void setCdate_3(String cdate_3) {
+        this.cdate_3 = cdate_3;
+    }
+
+    public String getCdate_2() {
+        return this.cdate_2;
+    }
+
+    public void setCdate_2(String cdate_2) {
+        this.cdate_2 = cdate_2;
+    }
+
+    public String getCdate_1() {
+        return this.cdate_1;
+    }
+
+    public void setCdate_1(String cdate_1) {
+        this.cdate_1 = cdate_1;
+    }
+
+    public String getDatetime_4() {
+        return this.datetime_4;
+    }
+
+    public void setDatetime_4(String datetime_4) {
+        this.datetime_4 = datetime_4;
+    }
+
+    public String getDatetime_3() {
+        return this.datetime_3;
+    }
+
+    public void setDatetime_3(String datetime_3) {
+        this.datetime_3 = datetime_3;
+    }
+
+    public String getDatetime_2() {
+        return this.datetime_2;
+    }
+
+    public void setDatetime_2(String datetime_2) {
+        this.datetime_2 = datetime_2;
     }
 }
 

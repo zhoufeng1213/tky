@@ -39,7 +39,6 @@ android {
     }
 
 
-
     publish {
         userOrg = 'fengjianzhu1213'
         groupId = 'com.kty.sdk'
@@ -59,7 +58,7 @@ android {
 
 }
 greendao {
-    schemaVersion 3  //版本
+    schemaVersion 4  //版本
     daoPackage 'com.kty.cc.db.gen' // 一般为app包名+生成文件的文件夹名
     targetGenDir 'src/main/java' //生成文件路径
 }
@@ -86,7 +85,6 @@ dependencies {
     implementation 'com.kty.sdk:baselibrary:0.2.4'
 
 
-
     //http
     api 'com.zhy:okhttputils:2.6.2'
     //权限
@@ -99,7 +97,7 @@ dependencies {
     //rxlife
     api 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.0'
     //图片加载
-    api ('com.github.bumptech.glide:glide:4.8.0'){
+    api('com.github.bumptech.glide:glide:4.8.0') {
         exclude group: "com.android.support"
     }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
@@ -113,6 +111,7 @@ dependencies {
     api 'org.greenrobot:greendao:3.2.2'
     api 'org.greenrobot:greendao-generator:3.2.2'
     api 'com.github.promeg:tinypinyin:2.0.3'
+//    api 'com.github.codbking:PickTime:v1.0.1'
 //    configurations.all {
 //        resolutionStrategy {
 //            force 'com.android.support:support-v4:27.1.1'
@@ -157,7 +156,6 @@ allprojects {
 //        pom.version = "1.0.0"
 //    }
 //}
-
 
 
 //apply from: './gradleBintrayPluginConfigurationsUpload.gradle'

@@ -1,5 +1,7 @@
 package com.xxxx.cc.util;
 
+import android.text.TextUtils;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -95,10 +97,30 @@ public class TimeUtils {
             int minuteTime = second % 3600;
             int minute = minuteTime / 60;
             int seconds = minuteTime % 60;
-            times = getSecondTime(hour)+ ":"  + getSecondTime(minute) + ":" + getSecondTime(seconds);
+            times = getSecondTime(hour) + ":" + getSecondTime(minute) + ":" + getSecondTime(seconds);
 
         }
         return times;
+    }
+
+    public static long getSecondFromTime(String time) {
+        long totalSecond = 0;
+        try {
+            if (!TextUtils.isEmpty(time)) {
+                boolean isTime = time.matches("^(0\\d{1}|1\\d{1}|2[0-3]):[0-5]\\d{1}:([0-5]\\d{1})$");
+                if (isTime) {
+                    String[] times = time.split(":");
+                    int hour = Integer.parseInt(times[0]);
+                    int minute = Integer.parseInt(times[1]);
+                    int second = Integer.parseInt(times[2]);
+                    totalSecond = hour * 3600 + minute * 60 + second;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return totalSecond;
+
     }
 
 

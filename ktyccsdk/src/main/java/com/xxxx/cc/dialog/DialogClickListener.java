@@ -5,6 +5,6 @@ public abstract class DialogClickListener {
 
     public abstract void onCancelClick(Object object);
 
-    public abstract void onSiteClick(Object object);
+    public abstract void onSingleItemSelected(Object object);
 
 }

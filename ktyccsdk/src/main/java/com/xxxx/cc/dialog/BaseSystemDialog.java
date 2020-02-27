@@ -31,7 +31,7 @@ public class BaseSystemDialog {
 
     }
 
-    protected static void setDialog(int width, int delayTime) {
+    protected static void setDialog(int width, int height, int delayTime) {
         if (mDialog.getWindow() != null) {
             Window window = mDialog.getWindow();
             window.setDimAmount(0.2f);
@@ -55,5 +55,10 @@ public class BaseSystemDialog {
                 return false;
             }
         });
+
+
+
     }
+
+
 }

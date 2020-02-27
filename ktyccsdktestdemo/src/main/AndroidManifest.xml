@@ -44,7 +44,7 @@
         <activity android:name="com.xxxx.tky.activity.CustomPesonDetailActivity" />
         <activity
             android:name="com.xxxx.tky.activity.CustomPersonDetailToDetailActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name="com.xxxx.tky.activity.MineCustomPersonActivity" />
 
     </application>
