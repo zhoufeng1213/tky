@@ -39,7 +39,12 @@ public class BaseSystemDialog {
             showDialog(delayTime);
             WindowManager.LayoutParams layoutParams = window.getAttributes();
             layoutParams.width = width;
-            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+            if (height > 0) {
+                layoutParams.height = height;
+            } else {
+                layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            }
             layoutParams.gravity = Gravity.CENTER;
             window.setAttributes(layoutParams);
             window.setWindowAnimations(R.style.ScaleDialog);
@@ -55,7 +60,6 @@ public class BaseSystemDialog {
                 return false;
             }
         });
-
 
 
     }

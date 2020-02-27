@@ -18,4 +18,5 @@
     <color name="c_42A6FE">#42A6FE</color>
     <color name="c_FDB201">#FDB201</color>
     <color name="p100_light_dark">#ff363435</color>
+    <color name="p100_line_bg">#EBEBEB</color>
 </resources>

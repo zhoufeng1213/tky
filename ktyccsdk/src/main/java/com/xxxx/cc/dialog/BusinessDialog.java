@@ -79,7 +79,8 @@ public class BusinessDialog extends BaseSystemDialog {
         int height = (int) ComUtils.dp2px(activity, 400);
 
         setRootViewMaxHeight(rootView, width, height);
-        setDialog(width, height, 0);
+        setDialog(width, 0, 0);
+
 
     }
 
@@ -178,6 +179,7 @@ public class BusinessDialog extends BaseSystemDialog {
                     //注意：这里的 LayoutParams 必须是 FrameLayout的！！
                     rootView.setLayoutParams(new FrameLayout.LayoutParams(width,
                             needHeight));
+                    setDialog(width, needHeight, 0);
                 }
             }
         });
