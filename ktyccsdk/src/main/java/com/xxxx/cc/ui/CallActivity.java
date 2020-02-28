@@ -327,7 +327,7 @@ public class CallActivity extends BaseHttpRequestActivity {
             handler.sendMessage(msg);
             mCommunicationRecordResponseBean = new CommunicationRecordResponseBean();
             JSONObject json = (JSONObject) result.getData();
-            mCommunicationRecordResponseBean.setCallId(json.getString("uuid"));
+            mCommunicationRecordResponseBean.setCalldetailId(json.getString("uuid"));
         }
     }
 

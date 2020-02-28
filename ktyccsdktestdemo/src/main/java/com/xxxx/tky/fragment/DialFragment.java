@@ -21,6 +21,7 @@ import com.flyco.roundview.RoundLinearLayout;
 import com.flyco.roundview.RoundTextView;
 import com.xxxx.cc.base.fragment.BaseFragment;
 import com.xxxx.cc.global.KtyCcSdkTool;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.activity.ContactDetailActivity;
@@ -29,6 +30,7 @@ import com.xxxx.tky.contant.Contant;
 import com.xxxx.tky.model.ContactUserName;
 import com.xxxx.tky.util.AntiShakeUtils;
 import com.xxxx.tky.util.CallPhoneTool;
+import com.xxxx.tky.util.ClipeBoardUtil;
 import com.xxxx.tky.util.MobilePhoneUtil;
 
 import java.util.ArrayList;
@@ -73,7 +75,7 @@ public class DialFragment extends BaseFragment {
     @BindView(R.id.button_jin)
     RoundTextView buttonJin;
     @BindView(R.id.call_button)
-    ImageView callButton;
+    RoundLinearLayout callButton;
     @BindView(R.id.delete)
     ImageView delete;
     @BindView(R.id.person_list_recycler)
@@ -299,4 +301,13 @@ public class DialFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        String content = ClipeBoardUtil.getClipeBoardContent(mContext);
+        if (ClipeBoardUtil.isChinaPhoneLegal(content)) {
+            LogUtils.e("lxl粘:" + content);
+            phoneNumTextView.setText(content);
+        }
+    }
 }

@@ -14,6 +14,7 @@ public class HttpRequest {
     public static class CallHistory {
         public static String callHistory = "/sdk/api/v1/callHistory";
         public static String currentCalls = "/sdk/api/v1/callHistory/currentCalls/";
+        public static String calldetailWithCommRecords = "/sdk/api/v1/callHistory/calldetailWithCommRecords";
     }
 
     public static class Contant {
@@ -25,6 +26,7 @@ public class HttpRequest {
         public static String selfdefinedContacts = "/sdk/api/v1/selfdefined/contacts/all";
         public static String getOneCustom = "/sdk/api/v1/contacts/getOne/";
         public static String getSubItem = "/sdk/api/v1/selfdefined/contacts/item";
+        public static String updateSummary = "/sdk/api/v1/summary/update/";
     }
 
     public static class Version {

@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.xxxx.cc.base.fragment.BaseHttpRequestFragment;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.model.BaseBean;
+import com.xxxx.cc.model.CommunicationRecordBean;
 import com.xxxx.cc.model.CommunicationRecordReturnResultBean;
 import com.xxxx.cc.model.CurrentCallsReturnResultBean;
 import com.xxxx.cc.model.QueryCustomPersonBean;
@@ -116,7 +117,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                                 public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                                     page++;
                                     basePostPresenter.presenterBusinessByHeader(
-                                            HttpRequest.Contant.communicationRecord,
+                                            HttpRequest.CallHistory.calldetailWithCommRecords,
                                             false,
                                             "token", cacheUserBean.getToken(),
                                             "Content-Type", "application/json"
@@ -124,7 +125,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                                 }
                             });
                             basePostPresenter.presenterBusinessByHeader(
-                                    HttpRequest.Contant.communicationRecord,
+                                    HttpRequest.CallHistory.calldetailWithCommRecords,
                                     false,
                                     "token", cacheUserBean.getToken(),
                                     "Content-Type", "application/json"
@@ -155,9 +156,9 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
         ImageView ivClose = dialogView.findViewById(R.id.iv_close);
         userMeno = dialogView.findViewById(R.id.user_meno);
 
-        if (selectCommunicationRecordResponseBean != null && !TextUtils.isEmpty(selectCommunicationRecordResponseBean.getCommRecoeds())) {
-            userMeno.setText(selectCommunicationRecordResponseBean.getCommRecoeds());
-            userMeno.setSelection(selectCommunicationRecordResponseBean.getCommRecoeds().length());
+        if (selectCommunicationRecordResponseBean != null && !TextUtils.isEmpty(selectCommunicationRecordResponseBean.getCommunication())) {
+            userMeno.setText(selectCommunicationRecordResponseBean.getCommunication());
+            userMeno.setSelection(selectCommunicationRecordResponseBean.getCommunication().length());
         }
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,9 +179,18 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                 if(sweetAlertDialog != null){
                     sweetAlertDialog.dismiss();
                 }
-                if (cacheUserBean != null && selectCommunicationRecordResponseBean != null && selectCommunicationRecordResponseBean.getCallId() != null) {
-                    basePostPresenter.presenterBusinessByHeader(HttpRequest.Contant.saveSummary,true,
-                            "token",cacheUserBean.getToken());
+
+                if (cacheUserBean != null && selectCommunicationRecordResponseBean != null && selectCommunicationRecordResponseBean.getCalldetailId() != null) {
+                    if (selectCommunicationRecordResponseBean.getId() != null) {
+                        basePostPresenter.presenterBusinessByHeader(HttpRequest.Contant.updateSummary + selectCommunicationRecordResponseBean.getId(), true,
+                                "token", cacheUserBean.getToken());
+
+                    } else {
+                        basePostPresenter.presenterBusinessByHeader(HttpRequest.Contant.saveSummary, true,
+                                "token", cacheUserBean.getToken());
+                    }
+
+
                 } else {
                     showToast("未能查询到您的本次通话记录，保存沟通记录失败");
                 }
@@ -203,7 +213,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
     public void onResume() {
         super.onResume();
         basePostPresenter.presenterBusinessByHeader(
-                HttpRequest.Contant.communicationRecord,
+                HttpRequest.CallHistory.calldetailWithCommRecords,
                 false,
                 "token", cacheUserBean.getToken(),
                 "Content-Type", "application/json"
@@ -221,7 +231,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
     @Override
     public JSONObject getHttpRequestParams(String moduleName) {
         JSONObject jsonObject = new JSONObject();
-        if (HttpRequest.Contant.communicationRecord.equals(moduleName)) {
+        if (HttpRequest.CallHistory.calldetailWithCommRecords.equals(moduleName)) {
             CommunicationRecordRequestBean requestBean = new CommunicationRecordRequestBean();
             requestBean.setPage(page);
             requestBean.setSize(COMMON_PAGE_SIZE);
@@ -230,11 +240,16 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
         }else if(HttpRequest.Contant.saveSummary.equals(moduleName)){
             SaveSummaryBean saveSummaryBean = new SaveSummaryBean();
             if(selectCommunicationRecordResponseBean != null && queryCustomPersonBean != null && userMeno != null){
-                saveSummaryBean.setCalldetailId(selectCommunicationRecordResponseBean.getCallId());
+                saveSummaryBean.setCalldetailId(selectCommunicationRecordResponseBean.getCalldetailId());
                 saveSummaryBean.setContactid(queryCustomPersonBean.getId());
                 saveSummaryBean.setPhonenumber(queryCustomPersonBean.getRealMobileNumber());
                 saveSummaryBean.setSummary(userMeno.getText().toString().trim());
-                selectCommunicationRecordResponseBean.setCommRecoeds(userMeno.getText().toString().trim());
+            }
+            jsonObject = JSONObject.parseObject(new Gson().toJson(saveSummaryBean));
+        } else if ((HttpRequest.Contant.updateSummary + selectCommunicationRecordResponseBean.getId()).equals(moduleName)) {
+            SaveSummaryBean saveSummaryBean = new SaveSummaryBean();
+            if (userMeno != null) {
+                saveSummaryBean.setSummary(userMeno.getText().toString().trim());
             }
             jsonObject = JSONObject.parseObject(new Gson().toJson(saveSummaryBean));
         }
@@ -263,18 +278,20 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
     boolean isCall = false;
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
-        if (HttpRequest.Contant.communicationRecord.equals(moduleName)) {
+        if (HttpRequest.CallHistory.calldetailWithCommRecords.equals(moduleName)) {
+            LogUtils.e("calldetailWithCommRecords:" + response);
             srlRefresh.finishLoadMore();
             srlRefresh.finishRefresh();
             if (!TextUtils.isEmpty(response)) {
-                LogUtils.e(response);
                 CommunicationRecordReturnResultBean historyResponseBean = (new Gson()).fromJson(response, CommunicationRecordReturnResultBean.class);
+                LogUtils.e("Message:" + historyResponseBean.getMessage());
+                LogUtils.e("Code" + historyResponseBean.getCode() + "historyResponseBean:" + historyResponseBean.getData().getContent().size());
                 if (historyResponseBean.getCode() == 0) {
-                    if (historyResponseBean.getPage() != null &&
-                            historyResponseBean.getPage().getContent() != null
-                            && historyResponseBean.getPage().getContent().size() > 0) {
+                    if (historyResponseBean.getData() != null &&
+                            historyResponseBean.getData().getContent() != null
+                            && historyResponseBean.getData().getContent().size() > 0) {
                         contentBeanList.clear();
-                        contentBeanList.addAll(historyResponseBean.getPage().getContent());
+                        contentBeanList.addAll(historyResponseBean.getData().getContent());
                         LogUtils.e("isCall:" + isCall);
                         if (isCall && currentCallsCommunicationRecordResponseBean != null) {
                             contentBeanList.add(0, currentCallsCommunicationRecordResponseBean);
@@ -286,38 +303,40 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
 
         } else if ((HttpRequest.CallHistory.currentCalls + queryCustomPersonBean.getRealMobileNumber()).equals(moduleName)) {
             LogUtils.e("currentCalls:" + response);
-            if (!TextUtils.isEmpty(response)) {
-                CurrentCallsReturnResultBean currentCallsReturnResultBean = (new Gson()).fromJson(response, CurrentCallsReturnResultBean.class);
-                if (currentCallsReturnResultBean.getCode() == 0) {
-                    if (!isCall) {
-                        currentCallsCommunicationRecordResponseBean = new CommunicationRecordResponseBean();
-                        currentCallsCommunicationRecordResponseBean.setCallId(currentCallsReturnResultBean.getDateBean().getUuid());
-                        currentCallsCommunicationRecordResponseBean.setCreateTime(currentCallsReturnResultBean.getDateBean().getCallTime());
-                        currentCallsCommunicationRecordResponseBean.setBillingInSec(-1);
-                        contentBeanList.add(0, currentCallsCommunicationRecordResponseBean);
-                        communicationRecordAdapter.notifyDataSetChanged();
-                        LogUtils.e("contentBeanList:" + contentBeanList.size());
-                        selectCommunicationRecordResponseBean = currentCallsCommunicationRecordResponseBean;
-                        isCall = true;
-                    }
-                } else if (currentCallsReturnResultBean.getCode() == 1) {
-                    if (contentBeanList.contains(currentCallsCommunicationRecordResponseBean)) {
-                        contentBeanList.remove(currentCallsCommunicationRecordResponseBean);
-                        communicationRecordAdapter.notifyDataSetChanged();
-                    }
-                    isCall = false;
-                    currentCallsCommunicationRecordResponseBean = null;
-                }
+//            if (!TextUtils.isEmpty(response)) {
+//                CurrentCallsReturnResultBean currentCallsReturnResultBean = (new Gson()).fromJson(response, CurrentCallsReturnResultBean.class);
+//                if (currentCallsReturnResultBean.getCode() == 0) {
+//                    if (!isCall) {
+//                        currentCallsCommunicationRecordResponseBean = new CommunicationRecordResponseBean();
+//                        currentCallsCommunicationRecordResponseBean.setCallId(currentCallsReturnResultBean.getDateBean().getUuid());
+//                        currentCallsCommunicationRecordResponseBean.setCreateTime(currentCallsReturnResultBean.getDateBean().getCallTime());
+//                        currentCallsCommunicationRecordResponseBean.setBillingInSec(-1);
+//                        contentBeanList.add(0, currentCallsCommunicationRecordResponseBean);
+//                        communicationRecordAdapter.notifyDataSetChanged();
+//                        LogUtils.e("contentBeanList:" + contentBeanList.size());
+//                        selectCommunicationRecordResponseBean = currentCallsCommunicationRecordResponseBean;
+//                        isCall = true;
+//                    }
+//                } else if (currentCallsReturnResultBean.getCode() == 1) {
+//                    if (contentBeanList.contains(currentCallsCommunicationRecordResponseBean)) {
+//                        contentBeanList.remove(currentCallsCommunicationRecordResponseBean);
+//                        communicationRecordAdapter.notifyDataSetChanged();
+//                    }
+//                    isCall = false;
+//                    currentCallsCommunicationRecordResponseBean = null;
+//                }
 
-            }
-        } else if (HttpRequest.Contant.saveSummary.equals(moduleName)) {
+//              }
+        } else if (HttpRequest.Contant.saveSummary.equals(moduleName) || (HttpRequest.Contant.updateSummary + selectCommunicationRecordResponseBean.getId()).equals(moduleName)) {
             if(result != null && result.isOk()){
                 //刷新数据
                 showToast("保存成功");
-                contentBeanList.clear();
-                communicationRecordAdapter.notifyDataSetChanged();
+                CommunicationRecordBean responseBean = (new Gson()).fromJson(response, CommunicationRecordBean.class);
+
+                selectCommunicationRecordResponseBean.setId(responseBean.getData().getId());
+                selectCommunicationRecordResponseBean.setCommunication(responseBean.getData().getCommunication());
                 basePostPresenter.presenterBusinessByHeader(
-                        HttpRequest.Contant.communicationRecord,
+                        HttpRequest.CallHistory.calldetailWithCommRecords,
                         false,
                         "token", cacheUserBean.getToken(),
                         "Content-Type", "application/json"

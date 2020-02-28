@@ -251,6 +251,7 @@
                 android:layout_weight="1">
 
                 <com.flyco.roundview.RoundLinearLayout
+                    android:id="@+id/call_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -261,7 +262,6 @@
                     app:rv_isRadiusHalfHeight="true">
 
                     <ImageView
-                        android:id="@+id/call_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/dianhua_white" />
