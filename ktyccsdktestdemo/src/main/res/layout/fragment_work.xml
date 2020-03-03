@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:focusable="true"
     android:background="@color/f_7F4F8"
-    android:focusableInTouchMode="true">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/d44"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/d24"
+        android:layout_marginBottom="@dimen/d6"
+        android:gravity="center"
         android:text="工作台"
         android:textColor="#ff333333"
-        android:textStyle="bold"
         android:textSize="18sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="19.33dp"
-        android:layout_marginBottom="19.33dp"
-        />
+        android:textStyle="bold" />
+
     <ImageView
         android:id="@+id/guide_banner_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:scaleType="fitCenter"
-        android:src="@mipmap/banner"
-        >
+        android:src="@mipmap/banner">
 
     </ImageView>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,10 +41,11 @@
             android:id="@+id/recent_call_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d10"
             app:icon="@mipmap/call_icon"
             app:text="通话记录"
-            android:layout_marginTop="@dimen/d10"
             app:text_state="让沟通信息更简洁" />
+
         <com.xxxx.tky.view.ImageTextButton
             android:id="@+id/customer_bt"
             android:layout_width="wrap_content"
@@ -52,17 +55,18 @@
             app:icon="@mipmap/customer_icon"
             app:text="我的客户"
             app:text_state="让本人客户安全放心" />
+
         <com.xxxx.tky.view.ImageTextButton
             android:id="@+id/_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/d10"
             android:layout_marginTop="@dimen/d10"
-            app:icon="@mipmap/customer_icon"
             android:visibility="invisible"
+            app:icon="@mipmap/customer_icon"
             app:text="我的客户"
             app:text_state="让本人客户安全放心" />
 
-</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

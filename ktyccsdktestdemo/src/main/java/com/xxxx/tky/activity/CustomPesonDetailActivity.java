@@ -248,39 +248,42 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
         super.dealHttpRequestResult(moduleName, result, response);
-        LogUtils.i("zwmn", moduleName + " >> " + result + " >> " + response);
-        if (!TextUtils.isEmpty(response)) {
-            try {
-                JSONObject json = new JSONObject(response);
-                JSONArray dataList = json.optJSONArray("data");
-                if (null != dataList && dataList.length() > 0) {
-                    customDefinedBeans.clear();
-                    for (int i = 0; i < dataList.length(); i++) {
-                        JSONObject item = dataList.getJSONObject(i);
-                        if (item.optBoolean("showInPage")) {
-                            CustomDefinedBean bean = (new Gson()).fromJson(item.toString(), CustomDefinedBean.class);
-                            if (!TextUtils.isEmpty(personBeanData)) {
-                                JSONObject personJson = new JSONObject(personBeanData);
-                                String value = personJson.optString(bean.getField());
-                                String type = item.optString("type");
-                                if ("time".equals(type)) {
-                                    value = TimeUtils.getWatchTime1(Integer.parseInt(value));
+        if (HttpRequest.Contant.selfdefinedContacts.equals(moduleName)) {
+//            LogUtils.i("zwmn", moduleName + " >> " + result + " >> " + response);
+            if (!TextUtils.isEmpty(response)) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    JSONArray dataList = json.optJSONArray("data");
+                    if (null != dataList && dataList.length() > 0) {
+                        customDefinedBeans.clear();
+                        for (int i = 0; i < dataList.length(); i++) {
+                            JSONObject item = dataList.getJSONObject(i);
+                            if (item.optBoolean("showInPage")) {
+                                CustomDefinedBean bean = (new Gson()).fromJson(item.toString(), CustomDefinedBean.class);
+                                if (!TextUtils.isEmpty(personBeanData)) {
+                                    JSONObject personJson = new JSONObject(personBeanData);
+                                    String value = personJson.optString(bean.getField());
+                                    String type = item.optString("type");
+                                    if ("time".equals(type)) {
+                                        value = TimeUtils.getWatchTime1(Integer.parseInt(value));
+                                    }
+
+                                    bean.setValue(value);
                                 }
-
-                                bean.setValue(value);
+                                customDefinedBeans.add(bean);
                             }
-                            customDefinedBeans.add(bean);
                         }
+
+                        setCustomDefinedView();
+
                     }
-
-                    setCustomDefinedView();
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
+            }
         }
+
 
     }
 

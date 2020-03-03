@@ -28,6 +28,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStatusBar();
         initViewBeforeSetContentView();
         setContentView(getLayoutViewId());
         ButterKnife.bind(this);
@@ -37,7 +38,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 //            ImmersionBar.with(this).statusBarDarkFont(true).barColor(R.color.white).fitsSystemWindows(true)
 //                    .init();
 //        }
-        setStatusBar();
+
 
         initView(savedInstanceState);
     }
@@ -59,7 +60,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             StatusBarUtil.setStatusBarColor(this, 1426063360);
         }
 
+
     }
+
 
     public boolean isAddImmersionBar() {
         return true;

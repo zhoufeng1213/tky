@@ -1,5 +1,6 @@
 package com.xxxx.tky.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -71,6 +72,8 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
     QuickIndexBar qib;
     @BindView(R.id.tvLetter)
     TextView tvLetter;
+    @BindView(R.id.iv_add_custom)
+    ImageView ivAddCustom;
 
     @Override
     public int getLayoutViewId() {
@@ -84,6 +87,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
     private UserBean cacheUserBean;
     private long endTime = System.currentTimeMillis();
     private long beginTime = 0;
+    private final static int ADD_CUSTOM_FOR_RESULT_CODE = 1010;
 
     @Override
     public boolean isAddImmersionBar() {
@@ -134,7 +138,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                     @Override
                     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                         page = 0;
-                        endTime = System.currentTimeMillis();
+                        endTime = System.currentTimeMillis() + 60 * 1000;
                         baseGetPresenter.presenterBusinessByHeader(
                                 HttpRequest.Contant.mineContacts,
                                 false,
@@ -353,11 +357,11 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
 
         } else if (HttpRequest.Contant.getSubItem.equals(moduleName)) {
             if (result.isOk()) {
-                LogUtils.i("zwmn", "获取items:" + response);
+//                LogUtils.i("zwmn", "获取items:" + response);
                 SharedPreferencesUtil.save(getApplicationContext(), Constans.SP_DEFINED_ITEM_KEY, response);
 
             } else {
-                LogUtils.i("zwmn", "获取item失败");
+//                LogUtils.i("zwmn", "获取item失败");
                 SharedPreferencesUtil.save(getApplicationContext(), Constans.SP_DEFINED_ITEM_KEY, "");
             }
         }
@@ -379,6 +383,39 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
             return;
         }
         finish();
+    }
+
+    @OnClick(R.id.iv_add_custom)
+    public void add(View view) {
+        if (AntiShakeUtils.isInvalidClick(view)) {
+            return;
+        }
+//        startActivity(CustomAddActivity.class);
+        startActivityForResult(new Intent(this, CustomAddActivity.class), ADD_CUSTOM_FOR_RESULT_CODE);
+    }
+
+    private void refreshData() {
+        page = 0;
+        endTime = System.currentTimeMillis() + 60 * 1000;
+        baseGetPresenter.presenterBusinessByHeader(
+                HttpRequest.Contant.mineContacts,
+                false,
+                "token", cacheUserBean.getToken()
+        );
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case ADD_CUSTOM_FOR_RESULT_CODE:
+                    refreshData();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     @OnClick(R.id.search_btn)

@@ -1,13 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/head_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d24"
+        android:background="@color/white" />
+
     <include layout="@layout/common_title" />
+
     <WebView
         android:id="@+id/wv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </WebView>
+        android:layout_height="wrap_content"></WebView>
 </LinearLayout>

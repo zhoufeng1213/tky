@@ -9,7 +9,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0.7"
+        versionName "1.0.10"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -88,7 +88,6 @@ dependencies {
     implementation 'com.fly.sweet.dialog:sweet-custom-dialog:1.0.0'
     implementation 'com.kty.sdk:baselibrary:0.2.4'
     implementation project(path: ':pickerlibrary')
-//    implementation 'com.github.codbking:PickTime:v1.0.1'
 }
 
 configurations.all {

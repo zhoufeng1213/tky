@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="编辑信息"
+            android:text="添加客户"
             android:textColor="@color/black"
             android:textSize="@dimen/textNormal16" />
 
@@ -48,7 +48,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/d15"
-            android:src="@drawable/delete_detail" />
+            android:src="@drawable/delete_detail"
+            android:visibility="gone" />
 
 
     </RelativeLayout>
@@ -62,7 +63,7 @@
         android:layout_marginRight="@dimen/d20"
         android:layout_marginBottom="@dimen/d20"
         android:background="@drawable/button_bg"
-        android:text="保存"
+        android:text="添加"
         android:textColor="@color/white"
         android:textSize="@dimen/textNormal20" />
 
@@ -183,7 +184,9 @@
                             android:minHeight="@dimen/d50"
                             android:orientation="horizontal"
                             android:paddingLeft="@dimen/d20"
-                            android:paddingRight="@dimen/d20">
+                            android:paddingTop="5dp"
+                            android:paddingRight="@dimen/d20"
+                            android:paddingBottom="5dp">
 
                             <TextView
                                 android:id="@+id/tv_phone_name"
@@ -199,8 +202,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="@dimen/d10"
                                 android:layout_weight="1"
-                                android:background="@null"
-                                android:enabled="false"
+                                android:background="@drawable/selector_input_gray_bg"
                                 android:gravity="right|center_vertical"
                                 android:paddingRight="@dimen/d5"
                                 android:singleLine="true"

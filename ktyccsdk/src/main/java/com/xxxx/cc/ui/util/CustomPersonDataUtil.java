@@ -159,7 +159,6 @@ public class CustomPersonDataUtil {
         requestBean.setStarttime(beginTime);
         requestBean.setEndtime(endTime);
         jsonObject = JSONObject.parseObject(new Gson().toJson(requestBean));
-        LogUtils.i("zwmn", jsonObject.toString());
         return jsonObject;
     }
 

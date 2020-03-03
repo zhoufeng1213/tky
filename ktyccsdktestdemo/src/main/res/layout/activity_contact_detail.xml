@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <com.flyco.roundview.RoundTextView
         android:id="@+id/name_letter"
         android:layout_width="@dimen/d100"
         android:layout_height="@dimen/d100"
-        app:rv_isRadiusHalfHeight="true"
-        app:rv_backgroundColor="@color/color_main_bule"
-        android:text="1"
-        android:textSize="@dimen/textNormal18"
-        android:gravity="center"
-        android:textColor="@color/white"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/d15"
-        />
+        android:layout_marginTop="@dimen/d39"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textNormal18"
+        app:rv_backgroundColor="@color/color_main_bule"
+        app:rv_isRadiusHalfHeight="true" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="123"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textNormal18"
         android:layout_marginTop="@dimen/d10"
         android:gravity="center"
-        />
+        android:text="123"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textNormal18" />
 
     <RelativeLayout
         android:id="@+id/bohao_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/d20"
         android:layout_marginLeft="@dimen/d15"
-        >
+        android:layout_marginTop="@dimen/d20">
+
         <TextView
             android:id="@+id/tag"
             android:layout_width="match_parent"
@@ -49,27 +47,23 @@
             android:id="@+id/phone_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/tag"
+            android:layout_marginTop="@dimen/d10"
             android:text="123"
             android:textColor="@color/black"
-            android:textSize="@dimen/textNormal18"
-            android:layout_marginTop="@dimen/d10"
-            android:layout_below="@id/tag"
-            />
+            android:textSize="@dimen/textNormal18" />
 
 
         <ImageView
             android:id="@+id/call_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-android:src="@drawable/dianhua"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/d15"
             android:layout_centerVertical="true"
-            />
+            android:layout_marginRight="@dimen/d15"
+            android:src="@drawable/dianhua" />
 
     </RelativeLayout>
-
-
 
 
 </LinearLayout>

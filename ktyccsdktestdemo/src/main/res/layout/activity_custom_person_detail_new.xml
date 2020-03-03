@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/head_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d24"
+        android:background="@color/white" />
+
     <include layout="@layout/common_title" />
 
     <RelativeLayout
@@ -198,8 +204,8 @@
                 android:layout_height="@dimen/d36"
                 android:layout_below="@id/zidingyi_layout"
                 android:background="@mipmap/image_message_card_bg"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="@dimen/d10">
 
                 <TextView

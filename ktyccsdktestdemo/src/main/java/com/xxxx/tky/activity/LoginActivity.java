@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.flyco.roundview.RoundTextView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xw.repo.XEditText;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
@@ -27,6 +26,7 @@ import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.KtyCcNetUtil;
 import com.xxxx.cc.global.KtyCcOptionsUtil;
+import com.xxxx.cc.global.PackageUtils;
 import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.ToastUtil;
@@ -73,6 +73,8 @@ public class LoginActivity extends BaseHttpRequestActivity {
     EditText homeEtHost;
     @BindView(R.id.home_tv_switch_url_host)
     TextView homeTvSwitchUrlHost;
+    @BindView(R.id.tv_app_version)
+    TextView tvVersion;
 
     private RxPermissions rxPermissions;
 
@@ -102,6 +104,12 @@ public class LoginActivity extends BaseHttpRequestActivity {
         super.initView(savedInstanceState);
         rxPermissions = new RxPermissions(this);
         UpdateAppUtils.getInstance().deleteInstalledApk();
+        String appVersion = PackageUtils.getVersionName(this);
+        if (!TextUtils.isEmpty(appVersion)) {
+            tvVersion.setText("v" + appVersion);
+        } else {
+            tvVersion.setText("");
+        }
         String phoneNum = SharedPreferencesUtil.getValue(mContext, Contant.LOGIN_SAVE_TAG);
         String pwd = SharedPreferencesUtil.getValue(mContext, Contant.LOGIN_PWD_SAVE_TAG);
         if (!TextUtils.isEmpty(phoneNum)) {

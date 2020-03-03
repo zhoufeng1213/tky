@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/d44"
+        android:layout_marginTop="@dimen/d24"
         android:orientation="vertical">
 
 
@@ -35,6 +36,7 @@
 
 
         <ImageView
+            android:id="@+id/iv_add_custom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

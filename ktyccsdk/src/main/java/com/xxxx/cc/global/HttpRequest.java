@@ -28,6 +28,7 @@ public class HttpRequest {
         public static String getOneCustom = "/sdk/api/v1/contacts/getOne/";
         public static String getSubItem = "/sdk/api/v1/selfdefined/contacts/item";
         public static String updateSummary = "/sdk/api/v1/summary/update/";
+        public static String addCustom = "/sdk/api/v1/contacts/save";
     }
 
     public static class Version {
