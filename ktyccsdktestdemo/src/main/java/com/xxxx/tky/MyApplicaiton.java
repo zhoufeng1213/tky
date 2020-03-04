@@ -2,6 +2,7 @@ package com.xxxx.tky;
 
 import android.app.Application;
 
+import com.kty.mars.baselibrary.LibContext;
 import com.xxxx.cc.global.KtyCcOptionsUtil;
 import com.xxxx.cc.global.KtyCcSdkTool;
 
@@ -14,7 +15,8 @@ public class MyApplicaiton extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        KtyCcOptionsUtil.init(this,"https://tky.ketianyun.com");
+        KtyCcOptionsUtil.init(this, "https://tky.ketianyun.com");
         KtyCcSdkTool.getInstance().initKtyCcSdk(this);
+        LibContext.getInstance().init(this, false);
     }
 }

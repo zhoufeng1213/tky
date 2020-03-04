@@ -86,7 +86,7 @@ dependencies {
     implementation 'com.mjun:mtransition:0.1.3'
     implementation 'com.teprinciple:updateapputils:2.1.0'
     implementation 'com.fly.sweet.dialog:sweet-custom-dialog:1.0.0'
-    implementation 'com.kty.sdk:baselibrary:0.2.4'
+    api 'com.kty.sdk:baselibrary:0.2.4'
     implementation project(path: ':pickerlibrary')
 }
 
