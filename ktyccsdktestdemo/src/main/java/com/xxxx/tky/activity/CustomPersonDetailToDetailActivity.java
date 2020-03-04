@@ -229,7 +229,7 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
 
     private void setItemClick(CustomDefinedBean bean, TextView textView) {
 //        ToastUtil.showToast(this, bean.getType());
-        LogUtils.i("zwmn", bean.toString());
+//        LogUtils.i("zwmn", bean.toString());
         if ("select".equals(bean.getType()) || "radio".equals(bean.getType())) {
             JSONArray items = CustomItemParse.parseItem(getApplicationContext(), bean.getId());
             if (null != items && items.length() > 0) {
@@ -299,7 +299,7 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
             public void onSure(Date date) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String text = format.format(date);
-                LogUtils.i("zwmn", "所选日期时间：" + text);
+//                LogUtils.i("zwmn", "所选日期时间：" + text);
                 textView.setText(text);
                 bean.setValue(text);
 
@@ -336,7 +336,7 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
             public void onSure(Date date) {
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
                 String text = format.format(date);
-                LogUtils.i("zwmn", "所选日期时间：" + text);
+//                LogUtils.i("zwmn", "所选日期时间：" + text);
                 textView.setText(text);
                 bean.setValue(text);
 
@@ -374,7 +374,7 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
             public void onSure(Date date) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 String text = format.format(date);
-                LogUtils.i("zwmn", "所选日期时间：" + text);
+//                LogUtils.i("zwmn", "所选日期时间：" + text);
                 textView.setText(text);
                 bean.setValue(text);
 
@@ -472,10 +472,10 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
             }
         } else if ((HttpRequest.Contant.getOneCustom + queryCustomPersonBean.getId()).equals(moduleName)) {
             if (result.isOk()) {
-                LogUtils.i("zwmn", "获取用户信息：" + response);
+//                LogUtils.i("zwmn", "获取用户信息：" + response);
 
             } else {
-                LogUtils.i("zwmn", "获取用户信息请求失败");
+//                LogUtils.i("zwmn", "获取用户信息请求失败");
             }
 
         }
@@ -501,7 +501,7 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
                 }
             }
         }
-        LogUtils.i("zwmn", jsonObject.toString());
+//        LogUtils.i("zwmn", jsonObject.toString());
         return jsonObject;
     }
 

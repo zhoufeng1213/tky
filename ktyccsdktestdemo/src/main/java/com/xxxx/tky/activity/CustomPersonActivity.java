@@ -206,7 +206,7 @@ public class CustomPersonActivity extends BaseHttpRequestActivity {
 
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
-        LogUtils.i("zwmn", "CustomPersonActivity 请求数据 " + response);
+//        LogUtils.i("zwmn", "CustomPersonActivity 请求数据 " + response);
         if (HttpRequest.Contant.mineContacts.equals(moduleName)) {
             srlRefresh.finishLoadMore();
             srlRefresh.finishRefresh();

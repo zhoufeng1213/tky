@@ -25,7 +25,6 @@ import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.model.CustomDefinedBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.parse.CustomItemParse;
-import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.cc.util.ToastUtil;
@@ -98,6 +97,17 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
         if (AntiShakeUtils.isInvalidClick(view)) {
             return;
         }
+        String name = userName.getText().toString();
+        if (TextUtils.isEmpty(name)) {
+            ToastUtil.showToast(this, "姓名不能为空！");
+            return;
+        }
+
+        String phone = phoneNum.getText().toString();
+        if (TextUtils.isEmpty(phone)) {
+            ToastUtil.showToast(this, "电话不能为空");
+            return;
+        }
         addCustom();
     }
 
@@ -143,7 +153,7 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
                     }
                 }
             }
-            LogUtils.i("zwmn", jsonObject.toString());
+//            LogUtils.i("zwmn", jsonObject.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -193,7 +203,7 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
     @Override
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
-        LogUtils.i("zwmn", moduleName + " >> " + result + " >> ");
+//        LogUtils.i("zwmn", moduleName + " >> " + result + " >> ");
 
     }
 
@@ -288,7 +298,7 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
 
     private void setItemClick(CustomDefinedBean bean, TextView textView) {
 //        ToastUtil.showToast(this, bean.getType());
-        LogUtils.i("zwmn", bean.toString());
+//        LogUtils.i("zwmn", bean.toString());
         if ("select".equals(bean.getType()) || "radio".equals(bean.getType())) {
             JSONArray items = CustomItemParse.parseItem(getApplicationContext(), bean.getId());
             if (null != items && items.length() > 0) {
@@ -358,7 +368,7 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
             public void onSure(Date date) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String text = format.format(date);
-                LogUtils.i("zwmn", "所选日期时间：" + text);
+//                LogUtils.i("zwmn", "所选日期时间：" + text);
                 textView.setText(text);
                 bean.setValue(text);
 
@@ -395,7 +405,7 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
             public void onSure(Date date) {
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
                 String text = format.format(date);
-                LogUtils.i("zwmn", "所选日期时间：" + text);
+//                LogUtils.i("zwmn", "所选日期时间：" + text);
                 textView.setText(text);
                 bean.setValue(text);
 
@@ -433,7 +443,7 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
             public void onSure(Date date) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 String text = format.format(date);
-                LogUtils.i("zwmn", "所选日期时间：" + text);
+//                LogUtils.i("zwmn", "所选日期时间：" + text);
                 textView.setText(text);
                 bean.setValue(text);
 
