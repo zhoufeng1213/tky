@@ -89,7 +89,7 @@ public class FileSaveManager {
         try {
             long currentTime = System.currentTimeMillis();
             long dealTime = currentTime - days * 24 * 60 * 60 * 1000;
-            String dealName = pre_file_name + new SimpleDateFormat("yyyy-MM-dd").format(new Date(dealTime)) + ".txt";
+            String dealName = pre_file_name + new SimpleDateFormat("yyyy-MM-dd").format(new Date(dealTime)) + ".log";
             File dirList = new File(dirPath);
             if (dirList.exists()) {
                 File[] listFiles = dirList.listFiles();
@@ -137,7 +137,7 @@ public class FileSaveManager {
         try {
             long currentTime = System.currentTimeMillis();
             long dealTime = currentTime - days * 24 * 60 * 60 * 1000;
-            String dealName = pre_file_name + new SimpleDateFormat("yyyy-MM-dd").format(new Date(dealTime)) + ".txt";
+            String dealName = pre_file_name + new SimpleDateFormat("yyyy-MM-dd").format(new Date(dealTime)) + ".log";
             File dirList = new File(dirPath);
             if (dirList.exists()) {
                 File[] listFiles = dirList.listFiles();
@@ -181,7 +181,7 @@ public class FileSaveManager {
         try {
             long currentTime = System.currentTimeMillis();
             long dealTime = currentTime - days * 24 * 60 * 60 * 1000;
-            String dealName = pre_file_name + new SimpleDateFormat("yyyy-MM-dd").format(new Date(dealTime)) + ".txt";
+            String dealName = pre_file_name + new SimpleDateFormat("yyyy-MM-dd").format(new Date(dealTime)) + ".log";
             File dirList = new File(dirPath);
             if (dirList.exists()) {
                 File[] listFiles = dirList.listFiles();
