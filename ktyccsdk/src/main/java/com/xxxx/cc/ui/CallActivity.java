@@ -200,26 +200,28 @@ public class CallActivity extends BaseHttpRequestActivity {
                     public void onResponse(String response, int id) {
                         LogUtils.e("response：" + response);
                         layoutPhoneAddress.setVisibility(View.GONE);
-                        if (!TextUtils.isEmpty(response)) {
+                        if (!response.equals("")) {
                             try {
                                 JSONObject json = JSON.parseObject(response);
-                                JSONObject phoneDetail = json.getJSONObject("response").getJSONObject(phoneNum).getJSONObject("detail");
-                                String province = phoneDetail.getString("province");
-                                JSONArray area = phoneDetail.getJSONArray("area");
-                                String city = "";
-                                String showText = "";
-                                if (null != area && area.size() > 0) {
-                                    city = area.getJSONObject(0).getString("city");
-                                }
-                                if (!TextUtils.isEmpty(province)) {
-                                    showText = province + " " + city;
-                                } else {
-                                    showText = city;
-                                }
+                                if (!json.getJSONObject("response").toJSONString().equals("{}")) {
+                                    JSONObject phoneDetail = json.getJSONObject("response").getJSONObject(phoneNum).getJSONObject("detail");
+                                    String province = phoneDetail.getString("province");
+                                    JSONArray area = phoneDetail.getJSONArray("area");
+                                    String city = "";
+                                    String showText = "";
+                                    if (null != area && area.size() > 0) {
+                                        city = area.getJSONObject(0).getString("city");
+                                    }
+                                    if (!TextUtils.isEmpty(province)) {
+                                        showText = province + " " + city;
+                                    } else {
+                                        showText = city;
+                                    }
 
-                                if (!TextUtils.isEmpty(showText)) {
-                                    layoutPhoneAddress.setVisibility(View.VISIBLE);
-                                    tvPhoneAddress.setText(showText);
+                                    if (!TextUtils.isEmpty(showText)) {
+                                        layoutPhoneAddress.setVisibility(View.VISIBLE);
+                                        tvPhoneAddress.setText(showText);
+                                    }
                                 }
 
                             } catch (JSONException e) {
@@ -310,7 +312,7 @@ public class CallActivity extends BaseHttpRequestActivity {
     public JSONObject getHttpRequestParams(String moduleName) {
         JSONObject jsonObject = new JSONObject();
         MakecallBean makecallBean = new MakecallBean();
-        makecallBean.setCaller(cacheUserBean.getMobile());
+        makecallBean.setCaller(cacheUserBean.getCcUserInfo().getExtensionNo());
         makecallBean.setCallee(phoneNum);
         makecallBean.setName(userContactName);
         makecallBean.setAppname("android");

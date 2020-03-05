@@ -74,6 +74,10 @@ public class CallPhoneTool {
             @Override
             public void onClick(View view) {
                 dialog.cancel();
+                if (cacheUserBean.getCcUserInfo()==null||cacheUserBean.getCcUserInfo().getExtensionNo() == null || cacheUserBean.getCcUserInfo().getExtensionNo() .equals("")) {
+                    showToast("请联系管理员配置手机号,然后退出重新登录");
+                    return;
+                }
                 KtyCcSdkTool.getInstance().callPhone(mContext, phoneNum,
                         userName,
                         ""
@@ -86,7 +90,7 @@ public class CallPhoneTool {
                 dialog.cancel();
                 LogUtils.e("Mobile:" + cacheUserBean.getMobile());
                 if (cacheUserBean.getMobile() == null || cacheUserBean.getMobile().equals("")) {
-                    showToast("请联系管理员配置手机号");
+                    showToast("请联系管理员配置手机号,然后退出重新登录");
                     return;
                 }
                 doPostByHeaders(
