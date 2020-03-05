@@ -1,12 +1,15 @@
 package com.xxxx.tky.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +28,7 @@ import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.model.CustomDefinedBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.parse.CustomItemParse;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.cc.util.ToastUtil;
@@ -103,11 +107,24 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
             return;
         }
 
-        String phone = phoneNum.getText().toString();
-        if (TextUtils.isEmpty(phone)) {
-            ToastUtil.showToast(this, "电话不能为空");
-            return;
+//        String phone = phoneNum.getText().toString();
+//        if (TextUtils.isEmpty(phone)) {
+//            ToastUtil.showToast(this, "电话不能为空");
+//            return;
+//        }
+        if (null != customDefinedBeans && customDefinedBeans.size() > 0) {
+            for (int i = 0; i < customDefinedBeans.size(); i++) {
+                CustomDefinedBean bean = customDefinedBeans.get(i);
+                LogUtils.i("zwmn", bean.getName() + "是否必填：" + bean.isRequireWrite());
+                if (bean.isRequireWrite() && TextUtils.isEmpty(bean.getValue())) {
+                    ToastUtil.showToast(this, bean.getName() + "不能为空");
+                    return;
+
+                }
+
+            }
         }
+
         addCustom();
     }
 
@@ -268,7 +285,7 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
 
 
                 tvName.setText(bean.getName());
-                String value = bean.getValue();
+                String value = bean.getDefaultValue();
                 //cdate "2018-11-21 00:00:00" 需要特殊处理:值展示日期
                 if ("cdate".equals(bean.getType())) {
                     if (!TextUtils.isEmpty(value)) {
@@ -343,7 +360,7 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
     private void showDateTimePick(CustomDefinedBean bean, TextView textView) {
         DatePickDialog dialog = new DatePickDialog(this);
         //设置上下年分限制
-        dialog.setYearLimt(5);
+        dialog.setYearLimt(10);
         //设置标题
         dialog.setTitle("选择时间");
         //设置类型
@@ -451,5 +468,39 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
         });
         dialog.show();
 
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    assert v != null;
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    /** here */
+                    v.clearFocus();
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        return getWindow().superDispatchTouchEvent(ev) || onTouchEvent(ev);
+    }
+
+    public boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = {0, 0};
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
+        }
+        return false;
     }
 }

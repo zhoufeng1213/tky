@@ -97,7 +97,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/d20"
         android:text="V1.0.10"
-        android:textColor="@color/gray_btn_bg_color"
+        android:textColor="@color/p70_light_dark"
         android:textSize="13sp" />
 
 </LinearLayout>

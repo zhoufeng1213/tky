@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.xxxx.cc.base.presenter.MyStringCallback;
 import com.xxxx.cc.callback.LoginCallBack;
 import com.xxxx.cc.model.BaseBean;
@@ -17,22 +18,23 @@ import com.xxxx.cc.util.LinServiceManager;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
 import com.xxxx.cc.util.SharedPreferencesUtil;
+import com.xxxx.cc.util.SystemUtils;
 import com.xxxx.cc.util.ThreadTask;
 import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.cc.util.db.DbUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.builder.GetBuilder;
+import com.zhy.http.okhttp.builder.PostStringBuilder;
 
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.RegistrationState;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import okhttp3.Call;
+import okhttp3.MediaType;
 
 import static com.xxxx.cc.global.Constans.KTY_CC_BEGIN;
 import static com.xxxx.cc.global.Constans.KTY_CUSTOM_BEGIN;
@@ -46,7 +48,6 @@ import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
 public class KtyCcNetUtil {
 
 
-
     public static void login(Context context, String userName, String pwd, LoginCallBack loginCallBack) {
         if (loginCallBack == null) {
             ToastUtil.showToast(context, "loginCallBack 不能为null");
@@ -57,12 +58,19 @@ public class KtyCcNetUtil {
             loginCallBack.onFailed(ErrorCode.NOT_NET_ERROR, "无网络");
             return;
         }
-        GetBuilder okHttpUtils = OkHttpUtils.get();
-        okHttpUtils.url(Constans.BASE_URL + HttpRequest.Login.loginUser);
-        //添加请求参数
-        okHttpUtils.addParams("username", userName);
-        okHttpUtils.addParams("password", pwd);
-        okHttpUtils.build()
+        PostStringBuilder okHttpUtils = OkHttpUtils.postString();
+        okHttpUtils.url(Constans.BASE_URL + HttpRequest.Login.postLoginUrl);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", userName);
+        jsonObject.put("password", pwd);
+        jsonObject.put("userAgent", SystemUtils.getDeviceModel());
+        jsonObject.put("appVersion", PackageUtils.getVersionName(context));
+        jsonObject.put("os", "Android");
+        jsonObject.put("osVersion", SystemUtils.getOSVersion());
+        okHttpUtils.content(jsonObject.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
@@ -104,8 +112,8 @@ public class KtyCcNetUtil {
         LogUtils.e(JSON.toJSONString(userBean));
         SharedPreferencesUtil.saveObjectBean(context, userBean, USERBEAN_SAVE_TAG);
         DbUtil.init(context);
-        dealCache(context,userBean);
-        dealCustomCache(context,userBean);
+        dealCache(context, userBean);
+        dealCustomCache(context, userBean);
         //去配置linphone的参数
         if (!LinphoneService.isReady()) {
             context.startService(new Intent(context, LinphoneService.class));
@@ -113,76 +121,73 @@ public class KtyCcNetUtil {
     }
 
 
-    private static void dealCache(Context context,UserBean userBean){
-        String beginStr = SharedPreferencesUtil.getValue(context,KTY_CC_BEGIN);
+    private static void dealCache(Context context, UserBean userBean) {
+        String beginStr = SharedPreferencesUtil.getValue(context, KTY_CC_BEGIN);
         long beginTime = 0;
-        if(!TextUtils.isEmpty(beginStr)){
+        if (!TextUtils.isEmpty(beginStr)) {
             try {
                 beginTime = Long.valueOf(beginStr);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             //找到当前时间的前40天的时间当做开始时间
             Calendar cl = Calendar.getInstance();
-            cl.add(Calendar.DATE,-40);
+            cl.add(Calendar.DATE, -40);
             Date date = cl.getTime();
             beginTime = date.getTime();
         }
         HttpCacheDataUtil httpCacheDataUtil = HttpCacheDataUtil.getInstance(context.getApplicationContext());
-        httpCacheDataUtil.setQueryData(beginTime,System.currentTimeMillis(),userBean.getUserId(),userBean.getToken());
+        httpCacheDataUtil.setQueryData(beginTime, System.currentTimeMillis(), userBean.getUserId(), userBean.getToken());
         httpCacheDataUtil.loadAllNetData();
     }
 
 
-
-    private static void dealCustomCache(Context context,UserBean userBean){
-        String beginStr = SharedPreferencesUtil.getValue(context,KTY_CUSTOM_BEGIN);
-        LogUtils.e("beginStr====> "+(beginStr == null?"null":beginStr));
+    private static void dealCustomCache(Context context, UserBean userBean) {
+        String beginStr = SharedPreferencesUtil.getValue(context, KTY_CUSTOM_BEGIN);
+        LogUtils.e("beginStr====> " + (beginStr == null ? "null" : beginStr));
         long beginTime = 0;
-        if(!TextUtils.isEmpty(beginStr)){
+        if (!TextUtils.isEmpty(beginStr)) {
             try {
                 beginTime = Long.valueOf(beginStr);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             //找到当前时间的前40天的时间当做开始时间
             Calendar cl = Calendar.getInstance();
-            cl.add(Calendar.DATE,-40);
+            cl.add(Calendar.DATE, -40);
             Date date = cl.getTime();
             beginTime = date.getTime();
         }
         CustomPersonDataUtil httpCacheDataUtil = CustomPersonDataUtil.getInstance(context.getApplicationContext());
-        httpCacheDataUtil.setQueryData(beginTime,System.currentTimeMillis(),userBean.getToken());
+        httpCacheDataUtil.setQueryData(beginTime, System.currentTimeMillis(), userBean.getToken());
         httpCacheDataUtil.loadAllNetData();
     }
 
     private static void dealLinkLinPhone(Context context, BaseBean baseBean, LoginCallBack loginCallBack) {
         UserBean userBean = JSON.parseObject(baseBean.getData().toString(), UserBean.class);
         //判断service
-        if(LinphoneService.isReady()){
-            LinServiceManager.addListener(new CoreListenerStub(){
+        if (LinphoneService.isReady()) {
+            LinServiceManager.addListener(new CoreListenerStub() {
                 @Override
                 public void onRegistrationStateChanged(Core lc, ProxyConfig cfg, RegistrationState cstate, String message) {
                     super.onRegistrationStateChanged(lc, cfg, cstate, message);
                     if (cstate == RegistrationState.Ok) {
                         LinphoneService.setRegister(true);
                         loginCallBack.onSuccess(ErrorCode.SUCCESS, "登录成功");
-                    }else{
+                    } else {
                         loginCallBack.onFailed(ErrorCode.REGISTER_ERROR, "注册失败");
                     }
                 }
             });
             LinServiceManager.setLinPhoneConfig(userBean);
-        }else{
+        } else {
             LogUtils.e("service还没起");
-            LoginRunnable loginRunnable = new LoginRunnable(userBean,loginCallBack);
+            LoginRunnable loginRunnable = new LoginRunnable(userBean, loginCallBack);
             ThreadTask.getInstance().executorOtherThread(loginRunnable, 10);
         }
     }
-
-
 
 
 }

@@ -9,6 +9,7 @@ public class HttpRequest {
 
     public static class Login {
         public static String loginUser = "/sdk/api/v1/authentication";
+        public static String postLoginUrl = "/sdk/api/v1/login";
     }
 
     public static class CallHistory {

@@ -274,7 +274,7 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
     private void showDateTimePick(CustomDefinedBean bean, TextView textView) {
         DatePickDialog dialog = new DatePickDialog(this);
         //设置上下年分限制
-        dialog.setYearLimt(5);
+        dialog.setYearLimt(10);
         //设置标题
         dialog.setTitle("选择时间");
         //设置类型
