@@ -95,12 +95,14 @@ public class BaseFragmentPresenter {
                         } else {
                             baseBean = null;
                         }
+                        Log.e("lxl","e.getMessage():"+e.getMessage());
                         mActivity.dealHttpRequestFail(moduleName, baseBean);
                     }
 
 
                     @Override
                     public void onResponse(String response, int id) {
+                        Log.e("lxl","onResponse:"+response);
                         try {
                             if (isShowDialog) {
                                 mActivity.dismissDialog();

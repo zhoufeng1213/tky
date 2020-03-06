@@ -1,6 +1,8 @@
 package com.xxxx.cc.base.presenter;
 
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.global.Constans;
@@ -86,6 +88,7 @@ public class BaseGetPresenter {
                     .execute(new MyStringCallback() {
                         @Override
                         public void onError(Call call, Exception e, int id) {
+                            Log.e("lxl","e.getMessage():"+e.getMessage());
                             mActivity.dismissDialog();
                             BaseBean baseBean = new BaseBean();
                             if (e != null) {
@@ -98,6 +101,7 @@ public class BaseGetPresenter {
 
                         @Override
                         public void onResponse(String response, int id) {
+                            Log.e("lxl","onResponse:"+response);
                             try {
                                 mActivity.dismissDialog();
                                 BaseBean baseBean = JSON.parseObject(response, BaseBean.class);

@@ -5,6 +5,8 @@ import android.app.Application;
 import com.kty.mars.baselibrary.LibContext;
 import com.xxxx.cc.global.KtyCcOptionsUtil;
 import com.xxxx.cc.global.KtyCcSdkTool;
+import com.xxxx.cc.save.FileSaveManager;
+import com.xxxx.cc.util.LogCatHelper;
 
 /**
  * @author zhoufeng
@@ -18,5 +20,13 @@ public class MyApplicaiton extends Application {
         KtyCcOptionsUtil.init(this, "https://tky.ketianyun.com");
         KtyCcSdkTool.getInstance().initKtyCcSdk(this);
         LibContext.getInstance().init(this, false);
+        String logPath=getApplicationContext().getExternalCacheDir()+"/logPath/";
+        FileSaveManager.getInstance().deleteOutlineFiles(logPath,3);
+        new Thread() {
+            public void run() {
+                LogCatHelper.getInstance(getApplicationContext(), logPath).start();
+            }
+        }
+                .start();
     }
 }

@@ -75,7 +75,7 @@ public class CallPhoneTool {
             public void onClick(View view) {
                 dialog.cancel();
                 if (cacheUserBean.getCcUserInfo()==null||cacheUserBean.getCcUserInfo().getExtensionNo() == null || cacheUserBean.getCcUserInfo().getExtensionNo() .equals("")) {
-                    showToast("请联系管理员配置手机号,然后退出重新登录");
+                    showToast("请联系管理员配置分机号,然后退出重新登录");
                     return;
                 }
                 KtyCcSdkTool.getInstance().callPhone(mContext, phoneNum,

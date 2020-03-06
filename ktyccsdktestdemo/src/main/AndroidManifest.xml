@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name="com.xxxx.tky.MyApplicaiton"
@@ -38,6 +38,7 @@
         <activity android:name="com.xxxx.tky.activity.CallHistoryFragmentActivity" />
         <activity android:name="com.xxxx.tky.activity.HomeActivity" />
         <activity android:name="com.xxxx.tky.activity.GuideActivity" />
+        <activity android:name="com.xxxx.tky.activity.FeedBackActivity" />
         <activity android:name="com.xxxx.tky.activity.ContactDetailActivity" />
         <activity android:name="com.xxxx.tky.activity.CustomPersonActivity" />
         <activity android:name="com.xxxx.tky.activity.SearchPersonActivity" />

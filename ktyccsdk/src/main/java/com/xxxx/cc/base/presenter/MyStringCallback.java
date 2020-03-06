@@ -21,6 +21,7 @@ public abstract class MyStringCallback extends Callback<String> {
 
     @Override
     public String parseNetworkResponse(Response response, int id) throws Exception {
+        Log.e("lxl","response:"+response);
         if (response.code() >= 200 && response.code() < 300) {
             if (response.body() != null) {
                 return response.body().string();
