@@ -132,17 +132,29 @@
                             android:gravity="center_vertical"
                             android:minHeight="@dimen/d50"
                             android:orientation="horizontal"
-                            android:paddingLeft="@dimen/d20"
+                            android:paddingLeft="@dimen/d15"
                             android:paddingTop="5dp"
                             android:paddingRight="@dimen/d20"
                             android:paddingBottom="5dp">
+
+                            <TextView
+                                android:id="@+id/tv_force_flag"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:gravity="center_vertical"
+                                android:paddingTop="4dp"
+                                android:text="*"
+                                android:textColor="@color/red_btn_bg_color"
+                                android:textSize="@dimen/textNormal14" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:text="姓名"
-                                android:textColor="@color/c_3D4249" />
+                                android:textColor="@color/c_3D4249"
+                                android:textSize="@dimen/textNormal14" />
 
 
                             <EditText
@@ -182,8 +194,20 @@
                             android:gravity="center_vertical"
                             android:minHeight="@dimen/d50"
                             android:orientation="horizontal"
-                            android:paddingLeft="@dimen/d20"
+                            android:paddingLeft="@dimen/d15"
                             android:paddingRight="@dimen/d20">
+
+                            <TextView
+                                android:id="@+id/tv_phone_force_flag"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:gravity="center_vertical"
+                                android:paddingTop="4dp"
+                                android:text="*"
+                                android:textColor="@color/red_btn_bg_color"
+                                android:textSize="@dimen/textNormal14"
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/tv_phone_name"

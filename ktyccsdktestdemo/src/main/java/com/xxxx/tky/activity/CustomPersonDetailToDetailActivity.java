@@ -34,6 +34,7 @@ import com.xxxx.cc.parse.CustomItemParse;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.TimeUtils;
+import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.cc.util.db.DbUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.util.AntiShakeUtils;
@@ -148,6 +149,7 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
                 EditText etValue = itemView.findViewById(R.id.et_defined_value);
                 TextView tvValue = itemView.findViewById(R.id.tv_defined_value);
                 ImageView ivArrow = itemView.findViewById(R.id.iv_right_arrow);
+                TextView tvForce = itemView.findViewById(R.id.tv_force_flag);
                 boolean isEdit = bean.isSupportEdit();
                 if (isEdit) {
                     ivArrow.setVisibility(View.VISIBLE);
@@ -208,6 +210,12 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
                 }
                 tvValue.setText(value);
                 etValue.setText(value);
+
+                if (bean.isRequireWrite()) {
+                    tvForce.setVisibility(View.VISIBLE);
+                } else {
+                    tvForce.setVisibility(View.INVISIBLE);
+                }
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -418,6 +426,26 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
         if (AntiShakeUtils.isInvalidClick(view)) {
             return;
         }
+        String name = userName.getText().toString();
+        if (TextUtils.isEmpty(name)) {
+            ToastUtil.showToast(this, "姓名不能为空！");
+            return;
+        }
+
+        if (null != customDefinedBeans && customDefinedBeans.size() > 0) {
+            for (int i = 0; i < customDefinedBeans.size(); i++) {
+                CustomDefinedBean bean = customDefinedBeans.get(i);
+                LogUtils.i("zwmn", bean.getName() + "是否必填：" + bean.isRequireWrite());
+                if (bean.isRequireWrite() && TextUtils.isEmpty(bean.getValue())) {
+                    ToastUtil.showToast(this, bean.getName() + "不能为空");
+                    return;
+
+                }
+
+            }
+        }
+
+
         if (cacheUserBean != null && queryCustomPersonBean != null) {
             basePostPresenter.presenterBusinessByHeader(
                     HttpRequest.Contant.updateAll + queryCustomPersonBean.getId(),

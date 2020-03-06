@@ -107,11 +107,6 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
             return;
         }
 
-//        String phone = phoneNum.getText().toString();
-//        if (TextUtils.isEmpty(phone)) {
-//            ToastUtil.showToast(this, "电话不能为空");
-//            return;
-//        }
         if (null != customDefinedBeans && customDefinedBeans.size() > 0) {
             for (int i = 0; i < customDefinedBeans.size(); i++) {
                 CustomDefinedBean bean = customDefinedBeans.get(i);
@@ -233,6 +228,7 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
                 TextView tvName = itemView.findViewById(R.id.tv_defined_name);
                 EditText etValue = itemView.findViewById(R.id.et_defined_value);
                 TextView tvValue = itemView.findViewById(R.id.tv_defined_value);
+                TextView tvForce = itemView.findViewById(R.id.tv_force_flag);
                 ImageView ivArrow = itemView.findViewById(R.id.iv_right_arrow);
                 boolean isEdit = bean.isSupportEdit();
                 if (isEdit) {
@@ -294,6 +290,11 @@ public class CustomAddActivity extends BaseHttpRequestActivity {
                 }
                 tvValue.setText(value);
                 etValue.setText(value);
+                if (bean.isRequireWrite()) {
+                    tvForce.setVisibility(View.VISIBLE);
+                } else {
+                    tvForce.setVisibility(View.INVISIBLE);
+                }
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
