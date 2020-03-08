@@ -30,6 +30,7 @@ public class UserBean {
     private String userId;
     private String username;
     private String mobile;
+    private String email;
     private List<String> sitePermisson;
     private List<String> userPermission;
 
@@ -95,6 +96,13 @@ public class UserBean {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<String> getSitePermisson() {

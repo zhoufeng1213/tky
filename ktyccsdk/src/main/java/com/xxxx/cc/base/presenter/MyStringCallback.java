@@ -3,6 +3,7 @@ package com.xxxx.cc.base.presenter;
 import android.util.Log;
 
 import com.xxxx.cc.util.HttpExceptionUtil;
+import com.xxxx.cc.util.LogUtils;
 import com.zhy.http.okhttp.callback.Callback;
 
 import okhttp3.Response;
@@ -21,7 +22,7 @@ public abstract class MyStringCallback extends Callback<String> {
 
     @Override
     public String parseNetworkResponse(Response response, int id) throws Exception {
-        Log.e("lxl","response:"+response);
+      LogUtils.e("response:"+response);
         if (response.code() >= 200 && response.code() < 300) {
             if (response.body() != null) {
                 return response.body().string();

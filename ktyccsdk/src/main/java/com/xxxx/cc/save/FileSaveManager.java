@@ -2,6 +2,7 @@ package com.xxxx.cc.save;
 
 import com.kty.mars.baselibrary.LibContext;
 import com.xxxx.cc.util.FileUtil;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.StringUtils;
 
 import java.io.File;
@@ -137,18 +138,19 @@ public class FileSaveManager {
         try {
             long currentTime = System.currentTimeMillis();
             long dealTime = currentTime - days * 24 * 60 * 60 * 1000;
-            String dealName = pre_file_name + new SimpleDateFormat("yyyy-MM-dd").format(new Date(dealTime)) + ".log";
+            String dealName =  new SimpleDateFormat("yyyyMMdd").format(new Date(dealTime));
+            LogUtils.e("dealName:"+dealName);
             File dirList = new File(dirPath);
             if (dirList.exists()) {
                 File[] listFiles = dirList.listFiles();
                 if (null != listFiles && listFiles.length > 0) {
                     for (File file : listFiles) {
                         String fileName = file.getName();
-                        if (fileName.startsWith(pre_file_name)) {
-                            int code = fileName.compareTo(dealName);
-                            if (code > 0) {
+                        LogUtils.e("fileName:"+fileName);
+                        if (fileName.startsWith(dealName)) {
+                            LogUtils.e("startsWith:");
                                 paths.add(file.getAbsolutePath());
-                            }
+
                         }
                     }
                 }
@@ -156,6 +158,7 @@ public class FileSaveManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        LogUtils.e("paths:"+paths.size());
         return paths;
 
     }
@@ -181,18 +184,18 @@ public class FileSaveManager {
         try {
             long currentTime = System.currentTimeMillis();
             long dealTime = currentTime - days * 24 * 60 * 60 * 1000;
-            String dealName = pre_file_name + new SimpleDateFormat("yyyy-MM-dd").format(new Date(dealTime)) + ".log";
+            String dealName = new SimpleDateFormat("yyyyMMdd").format(new Date(dealTime));
             File dirList = new File(dirPath);
             if (dirList.exists()) {
                 File[] listFiles = dirList.listFiles();
                 if (null != listFiles && listFiles.length > 0) {
                     for (File file : listFiles) {
                         String fileName = file.getName();
-                        int code = fileName.compareTo(dealName);
-                        if (code <= 0) {
+                        if (fileName.startsWith(dealName)) {
                             file.delete();
                         }
-                    }
+                        }
+
 
                 }
             }

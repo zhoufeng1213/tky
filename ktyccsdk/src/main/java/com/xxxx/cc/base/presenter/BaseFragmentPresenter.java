@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.xxxx.cc.base.fragment.BaseHttpRequestFragment;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.model.BaseBean;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
@@ -81,6 +82,7 @@ public class BaseFragmentPresenter {
                 }
             }
         }
+        LogUtils.e("moduleName:"+moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(mActivity.getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -137,6 +139,7 @@ public class BaseFragmentPresenter {
         for (String key : params.keySet()) {
             okHttpUtils.addParams(key, params.get(key));
         }
+        LogUtils.e("moduleName:"+moduleName+"，Params:"+params);
         okHttpUtils.build()
                 .execute(new StringCallback() {
                     @Override

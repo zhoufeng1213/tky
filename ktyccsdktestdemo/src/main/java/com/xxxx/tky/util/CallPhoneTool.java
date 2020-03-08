@@ -125,6 +125,7 @@ public class CallPhoneTool {
                 }
             }
         }
+        LogUtils.e("moduleName:"+moduleName+"，Params:"+getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))

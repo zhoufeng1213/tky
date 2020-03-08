@@ -60,7 +60,6 @@ public class KtyCcNetUtil {
         }
         PostStringBuilder okHttpUtils = OkHttpUtils.postString();
         okHttpUtils.url(Constans.BASE_URL + HttpRequest.Login.postLoginUrl);
-
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", userName);
         jsonObject.put("password", pwd);
@@ -68,6 +67,7 @@ public class KtyCcNetUtil {
         jsonObject.put("appVersion", PackageUtils.getVersionName(context));
         jsonObject.put("os", "Android");
         jsonObject.put("osVersion", SystemUtils.getOSVersion());
+        LogUtils.e("moduleName:"+ HttpRequest.Login.postLoginUrl+"，Params:"+jsonObject.toString());
         okHttpUtils.content(jsonObject.toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()

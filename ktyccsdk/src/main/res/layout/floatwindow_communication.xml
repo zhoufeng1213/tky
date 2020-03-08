@@ -6,6 +6,7 @@
     android:layout_height="200dp"
     android:background="@drawable/ic_svg_xuanfuchuang"
     android:orientation="vertical"
+    android:keepScreenOn="true"
     tools:ignore="InOrMmUsage">
 
     <TextView

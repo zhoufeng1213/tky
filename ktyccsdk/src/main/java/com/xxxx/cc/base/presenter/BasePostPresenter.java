@@ -10,6 +10,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.model.BaseBean;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostFileBuilder;
@@ -97,6 +98,7 @@ public class BasePostPresenter {
                 }
             }
         }
+        LogUtils.e("moduleName:"+moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(mActivity.getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -104,7 +106,7 @@ public class BasePostPresenter {
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Log.e("lxl","e.getMessage():"+e.getMessage());
+                        LogUtils.e("e.getMessage():"+e.getMessage());
                         mActivity.dismissDialog();
                         BaseBean baseBean = new BaseBean();
                         if (e != null) {
@@ -118,7 +120,7 @@ public class BasePostPresenter {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e("lxl","onResponse:"+response);
+                        LogUtils.e("lxl","onResponse:"+response);
                         try {
                             if (isShowDialog) {
                                 mActivity.dismissDialog();
@@ -155,6 +157,7 @@ public class BasePostPresenter {
             mActivity.dealHttpRequestFail(moduleName, baseBean);
             return;
         }
+        LogUtils.e("moduleName:"+moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
         OkHttpUtils
                 .postString()
                 .url(Constans.BASE_URL + moduleName)
@@ -223,6 +226,7 @@ public class BasePostPresenter {
                 }
             }
         }
+        LogUtils.e("moduleName:"+moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
         Map<String, String> params = JSONObject.parseObject(mActivity.getHttpRequestParams(moduleName).toString(), new TypeReference<Map<String, String>>(){});
         okHttpUtils.addFile("file",file.getName(),file)
                 .params(params)

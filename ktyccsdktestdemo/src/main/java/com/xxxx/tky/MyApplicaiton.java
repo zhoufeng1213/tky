@@ -20,7 +20,7 @@ public class MyApplicaiton extends Application {
         KtyCcOptionsUtil.init(this, "https://tky.ketianyun.com");
         KtyCcSdkTool.getInstance().initKtyCcSdk(this);
         LibContext.getInstance().init(this, false);
-        String logPath=getApplicationContext().getExternalCacheDir()+"/logPath/";
+        String logPath=getApplicationContext().getExternalCacheDir()+"/log/";
         FileSaveManager.getInstance().deleteOutlineFiles(logPath,3);
         new Thread() {
             public void run() {

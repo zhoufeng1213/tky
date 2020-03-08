@@ -2,7 +2,9 @@ package com.xxxx.tky.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,11 +19,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -39,21 +39,18 @@ import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.PackageUtils;
 import com.xxxx.cc.model.BaseBean;
-import com.xxxx.cc.model.CustomPersonRequestBean;
 import com.xxxx.cc.model.UserBean;
-import com.xxxx.cc.save.FileSaveManager;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.model.UploadlogBean;
 import com.xxxx.tky.util.Cemera;
-import com.xxxx.tky.util.FileToZip;
+import com.xxxx.tky.util.FileUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -110,6 +107,7 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
     private ProgressDialog progressDialog;
     private UserBean cacheUserBean;
    private String logZipPath;
+    private String logPath;
    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd_HH:mm");
    boolean isRequestok=true;
     @Override
@@ -117,7 +115,9 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
         ButterKnife.bind(this);
-        logPath=getApplicationContext().getExternalCacheDir()+"/logPath/";
+        logCachePath=getApplicationContext().getExternalCacheDir()+"/logCache/";
+        logCacheFile=logCachePath+"/logCacheFile/";
+        logPath=getApplicationContext().getExternalCacheDir()+"/log/";
         initData();
         initView();
         initLongClick();
@@ -201,7 +201,8 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
     private static int maxPic = 5;
     private static int currentPic = 1;
     String[] mPicLocalArray = new String[5];
-    private String logPath;
+    private String logCachePath;
+    private String logCacheFile;
     @OnClick({R.id.iv_close, R.id.iv_afb_cancel_1, R.id.iv_afb_1, R.id.rl_afb_iv_1, R.id.iv_afb_cancel_2, R.id.iv_afb_2, R.id.rl_afb_iv_2, R.id.iv_afb_cancel_3, R.id.iv_afb_3, R.id.rl_afb_iv_3, R.id.iv_afb_cancel_4, R.id.iv_afb_4, R.id.rl_afb_iv_4, R.id.iv_afb_cancel_5, R.id.iv_afb_5, R.id.rl_afb_iv_5, R.id.ll_afb_phone_email, R.id.bt_afb_commit})
     public void onClick(View v) {
         int i = v.getId();
@@ -233,31 +234,37 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
             ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             progressDialog.setMessage("上传中...");
             progressDialog.show();
-            if(isRequestok)
-            {
                 for (int i1 = 0; i1 < mPicLocalArray.length; i1++) {
                     if (mPicLocalArray[i1] != null)
-                        FileToZip.copy(mPicLocalArray[i1], logPath);
+                        FileUtils.copy(mPicLocalArray[i1], logCacheFile);
                 }
-                FileSaveManager.getInstance().getRecentFilePaths(logPath,1);
+                    FileUtils.copyFolder(logPath, logCacheFile+"logs");
+
                 String fileTime = simpleDateFormat.format(new Date()).toString().replace(":", "");
-                logZipPath = "this_is_guid_" + fileTime;
-                FileToZip.fileToZip(logPath, logPath, logZipPath);
+                logZipPath = logCachePath+"this_is_guid_" + fileTime+".zip";
+            try {
+                FileUtils.zip(logCacheFile, logZipPath);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            File zipFile= new File(logZipPath);
+            if(zipFile.exists()) {
                 basePostPresenter.post_file(
-                        HttpRequest.uploadlog, new File(logPath + logZipPath + ".zip"),
+                        HttpRequest.uploadlog, zipFile,
                         "token", cacheUserBean.getToken(),
                         "Content-Type", "application/json"
                 );
             }
-            else {
-                basePostPresenter.post_file(
-                        HttpRequest.uploadlog, new File(logPath + logZipPath + ".zip"),
-                        "token", cacheUserBean.getToken(),
-                        "Content-Type", "application/json"
-                );
+            else
+            {
+                progressDialog.dismiss();
+                ToastUtil.showToast(getApplicationContext(),"没有对应的log文件");
+            }
             }
 
-        }
+
+
+
     }
 
     private void addPic(int i) {
@@ -367,7 +374,17 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
                             clearPic(i);
                         }
                     }
-                    ToastUtil.showToast(getApplicationContext(),"上传成功");
+
+                    new AlertDialog.Builder(FeedBackActivity.this).setTitle("您的建议已提交，感谢您的反馈")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            }
+                            ).show();
+
+
                     break;
 
                 case 10002:
@@ -563,7 +580,7 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
             requestBean.setOs("Android");
             requestBean.setOsVersion( android.os.Build.VERSION.RELEASE);
             requestBean.setUserAccount(cacheUserBean.getUsername());
-            requestBean.setUserEmail(cacheUserBean.getMobile());
+            requestBean.setUserEmail(cacheUserBean.getEmail());
             requestBean.setUserId(cacheUserBean.getUserId());
             requestBean.setUserName(cacheUserBean.getUsername());
             requestBean.setUserPhone(cacheUserBean.getMobile());
@@ -576,8 +593,9 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
     @Override
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
+      FileUtils.deleteDirectory(logCachePath);
+        if(result == null) return;
         if (HttpRequest.uploadlog.equals(moduleName)) {
-            isRequestok=false;
             Message message = new Message();
             Bundle bundle = new Bundle();
             message.what = 10002;
@@ -593,8 +611,7 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
      LogUtils.i("lxl", "请求数据 " + response);
         if (HttpRequest.uploadlog.equals(moduleName)) {
-            isRequestok=true;
-            FileToZip.deleteDirectory(logPath);
+            FileUtils.deleteDirectory(logCachePath);
             Message message = new Message();
             Bundle bundle = new Bundle();
             message.what = 10001;

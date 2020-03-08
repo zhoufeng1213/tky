@@ -90,7 +90,7 @@ public class CustomPersonDataUtil {
         for (Object key : mapParam.keySet()) {
             okHttpUtils.addParams((String) key, mapParam.get(key) == null ? "" : String.valueOf(mapParam.get(key)));
         }
-
+        LogUtils.e("moduleName:"+HttpRequest.Contant.mineContacts+"，Params:"+mapParam.toString());
         okHttpUtils
                 .build()
                 .execute(new MyStringCallback() {
