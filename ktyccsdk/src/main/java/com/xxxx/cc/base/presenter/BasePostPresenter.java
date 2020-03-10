@@ -98,7 +98,7 @@ public class BasePostPresenter {
                 }
             }
         }
-        LogUtils.e("moduleName:"+moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
+       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(mActivity.getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -106,15 +106,13 @@ public class BasePostPresenter {
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        LogUtils.e("e.getMessage():"+e.getMessage());
+                        LogUtils.e("e.getMessage():" + e.getMessage());
                         mActivity.dismissDialog();
-                        BaseBean baseBean = new BaseBean();
                         if (e != null) {
-                            baseBean.setMessage(e.getMessage());
-                        } else {
-                            baseBean = null;
+                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                            mActivity.dealHttpRequestFail(moduleName, baseBean);
+
                         }
-                        mActivity.dealHttpRequestFail(moduleName, baseBean);
                     }
 
 
@@ -157,7 +155,7 @@ public class BasePostPresenter {
             mActivity.dealHttpRequestFail(moduleName, baseBean);
             return;
         }
-        LogUtils.e("moduleName:"+moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
+       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
         OkHttpUtils
                 .postString()
                 .url(Constans.BASE_URL + moduleName)
@@ -168,13 +166,12 @@ public class BasePostPresenter {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         mActivity.dismissDialog();
-                        BaseBean baseBean = new BaseBean();
                         if (e != null) {
-                            baseBean.setMessage(e.getMessage());
-                        } else {
-                            baseBean = null;
-                        }
+                        BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
                         mActivity.dealHttpRequestFail(moduleName, baseBean);
+
+                        }
+
                     }
 
 
@@ -226,7 +223,7 @@ public class BasePostPresenter {
                 }
             }
         }
-        LogUtils.e("moduleName:"+moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
+       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
         Map<String, String> params = JSONObject.parseObject(mActivity.getHttpRequestParams(moduleName).toString(), new TypeReference<Map<String, String>>(){});
         okHttpUtils.addFile("file",file.getName(),file)
                 .params(params)
@@ -236,13 +233,11 @@ public class BasePostPresenter {
                     public void onError(Call call, Exception e, int id) {
                         Log.e("lxl","e.getMessage():"+e.getMessage());
                         mActivity.dismissDialog();
-                        BaseBean baseBean = new BaseBean();
                         if (e != null) {
-                            baseBean.setMessage(e.getMessage());
-                        } else {
-                            baseBean = null;
+                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                            mActivity.dealHttpRequestFail(moduleName, baseBean);
+
                         }
-                        mActivity.dealHttpRequestFail(moduleName, baseBean);
                     }
 
 

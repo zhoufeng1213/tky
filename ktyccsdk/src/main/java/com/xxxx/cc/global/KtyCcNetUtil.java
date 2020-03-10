@@ -67,7 +67,7 @@ public class KtyCcNetUtil {
         jsonObject.put("appVersion", PackageUtils.getVersionName(context));
         jsonObject.put("os", "Android");
         jsonObject.put("osVersion", SystemUtils.getOSVersion());
-        LogUtils.e("moduleName:"+ HttpRequest.Login.postLoginUrl+"，Params:"+jsonObject.toString());
+        LogUtils.e("url:"+ HttpRequest.Login.postLoginUrl+"，Params:"+jsonObject.toString());
         okHttpUtils.content(jsonObject.toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()

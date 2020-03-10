@@ -69,6 +69,7 @@ import android.text.TextUtils;
 
             public LogRunnable(int pid,String dirPath) {
                 this.mPid = ""+pid;
+                LogUtils.e("PID:"+mPid);
                 try {
                     File file = new File(dirPath,FormatDate.getFormatDate()+".log");
                     if(!file.exists()){
@@ -78,7 +79,7 @@ import android.text.TextUtils;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                cmds = "logcat *:v | grep \"(" + mPid + ")\"";
+                cmds = "logcat *:e | grep \"(" + mPid + ")\"";
             }
 
             @Override

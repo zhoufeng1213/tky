@@ -125,7 +125,7 @@ public class CallPhoneTool {
                 }
             }
         }
-        LogUtils.e("moduleName:"+moduleName+"，Params:"+getHttpRequestParams(moduleName).toString());
+       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -134,13 +134,11 @@ public class CallPhoneTool {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         LogUtils.e("onError:" + e.getMessage());
-                        BaseBean baseBean = new BaseBean();
                         if (e != null) {
-                            baseBean.setMessage(e.getMessage());
-                        } else {
-                            baseBean = null;
+                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                           dealHttpRequestFail(moduleName, baseBean);
+
                         }
-                        dealHttpRequestFail(moduleName, baseBean);
                     }
 
 

@@ -609,7 +609,7 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
 
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
-     LogUtils.i("lxl", "请求数据 " + response);
+     LogUtils.i("tag","请求数据 " + response);
         if (HttpRequest.uploadlog.equals(moduleName)) {
             FileUtils.deleteDirectory(logCachePath);
             Message message = new Message();

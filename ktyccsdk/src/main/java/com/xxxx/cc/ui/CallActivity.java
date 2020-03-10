@@ -337,8 +337,10 @@ public class CallActivity extends BaseHttpRequestActivity {
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
         LogUtils.e("呼叫失败1：" + result.getMessage());
-        showToast("呼叫失败1");
-        finish();
+        if(result.getMessage()!=null)
+        showToast(result.getMessage());
+        else showToast("呼叫失败");
+        hookCall();
     }
 
     public void hookCall() {

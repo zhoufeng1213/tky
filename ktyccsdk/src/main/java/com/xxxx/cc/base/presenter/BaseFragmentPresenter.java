@@ -82,7 +82,7 @@ public class BaseFragmentPresenter {
                 }
             }
         }
-        LogUtils.e("moduleName:"+moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
+        LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(mActivity.getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -91,14 +91,12 @@ public class BaseFragmentPresenter {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         mActivity.dismissDialog();
-                        BaseBean baseBean = new BaseBean();
                         if (e != null) {
-                            baseBean.setMessage(e.getMessage());
-                        } else {
-                            baseBean = null;
+                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                            mActivity.dealHttpRequestFail(moduleName, baseBean);
+
                         }
                         Log.e("lxl","e.getMessage():"+e.getMessage());
-                        mActivity.dealHttpRequestFail(moduleName, baseBean);
                     }
 
 
@@ -139,7 +137,7 @@ public class BaseFragmentPresenter {
         for (String key : params.keySet()) {
             okHttpUtils.addParams(key, params.get(key));
         }
-        LogUtils.e("moduleName:"+moduleName+"，Params:"+params);
+       LogUtils.e("url:"+Constans.BASE_URL + moduleName+" Params:"+params);
         okHttpUtils.build()
                 .execute(new StringCallback() {
                     @Override
