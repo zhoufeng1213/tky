@@ -433,7 +433,7 @@ public class CallActivity extends BaseHttpRequestActivity {
     private CoreListenerStub mCoreListener = new CoreListenerStub() {
         @Override
         public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
-            LogUtils.e("tag:" + state.name());
+            LogUtils.e("tag:" + state.name()+",message:"+message);
             if (state == Call.State.End) {
                 LogUtils.e("进入了End2");
                 hook = true;

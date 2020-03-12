@@ -13,6 +13,7 @@ import com.xxxx.cc.base.fragment.BaseFragment;
 import com.xxxx.cc.global.PackageUtils;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.LinphoneService;
+import com.xxxx.cc.util.LinServiceManager;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.activity.FeedBackActivity;
@@ -83,7 +84,7 @@ public class MineFragment extends BaseFragment {
             }
             SharedPreferencesUtil.save(mContext, Contant.LOGIN_PWD_SAVE_TAG, "");
 //        KtyCcSdkTool.getInstance().unRegister(mContext);
-            LinphoneService.setRegister(false);
+            LinServiceManager.unRegisterLinPhone();
             startActivity(LoginActivity.class);
             if (getActivity() != null) {
                 getActivity().finish();
