@@ -1,7 +1,5 @@
 package com.xxxx.cc.base.presenter;
 
-import android.util.Log;
-
 import com.xxxx.cc.util.HttpExceptionUtil;
 import com.zhy.http.okhttp.callback.Callback;
 

@@ -12,6 +12,7 @@ import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.model.CustomPersonRequestBean;
 import com.xxxx.cc.model.CustomPersonReturnResultBean;
 import com.xxxx.cc.model.QueryCustomPersonBean;
+import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.TextUtil;
@@ -59,11 +60,14 @@ public class CustomPersonDataUtil {
     private long beginTime = 0;
     private long endTime = 0;
     private String token;
+    private UserBean userBean;
 
-    public void setQueryData(long beginTime, long endTime, String token) {
+    public void setQueryData(UserBean bean, long beginTime, long endTime, int loadPage) {
         this.beginTime = beginTime;
         this.endTime = endTime;
-        this.token = token;
+        this.token = bean.getToken();
+        this.userBean = bean;
+        this.loadPage = loadPage;
     }
 
     public void loadAllNetData() {
@@ -108,7 +112,7 @@ public class CustomPersonDataUtil {
 
     private void dealResult(String response) {
         if (!TextUtils.isEmpty(response)) {
-//            LogUtils.e(response);
+            LogUtils.e(response);
             CustomPersonReturnResultBean historyResponseBean = (new Gson()).fromJson(response, CustomPersonReturnResultBean.class);
             if (historyResponseBean.getCode() == 0) {
 

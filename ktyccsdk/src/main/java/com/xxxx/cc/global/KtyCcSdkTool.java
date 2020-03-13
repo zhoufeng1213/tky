@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
+import com.kty.mars.baselibrary.http.LoggerInterceptor;
 import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.LinphoneService;
@@ -50,6 +51,7 @@ public class KtyCcSdkTool {
     private String userName;
     private String headUrl;
     UserBean cacheUserBean;
+
     private KtyCcSdkTool() {
 
     }
@@ -67,9 +69,10 @@ public class KtyCcSdkTool {
 
     /**
      * 初始化db和net
+     *
      * @param context
      */
-    public void initKtyCcSdk(Context context){
+    public void initKtyCcSdk(Context context) {
         initNetConfig();
         DbUtil.init(context);
     }
@@ -78,10 +81,10 @@ public class KtyCcSdkTool {
         CookieJarImpl cookieJar = new CookieJarImpl(new MemoryCookieStore());
         HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor(new LoggerInterceptor("TAG"))
+                .addInterceptor(new LoggerInterceptor("zwmn", true))
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
-                .cookieJar(cookieJar)
+//                .cookieJar(cookieJar)
                 .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
                 //其他配置
                 .build();
@@ -100,7 +103,7 @@ public class KtyCcSdkTool {
         SharedPreferencesUtil.save(context, VOICE_RECORD_PREFIX, "");
         SharedPreferencesUtil.save(context, KTY_CC_BASE_URL, "");
         SharedPreferencesUtil.save(context, KTY_CC_BEGIN, "");
-        SharedPreferencesUtil.save(context, Constans.KTY_CUSTOM_BEGIN,"");
+        SharedPreferencesUtil.save(context, Constans.KTY_CUSTOM_BEGIN, "");
         //删除数据库数据
         DbUtil.clearDb();
     }
@@ -167,6 +170,7 @@ public class KtyCcSdkTool {
             ToastUtil.showToast(mContext, "LinphoneService .getCore() == nul");
         }
     }
+
     public interface CallPhoneInterface {
         void goToCall(CommunicationRecordResponseBean mCommunicationRecordResponseBean);
     }
@@ -195,7 +199,7 @@ public class KtyCcSdkTool {
             Object objectBean = SharedPreferencesUtil.getObjectBean(context, USERBEAN_SAVE_TAG, UserBean.class);
             if (objectBean != null) {
                 context.startActivity(new Intent(context, HistoryActivity.class));
-            }else{
+            } else {
                 ToastUtil.showToast(context, "请登录");
             }
         } catch (Exception e) {

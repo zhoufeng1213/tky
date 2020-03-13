@@ -102,6 +102,13 @@ public class LoginActivity extends BaseHttpRequestActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
+        //安装这个版本后的第一次需要清除一下请求的begin time
+        boolean notClearBeginTime = SharedPreferencesUtil.getBoolean(mContext, Contant.CLEAR_REQUEST_BEGIN_TIME);
+        if (!notClearBeginTime) {
+            SharedPreferencesUtil.save(mContext, Constans.KTY_CC_BEGIN, "");
+            SharedPreferencesUtil.save(mContext, Constans.KTY_CUSTOM_BEGIN, "");
+            SharedPreferencesUtil.setBoolean(mContext, Contant.CLEAR_REQUEST_BEGIN_TIME, true);
+        }
         rxPermissions = new RxPermissions(this);
         UpdateAppUtils.getInstance().deleteInstalledApk();
         String appVersion = PackageUtils.getVersionName(this);

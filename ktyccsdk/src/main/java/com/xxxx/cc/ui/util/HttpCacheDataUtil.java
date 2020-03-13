@@ -39,14 +39,14 @@ public class HttpCacheDataUtil {
     private static volatile HttpCacheDataUtil httpCacheDataUtil;
     private Context mContext;
 
-    private HttpCacheDataUtil(Context context){
+    private HttpCacheDataUtil(Context context) {
         this.mContext = context;
     }
 
-    public static HttpCacheDataUtil getInstance(Context context){
-        if(httpCacheDataUtil == null){
-            synchronized (HttpCacheDataUtil.class){
-                if(httpCacheDataUtil == null){
+    public static HttpCacheDataUtil getInstance(Context context) {
+        if (httpCacheDataUtil == null) {
+            synchronized (HttpCacheDataUtil.class) {
+                if (httpCacheDataUtil == null) {
                     httpCacheDataUtil = new HttpCacheDataUtil(context);
                 }
             }
@@ -60,19 +60,20 @@ public class HttpCacheDataUtil {
     private String userId;
     private String token;
 
-    public void setQueryData(long beginTime, long endTime, String userId, String token) {
+    public void setQueryData(long beginTime, long endTime, String userId, String token, int loadPage) {
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.userId = userId;
         this.token = token;
+        this.loadPage = loadPage;
     }
 
-    public void loadAllNetData(){
-        if(!TextUtils.isEmpty(token) && !TextUtils.isEmpty(userId)){
+    public void loadAllNetData() {
+        if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(userId)) {
             ThreadTask.getInstance().executorNetThread(new Runnable() {
                 @Override
                 public void run() {
-                    LogUtils.e("正在加载数据"+loadPage);
+                    LogUtils.e("正在加载数据" + loadPage);
                     requestPost();
                 }
             }, 10);
@@ -80,7 +81,7 @@ public class HttpCacheDataUtil {
     }
 
 
-    private void requestPost(){
+    private void requestPost() {
         PostStringBuilder okHttpUtils = OkHttpUtils.postString();
         okHttpUtils.url(Constans.BASE_URL + HttpRequest.CallHistory.callHistory);
         //添加header
@@ -96,6 +97,7 @@ public class HttpCacheDataUtil {
                     public void onError(Call call, Exception e, int id) {
                         LogUtils.e("加载失败");
                     }
+
                     @Override
                     public void onResponse(String response, int id) {
                         dealResult(response);
@@ -103,7 +105,7 @@ public class HttpCacheDataUtil {
                 });
     }
 
-    private void dealResult(String response){
+    private void dealResult(String response) {
         if (!TextUtils.isEmpty(response)) {
             HistoryResponseBean historyResponseBean = (new Gson()).fromJson(response, HistoryResponseBean.class);
             if (historyResponseBean.getCode() == 0) {
@@ -112,14 +114,14 @@ public class HttpCacheDataUtil {
                     int totalPage = historyResponseBean.getPage().getTotalPages();
 
                     SharedPreferencesUtil.save(mContext, VOICE_RECORD_PREFIX, historyResponseBean.getRecordPrefix());
-                    if( historyResponseBean.getPage().getContent() != null && historyResponseBean.getPage().getContent().size()>0){
+                    if (historyResponseBean.getPage().getContent() != null && historyResponseBean.getPage().getContent().size() > 0) {
                         //把查询到的直接添加到数据库
                         saveCacheData(historyResponseBean.getPage().getContent());
                     }
-                    if(loadPage >= totalPage){
+                    if (loadPage >= totalPage) {
                         LogUtils.e("缓存数据成功");
-                        SharedPreferencesUtil.save(mContext,KTY_CC_BEGIN,String.valueOf(endTime));
-                    }else{
+                        SharedPreferencesUtil.save(mContext, KTY_CC_BEGIN, String.valueOf(endTime));
+                    } else {
                         loadPage++;
                         loadAllNetData();
                     }
@@ -130,7 +132,7 @@ public class HttpCacheDataUtil {
     }
 
 
-    private void saveCacheData(List<ContentBean> list){
+    private void saveCacheData(List<ContentBean> list) {
         ThreadTask.getInstance().executorDBThread(new Runnable() {
             @Override
             public void run() {

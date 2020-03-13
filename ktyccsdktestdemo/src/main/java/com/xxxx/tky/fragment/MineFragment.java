@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.flyco.roundview.RoundTextView;
 import com.xxxx.cc.base.fragment.BaseFragment;
+import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.global.PackageUtils;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.LinphoneService;
@@ -81,6 +82,7 @@ public class MineFragment extends BaseFragment {
         SharedPreferencesUtil.save(mContext, Contant.LOGIN_PWD_SAVE_TAG, "");
 //        KtyCcSdkTool.getInstance().unRegister(mContext);
         LinphoneService.setRegister(false);
+        KtyCcSdkTool.getInstance().unRegister(mActivity);
         startActivity(LoginActivity.class);
         if (getActivity() != null) {
             getActivity().finish();

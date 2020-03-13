@@ -138,7 +138,7 @@ public class KtyCcNetUtil {
             beginTime = date.getTime();
         }
         HttpCacheDataUtil httpCacheDataUtil = HttpCacheDataUtil.getInstance(context.getApplicationContext());
-        httpCacheDataUtil.setQueryData(beginTime, System.currentTimeMillis(), userBean.getUserId(), userBean.getToken());
+        httpCacheDataUtil.setQueryData(beginTime, System.currentTimeMillis(), userBean.getUserId(), userBean.getToken(),0);
         httpCacheDataUtil.loadAllNetData();
     }
 
@@ -161,7 +161,7 @@ public class KtyCcNetUtil {
             beginTime = date.getTime();
         }
         CustomPersonDataUtil httpCacheDataUtil = CustomPersonDataUtil.getInstance(context.getApplicationContext());
-        httpCacheDataUtil.setQueryData(beginTime, System.currentTimeMillis(), userBean.getToken());
+        httpCacheDataUtil.setQueryData(userBean, beginTime, System.currentTimeMillis(), 0);
         httpCacheDataUtil.loadAllNetData();
     }
 

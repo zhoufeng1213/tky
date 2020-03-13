@@ -15,4 +15,5 @@ public class Contant {
 
     public static final String LOGIN_SAVE_TAG = "LOGIN_SAVE_TAG";
     public static final String LOGIN_PWD_SAVE_TAG = "LOGIN_PWD_SAVE_TAG";
+    public static final String CLEAR_REQUEST_BEGIN_TIME = "CLEAR_REQUEST_BEGIN_TIME";
 }
