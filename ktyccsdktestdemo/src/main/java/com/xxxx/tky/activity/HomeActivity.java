@@ -139,4 +139,5 @@ public class HomeActivity extends BaseTransitionActivity {
         }
         return super.onKeyUp(keyCode, event);
     }
+
 }

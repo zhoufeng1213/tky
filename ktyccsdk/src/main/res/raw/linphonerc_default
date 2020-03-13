@@ -1,7 +1,7 @@
 [sip]
 contact="Linphone Android" <sip:linphone.android@unknown-host>
 use_info=0
-use_ipv6=1
+use_ipv6=0
 keepalive_period=30000
 sip_port=-1
 sip_tcp_port=-1
@@ -18,3 +18,10 @@ push_notification=1
 [misc]
 max_calls=10
 history_max_size=100
+
+[rtp]
+audio_jitt_comp=160
+nortp_timeout=20
+
+[sound]
+el_sustain=50

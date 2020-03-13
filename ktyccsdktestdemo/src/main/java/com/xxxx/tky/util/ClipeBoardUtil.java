@@ -21,7 +21,7 @@ public class ClipeBoardUtil {
         String content = null;
         if (primaryClip != null && primaryClip.getItemCount() > 0) {
             ClipData.Item itemAt = primaryClip.getItemAt(0);
-            if (itemAt != null) {
+            if (itemAt != null&&itemAt.getText()!=null) {
                 content = itemAt.getText().toString();
             }
         }

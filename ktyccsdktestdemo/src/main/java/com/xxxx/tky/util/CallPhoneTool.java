@@ -75,7 +75,7 @@ public class CallPhoneTool {
             public void onClick(View view) {
                 dialog.cancel();
                 if (cacheUserBean.getCcUserInfo()==null||cacheUserBean.getCcUserInfo().getExtensionNo() == null || cacheUserBean.getCcUserInfo().getExtensionNo() .equals("")) {
-                    showToast("请联系管理员配置手机号,然后退出重新登录");
+                    showToast("请联系管理员配置分机号,然后退出重新登录");
                     return;
                 }
                 KtyCcSdkTool.getInstance().callPhone(mContext, phoneNum,
@@ -125,6 +125,7 @@ public class CallPhoneTool {
                 }
             }
         }
+       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -133,13 +134,11 @@ public class CallPhoneTool {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         LogUtils.e("onError:" + e.getMessage());
-                        BaseBean baseBean = new BaseBean();
                         if (e != null) {
-                            baseBean.setMessage(e.getMessage());
-                        } else {
-                            baseBean = null;
+                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                           dealHttpRequestFail(moduleName, baseBean);
+
                         }
-                        dealHttpRequestFail(moduleName, baseBean);
                     }
 
 

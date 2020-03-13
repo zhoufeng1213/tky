@@ -9,6 +9,7 @@ import com.xxxx.cc.service.LinphoneService;
 
 import org.linphone.core.AccountCreator;
 import org.linphone.core.Address;
+import org.linphone.core.AuthInfo;
 import org.linphone.core.Call;
 import org.linphone.core.CallParams;
 import org.linphone.core.Core;
@@ -136,6 +137,56 @@ public class LinServiceManager {
             e.printStackTrace();
         }
 
+    }
+
+    public static void unRegisterLinPhone() {
+
+        //https://github.com/BelledonneCommunications/linphone-android/issues/85
+        //https://github.com/BelledonneCommunications/linphone-android/issues/650
+
+        Core linphoneCore = LinphoneService.getCore();
+        if (linphoneCore != null){
+            ProxyConfig[] proxyConfigList = linphoneCore.getProxyConfigList();
+
+            ProxyConfig lastProxyConfig = null;
+            if(proxyConfigList != null && proxyConfigList.length > 0){
+                lastProxyConfig = proxyConfigList[proxyConfigList.length - 1];
+            }
+
+            if(lastProxyConfig != null) {
+
+                /*
+                //Remove Auth Info
+                Address identityAddress = lastProxyConfig.getIdentityAddress();
+                if(identityAddress != null){
+                    String userName = identityAddress.getUsername();
+                    String domain = identityAddress.getDomain();
+
+                    AuthInfo authInfo = linphoneCore.findAuthInfo(userName, null, domain);
+                    if(authInfo != null){
+                        linphoneCore.removeAuthInfo(authInfo);
+                    } else {
+                        //Log Error here
+                    }
+                } else {
+                    //Log Error here
+                }
+                */
+
+                //Set proxyConfig Expires
+                lastProxyConfig.edit();
+                lastProxyConfig.enableRegister(false);
+                lastProxyConfig.setExpires(0);
+                lastProxyConfig.done();
+                linphoneCore.refreshRegisters();
+
+                //Remove proxy config
+                linphoneCore.removeProxyConfig(lastProxyConfig);
+
+            }
+        }
+
+        LinphoneService.setRegister(false);
     }
 
 

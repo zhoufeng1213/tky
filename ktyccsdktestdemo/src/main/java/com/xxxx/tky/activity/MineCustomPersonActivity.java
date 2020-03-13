@@ -313,6 +313,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
 
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
+        LogUtils.i("lxl", "response： " + response);
         if (HttpRequest.Contant.mineContacts.equals(moduleName)) {
 //            LogUtils.i("zwmn", "所有客户信息：" + response);
             srlRefresh.finishLoadMore();
@@ -340,6 +341,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                             //直接去数据库重新查找数据
 //                            List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanList(page);
                             List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllList();
+                            LogUtils.i("lxl", "数据库查询到的： " + list.size());
                             historyResponseBeanList.clear();
                             mAdapter.notifyDataSetChanged();
                             if (list != null && list.size() > 0) {
@@ -349,6 +351,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                         } else {
                             historyResponseBeanList.addAll(historyResponseBean.getPage().getContent());
 //                            showMineCustomPersonBeanList.addAll(getShowMineCustomPersonBeanList(historyResponseBean.getPage().getContent()));
+                            LogUtils.i("lxl", "后台返回的： " +historyResponseBeanList);
                         }
                         mAdapter.notifyDataSetChanged();
                     }

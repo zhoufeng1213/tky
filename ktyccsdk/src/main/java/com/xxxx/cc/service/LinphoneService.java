@@ -86,6 +86,7 @@ public class LinphoneService extends Service {
         mCoreListener = new CoreListenerStub() {
             @Override
             public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
+                LogUtils.e("LinphoneService CallState:" + state.name()+",message:"+message);
                 if (state == Call.State.IncomingReceived) {
                     CallParams params = getCore().createCallParams(call);
                     params.enableVideo(true);

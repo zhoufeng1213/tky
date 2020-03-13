@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.xxxx.cc.base.fragment.BaseHttpRequestFragment;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.model.BaseBean;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
@@ -81,6 +82,7 @@ public class BaseFragmentPresenter {
                 }
             }
         }
+        LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(mActivity.getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -89,18 +91,18 @@ public class BaseFragmentPresenter {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         mActivity.dismissDialog();
-                        BaseBean baseBean = new BaseBean();
                         if (e != null) {
-                            baseBean.setMessage(e.getMessage());
-                        } else {
-                            baseBean = null;
+                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                            mActivity.dealHttpRequestFail(moduleName, baseBean);
+
                         }
-                        mActivity.dealHttpRequestFail(moduleName, baseBean);
+                        Log.e("lxl","e.getMessage():"+e.getMessage());
                     }
 
 
                     @Override
                     public void onResponse(String response, int id) {
+                        Log.e("lxl","onResponse:"+response);
                         try {
                             if (isShowDialog) {
                                 mActivity.dismissDialog();
@@ -135,6 +137,7 @@ public class BaseFragmentPresenter {
         for (String key : params.keySet()) {
             okHttpUtils.addParams(key, params.get(key));
         }
+       LogUtils.e("url:"+Constans.BASE_URL + moduleName+" Params:"+params);
         okHttpUtils.build()
                 .execute(new StringCallback() {
                     @Override

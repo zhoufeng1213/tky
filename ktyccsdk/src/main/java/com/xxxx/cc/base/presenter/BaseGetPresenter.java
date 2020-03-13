@@ -1,10 +1,13 @@
 package com.xxxx.cc.base.presenter;
 
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.model.BaseBean;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.GetBuilder;
@@ -76,6 +79,7 @@ public class BaseGetPresenter {
                     }
                 }
             }
+            LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
             //添加请求参数
             Map mapParam = JSON.parseObject(mActivity.getHttpRequestParams(moduleName).toJSONString(),
                     Map.class);
@@ -86,18 +90,18 @@ public class BaseGetPresenter {
                     .execute(new MyStringCallback() {
                         @Override
                         public void onError(Call call, Exception e, int id) {
+                            LogUtils.e("e.getMessage():"+e.getMessage());
                             mActivity.dismissDialog();
-                            BaseBean baseBean = new BaseBean();
                             if (e != null) {
-                                baseBean.setMessage(e.getMessage());
-                            } else {
-                                baseBean = null;
+                                BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                                mActivity.dealHttpRequestFail(moduleName, baseBean);
+
                             }
-                            mActivity.dealHttpRequestFail(moduleName, baseBean);
                         }
 
                         @Override
                         public void onResponse(String response, int id) {
+                            Log.e("lxl","onResponse:"+response);
                             try {
                                 mActivity.dismissDialog();
                                 BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
@@ -131,24 +135,24 @@ public class BaseGetPresenter {
         }
         GetBuilder okHttpUtils = OkHttpUtils.get();
         okHttpUtils.url(Constans.BASE_URL + moduleName);
+       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
         //添加请求参数
         Map mapParam = JSON.parseObject(mActivity.getHttpRequestParams(moduleName).toJSONString(),
                 Map.class);
         for (Object key : mapParam.keySet()) {
             okHttpUtils.addParams((String) key, (String) mapParam.get(key));
         }
+       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mapParam.toString());
         okHttpUtils.build()
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         mActivity.dismissDialog();
-                        BaseBean baseBean = new BaseBean();
                         if (e != null) {
-                            baseBean.setMessage(e.getMessage());
-                        } else {
-                            baseBean = null;
+                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                            mActivity.dealHttpRequestFail(moduleName, baseBean);
+
                         }
-                        mActivity.dealHttpRequestFail(moduleName, baseBean);
                     }
 
                     @Override

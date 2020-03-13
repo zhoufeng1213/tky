@@ -337,8 +337,10 @@ public class CallActivity extends BaseHttpRequestActivity {
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
         LogUtils.e("呼叫失败1：" + result.getMessage());
-        showToast("呼叫失败1");
-        finish();
+        if(result.getMessage()!=null)
+        showToast(result.getMessage());
+        else showToast("呼叫失败");
+        hookCall();
     }
 
     public void hookCall() {
@@ -431,7 +433,7 @@ public class CallActivity extends BaseHttpRequestActivity {
     private CoreListenerStub mCoreListener = new CoreListenerStub() {
         @Override
         public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
-            LogUtils.e("tag:" + state.name());
+            LogUtils.e("tag:" + state.name()+",message:"+message);
             if (state == Call.State.End) {
                 LogUtils.e("进入了End2");
                 hook = true;

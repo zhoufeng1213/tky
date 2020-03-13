@@ -1,5 +1,6 @@
 package com.xxxx.tky.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -12,16 +13,16 @@ import com.xxxx.cc.base.fragment.BaseFragment;
 import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.global.PackageUtils;
 import com.xxxx.cc.model.UserBean;
-import com.xxxx.cc.service.LinphoneService;
+import com.xxxx.cc.util.LinServiceManager;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.tky.R;
+import com.xxxx.tky.activity.FeedBackActivity;
 import com.xxxx.tky.activity.LoginActivity;
 import com.xxxx.tky.contant.Contant;
 import com.xxxx.tky.util.AntiShakeUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
 
@@ -73,20 +74,26 @@ public class MineFragment extends BaseFragment {
         }
     }
 
-    @Optional
-    @OnClick(R.id.log_out_button)
-    public void logOut(View view) {
-        if (AntiShakeUtils.isInvalidClick(view)) {
-            return;
-        }
-        SharedPreferencesUtil.save(mContext, Contant.LOGIN_PWD_SAVE_TAG, "");
-//        KtyCcSdkTool.getInstance().unRegister(mContext);
-        LinphoneService.setRegister(false);
-        KtyCcSdkTool.getInstance().unRegister(mActivity);
-        startActivity(LoginActivity.class);
-        if (getActivity() != null) {
-            getActivity().finish();
-        }
-    }
+    @OnClick({R.id.log_out_button, R.id.feedback_layout})
+    public void onClick(View view) {
+        int i = view.getId();
+        if (i == R.id.log_out_button) {
+            if (AntiShakeUtils.isInvalidClick(view)) {
+                return;
+            }
+            SharedPreferencesUtil.save(mContext, Contant.LOGIN_PWD_SAVE_TAG, "");
+            LinServiceManager.unRegisterLinPhone();
+            KtyCcSdkTool.getInstance().unRegister(mActivity);
+            startActivity(LoginActivity.class);
+            if (getActivity() != null) {
+                getActivity().finish();
 
+            } else if (i == R.id.feedback_layout) {
+
+                Intent intent = new Intent(mContext, FeedBackActivity.class);
+                startActivity(intent);
+            }
+        }
+
+    }
 }

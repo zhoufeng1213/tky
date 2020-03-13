@@ -12,21 +12,17 @@ import com.xxxx.cc.BuildConfig;
 public class LogUtils {
 
     public static void i(String tag, String msg) {
-        if (BuildConfig.DEBUG) {
-            Log.e("tag", msg);
-        }
+            Log.i("tag", msg);
+
     }
 
     public static void e(String tag, String msg) {
-        if (BuildConfig.DEBUG) {
             Log.e("tag", msg);
-        }
     }
 
     public static void e(String msg) {
-        if (BuildConfig.DEBUG) {
             Log.e("tag", msg);
-        }
+
     }
 
 }
