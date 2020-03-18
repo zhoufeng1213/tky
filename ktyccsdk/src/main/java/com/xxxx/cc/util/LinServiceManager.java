@@ -172,15 +172,6 @@ public class LinServiceManager {
     public static void setLinPhoneConfig(UserBean userBean) {
         if (LinphoneService.getCore() != null) {
 
-            ProxyConfig[] proxyConfigList = LinphoneService.getCore().getProxyConfigList();
-            if(proxyConfigList != null && proxyConfigList.length > 0){
-                LogUtils.i("linphone_registration", "Has proxyConfigList size: " + proxyConfigList.length);
-
-                for(ProxyConfig proxyConfig : proxyConfigList){
-                    LogUtils.i("linphone_registration", "proxyConfig: " + proxyConfig.toString());
-                }
-            }
-
             AccountCreator mAccountCreator = LinphoneService.getCore().createAccountCreator(null);
 
             mAccountCreator.setUsername(userBean.getCcUserInfo().getExtensionNo());
@@ -203,23 +194,20 @@ public class LinServiceManager {
             cfg.enableRegister(true);
             cfg.setExpires(expire);
 
-
             Factory lcFactory = Factory.instance();
 //            lcFactory.setDebugMode(true, "Linphone_tky");
 
             LinphoneService.getCore().addAuthInfo(lcFactory.createAuthInfo(username, username, password, null, domain, domain));
 
             PayloadType[] payloadType = LinphoneService.getCore().getAudioPayloadTypes();
-
-            for (PayloadType payloadTypeA : payloadType) {
-
-                String mineType = payloadTypeA.getMimeType();
-                int channel = payloadTypeA.getChannels();
-                String des = payloadTypeA.getDescription();
-                LogUtils.e("mineType: " + mineType + ", channel: " + channel + ", des: " + des);
+            if(payloadType != null){
+                for (PayloadType payloadTypeA : payloadType) {
+                    String mineType = payloadTypeA.getMimeType();
+                    int channel = payloadTypeA.getChannels();
+                    String description = payloadTypeA.getDescription();
+                    LogUtils.i("linphone_config","audio codec, mineType: " + mineType + ", channel: " + channel + ", description: " + description);
+                }
             }
-
-
 
 //            PayloadType[] setCodecs = new PayloadType[]{payloadType[0], payloadType[3], payloadType[4]};
 //            LinphoneService.getCore().setAudioPayloadTypes(setCodecs);
@@ -228,15 +216,6 @@ public class LinServiceManager {
             LinphoneService.getCore().setUserAgent("SIP Agent", "1.0");
             LinphoneService.getCore().addProxyConfig(cfg);
             LinphoneService.getCore().setDefaultProxyConfig(cfg);
-
-            proxyConfigList = LinphoneService.getCore().getProxyConfigList();
-            if(proxyConfigList != null && proxyConfigList.length > 0){
-                LogUtils.i("linphone_registration", "Has proxyConfigList size: " + proxyConfigList.length);
-
-                for(ProxyConfig proxyConfig : proxyConfigList){
-                    LogUtils.i("linphone_registration", "proxyConfig: " + proxyConfig.toString());
-                }
-            }
         }
     }
 }
