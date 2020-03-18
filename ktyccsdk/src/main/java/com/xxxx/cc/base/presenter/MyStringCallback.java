@@ -1,7 +1,13 @@
 package com.xxxx.cc.base.presenter;
 
+import android.util.Log;
+
+import com.alibaba.fastjson.JSON;
+import com.xxxx.cc.global.GlobalApplication;
+import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.util.HttpExceptionUtil;
 import com.xxxx.cc.util.LogUtils;
+import com.xxxx.cc.util.ToastUtil;
 import com.zhy.http.okhttp.callback.Callback;
 
 import okhttp3.Response;
@@ -27,9 +33,15 @@ public abstract class MyStringCallback extends Callback<String> {
             }
             return null;
         } else {
+            if(response.code()==45009)
+            {
+               // ToastUtil.showToast(GlobalApplication.getInstance(),"您的登录身份已过期，请退出重新登录");
+                return null;
+            }
             String mes=response.body().string();
             if(mes!=null)
             {
+               // ToastUtil.showToast(GlobalApplication.getInstance(),"error:"+mes);
                 LogUtils.e("error:"+mes);
                 throw new Exception(mes);
             }

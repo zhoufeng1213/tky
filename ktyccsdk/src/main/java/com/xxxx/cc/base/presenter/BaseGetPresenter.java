@@ -4,6 +4,7 @@ package com.xxxx.cc.base.presenter;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.model.BaseBean;
@@ -148,8 +149,18 @@ public class BaseGetPresenter {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         mActivity.dismissDialog();
+                        LogUtils.e("Message:"+e.getMessage());
                         if (e != null) {
-                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                            BaseBean baseBean;
+                            try {
+                                 baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                            }catch (JSONException exception)
+                            {
+                                 baseBean =new BaseBean();
+                                baseBean.setMessage(e.getMessage());
+                            }
+
+
                             mActivity.dealHttpRequestFail(moduleName, baseBean);
 
                         }

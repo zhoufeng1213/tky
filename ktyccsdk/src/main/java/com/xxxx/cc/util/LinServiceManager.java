@@ -148,41 +148,20 @@ public class LinServiceManager {
         if (linphoneCore != null){
             ProxyConfig[] proxyConfigList = linphoneCore.getProxyConfigList();
 
-            ProxyConfig lastProxyConfig = null;
             if(proxyConfigList != null && proxyConfigList.length > 0){
-                lastProxyConfig = proxyConfigList[proxyConfigList.length - 1];
-            }
 
-            if(lastProxyConfig != null) {
+                LogUtils.i("linphone_unregistration", "proxyConfig to remove, size:" + proxyConfigList.length);
+                for(ProxyConfig proxyConfig : proxyConfigList){
+                    //Set proxyConfig Expires
+                    proxyConfig.edit();
+                    proxyConfig.enableRegister(false);
+                    proxyConfig.setExpires(0);
+                    proxyConfig.done();
 
-                /*
-                //Remove Auth Info
-                Address identityAddress = lastProxyConfig.getIdentityAddress();
-                if(identityAddress != null){
-                    String userName = identityAddress.getUsername();
-                    String domain = identityAddress.getDomain();
-
-                    AuthInfo authInfo = linphoneCore.findAuthInfo(userName, null, domain);
-                    if(authInfo != null){
-                        linphoneCore.removeAuthInfo(authInfo);
-                    } else {
-                        //Log Error here
-                    }
-                } else {
-                    //Log Error here
+                    //Remove proxy config
+                    linphoneCore.removeProxyConfig(proxyConfig);
                 }
-                */
-
-                //Set proxyConfig Expires
-                lastProxyConfig.edit();
-                lastProxyConfig.enableRegister(false);
-                lastProxyConfig.setExpires(0);
-                lastProxyConfig.done();
                 linphoneCore.refreshRegisters();
-
-                //Remove proxy config
-                linphoneCore.removeProxyConfig(lastProxyConfig);
-
             }
         }
 
@@ -192,12 +171,22 @@ public class LinServiceManager {
 
     public static void setLinPhoneConfig(UserBean userBean) {
         if (LinphoneService.getCore() != null) {
+
+            ProxyConfig[] proxyConfigList = LinphoneService.getCore().getProxyConfigList();
+            if(proxyConfigList != null && proxyConfigList.length > 0){
+                LogUtils.i("linphone_registration", "Has proxyConfigList size: " + proxyConfigList.length);
+
+                for(ProxyConfig proxyConfig : proxyConfigList){
+                    LogUtils.i("linphone_registration", "proxyConfig: " + proxyConfig.toString());
+                }
+            }
+
             AccountCreator mAccountCreator = LinphoneService.getCore().createAccountCreator(null);
 
             mAccountCreator.setUsername(userBean.getCcUserInfo().getExtensionNo());
             mAccountCreator.setDomain(userBean.getCcUserInfo().getDomain());
             mAccountCreator.setPassword(userBean.getCcUserInfo().getExtensionPassword());
-            mAccountCreator.setTransport(TransportType.Tcp);
+            mAccountCreator.setTransport(TransportType.Tls);
 
             ProxyConfig cfg = mAccountCreator.createProxyConfig();
             String username = userBean.getCcUserInfo().getExtensionNo();
@@ -205,8 +194,8 @@ public class LinServiceManager {
             String sipAddressStr = "sip:" + username + '@' + domain;
             String password = userBean.getCcUserInfo().getExtensionPassword();
             String proxyAddressStr = "sip:" + userBean.getCcServerProxy();
-            String[] dnsServers = {"223.5.5.5"};
-            int expire = 30;
+            String[] dnsServers = {"223.5.5.5", "114.114.114.114"};
+            int expire = 600;
 
             cfg.setIdentityAddress(LinphoneService.getCore().createAddress(sipAddressStr));
             cfg.setServerAddr(proxyAddressStr);
@@ -216,16 +205,38 @@ public class LinServiceManager {
 
 
             Factory lcFactory = Factory.instance();
+//            lcFactory.setDebugMode(true, "Linphone_tky");
+
             LinphoneService.getCore().addAuthInfo(lcFactory.createAuthInfo(username, username, password, null, domain, domain));
 
             PayloadType[] payloadType = LinphoneService.getCore().getAudioPayloadTypes();
-            PayloadType[] setCodecs = new PayloadType[]{payloadType[0], payloadType[3], payloadType[4]};
-            LinphoneService.getCore().setAudioPayloadTypes(setCodecs);
+
+            for (PayloadType payloadTypeA : payloadType) {
+
+                String mineType = payloadTypeA.getMimeType();
+                int channel = payloadTypeA.getChannels();
+                String des = payloadTypeA.getDescription();
+                LogUtils.e("mineType: " + mineType + ", channel: " + channel + ", des: " + des);
+            }
+
+
+
+//            PayloadType[] setCodecs = new PayloadType[]{payloadType[0], payloadType[3], payloadType[4]};
+//            LinphoneService.getCore().setAudioPayloadTypes(setCodecs);
             LinphoneService.getCore().setDnsServers(dnsServers);
             LinphoneService.getCore().setMaxCalls(1);
             LinphoneService.getCore().setUserAgent("SIP Agent", "1.0");
             LinphoneService.getCore().addProxyConfig(cfg);
             LinphoneService.getCore().setDefaultProxyConfig(cfg);
+
+            proxyConfigList = LinphoneService.getCore().getProxyConfigList();
+            if(proxyConfigList != null && proxyConfigList.length > 0){
+                LogUtils.i("linphone_registration", "Has proxyConfigList size: " + proxyConfigList.length);
+
+                for(ProxyConfig proxyConfig : proxyConfigList){
+                    LogUtils.i("linphone_registration", "proxyConfig: " + proxyConfig.toString());
+                }
+            }
         }
     }
 }

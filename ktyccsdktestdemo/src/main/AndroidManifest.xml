@@ -49,7 +49,6 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name="com.xxxx.tky.activity.MineCustomPersonActivity" />
         <activity android:name=".activity.CustomAddActivity" />
-
     </application>
 
 </manifest>

@@ -153,13 +153,14 @@ public class KtyCcSdkTool {
                     @Override
                     public void onRegistrationStateChanged(Core core, ProxyConfig cfg, RegistrationState
                             state, String message) {
+                        LogUtils.i("linphone_registration", "state:" + state.name() + ", message:" + message);
                         if (state == RegistrationState.Ok) {
                             LinServiceManager.removeListener(this);
                             LinphoneService.setRegister(true);
                             goToCallActivity(mContext, phoneNum, userName, headUrl);
                         } else if (state == RegistrationState.Failed) {
                             LogUtils.e("注册失败了-----》" + state.name());
-                            ToastUtil.showToast(mContext, "LinphoneService注册失败");
+                            ToastUtil.showToast(mContext, "注册服务失败");
                         }
                     }
                 });

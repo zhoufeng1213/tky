@@ -88,11 +88,12 @@ public class MineFragment extends BaseFragment {
             if (getActivity() != null) {
                 getActivity().finish();
 
-            } else if (i == R.id.feedback_layout) {
-
-                Intent intent = new Intent(mContext, FeedBackActivity.class);
-                startActivity(intent);
             }
+        }
+        else if (i == R.id.feedback_layout) {
+
+            Intent intent = new Intent(mContext, FeedBackActivity.class);
+            startActivity(intent);
         }
 
     }

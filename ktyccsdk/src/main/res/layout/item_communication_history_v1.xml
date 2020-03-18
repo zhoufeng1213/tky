@@ -7,28 +7,28 @@
     android:orientation="vertical"
     tools:ignore="InOrMmUsage">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d60"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/d15"
         android:layout_marginBottom="@dimen/d10"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/iv_call_photo"
-            android:layout_width="@dimen/d60"
-            android:layout_height="@dimen/d60"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/d20"
+            android:layout_alignParentLeft="true"
             android:src="@mipmap/icon_call_ok" />
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_call_photo"
             android:layout_marginLeft="@dimen/d10"
-            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
@@ -57,6 +57,7 @@
             android:layout_marginLeft="@dimen/d10"
             android:layout_marginRight="@dimen/d20"
             android:gravity="right"
+            android:layout_alignParentRight="true"
             android:orientation="vertical">
 
             <TextView
@@ -73,15 +74,23 @@
                 android:id="@+id/tv_call_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/d15"
+                android:layout_marginTop="@dimen/d10"
                 android:text="通话时长  08:45:21"
+                android:textColor="@color/c_42A6FE"
+                android:textSize="@dimen/textNormal10" />
+            <TextView
+                android:id="@+id/tv_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:text="挂断"
                 android:textColor="@color/c_42A6FE"
                 android:textSize="@dimen/textNormal10" />
 
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

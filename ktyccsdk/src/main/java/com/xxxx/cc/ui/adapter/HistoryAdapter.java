@@ -35,6 +35,7 @@ public class HistoryAdapter extends BaseQuickAdapter<ContentBean, BaseViewHolder
         helper.setText(R.id.tv_start_time, createTime);
         int durationTime = item.getDurationInSec();
         helper.setText(R.id.tv_call_duration, "通话时长 " + TimeUtils.getWatchTime1(durationTime));
+        helper.setText(R.id.tv_call,item.getReserved2() );
         if (durationTime > 0) {
             helper.setImageResource(R.id.iv_call_photo, R.mipmap.icon_call_ok);
             helper.setTextColor(R.id.tv_call_duration, mContext.getResources().getColor(R.color.c_42A6FE));

@@ -103,8 +103,7 @@ public class DbUtil {
                 .orderDesc(ContentBeanDao.Properties.CreateTime)
                 .offset(page * Constans.COMMON_PAGE_SIZE)
                 .limit(Constans.COMMON_PAGE_SIZE)
-                .list()
-                ;
+                .list();
     }
 
     public static List<ContentBean> queryPhoneRecordList(String userId,String dnis,String direction, int page,int size) {

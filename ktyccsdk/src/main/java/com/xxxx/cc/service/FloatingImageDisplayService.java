@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.xxxx.cc.R;
 import com.xxxx.cc.ui.CallActivity;
+import com.xxxx.cc.ui.HistoryActivity;
 import com.xxxx.cc.util.TimeUtils;
 
 public class FloatingImageDisplayService extends Service {
@@ -105,14 +106,20 @@ public class FloatingImageDisplayService extends Service {
                 @Override
                 public void onClick(final View v) {
                     isActionMove = false;
-                    final Intent intent = new Intent(FloatingImageDisplayService.this, CallActivity.class);
-                    final PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-                    try {
-                        pendingIntent.send();
-                        releaseService();
-                    } catch (PendingIntent.CanceledException e) {
-                        e.printStackTrace();
-                    }
+//                    final Intent intent = new Intent(FloatingImageDisplayService.this, CallActivity.class);
+//                    final PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+//                    try {
+//                        pendingIntent.send();
+//                       // releaseService();
+//                    } catch (PendingIntent.CanceledException e) {
+//                        e.printStackTrace();
+//                    }
+                    Intent intent = new Intent(FloatingImageDisplayService.this, CallActivity.class);
+                    intent.setAction("com.xxxx.cc.callAction");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+                   // releaseService();
                 }
             });
         }
@@ -181,6 +188,14 @@ public class FloatingImageDisplayService extends Service {
                     break;
             }
             return isActionMove;
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(isStarted)
+        {
+            releaseService();
         }
     }
 }

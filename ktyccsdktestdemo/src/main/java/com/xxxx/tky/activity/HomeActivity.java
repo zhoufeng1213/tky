@@ -18,6 +18,10 @@ import com.shizhefei.view.indicator.FixedIndicatorView;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.shizhefei.view.viewpager.SViewPager;
+import com.xxxx.cc.service.FloatingImageDisplayService;
+import com.xxxx.cc.ui.widget.FloatingImageDisplay;
+import com.xxxx.cc.util.LinServiceManager;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.fragment.AddressBookFragment;
@@ -132,8 +136,17 @@ public class HomeActivity extends BaseTransitionActivity {
                 firstTime = secondTime;
                 return true;
             } else {
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(0);
+
+                if(FloatingImageDisplayService.isStarted)
+                {
+                    moveTaskToBack(true);
+                    LogUtils.e("moveTaskToBack");
+                }
+                else {
+                    LinServiceManager.unRegisterLinPhone();
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(0);
+                }
                 return false;
             }
         }
