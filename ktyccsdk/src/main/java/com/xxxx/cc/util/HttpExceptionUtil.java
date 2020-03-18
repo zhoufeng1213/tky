@@ -65,7 +65,8 @@ public class HttpExceptionUtil {
             "417",
             "500", "501",
             "502", "503",
-            "504", "505"
+            "504", "505",
+            "45009"
     };
     public static String[] msgs = {
             "服务器不理解请求的语法", "请求要求身份验证",
@@ -79,15 +80,16 @@ public class HttpExceptionUtil {
             "服务器未满足”期望”请求标头字段的要求。",
             "服务器遇到错误，无法完成请求。", "服务器不具备完成请求的功能。",
             "服务器作为网关或代理，从上游服务器收到无效响应", "服务器目前无法使用（由于超载或停机维护）",
-            "服务器作为网关或代理，但是没有及时从上游服务器收到请求", "服务器不支持请求中所用的 HTTP 协议版本"
+            "服务器作为网关或代理，但是没有及时从上游服务器收到请求", "服务器不支持请求中所用的 HTTP 协议版本",
+            "您的登录身份已过期，请退出重新登录!"
     };
 
     public static String getHttpExceptionMsg(String code) {
-        String result = "响应code：" + (TextUtils.isEmpty(code) ? "无响应code" : code) + ",错误内容：网络连接失败";
+        String result = "code：" + (TextUtils.isEmpty(code) ? "无响应code" : code) + ",message：网络连接失败";
         try {
             for (int i = 0; i < codes.length; i++) {
                 if (codes[i].equals(code)) {
-                    result = "响应code：" + code + ",错误内容：" + msgs[i];
+                    result = "code：" + code + ",message：" + msgs[i];
                     break;
                 }
             }

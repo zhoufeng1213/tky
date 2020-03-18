@@ -118,7 +118,6 @@ public class FloatingImageDisplayService extends Service {
                     intent.setAction("com.xxxx.cc.callAction");
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-
                    // releaseService();
                 }
             });

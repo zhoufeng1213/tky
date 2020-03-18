@@ -12,6 +12,7 @@ import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
+import com.xxxx.cc.util.ToastUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostFileBuilder;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
@@ -110,7 +111,13 @@ public class BasePostPresenter {
                         mActivity.dismissDialog();
                         if (e != null) {
                             BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                            mActivity.dealHttpRequestFail(moduleName, baseBean);
+                            if(baseBean.getCode()==45009)
+                            {
+                                ToastUtil.showToast(mActivity,"您的登录身份已过期，请退出重新登录");
+                            }
+                            else {
+                                mActivity.dealHttpRequestFail(moduleName, baseBean);
+                            }
 
                         }
                     }

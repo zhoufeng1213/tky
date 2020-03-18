@@ -10,6 +10,7 @@ import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
+import com.xxxx.cc.util.ToastUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
 import com.zhy.http.okhttp.builder.PostStringBuilder;
@@ -93,8 +94,13 @@ public class BaseFragmentPresenter {
                         mActivity.dismissDialog();
                         if (e != null) {
                             BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                            mActivity.dealHttpRequestFail(moduleName, baseBean);
-
+                         if(baseBean.getCode()==45009)
+                                {
+                                    ToastUtil.showToast(mActivity.mContext,"您的登录身份已过期，请退出重新登录");
+                                }
+                            else {
+                                    mActivity.dealHttpRequestFail(moduleName, baseBean);
+                                }
                         }
                         Log.e("lxl","e.getMessage():"+e.getMessage());
                     }

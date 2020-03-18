@@ -68,6 +68,7 @@ public class ContentBean {
     private boolean bridged;
     private int chargeMin;
     private String contactName;
+    private String context;
     private String createTime;
     private String daSampleCategory;
     private String daSampleDetail;
@@ -99,19 +100,16 @@ public class ContentBean {
     private int waitInIvrSec;
     private int waitInQueueSec;
     private int waitInSec;
-
-    @Generated(hash = 133207740)
-    public ContentBean(Long contentId, String agentUnames, String agentUserName,
-            double alegQuality, String ani, String area, int billingInSec,
-            double blegQuality, String blegUuid, boolean bridged, int chargeMin,
-            String contactName, String createTime, String daSampleCategory,
-            String daSampleDetail, String daSampleName, String daTone, String direction,
-            String dnbr, String dnis, int durationInSec, String hangupCause,
-            String hangupTime, String id, String ivrTime, double lat, double lng,
-            String orgId, String reserved1, String reserved2, int satisfy,
-            boolean transfered, boolean transferee, String updateTime, String userId,
-            String uuid, String recordFile, String reserved5, int waitInBillingSec,
-            int waitInIvrSec, int waitInQueueSec, int waitInSec) {
+    @Generated(hash = 715224039)
+    public ContentBean(Long contentId, String agentUnames, String agentUserName, double alegQuality,
+            String ani, String area, int billingInSec, double blegQuality, String blegUuid,
+            boolean bridged, int chargeMin, String contactName, String context, String createTime,
+            String daSampleCategory, String daSampleDetail, String daSampleName, String daTone,
+            String direction, String dnbr, String dnis, int durationInSec, String hangupCause,
+            String hangupTime, String id, String ivrTime, double lat, double lng, String orgId,
+            String reserved1, String reserved2, int satisfy, boolean transfered, boolean transferee,
+            String updateTime, String userId, String uuid, String recordFile, String reserved5,
+            int waitInBillingSec, int waitInIvrSec, int waitInQueueSec, int waitInSec) {
         this.contentId = contentId;
         this.agentUnames = agentUnames;
         this.agentUserName = agentUserName;
@@ -124,6 +122,7 @@ public class ContentBean {
         this.bridged = bridged;
         this.chargeMin = chargeMin;
         this.contactName = contactName;
+        this.context = context;
         this.createTime = createTime;
         this.daSampleCategory = daSampleCategory;
         this.daSampleDetail = daSampleDetail;
@@ -508,4 +507,12 @@ public class ContentBean {
     public void setContentId(Long contentId) {
         this.contentId = contentId;
     }
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
+
 }

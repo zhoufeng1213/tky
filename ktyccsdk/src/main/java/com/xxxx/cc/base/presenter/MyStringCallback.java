@@ -33,15 +33,9 @@ public abstract class MyStringCallback extends Callback<String> {
             }
             return null;
         } else {
-            if(response.code()==45009)
-            {
-               // ToastUtil.showToast(GlobalApplication.getInstance(),"您的登录身份已过期，请退出重新登录");
-                return null;
-            }
             String mes=response.body().string();
             if(mes!=null)
             {
-               // ToastUtil.showToast(GlobalApplication.getInstance(),"error:"+mes);
                 LogUtils.e("error:"+mes);
                 throw new Exception(mes);
             }

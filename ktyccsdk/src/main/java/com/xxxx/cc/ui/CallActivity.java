@@ -356,7 +356,7 @@ public class CallActivity extends BaseHttpRequestActivity {
         }
         finish();
     }
-
+boolean isApplyPermission=false;
     public void clickShrink() {
         LogUtils.e("clickShrink   ------ > clickShrink");
         //获取悬浮框权限
@@ -366,7 +366,9 @@ public class CallActivity extends BaseHttpRequestActivity {
             bindFloatService();
             moveTaskToBack(true);
         } else {
-            FloatWindowManager.getInstance().applyPermission(this);
+            isApplyPermission=true;
+            FloatWindowManager.getInstance(). applyPermission(this);
+            LogUtils.e("clickShrink   ------ > applyPermission");
         }
     }
 
@@ -476,6 +478,7 @@ public class CallActivity extends BaseHttpRequestActivity {
             unbindService(conn);
             mBound = false;
         }
+        isApplyPermission=false;
     }
 
     @Override
@@ -488,7 +491,7 @@ public class CallActivity extends BaseHttpRequestActivity {
 
         if (!hook) {
             LogUtils.e("onPause   ------ > clickShrink");
-            if (!isNeedRequestPermission) {
+            if (!isNeedRequestPermission&&!isApplyPermission) {
                 clickShrink();
             }
         }
@@ -514,8 +517,7 @@ public class CallActivity extends BaseHttpRequestActivity {
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK|| keyCode == KeyEvent.KEYCODE_HOME) {
-            bindFloatService();
-            finish();
+                  clickShrink();
                     return true;
         }
         return super.onKeyUp(keyCode, event);
