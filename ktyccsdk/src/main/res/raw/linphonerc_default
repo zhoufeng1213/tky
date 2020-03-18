@@ -25,3 +25,8 @@ nortp_timeout=20
 
 [sound]
 el_sustain=50
+playback_gain_db=0
+mic_gain_db=0
+
+[net]
+enable_nat_helper=0
