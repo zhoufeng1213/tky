@@ -13,8 +13,10 @@ import com.xxxx.cc.base.fragment.BaseFragment;
 import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.global.PackageUtils;
 import com.xxxx.cc.model.UserBean;
+import com.xxxx.cc.service.FloatingImageDisplayService;
 import com.xxxx.cc.util.LinServiceManager;
 import com.xxxx.cc.util.SharedPreferencesUtil;
+import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.activity.FeedBackActivity;
 import com.xxxx.tky.activity.LoginActivity;
@@ -79,6 +81,11 @@ public class MineFragment extends BaseFragment {
         int i = view.getId();
         if (i == R.id.log_out_button) {
             if (AntiShakeUtils.isInvalidClick(view)) {
+                return;
+            }
+            if(FloatingImageDisplayService.isStarted)
+            {
+                ToastUtil.showToast(getContext(),"  正在通话中，请结束通话后，再退出登录！");
                 return;
             }
             SharedPreferencesUtil.save(mContext, Contant.LOGIN_PWD_SAVE_TAG, "");

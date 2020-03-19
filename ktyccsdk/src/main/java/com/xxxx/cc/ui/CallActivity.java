@@ -398,8 +398,6 @@ boolean isApplyPermission=false;
             FloatingImageDisplayService.FloatingImageDisplayBinder floatingImageDisplayBinder = (FloatingImageDisplayService.FloatingImageDisplayBinder) service;
             floatingImageDisplayService = floatingImageDisplayBinder.getService();
             setMBound(true);
-            isMiantiClicked = true;
-            llMianti.setBackgroundResource(R.drawable.selected_container);
         }
 
         @Override

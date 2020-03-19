@@ -33,13 +33,11 @@ public class HistoryAdapter extends BaseQuickAdapter<ContentBean, BaseViewHolder
         }
         helper.setText(R.id.tv_call_name, userName);
 
-
-
         String createTime = TimeUtils.stringToDate_HM_MD(item.getCreateTime());
         helper.setText(R.id.tv_start_time, createTime);
         int durationTime = item.getDurationInSec();
         helper.setText(R.id.tv_call_duration, "通话时长 " + TimeUtils.getWatchTime1(durationTime));
-        if(item.getDirection().equals("OUTBOUND"))  helper.setText(R.id.tv_direction,"呼出" );
+        if(item.getDirection()!=null&&item.getDirection().equals("OUTBOUND"))  helper.setText(R.id.tv_direction,"呼出" );
         else helper.setText(R.id.tv_direction,"呼入" );
         if(item.getDaSampleName()!=null)
         {
