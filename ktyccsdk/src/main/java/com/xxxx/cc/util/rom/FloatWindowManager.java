@@ -12,6 +12,8 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.WindowManager;
 
+import com.xxxx.cc.util.LogUtils;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -114,6 +116,7 @@ public class FloatWindowManager {
                 this.oppoROMPermissionApply((Context) context);
             }
         } else {
+            LogUtils.e("commonROMPermissionAppl");
             this.commonROMPermissionApply(context);
         }
     }

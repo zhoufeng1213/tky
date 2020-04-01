@@ -1,6 +1,8 @@
 package com.xxxx.cc.ui;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +25,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xxxx.cc.R;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
+import com.xxxx.cc.global.Constans;
+import com.xxxx.cc.global.GlobalApplication;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.model.BaseBean;
@@ -32,6 +36,7 @@ import com.xxxx.cc.model.HistoryResponseBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.ui.adapter.HistoryAdapter;
 import com.xxxx.cc.ui.widget.CustomPopWindow;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.ThreadTask;
 import com.xxxx.cc.util.db.DbUtil;
@@ -67,7 +72,7 @@ public class HistoryActivity extends BaseHttpRequestActivity {
     private long endTime = System.currentTimeMillis();
     private long beginTime = 0;
     private boolean isFirstRefrush = true;
-
+    MediaPlayer mediaPlayer=null;
     @Override
     public int getLayoutViewId() {
         return R.layout.activity_history;
@@ -182,8 +187,11 @@ public class HistoryActivity extends BaseHttpRequestActivity {
         historyAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId() == R.id.more) {
-                    showPopupWidow(historyResponseBeanList.get(position));
+                if (view.getId() == R.id.iv_call_record) {
+                    LogUtils.e("iv_call_record");
+                    Uri uri= Uri.parse(Constans.FILES_URL + historyResponseBeanList.get(position).getRecordFile());
+                    mediaPlayer = create(uri);
+                    mediaPlayer.start();
                 }
             }
         });
@@ -201,6 +209,17 @@ public class HistoryActivity extends BaseHttpRequestActivity {
         });
     }
 
+    public  MediaPlayer create( Uri uri) {
+
+        if (mediaPlayer != null) {
+            LogUtils.e("stop");
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
+        mediaPlayer = MediaPlayer.create(GlobalApplication.getInstance(), uri);
+        LogUtils.e("create");
+        return mediaPlayer;
+    }
 
     private void loadData(){
         //判断是否存在begin

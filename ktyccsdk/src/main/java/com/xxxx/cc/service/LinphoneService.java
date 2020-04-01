@@ -145,7 +145,7 @@ public class LinphoneService extends Service {
 
     @Override
     public void onDestroy() {
-        LogUtils.e("onDestroy");
+        LogUtils.e("service onDestroy");
         if (mTimer != null) {
             mTimer.cancel();
         }
@@ -165,6 +165,7 @@ public class LinphoneService extends Service {
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         // For this sample we will kill the Service at the same time we kill the app
+        LogUtils.e("kill the Service");
         stopSelf();
 
         super.onTaskRemoved(rootIntent);

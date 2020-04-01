@@ -55,7 +55,7 @@ public class KtyCcNetUtil {
         }
         //判断网络是否可用
         if (!NetUtil.isNetworkConnected(context)) {
-            loginCallBack.onFailed(ErrorCode.NOT_NET_ERROR, "无网络");
+            loginCallBack.onFailed(ErrorCode.NOT_NET_ERROR, "网络连接失败，请检查网络");
             return;
         }
         PostStringBuilder okHttpUtils = OkHttpUtils.postString();
@@ -74,7 +74,8 @@ public class KtyCcNetUtil {
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        loginCallBack.onFailed(id, e.getMessage());
+                        BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                        loginCallBack.onFailed(baseBean.getCode(), baseBean.getMessage());
                     }
 
                     @Override

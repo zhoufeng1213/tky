@@ -17,7 +17,10 @@ import org.linphone.core.CoreListenerStub;
 import org.linphone.core.Factory;
 import org.linphone.core.PayloadType;
 import org.linphone.core.ProxyConfig;
+import org.linphone.core.RegistrationState;
 import org.linphone.core.TransportType;
+
+import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
 
 /**
  * @author zhoufeng
@@ -140,17 +143,16 @@ public class LinServiceManager {
     }
 
     public static void unRegisterLinPhone() {
-
+        LogUtils.e("unRegisterLinPhone");
         //https://github.com/BelledonneCommunications/linphone-android/issues/85
         //https://github.com/BelledonneCommunications/linphone-android/issues/650
-
         Core linphoneCore = LinphoneService.getCore();
         if (linphoneCore != null){
             ProxyConfig[] proxyConfigList = linphoneCore.getProxyConfigList();
 
             if(proxyConfigList != null && proxyConfigList.length > 0){
 
-                LogUtils.i("linphone_unregistration", "proxyConfig to remove, size:" + proxyConfigList.length);
+                LogUtils.e("linphone_unregistration", "proxyConfig to remove, size:" + proxyConfigList.length);
                 for(ProxyConfig proxyConfig : proxyConfigList){
                     //Set proxyConfig Expires
                     proxyConfig.edit();
@@ -164,7 +166,12 @@ public class LinServiceManager {
                 linphoneCore.refreshRegisters();
             }
         }
-
+        AuthInfo[] authInfos = LinphoneService.getCore().getAuthInfoList();
+        if(authInfos != null && authInfos.length > 0){
+            for (AuthInfo authInfo:authInfos){
+                linphoneCore.removeAuthInfo(authInfo);
+            }
+        }
         LinphoneService.setRegister(false);
     }
 
@@ -186,7 +193,7 @@ public class LinServiceManager {
             String password = userBean.getCcUserInfo().getExtensionPassword();
             String proxyAddressStr = "sip:" + userBean.getCcServerProxy();
             String[] dnsServers = {"223.5.5.5", "114.114.114.114"};
-            int expire = 600;
+            int expire = 128;
 
             cfg.setIdentityAddress(LinphoneService.getCore().createAddress(sipAddressStr));
             cfg.setServerAddr(proxyAddressStr);
@@ -199,16 +206,6 @@ public class LinServiceManager {
 
             LinphoneService.getCore().addAuthInfo(lcFactory.createAuthInfo(username, username, password, null, domain, domain));
 
-            PayloadType[] payloadType = LinphoneService.getCore().getAudioPayloadTypes();
-            if(payloadType != null){
-                for (PayloadType payloadTypeA : payloadType) {
-                    String mineType = payloadTypeA.getMimeType();
-                    int channel = payloadTypeA.getChannels();
-                    String description = payloadTypeA.getDescription();
-                    LogUtils.i("linphone_config","audio codec, mineType: " + mineType + ", channel: " + channel + ", description: " + description);
-                }
-            }
-
 //            PayloadType[] setCodecs = new PayloadType[]{payloadType[0], payloadType[3], payloadType[4]};
 //            LinphoneService.getCore().setAudioPayloadTypes(setCodecs);
             LinphoneService.getCore().setDnsServers(dnsServers);
@@ -217,5 +214,52 @@ public class LinServiceManager {
             LinphoneService.getCore().addProxyConfig(cfg);
             LinphoneService.getCore().setDefaultProxyConfig(cfg);
         }
+    }
+
+    public static void unRegisterOnlineLinPhone(UserBean cacheUserBean,boolean isExit) {
+        if (cacheUserBean != null&&cacheUserBean.getCcUserInfo()!=null) {
+
+            if (LinphoneService.getCore() != null) {
+                if (LinphoneService.isRegister()) {
+                    unRegisterLinPhone();
+                    if(isExit) {
+                        LogUtils.e("完全退出");
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(0);
+                    }
+                } else {
+                    LogUtils.e("注册 LinphoneService");
+                    LinphoneService.getCore().addListener(new CoreListenerStub() {
+                        @Override
+                        public void onRegistrationStateChanged(Core core, ProxyConfig cfg, RegistrationState
+                                state, String message) {
+                            LogUtils.e("linphone_registration", "state:" + state.name() + ", message:" + message);
+                            if (state == RegistrationState.Ok) {
+                                LinServiceManager.removeListener(this);
+                                LinphoneService.setRegister(true);
+                              unRegisterLinPhone();
+                              if(isExit)
+                              {
+                                  LogUtils.e("完全退出");
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(0);
+                                }
+                            } else if (state == RegistrationState.Failed) {
+                                LogUtils.e("注册服务失败" + state.name());
+                                unRegisterLinPhone();
+                                if(isExit) {
+                                    LogUtils.e("完全退出");
+                                    android.os.Process.killProcess(android.os.Process.myPid());
+                                    System.exit(0);
+                                }
+                            }
+
+                        }
+                    });
+                    LinServiceManager.setLinPhoneConfig(cacheUserBean);
+                }
+            }
+        }
+
     }
 }

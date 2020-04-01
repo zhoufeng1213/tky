@@ -306,7 +306,7 @@ public class DialFragment extends BaseFragment {
         super.onResume();
         String content = ClipeBoardUtil.getClipeBoardContent(mContext);
         if (ClipeBoardUtil.isChinaPhoneLegal(content)) {
-            LogUtils.e("lxl粘:" + content);
+            LogUtils.e("tag粘:" + content);
             phoneNumTextView.setText(content);
         }
     }

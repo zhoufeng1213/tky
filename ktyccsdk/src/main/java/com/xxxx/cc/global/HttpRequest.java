@@ -39,5 +39,6 @@ public class HttpRequest {
     public static String makecallExternal = "/sdk/api/v1/makecall/external";
     public static String makecallInternal = "/sdk/api/v1/makecall/internal";
     public static String uploadlog = "/sdk/api/v1/uploadlog/upload";
+    public static String registe = "/sdk/api/v1/registe/info";
 }
 

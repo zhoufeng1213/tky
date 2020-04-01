@@ -11,4 +11,14 @@
     <string name="text_username">账号</string>
     <string name="text_password">密码</string>
     <string name="text_history_call">历史通话</string>
+    <string name="agree_content">&#160;&#160;&#160;&#160;欢迎您使用广州科天视畅信息科技有限公司（以下简称“我们”）“天客云”呼叫中心产品及相关软件（以下统称“服务”）！\n
+        &#160;&#160;&#160;&#160;在您使用我们的服务之前，请您阅读并同意遵守本《服务条款》（以下简称“本协议”）及《隐私政策》中的所有条款。请您务必审慎阅读、充分理解本协议及《隐私政策》中的各条款内容，特别是免除或者限制责任的条款、管辖与法律适用条款，以及开通或使用某项服务的附加条款。限制、免责条款可能以黑体加粗的形式提请您特别注意。您使用我们的服务即视为您已阅读并同意受本协议及《隐私政策》的约束。
+        \n     </string>
+    <string name="agree_yes">同意</string>
+    <string name="agree_no">不同意</string>
+    <string name="ysxyts">天客云服务协议及隐私政策提示</string>
+    <string name="fuwuxieyi">服务协议</string>
+    <string name="yisizhengce">隐私政策</string>
+    <string name="and_tag">和</string>
+    <string name="company_qunli">(C) 2015-2020 广州科天视畅信息科技有限公司。\n  保留所有权利。</string>
 </resources>

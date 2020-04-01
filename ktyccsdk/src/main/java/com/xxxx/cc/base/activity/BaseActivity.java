@@ -5,17 +5,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.kty.mars.baselibrary.log.LogUtil;
 import com.kty.mars.baselibrary.util.StatusBarUtil;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.xxxx.cc.R;
 import com.xxxx.cc.base.widget.LoadingDialog;
+import com.xxxx.cc.model.UserBean;
+import com.xxxx.cc.service.FloatingImageDisplayService;
 import com.xxxx.cc.service.LinphoneService;
+import com.xxxx.cc.util.LinServiceManager;
+import com.xxxx.cc.util.LogUtils;
+import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.ToastUtil;
 
 import butterknife.ButterKnife;
+
+import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
 
 
 /**
@@ -24,7 +33,6 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends RxAppCompatActivity {
 
     public Context mContext;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +46,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 //            ImmersionBar.with(this).statusBarDarkFont(true).barColor(R.color.white).fitsSystemWindows(true)
 //                    .init();
 //        }
-
 
         initView(savedInstanceState);
     }
@@ -191,5 +198,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         }
         super.onDestroy();
     }
+
 
 }

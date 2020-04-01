@@ -67,7 +67,7 @@ public class BaseGetPresenter {
             if (!NetUtil.isNetworkConnected(mActivity)) {
                 mActivity.dismissDialog();
                 BaseBean baseBean = new BaseBean();
-                baseBean.setMessage("无网络");
+                baseBean.setMessage("网络连接失败，请检查网络");
                 mActivity.dealHttpRequestFail(moduleName, baseBean);
                 return;
             }
@@ -92,23 +92,28 @@ public class BaseGetPresenter {
                     .execute(new MyStringCallback() {
                         @Override
                         public void onError(Call call, Exception e, int id) {
-                            LogUtils.e("e.getMessage():"+e.getMessage());
+                            LogUtils.e("e.getMessage():" + e.getMessage());
                             mActivity.dismissDialog();
+                            try {
                             if (e != null) {
                                 BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                                if(baseBean.getCode()==45009)
-                                {
-                                    ToastUtil.showToast(mActivity,"您的登录身份已过期，请退出重新登录");
-                                }
-                            else {
+                                if (baseBean.getCode() == 45009) {
+                                    ToastUtil.showToast(mActivity, "您的登录身份已过期，请退出重新登录");
+                                } else {
                                     mActivity.dealHttpRequestFail(moduleName, baseBean);
                                 }
+                            }
+                        } catch (JSONException ex)
+                            {
+                                BaseBean baseBean=new BaseBean();
+                                baseBean.setMessage(e.getMessage());
+                                mActivity.dealHttpRequestFail(moduleName, baseBean);
                             }
                         }
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.e("lxl","onResponse:"+response);
+                            Log.e("tag","onResponse:"+response);
                             try {
                                 mActivity.dismissDialog();
                                 BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
@@ -136,7 +141,7 @@ public class BaseGetPresenter {
         if (!NetUtil.isNetworkConnected(mActivity)) {
             mActivity.dismissDialog();
             BaseBean baseBean = new BaseBean();
-            baseBean.setMessage("无网络");
+            baseBean.setMessage("网络连接失败，请检查网络");
             mActivity.dealHttpRequestFail(moduleName, baseBean);
             return;
         }

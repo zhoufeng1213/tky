@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
@@ -85,7 +86,7 @@ public class BasePostPresenter {
         if (!NetUtil.isNetworkConnected(mActivity)) {
             mActivity.dismissDialog();
             BaseBean baseBean = new BaseBean();
-            baseBean.setMessage("无网络");
+            baseBean.setMessage("网络连接失败，请检查网络");
             mActivity.dealHttpRequestFail(moduleName, baseBean);
             return;
         }
@@ -110,14 +111,23 @@ public class BasePostPresenter {
                         LogUtils.e("e.getMessage():" + e.getMessage());
                         mActivity.dismissDialog();
                         if (e != null) {
-                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                            if(baseBean.getCode()==45009)
+                            try {
+                                BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                                if(baseBean.getCode()==45009)
+                                {
+                                    ToastUtil.showToast(mActivity,"您的登录身份已过期，请退出重新登录");
+                                }
+                                else {
+                                    mActivity.dealHttpRequestFail(moduleName, baseBean);
+                                }
+                            }catch (JSONException ex)
                             {
-                                ToastUtil.showToast(mActivity,"您的登录身份已过期，请退出重新登录");
-                            }
-                            else {
+
+                                BaseBean baseBean=new BaseBean();
+                                baseBean.setMessage(e.getMessage());
                                 mActivity.dealHttpRequestFail(moduleName, baseBean);
                             }
+
 
                         }
                     }
@@ -125,7 +135,7 @@ public class BasePostPresenter {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        LogUtils.e("lxl","onResponse:"+response);
+                        LogUtils.e("tag","onResponse:"+response);
                         try {
                             if (isShowDialog) {
                                 mActivity.dismissDialog();
@@ -158,7 +168,7 @@ public class BasePostPresenter {
         if (!NetUtil.isNetworkConnected(mActivity)) {
             mActivity.dismissDialog();
             BaseBean baseBean = new BaseBean();
-            baseBean.setMessage("无网络");
+            baseBean.setMessage("网络连接失败，请检查网络");
             mActivity.dealHttpRequestFail(moduleName, baseBean);
             return;
         }
@@ -216,7 +226,7 @@ public class BasePostPresenter {
         if (!NetUtil.isNetworkConnected(mActivity)) {
             mActivity.dismissDialog();
             BaseBean baseBean = new BaseBean();
-            baseBean.setMessage("无网络");
+            baseBean.setMessage("网络连接失败，请检查网络");
             mActivity.dealHttpRequestFail(moduleName, baseBean);
             return;
         }
@@ -238,7 +248,7 @@ public class BasePostPresenter {
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Log.e("lxl","e.getMessage():"+e.getMessage());
+                        Log.e("tag","e.getMessage():"+e.getMessage());
                         mActivity.dismissDialog();
                         if (e != null) {
                             BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
@@ -250,7 +260,7 @@ public class BasePostPresenter {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e("lxl","onResponse:"+response);
+                        Log.e("tag","onResponse:"+response);
                         try {
                             if (isShowDialog) {
                                 mActivity.dismissDialog();

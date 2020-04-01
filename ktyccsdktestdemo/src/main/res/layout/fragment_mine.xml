@@ -100,6 +100,33 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/about_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d10"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:padding="@dimen/d15">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关于"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/textNormal13"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/right" />
+
+
+    </RelativeLayout>
 
 
     <com.flyco.roundview.RoundTextView

@@ -6,9 +6,10 @@ package com.xxxx.cc.global;
  * @moduleName
  */
 public class Constans {
+    public static final String AGREE_PROTOCOL_TAG ="AGREE_PROTOCOL_TAG" ;
     public static String BASE_URL = "https://tky.ketianyun.com";
     public static String APK_NAME = "tky.apk";
-
+    public static String FILES_URL = "https://files.ketianyun.com";
     public static final String USERBEAN_SAVE_TAG = "KYT_SIP_USERBEAN";
     public static final String VOICE_RECORD_PREFIX = "VOICE_RECORD_PREFIX";
     public static final String KTY_CC_BASE_URL = "KTY_CC_BASE_URL";

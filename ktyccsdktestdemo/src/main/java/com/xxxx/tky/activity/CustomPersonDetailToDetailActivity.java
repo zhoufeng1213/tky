@@ -459,7 +459,7 @@ public class CustomPersonDetailToDetailActivity extends BaseHttpRequestActivity 
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
         if ((HttpRequest.Contant.updateAll + queryCustomPersonBean.getId()).equals(moduleName)) {
             if (result.isOk()) {
-                showToast("修改成功:");
+                showToast("修改成功");
                 //把本地的数据库更新一下
                 queryCustomPersonBean.setName(userName.getText().toString().trim());
                 queryCustomPersonBean.setPhone(phoneNum.getText().toString().trim());

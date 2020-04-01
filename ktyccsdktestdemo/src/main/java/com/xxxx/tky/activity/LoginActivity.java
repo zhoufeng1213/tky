@@ -7,9 +7,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.fly.sweet.dialog.SweetAlertDialog;
+import com.flyco.roundview.RoundTextView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xw.repo.XEditText;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
@@ -125,11 +134,14 @@ public class LoginActivity extends BaseHttpRequestActivity {
         if (!TextUtils.isEmpty(pwd)) {
             pwdEdit.setText(pwd);
         }
-
-        //先检测更新
-        baseGetPresenter.presenterBusiness(
-                HttpRequest.Version.checkVersion + BuildConfig.VERSION_NAME, false);
-
+if(!SharedPreferencesUtil.getBoolean(getApplicationContext(),Constans.AGREE_PROTOCOL_TAG))
+{
+    showAgreeDialog();
+}else {
+    //先检测更新
+    baseGetPresenter.presenterBusiness(
+            HttpRequest.Version.checkVersion + BuildConfig.VERSION_NAME, false);
+}
 //        if (!TextUtils.isEmpty(phoneNum) && !TextUtils.isEmpty(pwd)) {
 //            login();
 //        }
@@ -143,6 +155,7 @@ public class LoginActivity extends BaseHttpRequestActivity {
                 login();
             }
         });
+
     }
 
     private void login() {
@@ -188,7 +201,10 @@ public class LoginActivity extends BaseHttpRequestActivity {
                                     public void onFailed(int code, String message) {
                                         dismissDialog();
 //                                                Toast.makeText(mContext, TextUtils.isEmpty(message) ? "登录失败，原因无" : message, Toast.LENGTH_SHORT).show();
-                                        Toast.makeText(mContext, "密码错误", Toast.LENGTH_SHORT).show();
+                                       if(code==45003)
+                                           Toast.makeText(mContext, "密码错误", Toast.LENGTH_SHORT).show();
+                                       else
+                                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     } else {
@@ -369,5 +385,82 @@ public class LoginActivity extends BaseHttpRequestActivity {
         return false;
     }
 
+    private void showAgreeDialog() {
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this);
+        View dialogView = LayoutInflater.from(this)
+                .inflate(R.layout.dialog_agree_protocol, null, false);
+        sweetAlertDialog.setCustomView(dialogView);
+        sweetAlertDialog.setCancelable(false);
+        TextView dialogContent = dialogView.findViewById(R.id.dialog_content);
+        RoundTextView dialogConfirm = dialogView.findViewById(R.id.dialog_confirm);
+        RoundTextView dialogCancel = dialogView.findViewById(R.id.dialog_cancel);
 
+
+        String content = getString(R.string.agree_content);
+        SpannableString spannableString = new SpannableString(content);
+        int index1 = content.indexOf("《") + 1;
+        int index2 = content.indexOf("》") + 1;
+        int index3 = content.indexOf("《", index1) + 1;
+        int index4 = content.indexOf("》", index2) + 1;
+
+        ClickableSpan clickableSpan1 = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View view) {
+                if (AntiShakeUtils.isInvalidClick(view)) {
+                    return;
+                }
+              Intent intent = new Intent(LoginActivity.this, CustomServicerActivity.class);
+               intent.putExtra("type", 1);
+              startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                ds.setColor(getResources().getColor(R.color.c_2f9cf6));
+                ds.setUnderlineText(false);
+            }
+        };
+        ClickableSpan clickableSpan2 = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View view) {
+                if (AntiShakeUtils.isInvalidClick(view)) {
+                    return;
+                }
+               Intent intent;
+                intent = new Intent(LoginActivity.this, CustomServicerActivity.class);
+                intent.putExtra("type", 2);
+              startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                ds.setColor(getResources().getColor(R.color.c_2f9cf6));
+                ds.setUnderlineText(false);
+            }
+        };
+
+        spannableString.setSpan(clickableSpan1, index1 - 1, index2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan2, index3 - 1, index4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        dialogContent.setText(spannableString);
+        dialogContent.setMovementMethod(LinkMovementMethod.getInstance());
+
+        dialogConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              SharedPreferencesUtil.setBoolean(getApplicationContext(), Constans.AGREE_PROTOCOL_TAG, true);
+                sweetAlertDialog.dismiss();
+                baseGetPresenter.presenterBusiness(
+                        HttpRequest.Version.checkVersion + BuildConfig.VERSION_NAME, false);
+            }
+        });
+        dialogCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(0);
+            }
+        });
+        sweetAlertDialog.show();
+    }
 }

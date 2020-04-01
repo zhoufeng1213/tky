@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/head_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d24"
+        android:background="@color/white" />
+
+    <include layout="@layout/common_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/divider"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/user_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@mipmap/ic_launcher"
+            android:text="@string/app_name"
+            android:drawablePadding="@dimen/d8"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/d25" />
+
+
+        <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d25"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/user_image" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/d10"
+            android:layout_above="@id/company_name"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/btn_fuwuxieyi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fuwuxieyi"
+                android:textColor="@color/blue_btn_bg_color"
+                android:textSize="@dimen/textNormal12"
+                android:autoLink="all" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/and_tag"
+                android:textSize="@dimen/textNormal12"
+                android:autoLink="all" />
+
+            <TextView
+                android:id="@+id/btn_yinsi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yisizhengce"
+                android:textColor="@color/blue_btn_bg_color"
+                android:textSize="@dimen/textNormal12"
+                android:autoLink="all" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/company_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/company_qunli"
+            android:textSize="@dimen/textNormal12"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/d15"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

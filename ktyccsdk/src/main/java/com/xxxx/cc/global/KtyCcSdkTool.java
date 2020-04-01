@@ -146,6 +146,7 @@ public class KtyCcSdkTool {
     private void linphoneServiceCall() {
         if (LinphoneService.getCore() != null) {
             if (LinphoneService.isRegister()) {
+                LogUtils.e("已经注册 LinphoneService");
                 goToCallActivity(mContext, phoneNum, userName, headUrl);
             } else {
                 LogUtils.e("注册 LinphoneService");

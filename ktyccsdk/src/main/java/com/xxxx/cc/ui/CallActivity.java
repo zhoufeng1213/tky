@@ -509,6 +509,7 @@ boolean isApplyPermission=false;
             unbindService(conn);
             mBound = false;
         }
+        LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
     }
 
     @Override

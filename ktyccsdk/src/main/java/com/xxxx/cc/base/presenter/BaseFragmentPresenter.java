@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.xxxx.cc.base.fragment.BaseHttpRequestFragment;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.model.BaseBean;
@@ -69,7 +70,7 @@ public class BaseFragmentPresenter {
         if (!NetUtil.isNetworkConnected(mActivity.mContext)) {
             mActivity.dismissDialog();
             BaseBean baseBean = new BaseBean();
-            baseBean.setMessage("无网络");
+            baseBean.setMessage("网络连接失败，请检查网络");
             mActivity.dealHttpRequestFail(moduleName, baseBean);
             return;
         }
@@ -92,23 +93,31 @@ public class BaseFragmentPresenter {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         mActivity.dismissDialog();
+                        try {
                         if (e != null) {
                             BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                         if(baseBean.getCode()==45009)
-                                {
-                                    ToastUtil.showToast(mActivity.mContext,"您的登录身份已过期，请退出重新登录");
-                                }
-                            else {
-                                    mActivity.dealHttpRequestFail(moduleName, baseBean);
-                                }
+                            if (baseBean.getCode() == 45009) {
+                                ToastUtil.showToast(mActivity.mContext, "您的登录身份已过期，请退出重新登录");
+                            } else {
+                                mActivity.dealHttpRequestFail(moduleName, baseBean);
+                            }
                         }
-                        Log.e("lxl","e.getMessage():"+e.getMessage());
+                    }
+                        catch (JSONException ex)
+                        {
+
+                            BaseBean baseBean=new BaseBean();
+                            baseBean.setMessage(e.getMessage());
+                            mActivity.dealHttpRequestFail(moduleName, baseBean);
+                        }
+
+                        Log.e("tag","e.getMessage():"+e.getMessage());
                     }
 
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e("lxl","onResponse:"+response);
+                        Log.e("tag","onResponse:"+response);
                         try {
                             if (isShowDialog) {
                                 mActivity.dismissDialog();

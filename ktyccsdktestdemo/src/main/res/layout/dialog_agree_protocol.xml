@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rv_backgroundColor="@color/white"
+        android:orientation="vertical"
+        app:rv_cornerRadius="@dimen/d4"
+        android:layout_marginRight="@dimen/d30"
+        android:layout_marginLeft="@dimen/d30">
+
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ysxyts"
+            android:layout_marginTop="@dimen/d15"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:textColor="@color/c_353841"
+            android:textSize="@dimen/textNormal16"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+
+        <TextView
+            android:id="@+id/dialog_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="300dp"
+            android:layout_marginLeft="@dimen/d25"
+            android:layout_marginRight="@dimen/d25"
+            android:layout_marginTop="@dimen/d15"
+            android:layout_below="@id/dialog_title"
+            android:text="@string/agree_content"
+            android:scrollbars="vertical"
+            android:textColor="@color/c_5f636d" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/d40"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:layout_marginTop="@dimen/d15"
+            android:layout_marginBottom="@dimen/d5"
+            android:layout_below="@id/dialog_content"
+            android:gravity="center">
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/dialog_cancel"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="@dimen/d35"
+                app:rv_isRadiusHalfHeight="true"
+                android:layout_margin="@dimen/d10"
+                android:gravity="center"
+                android:text="@string/agree_no"
+                android:textColor="@color/c_2f9cf6"
+                app:rv_cornerRadius="@dimen/d4"
+                app:rv_backgroundColor="@color/white"
+                app:rv_strokeWidth="@dimen/d1"
+                app:rv_strokeColor="@color/c_2f9cf6"
+
+                />
+
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/dialog_confirm"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="@dimen/d35"
+                app:rv_isRadiusHalfHeight="true"
+                android:gravity="center"
+                android:layout_margin="@dimen/d10"
+                android:text="@string/agree_yes"
+                android:textColor="@color/white"
+                app:rv_cornerRadius="@dimen/d4"
+                app:rv_backgroundColor="@color/c_2f9cf6" />
+
+        </LinearLayout>
+
+
+    </com.flyco.roundview.RoundRelativeLayout>
+
+
+</LinearLayout>

@@ -110,7 +110,7 @@ public class CallPhoneTool {
         //判断网络是否可用
         if (!NetUtil.isNetworkConnected(mContext)) {
             BaseBean baseBean = new BaseBean();
-            baseBean.setMessage("无网络");
+            baseBean.setMessage("网络连接失败，请检查网络");
             showToast("请检查网络连接");
             dealHttpRequestFail(moduleName, baseBean);
             return;

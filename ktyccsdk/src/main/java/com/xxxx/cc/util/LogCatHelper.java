@@ -79,7 +79,7 @@ import android.text.TextUtils;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                cmds = "logcat *:e | grep \"(" + mPid + ")\"";
+                cmds = "logcat *:i | grep \"(" + mPid + ")\"";
             }
 
             @Override
