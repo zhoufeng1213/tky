@@ -203,7 +203,7 @@ public class CallActivity extends BaseHttpRequestActivity {
                     public void onResponse(String response, int id) {
                         LogUtils.e("response：" + response);
                         layoutPhoneAddress.setVisibility(View.GONE);
-                        if (!response.equals("")) {
+                        if (response!=null&&!TextUtils.isEmpty(response)) {
                             try {
                                 JSONObject json = JSON.parseObject(response);
                                 if (!json.getJSONObject("response").toJSONString().equals("{}")) {
