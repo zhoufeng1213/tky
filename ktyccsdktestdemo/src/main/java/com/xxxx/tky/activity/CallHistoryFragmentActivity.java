@@ -65,7 +65,8 @@ public class CallHistoryFragmentActivity extends BaseActivity {
                     public void onResponse(String response, int id) {
 //                        layoutPhoneAddress.setVisibility(View.VISIBLE);
                         LogUtils.i("TAG", response);
-                        if (response!=null&&!TextUtils.isEmpty(response)) {
+                        if (response != null && !TextUtils.isEmpty(response.trim()))
+                        {
                             try {
                                 JSONObject json = new JSONObject(response);
                                 JSONObject phoneDetail = json.optJSONObject("response").optJSONObject("17620370606").optJSONObject("detail");
