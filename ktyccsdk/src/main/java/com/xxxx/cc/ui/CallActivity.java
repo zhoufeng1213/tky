@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -93,6 +94,9 @@ public class CallActivity extends BaseHttpRequestActivity {
     private static final String TAG = "CallActivity";
     private UserBean cacheUserBean;
     private CommunicationRecordResponseBean mCommunicationRecordResponseBean;
+
+    public static boolean isReturnCall;
+
     @Override
     public int getLayoutViewId() {
         return R.layout.activity_communication;
@@ -157,6 +161,7 @@ public class CallActivity extends BaseHttpRequestActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
+        isReturnCall = true;
         ImmersionBar.with(this).init();
         findView();
         initListener();
@@ -341,14 +346,19 @@ public class CallActivity extends BaseHttpRequestActivity {
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
         LogUtils.e("呼叫失败1：" + result.getMessage());
-        if(result.getMessage()!=null)
-        showToast(result.getMessage());
-        else showToast("呼叫失败");
+        if(result.getMessage()!=null) {
+            LogUtils.e("呼叫失败 http1");
+            showToast(result.getMessage());
+        } else {
+            LogUtils.e("呼叫失败 http2");
+            showToast("呼叫失败");
+        }
         hookCall();
     }
 
     public void hookCall() {
         hook = true;
+        isReturnCall = false;
         LinServiceManager.hookCall();
         LogUtils.e("进入了End");
         if (floatingImageDisplayService != null) {
@@ -442,6 +452,7 @@ boolean isApplyPermission=false;
             if (state == Call.State.End) {
                 LogUtils.e("进入了End2");
                 hook = true;
+                isReturnCall = false;
                 if (floatingImageDisplayService != null) {
                     floatingImageDisplayService.releaseService();
                 }
@@ -477,6 +488,11 @@ boolean isApplyPermission=false;
             mBound = false;
         }
         isApplyPermission=false;
+        //获取悬浮框权限是否已经有了
+        boolean permission = FloatWindowManager.getInstance().checkPermission(this);
+        if (permission) {
+            FloatWindowManager.getInstance().dismissDialog();
+        }
     }
 
     @Override

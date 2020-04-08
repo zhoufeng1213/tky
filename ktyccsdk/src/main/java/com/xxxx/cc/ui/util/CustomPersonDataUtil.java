@@ -112,7 +112,7 @@ public class CustomPersonDataUtil {
 
     private void dealResult(String response) {
         if (!TextUtils.isEmpty(response)) {
-            LogUtils.e(response);
+//            LogUtils.e(response);
             CustomPersonReturnResultBean historyResponseBean = (new Gson()).fromJson(response, CustomPersonReturnResultBean.class);
             if (historyResponseBean.getCode() == 0) {
 

@@ -238,9 +238,17 @@ public class FloatWindowManager {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
                         result.confirmResult(false);
-                        FloatWindowManager.this.showConfirmDialog(context, message, result);
+                        dialog.dismiss();
+//                        FloatWindowManager.this.showConfirmDialog(context, message, result);
                     }
                 }).create()).show();
+    }
+
+
+    public void dismissDialog(){
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     private int dp2px(final Context context, final float dp) {

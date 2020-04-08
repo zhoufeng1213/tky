@@ -228,35 +228,35 @@ public class LinServiceManager {
                         System.exit(0);
                     }
                 } else {
-                    LogUtils.e("注册 LinphoneService");
-                    LinphoneService.getCore().addListener(new CoreListenerStub() {
-                        @Override
-                        public void onRegistrationStateChanged(Core core, ProxyConfig cfg, RegistrationState
-                                state, String message) {
-                            LogUtils.e("linphone_registration", "state:" + state.name() + ", message:" + message);
-                            if (state == RegistrationState.Ok) {
-                                LinServiceManager.removeListener(this);
-                                LinphoneService.setRegister(true);
-                              unRegisterLinPhone();
-                              if(isExit)
-                              {
-                                  LogUtils.e("完全退出");
-                                android.os.Process.killProcess(android.os.Process.myPid());
-                                System.exit(0);
-                                }
-                            } else if (state == RegistrationState.Failed) {
-                                LogUtils.e("注册服务失败" + state.name());
-                                unRegisterLinPhone();
-                                if(isExit) {
-                                    LogUtils.e("完全退出");
-                                    android.os.Process.killProcess(android.os.Process.myPid());
-                                    System.exit(0);
-                                }
-                            }
-
-                        }
-                    });
-                    LinServiceManager.setLinPhoneConfig(cacheUserBean);
+//                    LogUtils.e("注册 LinphoneService");
+//                    LinphoneService.getCore().addListener(new CoreListenerStub() {
+//                        @Override
+//                        public void onRegistrationStateChanged(Core core, ProxyConfig cfg, RegistrationState
+//                                state, String message) {
+//                            LogUtils.e("linphone_registration", "state:" + state.name() + ", message:" + message);
+//                            if (state == RegistrationState.Ok) {
+//                                LinServiceManager.removeListener(this);
+//                                LinphoneService.setRegister(true);
+//                                unRegisterLinPhone();
+//                                if(isExit)
+//                                {
+//                                    LogUtils.e("完全退出");
+//                                    android.os.Process.killProcess(android.os.Process.myPid());
+//                                    System.exit(0);
+//                                }
+//                            } else if (state == RegistrationState.Failed) {
+//                                LogUtils.e("注册服务失败" + state.name());
+//                                unRegisterLinPhone();
+//                                if(isExit) {
+//                                    LogUtils.e("完全退出");
+//                                    android.os.Process.killProcess(android.os.Process.myPid());
+//                                    System.exit(0);
+//                                }
+//                            }
+//
+//                        }
+//                    });
+//                    LinServiceManager.setLinPhoneConfig(cacheUserBean);
                 }
             }
         }

@@ -17,6 +17,8 @@ import com.xxxx.cc.base.widget.LoadingDialog;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.FloatingImageDisplayService;
 import com.xxxx.cc.service.LinphoneService;
+import com.xxxx.cc.util.ActivityUtil;
+import com.xxxx.cc.util.CallUtil;
 import com.xxxx.cc.util.LinServiceManager;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
@@ -39,6 +41,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setStatusBar();
         initViewBeforeSetContentView();
         setContentView(getLayoutViewId());
+        ActivityUtil.addActivity(this.getPackageName() + "." + this.getLocalClassName());
         ButterKnife.bind(this);
         mContext = this;
 //        initToolbar();
@@ -189,9 +192,15 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        CallUtil.restartConferenceActivityToOtherActivity(this);
+    }
 
     @Override
     protected void onDestroy() {
+        ActivityUtil.removeActivity(this.getPackageName() + "." + this.getLocalClassName());
         dismissDialog();
         if (isAddImmersionBar()) {
             ImmersionBar.with(this).destroy();

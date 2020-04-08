@@ -52,26 +52,25 @@ public class MyApplicaiton extends GlobalApplication {
         mHomeKeyListener.setOnHomePressedListener(new HomeKeyListener.OnHomePressedListener() {
             @Override
             public void onHomePressed() {
-                if (!FloatingImageDisplayService.isStarted) {
-                    LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
-                    LogUtils.e("KEYCODE_HOME");
-                    if (!FloatingImageDisplayService.isStarted) {
-                        LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
-
-                    }
-                }
+//                if (!FloatingImageDisplayService.isStarted) {
+//                    LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
+//                    LogUtils.e("KEYCODE_HOME");
+//                    if (!FloatingImageDisplayService.isStarted) {
+//                        LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
+//                    }
+//                }
             }
 
             @Override
             public void onHomeLongPressed() {
-                if (!FloatingImageDisplayService.isStarted) {
-                    LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
-                    LogUtils.e("KEYCODE_HOME");
-                    if (!FloatingImageDisplayService.isStarted) {
-                        LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
-
-                    }
-                }
+//                if (!FloatingImageDisplayService.isStarted) {
+//                    LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
+//                    LogUtils.e("KEYCODE_HOME");
+//                    if (!FloatingImageDisplayService.isStarted) {
+//                        LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
+//
+//                    }
+//                }
             }
         });
         mHomeKeyListener.startWatch();

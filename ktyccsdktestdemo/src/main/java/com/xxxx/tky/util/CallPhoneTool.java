@@ -152,6 +152,7 @@ public class CallPhoneTool {
                                     showToast("呼叫成功，请注意接听电话");
 
                                 } else {
+                                    LogUtils.e("呼叫失败 http 4");
                                     showToast("呼叫失败");
                                 }
                             } else {
