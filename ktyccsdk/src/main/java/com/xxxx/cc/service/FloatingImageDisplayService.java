@@ -152,39 +152,42 @@ public class FloatingImageDisplayService extends Service {
 
         @Override
         public boolean onTouch(final View view, final MotionEvent event) {
-            switch (event.getAction()) {
-                case 0:
-                    this.x = (int) event.getRawX();
-                    this.y = (int) event.getRawY();
-                    this.actionDwonX = this.x;
-                    this.actionDwonY = this.y;
-                    isActionMove = false;
-                    break;
+            if(windowManager != null && layoutParams != null){
+                switch (event.getAction()) {
+                    case 0:
+                        this.x = (int) event.getRawX();
+                        this.y = (int) event.getRawY();
+                        this.actionDwonX = this.x;
+                        this.actionDwonY = this.y;
+                        isActionMove = false;
+                        break;
 
-                case 2:
-                    final int nowX = (int) event.getRawX();
-                    final int nowY = (int) event.getRawY();
-                    final int movedX = nowX - this.x;
-                    final int movedY = nowY - this.y;
-                    this.x = nowX;
-                    this.y = nowY;
-                    layoutParams.x += movedX;
-                    layoutParams.y += movedY;
-                    windowManager.updateViewLayout(view, layoutParams);
-                    isActionMove = true;
-                    break;
+                    case 2:
+                        final int nowX = (int) event.getRawX();
+                        final int nowY = (int) event.getRawY();
+                        final int movedX = nowX - this.x;
+                        final int movedY = nowY - this.y;
+                        this.x = nowX;
+                        this.y = nowY;
+                        layoutParams.x += movedX;
+                        layoutParams.y += movedY;
 
-                case 1:
-                    final int upX = (int) event.getRawX();
-                    final int upY = (int) event.getRawY();
-                    if (Math.abs(upX - this.actionDwonX) >= 5 || Math.abs(upY - this.actionDwonY) >= 5) {
+                        windowManager.updateViewLayout(view, layoutParams);
                         isActionMove = true;
                         break;
-                    }
-                    isActionMove = false;
-                    break;
-                default:
-                    break;
+
+                    case 1:
+                        final int upX = (int) event.getRawX();
+                        final int upY = (int) event.getRawY();
+                        if (Math.abs(upX - this.actionDwonX) >= 5 || Math.abs(upY - this.actionDwonY) >= 5) {
+                            isActionMove = true;
+                            break;
+                        }
+                        isActionMove = false;
+                        break;
+                    default:
+                        break;
+                }
             }
             return isActionMove;
         }

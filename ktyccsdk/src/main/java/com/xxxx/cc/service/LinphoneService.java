@@ -89,7 +89,7 @@ public class LinphoneService extends Service {
                 LogUtils.e("LinphoneService CallState:" + state.name()+",message:"+message);
                 if (state == Call.State.IncomingReceived) {
                     CallParams params = getCore().createCallParams(call);
-                    params.enableVideo(true);
+                    params.enableVideo(false);
                     call.acceptWithParams(params);
                 } else if (state == Call.State.Connected) {
 
