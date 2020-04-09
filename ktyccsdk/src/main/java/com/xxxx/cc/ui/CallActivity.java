@@ -360,7 +360,7 @@ public class CallActivity extends BaseHttpRequestActivity {
         hook = true;
         isReturnCall = false;
         LinServiceManager.hookCall();
-        LogUtils.e("进入了End");
+        LogUtils.e("CallActivity, hookCall, 进入了End");
         if (floatingImageDisplayService != null) {
             floatingImageDisplayService.releaseService();
         }
@@ -448,9 +448,9 @@ boolean isApplyPermission=false;
     private CoreListenerStub mCoreListener = new CoreListenerStub() {
         @Override
         public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
-            LogUtils.i("linphone_callStateChange", "state:" + state.name() + ", message:" + message);
+            LogUtils.e("CallActivity, onCallStateChanged, CallState:" + state.name() + ", message:" + message);
             if (state == Call.State.End) {
-                LogUtils.e("进入了End2");
+                LogUtils.e("CallActivity, onCallStateChanged, 进入了End2");
                 hook = true;
                 isReturnCall = false;
                 if (floatingImageDisplayService != null) {
