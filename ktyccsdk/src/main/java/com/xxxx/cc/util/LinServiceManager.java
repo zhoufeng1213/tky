@@ -66,7 +66,7 @@ public class LinServiceManager {
 
 
     public static Call callPhone(String phoenNum, String contactName) {
-        LogUtils.e("callPhone");
+        LogUtils.e("LinServiceManager, callPhone:" + phoenNum);
         Core core = LinphoneService.getCore();
         if(core != null){
             LogUtils.e("core != null");

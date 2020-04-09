@@ -117,7 +117,7 @@ public class KtyCcSdkTool {
         this.userName = userName;
         this.headUrl = headUrl;
         //先判断用户是否保存在了本地
-        LogUtils.e("callPhone");
+        LogUtils.e("KtyCcSdkTool, callPhone:" + phoneNum);
         try {
             LinServiceManager.hookCall();
             Object objectBean = SharedPreferencesUtil.getObjectBean(mContext, USERBEAN_SAVE_TAG, UserBean.class);

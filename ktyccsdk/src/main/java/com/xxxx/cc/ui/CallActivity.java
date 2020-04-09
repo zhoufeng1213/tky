@@ -292,7 +292,7 @@ public class CallActivity extends BaseHttpRequestActivity {
     }
 
     private void callPhone(String phoenNum) {
-        LogUtils.e("callPhone");
+        LogUtils.e("CallActivity, callPhone:" + phoenNum);
         LinServiceManager.addListener(mCoreListener);
         //下面的代码一定都要设置，并且在configureAccountActivity中的设置也不能少
         try {
