@@ -72,7 +72,7 @@ public class SearchPersonActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
 
-        if(Contant.contactUserNameList == null){
+        if (Contant.contactUserNameList == null) {
             contactUserNameList = MobilePhoneUtil.getMobilePhoneList(mContext);
             //根据字母排序
             Collections.sort(contactUserNameList, new Comparator<ContactUserName>() {
@@ -82,7 +82,7 @@ public class SearchPersonActivity extends BaseActivity {
                 }
             });
             Contant.contactUserNameList = contactUserNameList;
-        }else{
+        } else {
             contactUserNameList = Contant.contactUserNameList;
         }
 
@@ -96,10 +96,7 @@ public class SearchPersonActivity extends BaseActivity {
                     manager.showSoftInput(searchEdit, 0);
                 }
             }
-        },100);
-
-
-
+        }, 100);
 
 
         searchEdit.setOnXTextChangeListener(new XEditText.OnXTextChangeListener() {

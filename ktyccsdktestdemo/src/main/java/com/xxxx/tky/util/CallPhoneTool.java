@@ -2,15 +2,11 @@ package com.xxxx.tky.util;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
-import com.kty.mars.baselibrary.log.LogUtil;
-import com.xxxx.cc.base.presenter.BasePostPresenter;
 import com.xxxx.cc.base.presenter.MyStringCallback;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.global.HttpRequest;
@@ -74,7 +70,7 @@ public class CallPhoneTool {
             @Override
             public void onClick(View view) {
                 dialog.cancel();
-                if (cacheUserBean.getCcUserInfo()==null||cacheUserBean.getCcUserInfo().getExtensionNo() == null || cacheUserBean.getCcUserInfo().getExtensionNo() .equals("")) {
+                if (cacheUserBean.getCcUserInfo() == null || cacheUserBean.getCcUserInfo().getExtensionNo() == null || cacheUserBean.getCcUserInfo().getExtensionNo().equals("")) {
                     showToast("请联系管理员配置分机号,然后退出重新登录");
                     return;
                 }
@@ -125,7 +121,7 @@ public class CallPhoneTool {
                 }
             }
         }
-       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+getHttpRequestParams(moduleName).toString());
+        LogUtils.e("url:" + Constans.BASE_URL + moduleName + "，Params:" + getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -136,7 +132,7 @@ public class CallPhoneTool {
                         LogUtils.e("onError:" + e.getMessage());
                         if (e != null) {
                             BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                           dealHttpRequestFail(moduleName, baseBean);
+                            dealHttpRequestFail(moduleName, baseBean);
 
                         }
                     }

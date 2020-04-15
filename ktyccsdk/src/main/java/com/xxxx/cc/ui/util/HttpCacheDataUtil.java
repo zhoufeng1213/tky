@@ -87,7 +87,7 @@ public class HttpCacheDataUtil {
         //添加header
         okHttpUtils.addHeader("token", token);
         okHttpUtils.addHeader("Content-Type", "application/json");
-        LogUtils.e("url:"+ Constans.BASE_URL +HttpRequest.CallHistory.callHistory+"，Params:"+getHttpPostParams());
+        LogUtils.e("url:" + Constans.BASE_URL + HttpRequest.CallHistory.callHistory + "，Params:" + getHttpPostParams());
         okHttpUtils
                 .content(getHttpPostParams())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))

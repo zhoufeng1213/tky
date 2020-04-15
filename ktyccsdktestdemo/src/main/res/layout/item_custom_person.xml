@@ -3,11 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-android:paddingLeft="@dimen/d15"
+    android:paddingLeft="@dimen/d15"
     android:paddingRight="@dimen/d15"
     android:paddingBottom="@dimen/d10"
-    android:paddingTop="@dimen/d10"
-    >
+    android:paddingTop="@dimen/d10">
 
     <com.flyco.roundview.RoundTextView
         android:id="@+id/user_name"
@@ -18,8 +17,7 @@ android:paddingLeft="@dimen/d15"
         android:text="1"
         android:textSize="@dimen/textNormal16"
         android:gravity="center"
-        android:textColor="@color/white"
-        />
+        android:textColor="@color/white" />
 
     <LinearLayout
         android:id="@+id/contact_layout"
@@ -27,16 +25,14 @@ android:paddingLeft="@dimen/d15"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="@dimen/d15"
-        android:layout_toRightOf="@id/user_name"
-        >
+        android:layout_toRightOf="@id/user_name">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="123"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -47,8 +43,7 @@ android:paddingLeft="@dimen/d15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="123"
-                android:textColor="@color/black"
-                />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/update_time"
@@ -56,17 +51,12 @@ android:paddingLeft="@dimen/d15"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="2019"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
         </RelativeLayout>
 
 
     </LinearLayout>
-
-
-
-
 
 
 </RelativeLayout>

@@ -31,8 +31,8 @@ public class ContactAdapter extends BaseQuickAdapter<ContactUserName, BaseViewHo
     protected void convert(BaseViewHolder helper, ContactUserName item) {
         try {
             helper.setText(R.id.name, item.getName());
-            if(!TextUtils.isEmpty(item.getName())){
-                helper.setText(R.id.name_letter, item.getName().substring(0,1));
+            if (!TextUtils.isEmpty(item.getName())) {
+                helper.setText(R.id.name_letter, item.getName().substring(0, 1));
             }
 
 

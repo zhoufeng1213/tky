@@ -27,8 +27,8 @@ public class SearchPersonAdapter extends BaseQuickAdapter<ContactUserName, BaseV
     @Override
     protected void convert(BaseViewHolder helper, ContactUserName item) {
         helper.setText(R.id.name, item.getName());
-        if(!TextUtils.isEmpty(item.getName())){
-            helper.setText(R.id.name_letter, item.getName().substring(0,1));
+        if (!TextUtils.isEmpty(item.getName())) {
+            helper.setText(R.id.name_letter, item.getName().substring(0, 1));
         }
         RoundTextView textView = helper.getView(R.id.name_letter);
         textView.getDelegate().setBackgroundColor(Color.parseColor(CONTACT_COLORS[helper.getAdapterPosition() % CONTACT_COLORS.length]));

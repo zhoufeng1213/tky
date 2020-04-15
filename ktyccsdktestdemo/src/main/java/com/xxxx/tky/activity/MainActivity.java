@@ -55,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.home_tv_login_in)
-    public void login(){
-        if(TextUtils.isEmpty(homeEtAccount.getText().toString().trim())){
-            Toast.makeText(MainActivity.this,"请输入账号",Toast.LENGTH_SHORT).show();
+    public void login() {
+        if (TextUtils.isEmpty(homeEtAccount.getText().toString().trim())) {
+            Toast.makeText(MainActivity.this, "请输入账号", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(homeEtPassword.getText().toString().trim())){
-            Toast.makeText(MainActivity.this,"请输入密码",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(homeEtPassword.getText().toString().trim())) {
+            Toast.makeText(MainActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
             return;
         }
         KtyCcNetUtil.login(this, homeEtAccount.getText().toString().trim(),
@@ -69,26 +69,26 @@ public class MainActivity extends AppCompatActivity {
                 new LoginCallBack() {
                     @Override
                     public void onSuccess(int code, String message) {
-                        Toast.makeText(MainActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFailed(int code, String message) {
-                        Toast.makeText(MainActivity.this,TextUtils.isEmpty(message)?"登录失败，原因无":message,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, TextUtils.isEmpty(message) ? "登录失败，原因无" : message, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     @OnClick(R.id.home_tv_login_out)
-    public void exit(){
+    public void exit() {
         KtyCcSdkTool.getInstance().unRegister(this);
-        Toast.makeText(MainActivity.this,"登出成功",Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "登出成功", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.home_tv_call)
-    public void call(){
-        if(TextUtils.isEmpty(homeEtPhone.getText().toString().trim())){
-            Toast.makeText(MainActivity.this,"请输入号码",Toast.LENGTH_SHORT).show();
+    public void call() {
+        if (TextUtils.isEmpty(homeEtPhone.getText().toString().trim())) {
+            Toast.makeText(MainActivity.this, "请输入号码", Toast.LENGTH_SHORT).show();
             return;
         }
 //        if(TextUtils.isEmpty(homeEtContactName.getText().toString().trim())){
@@ -97,21 +97,21 @@ public class MainActivity extends AppCompatActivity {
 //        }
         CallPhoneTool.getInstance().callPhone(this, homeEtPhone.getText().toString().trim(),
                 homeEtContactName.getText().toString().trim()
-                );
+        );
     }
 
     @OnClick(R.id.home_tv_history)
-    public void goToHistory(){
+    public void goToHistory() {
         KtyCcSdkTool.goToHistoryActivity(this);
     }
 
     @OnClick(R.id.home_tv_history_fragment)
-    public void goToHistoryFragment(){
-        startActivity(new Intent(this,CallHistoryFragmentActivity.class));
+    public void goToHistoryFragment() {
+        startActivity(new Intent(this, CallHistoryFragmentActivity.class));
     }
 
     @OnClick(R.id.home_tv_switch_url_host)
-    public void changeUrl(){
-        KtyCcOptionsUtil.switchHostOption(this,homeEtHost.getText().toString().trim());
+    public void changeUrl() {
+        KtyCcOptionsUtil.switchHostOption(this, homeEtHost.getText().toString().trim());
     }
 }

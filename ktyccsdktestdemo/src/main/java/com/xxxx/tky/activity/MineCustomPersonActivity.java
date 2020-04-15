@@ -205,6 +205,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                     helper.setText(R.id.user_name, item.getName());
                     helper.setText(R.id.update_time, TimeUtils.stringToDate_MD_HMS(item.getUpdatetime()));
                     helper.setText(R.id.phone_num, item.getRealMobileNumber());
+                    helper.setText(R.id.last_call_time, TimeUtils.stringToDate_MD_HMS(item.getLastCallTime()));
 
                     TextView letter = helper.getView(R.id.tvLetter);
                     letter.setText(item.getLetters());
@@ -257,6 +258,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
 //            List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanList(page);
             List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllList();
             if (list != null && list.size() > 0) {
+//                LogUtils.e("我的客户："+new Gson().toJson(list));
                 historyResponseBeanList.addAll(list);
                 mAdapter.notifyDataSetChanged();
             }
@@ -313,7 +315,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
 
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
-        LogUtils.i("tag", "response： " + response);
+//        LogUtils.i("tag", "response： " + response);
         if (HttpRequest.Contant.mineContacts.equals(moduleName)) {
 //            LogUtils.i("zwmn", "所有客户信息：" + response);
             srlRefresh.finishLoadMore();
@@ -351,7 +353,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                         } else {
                             historyResponseBeanList.addAll(historyResponseBean.getPage().getContent());
 //                            showMineCustomPersonBeanList.addAll(getShowMineCustomPersonBeanList(historyResponseBean.getPage().getContent()));
-                            LogUtils.i("tag", "后台返回的： " +historyResponseBeanList);
+                            LogUtils.i("tag", "后台返回的： " + historyResponseBeanList);
                         }
                         mAdapter.notifyDataSetChanged();
                     }

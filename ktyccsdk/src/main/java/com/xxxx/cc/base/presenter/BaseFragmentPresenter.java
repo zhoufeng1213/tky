@@ -84,7 +84,7 @@ public class BaseFragmentPresenter {
                 }
             }
         }
-        LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
+        LogUtils.e("url:" + Constans.BASE_URL + moduleName + "，Params:" + mActivity.getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(mActivity.getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -94,30 +94,28 @@ public class BaseFragmentPresenter {
                     public void onError(Call call, Exception e, int id) {
                         mActivity.dismissDialog();
                         try {
-                        if (e != null) {
-                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                            if (baseBean.getCode() == 45009) {
-                                ToastUtil.showToast(mActivity.mContext, "您的登录身份已过期，请退出重新登录");
-                            } else {
-                                mActivity.dealHttpRequestFail(moduleName, baseBean);
+                            if (e != null) {
+                                BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                                if (baseBean.getCode() == 45009) {
+                                    ToastUtil.showToast(mActivity.mContext, "您的登录身份已过期，请退出重新登录");
+                                } else {
+                                    mActivity.dealHttpRequestFail(moduleName, baseBean);
+                                }
                             }
-                        }
-                    }
-                        catch (JSONException ex)
-                        {
+                        } catch (JSONException ex) {
 
-                            BaseBean baseBean=new BaseBean();
+                            BaseBean baseBean = new BaseBean();
                             baseBean.setMessage(e.getMessage());
                             mActivity.dealHttpRequestFail(moduleName, baseBean);
                         }
 
-                        Log.e("tag","e.getMessage():"+e.getMessage());
+                        Log.e("tag", "e.getMessage():" + e.getMessage());
                     }
 
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e("tag","onResponse:"+response);
+                        Log.e("tag", "onResponse:" + response);
                         try {
                             if (isShowDialog) {
                                 mActivity.dismissDialog();
@@ -152,7 +150,7 @@ public class BaseFragmentPresenter {
         for (String key : params.keySet()) {
             okHttpUtils.addParams(key, params.get(key));
         }
-       LogUtils.e("url:"+Constans.BASE_URL + moduleName+" Params:"+params);
+        LogUtils.e("url:" + Constans.BASE_URL + moduleName + " Params:" + params);
         okHttpUtils.build()
                 .execute(new StringCallback() {
                     @Override
@@ -161,34 +159,34 @@ public class BaseFragmentPresenter {
                         mActivity.showToast("请检查网络连接");
 //                        LogUtils.e("出错接口:"+moduleName);
 //                        LogUtils.e("参数:"+params.toString());
-                        mActivity.dealHttpRequestFail(moduleName,null);
+                        mActivity.dealHttpRequestFail(moduleName, null);
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
                         try {
-                            if(isShowDialog){
+                            if (isShowDialog) {
                                 mActivity.dismissDialog();
                             }
-                            if(!TextUtils.isEmpty(response)){
+                            if (!TextUtils.isEmpty(response)) {
                                 BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
                                 if (baseBean.isOk()) {
                                     mActivity.dealHttpRequestResult(moduleName, baseBean);
                                 } else {
                                     mActivity.dismissDialog();
                                     mActivity.showToast(baseBean.getMessage() != null ? baseBean.getMessage() : "请检查网络连接");
-                                    mActivity.dealHttpRequestFail(moduleName,baseBean);
+                                    mActivity.dealHttpRequestFail(moduleName, baseBean);
                                 }
-                            }else{
+                            } else {
                                 mActivity.dismissDialog();
                                 mActivity.showToast("请检查网络连接");
-                                mActivity.dealHttpRequestFail(moduleName,null);
+                                mActivity.dealHttpRequestFail(moduleName, null);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                             mActivity.dismissDialog();
                             mActivity.showToast("请检查网络连接");
-                            mActivity.dealHttpRequestFail(moduleName,null);
+                            mActivity.dealHttpRequestFail(moduleName, null);
                         }
 
                     }

@@ -14,6 +14,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
@@ -25,7 +27,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="android:name,android:icon">
+        android:networkSecurityConfig="@xml/tky_net_config"
+        tools:replace="android:name,android:icon,android:networkSecurityConfig">
         <activity
             android:name="com.xxxx.tky.activity.LoginActivity"
             android:theme="@style/LaunchTheme">
@@ -37,6 +40,7 @@
         </activity>
 
         <activity android:name="com.xxxx.tky.activity.CallHistoryFragmentActivity" />
+        <activity android:name="com.xxxx.tky.activity.CallTotalCountActivity" />
         <activity android:name="com.xxxx.tky.activity.HomeActivity" />
         <activity android:name="com.xxxx.tky.activity.GuideActivity" />
         <activity android:name="com.xxxx.tky.activity.FeedBackActivity" />

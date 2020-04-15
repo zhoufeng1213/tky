@@ -6,10 +6,10 @@ package com.xxxx.tky.model;
  * @moduleName
  */
 public class SaveSummaryBean {
-   private String calldetailId;
+    private String calldetailId;
     private String contactid;
     private String phonenumber;
-    private String  summary;
+    private String summary;
 
 
     public String getCalldetailId() {

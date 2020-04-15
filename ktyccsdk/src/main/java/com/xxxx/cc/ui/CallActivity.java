@@ -6,29 +6,25 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
@@ -50,7 +46,6 @@ import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.cc.util.rom.FloatWindowManager;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.GetBuilder;
-import com.zhy.http.okhttp.builder.PostStringBuilder;
 
 import org.greenrobot.greendao.annotation.NotNull;
 import org.linphone.core.Call;
@@ -58,15 +53,10 @@ import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import okhttp3.MediaType;
 
 import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
 import static com.xxxx.cc.global.HttpRequest.makecallInternal;
-
-import com.alibaba.fastjson.JSONObject;
 
 public class CallActivity extends BaseHttpRequestActivity {
 
@@ -345,14 +335,29 @@ public class CallActivity extends BaseHttpRequestActivity {
     @Override
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
-        LogUtils.e("呼叫失败1：" + result.getMessage());
-        if(result.getMessage()!=null) {
+        LogUtils.e("呼叫失败1：" + result.toString());
+        LogUtils.e("呼叫失败1：code:" + result.getCode() + ",message:" + result.getMessage());
+        if (result.getMessage() != null) {
             LogUtils.e("呼叫失败 http1");
-            showToast(result.getMessage());
+            if (result.getCode() == 0 && "timeout".equals(result.getMessage())) {
+                //说明当前网络不行，但是网没断
+//                ToastUtil.showToast(mContext,"当前网络较差，请更换网络或者到网络好");
+                netErrorDialog();
+            } else {
+                showToast(result.getMessage());
+                hookCall();
+            }
         } else {
             LogUtils.e("呼叫失败 http2");
             showToast("呼叫失败");
+            hookCall();
         }
+    }
+
+
+    @Override
+    public void dealNetErrorConfirm() {
+        super.dealNetErrorConfirm();
         hookCall();
     }
 
@@ -366,7 +371,9 @@ public class CallActivity extends BaseHttpRequestActivity {
         }
         finish();
     }
-boolean isApplyPermission=false;
+
+    boolean isApplyPermission = false;
+
     public void clickShrink() {
         LogUtils.e("clickShrink   ------ > clickShrink");
         //获取悬浮框权限
@@ -376,8 +383,8 @@ boolean isApplyPermission=false;
             bindFloatService();
             moveTaskToBack(true);
         } else {
-            isApplyPermission=true;
-            FloatWindowManager.getInstance(). applyPermission(this);
+            isApplyPermission = true;
+            FloatWindowManager.getInstance().applyPermission(this);
             LogUtils.e("clickShrink   ------ > applyPermission");
         }
     }
@@ -487,7 +494,7 @@ boolean isApplyPermission=false;
             unbindService(conn);
             mBound = false;
         }
-        isApplyPermission=false;
+        isApplyPermission = false;
         //获取悬浮框权限是否已经有了
         boolean permission = FloatWindowManager.getInstance().checkPermission(this);
         if (permission) {
@@ -505,7 +512,7 @@ boolean isApplyPermission=false;
 
         if (!hook) {
             LogUtils.e("onPause   ------ > clickShrink");
-            if (!isNeedRequestPermission&&!isApplyPermission) {
+            if (!isNeedRequestPermission && !isApplyPermission) {
                 clickShrink();
             }
         }
@@ -525,15 +532,15 @@ boolean isApplyPermission=false;
             unbindService(conn);
             mBound = false;
         }
-        LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
+//        LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
     }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
-        if (keyCode == KeyEvent.KEYCODE_BACK|| keyCode == KeyEvent.KEYCODE_HOME) {
-                  clickShrink();
-                    return true;
+        if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME) {
+            clickShrink();
+            return true;
         }
         return super.onKeyUp(keyCode, event);
     }
@@ -544,4 +551,8 @@ boolean isApplyPermission=false;
         LogUtils.e("onNewIntent ");
     }
 
+    @Override
+    public boolean isShowNetErrorDialog() {
+        return false;
+    }
 }

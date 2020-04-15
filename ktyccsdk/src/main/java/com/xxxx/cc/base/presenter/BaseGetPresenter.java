@@ -81,12 +81,12 @@ public class BaseGetPresenter {
                     }
                 }
             }
-            LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
+            LogUtils.e("url:" + Constans.BASE_URL + moduleName + "，Params:" + mActivity.getHttpRequestParams(moduleName).toString());
             //添加请求参数
             Map mapParam = JSON.parseObject(mActivity.getHttpRequestParams(moduleName).toJSONString(),
                     Map.class);
             for (Object key : mapParam.keySet()) {
-                okHttpUtils.addParams( (String) key, mapParam.get(key)==null?"":String.valueOf(mapParam.get(key)));
+                okHttpUtils.addParams((String) key, mapParam.get(key) == null ? "" : String.valueOf(mapParam.get(key)));
             }
             okHttpUtils.build()
                     .execute(new MyStringCallback() {
@@ -95,17 +95,16 @@ public class BaseGetPresenter {
                             LogUtils.e("e.getMessage():" + e.getMessage());
                             mActivity.dismissDialog();
                             try {
-                            if (e != null) {
-                                BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                                if (baseBean.getCode() == 45009) {
-                                    ToastUtil.showToast(mActivity, "您的登录身份已过期，请退出重新登录");
-                                } else {
-                                    mActivity.dealHttpRequestFail(moduleName, baseBean);
+                                if (e != null) {
+                                    BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                                    if (baseBean.getCode() == 45009) {
+                                        ToastUtil.showToast(mActivity, "您的登录身份已过期，请退出重新登录");
+                                    } else {
+                                        mActivity.dealHttpRequestFail(moduleName, baseBean);
+                                    }
                                 }
-                            }
-                        } catch (JSONException ex)
-                            {
-                                BaseBean baseBean=new BaseBean();
+                            } catch (JSONException ex) {
+                                BaseBean baseBean = new BaseBean();
                                 baseBean.setMessage(e.getMessage());
                                 mActivity.dealHttpRequestFail(moduleName, baseBean);
                             }
@@ -113,14 +112,14 @@ public class BaseGetPresenter {
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.e("tag","onResponse:"+response);
+                            Log.e("tag", "onResponse:" + response);
                             try {
                                 mActivity.dismissDialog();
                                 BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
                                 if (baseBean.isOk()) {
-                                    mActivity.dealHttpRequestResult(moduleName, baseBean,response);
+                                    mActivity.dealHttpRequestResult(moduleName, baseBean, response);
                                 } else {
-    //                                mActivity.showToast(baseBean.getResMsg() != null ? baseBean.getResMsg() : "请检查网络连接");
+                                    //                                mActivity.showToast(baseBean.getResMsg() != null ? baseBean.getResMsg() : "请检查网络连接");
                                     mActivity.dealHttpRequestFail(moduleName, baseBean);
                                 }
                             } catch (Exception e) {
@@ -147,27 +146,26 @@ public class BaseGetPresenter {
         }
         GetBuilder okHttpUtils = OkHttpUtils.get();
         okHttpUtils.url(Constans.BASE_URL + moduleName);
-       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
+        LogUtils.e("url:" + Constans.BASE_URL + moduleName + "，Params:" + mActivity.getHttpRequestParams(moduleName).toString());
         //添加请求参数
         Map mapParam = JSON.parseObject(mActivity.getHttpRequestParams(moduleName).toJSONString(),
                 Map.class);
         for (Object key : mapParam.keySet()) {
             okHttpUtils.addParams((String) key, (String) mapParam.get(key));
         }
-       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mapParam.toString());
+        LogUtils.e("url:" + Constans.BASE_URL + moduleName + "，Params:" + mapParam.toString());
         okHttpUtils.build()
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         mActivity.dismissDialog();
-                        LogUtils.e("Message:"+e.getMessage());
+                        LogUtils.e("Message:" + e.getMessage());
                         if (e != null) {
                             BaseBean baseBean;
                             try {
-                                 baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                            }catch (JSONException exception)
-                            {
-                                 baseBean =new BaseBean();
+                                baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                            } catch (JSONException exception) {
+                                baseBean = new BaseBean();
                                 baseBean.setMessage(e.getMessage());
                             }
 
@@ -182,7 +180,7 @@ public class BaseGetPresenter {
                         mActivity.dismissDialog();
                         BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
                         if (baseBean.isOk()) {
-                            mActivity.dealHttpRequestResult(moduleName, baseBean,response);
+                            mActivity.dealHttpRequestResult(moduleName, baseBean, response);
                         } else {
 //                            mActivity.showToast(baseBean.getResMsg() != null ? baseBean.getResMsg() : "请检查网络连接");
                             mActivity.dealHttpRequestFail(moduleName, baseBean);

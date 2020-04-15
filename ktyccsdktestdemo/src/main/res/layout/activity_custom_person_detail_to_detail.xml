@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,23 +11,21 @@
         android:orientation="vertical"
         android:background="@color/c_a3d4ef"
         android:paddingBottom="@dimen/d20"
-        android:paddingTop="@dimen/d30"
-        >
+        android:paddingTop="@dimen/d30">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/d15"
-            >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="客户详情"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textNormal16"
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            />
+            android:layout_marginTop="@dimen/d15">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="客户详情"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textNormal16"
+                android:gravity="center"
+                android:layout_centerInParent="true" />
 
 
             <com.flyco.roundview.RoundTextView
@@ -45,8 +42,7 @@
                 android:paddingTop="@dimen/d5"
                 android:paddingBottom="@dimen/d5"
                 android:paddingLeft="@dimen/d12"
-                android:paddingRight="@dimen/d12"
-                />
+                android:paddingRight="@dimen/d12" />
         </RelativeLayout>
 
 
@@ -55,9 +51,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="@dimen/d20"
-            >
-
+            android:layout_marginTop="@dimen/d20">
 
 
             <com.flyco.roundview.RoundTextView
@@ -69,9 +63,7 @@
                 android:text="1"
                 android:textSize="@dimen/textNormal18"
                 android:gravity="center"
-                android:textColor="@color/white"
-                />
-
+                android:textColor="@color/white" />
 
 
         </LinearLayout>
@@ -83,15 +75,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/d40"
-        android:gravity="center_vertical"
-        >
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="客户姓名"
-            android:layout_marginLeft="@dimen/d15"
-            />
+            android:layout_marginLeft="@dimen/d15" />
 
 
         <TextView
@@ -100,8 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/d15"
-            android:text="123"
-            />
+            android:text="123" />
 
 
     </RelativeLayout>
@@ -109,23 +98,20 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider"
-        android:background="@color/line_background"
-        />
+        android:background="@color/line_background" />
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/d40"
-        android:gravity="center_vertical"
-        >
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="手机号码"
-            android:layout_marginLeft="@dimen/d15"
-            />
+            android:layout_marginLeft="@dimen/d15" />
 
 
         <TextView
@@ -138,8 +124,7 @@
             android:enabled="true"
             android:textIsSelectable="true"
             android:focusable="true"
-            android:longClickable="true"
-            />
+            android:longClickable="true" />
 
         <ImageView
             android:id="@+id/call_phone_btn"
@@ -147,31 +132,28 @@
             android:layout_height="wrap_content"
             android:src="@drawable/dianhua_detail"
             android:layout_alignParentRight="true"
-            android:paddingRight="@dimen/d15"
-            />
+            android:paddingRight="@dimen/d15" />
 
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider"
-        android:background="@color/line_background"
-        />
+        android:background="@color/line_background" />
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/d40"
-        android:gravity="center_vertical"
-        >
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="备注"
-            android:layout_marginLeft="@dimen/d15"
-            />
+            android:layout_marginLeft="@dimen/d15" />
 
 
         <TextView
@@ -179,8 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/d15"
-            />
+            android:layout_marginRight="@dimen/d15" />
 
 
     </RelativeLayout>
@@ -188,8 +169,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider"
-        android:background="@color/line_background"
-        />
+        android:background="@color/line_background" />
 
 
 </LinearLayout>

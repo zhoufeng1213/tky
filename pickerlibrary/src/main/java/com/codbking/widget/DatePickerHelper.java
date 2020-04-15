@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
-import static android.media.CamcorderProfile.get;
-
 /**
  * Created by codbking on 2016/8/10.
  */

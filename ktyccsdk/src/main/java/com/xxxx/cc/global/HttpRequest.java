@@ -30,6 +30,7 @@ public class HttpRequest {
         public static String getSubItem = "/sdk/api/v1/selfdefined/contacts/item";
         public static String updateSummary = "/sdk/api/v1/summary/update/";
         public static String addCustom = "/sdk/api/v1/contacts/save";
+        public static String updateLastCallTime = "/sdk/api/v1/contacts/updateLastCallTime";
     }
 
     public static class Version {
@@ -40,5 +41,6 @@ public class HttpRequest {
     public static String makecallInternal = "/sdk/api/v1/makecall/internal";
     public static String uploadlog = "/sdk/api/v1/uploadlog/upload";
     public static String registe = "/sdk/api/v1/registe/info";
+    public static String callTotalCount = "/sdk/api/v1/report/callTotalCount";
 }
 

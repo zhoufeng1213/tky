@@ -75,8 +75,7 @@
         android:paddingRight="@dimen/d15"
         android:paddingLeft="@dimen/d15"
         android:src="@drawable/ic_svg_more"
-        android:contentDescription="@string/app_name"
-        />
+        android:contentDescription="@string/app_name" />
 
 
 </RelativeLayout>

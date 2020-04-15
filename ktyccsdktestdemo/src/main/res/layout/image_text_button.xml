@@ -1,6 +1,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/image_text_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,8 +16,7 @@
             android:layout_width="wrap_content"
             android:animateLayoutChanges="true"
             android:background="@android:color/transparent"
-            android:scaleType="fitCenter">
-        </ImageButton>
+            android:scaleType="fitCenter"></ImageButton>
 
         <TextView
             android:id="@+id/button_text"
@@ -27,16 +26,15 @@
             android:textColor="#ff1f1a17"
             android:textStyle="bold"
             android:textSize="12sp"
-            android:scaleType="fitCenter">
-        </TextView>
+            android:scaleType="fitCenter"></TextView>
+
         <TextView
-        android:id="@+id/button_text_state"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:animateLayoutChanges="true"
+            android:id="@+id/button_text_state"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:animateLayoutChanges="true"
             android:textColor="#ff1f1a17"
             android:textSize="8sp"
-        android:scaleType="fitCenter">
-    </TextView>
+            android:scaleType="fitCenter"></TextView>
     </LinearLayout>
 </merge>

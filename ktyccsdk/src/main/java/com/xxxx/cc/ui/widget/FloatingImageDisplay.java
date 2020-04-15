@@ -1,6 +1,5 @@
 package com.xxxx.cc.ui.widget;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
@@ -17,8 +16,6 @@ import android.widget.TextView;
 
 import com.xxxx.cc.R;
 import com.xxxx.cc.global.GlobalApplication;
-import com.xxxx.cc.ui.CallActivity;
-import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.TimeUtils;
 
 public class FloatingImageDisplay {
@@ -31,9 +28,10 @@ public class FloatingImageDisplay {
     private int communicationSecond;
     private Handler.Callback changeImageCallback;
     private boolean isActionMove;
-   private static FloatingImageDisplay mInstance;
-   private Context context;
+    private static FloatingImageDisplay mInstance;
+    private Context context;
     TextView floatWindowTime;
+
     public static FloatingImageDisplay getInstance() {
         if (mInstance == null) {
             synchronized (FloatingImageDisplay.class) {
@@ -44,10 +42,11 @@ public class FloatingImageDisplay {
         }
         return mInstance;
     }
+
     public FloatingImageDisplay(Context context) {
         this.imageIndex = 0;
         this.communicationSecond = 0;
-        this. context=context;
+        this.context = context;
         this.changeImageCallback = new Handler.Callback() {
             @Override
             public boolean handleMessage(final Message msg) {
@@ -67,7 +66,7 @@ public class FloatingImageDisplay {
 
     public void onCreate() {
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-    layoutParams = new WindowManager.LayoutParams();
+        layoutParams = new WindowManager.LayoutParams();
         if (Build.VERSION.SDK_INT >= 26) {
             this.layoutParams.type = 2038;
         } else {
@@ -84,27 +83,27 @@ public class FloatingImageDisplay {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         displayView = layoutInflater.inflate(R.layout.floatwindow_communication, (ViewGroup) null);
         displayView.setOnTouchListener(new FloatingOnTouchListener());
-          floatWindowTime = (TextView) this.displayView.findViewById(R.id.float_window_time);
+        floatWindowTime = (TextView) this.displayView.findViewById(R.id.float_window_time);
     }
 
 
     @RequiresApi(api = 23)
-    public void showFloatingWindow( int second) {
+    public void showFloatingWindow(int second) {
         onCreate();
         FloatingImageDisplay.isStarted = true;
-            floatWindowTime.setText(second+"");
-            windowManager.addView(displayView, (ViewGroup.LayoutParams) layoutParams);
-            final Message message = new Message();
-            message.what = 0;
-            message.arg1 = second;
-            this.changeImageHandler.sendMessageDelayed(message, 0L);
-            this.displayView.setOnClickListener((View.OnClickListener) new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    isActionMove = false;
-                    Intent intent = new Intent();
-                    intent.setAction("com.xxxx.cc.callAction");
-                        context.startActivity(intent);
+        floatWindowTime.setText(second + "");
+        windowManager.addView(displayView, (ViewGroup.LayoutParams) layoutParams);
+        final Message message = new Message();
+        message.what = 0;
+        message.arg1 = second;
+        this.changeImageHandler.sendMessageDelayed(message, 0L);
+        this.displayView.setOnClickListener((View.OnClickListener) new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                isActionMove = false;
+                Intent intent = new Intent();
+                intent.setAction("com.xxxx.cc.callAction");
+                context.startActivity(intent);
                 //    releaseService();
 //                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 //                    try {
@@ -115,7 +114,7 @@ public class FloatingImageDisplay {
 //                        e.printStackTrace();
 //                    }
 
-                }
+            }
         });
     }
 

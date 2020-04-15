@@ -67,7 +67,7 @@ public class KtyCcNetUtil {
         jsonObject.put("appVersion", PackageUtils.getVersionName(context));
         jsonObject.put("os", "Android");
         jsonObject.put("osVersion", SystemUtils.getOSVersion());
-        LogUtils.e("url:"+ HttpRequest.Login.postLoginUrl+"，Params:"+jsonObject.toString());
+        LogUtils.e("url:" + HttpRequest.Login.postLoginUrl + "，Params:" + jsonObject.toString());
         okHttpUtils.content(jsonObject.toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()
@@ -139,7 +139,7 @@ public class KtyCcNetUtil {
             beginTime = date.getTime();
         }
         HttpCacheDataUtil httpCacheDataUtil = HttpCacheDataUtil.getInstance(context.getApplicationContext());
-        httpCacheDataUtil.setQueryData(beginTime, System.currentTimeMillis(), userBean.getUserId(), userBean.getToken(),0);
+        httpCacheDataUtil.setQueryData(beginTime, System.currentTimeMillis(), userBean.getUserId(), userBean.getToken(), 0);
         httpCacheDataUtil.loadAllNetData();
     }
 
@@ -147,6 +147,10 @@ public class KtyCcNetUtil {
     private static void dealCustomCache(Context context, UserBean userBean) {
         String beginStr = SharedPreferencesUtil.getValue(context, KTY_CUSTOM_BEGIN);
         LogUtils.e("beginStr====> " + (beginStr == null ? "null" : beginStr));
+        if (TextUtils.isEmpty(beginStr)) {
+            //清空数据库
+            DbUtil.clearCustomPersonList();
+        }
         long beginTime = 0;
         if (!TextUtils.isEmpty(beginStr)) {
             try {

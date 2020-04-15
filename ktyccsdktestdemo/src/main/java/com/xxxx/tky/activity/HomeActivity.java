@@ -21,10 +21,10 @@ import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
 import com.shizhefei.view.viewpager.SViewPager;
 import com.xxxx.cc.global.HttpRequest;
+import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.FloatingImageDisplayService;
-import com.xxxx.cc.service.LinphoneService;
 import com.xxxx.cc.util.LinServiceManager;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
@@ -83,6 +83,10 @@ public class HomeActivity extends BaseTransitionActivity {
         if (objectBean != null) {
             cacheUserBean = (UserBean) objectBean;
         }
+
+
+        //先启动service
+        KtyCcSdkTool.startLinPhoneService(this);
 //        if (cacheUserBean != null && cacheUserBean.getCcUserInfo() != null && LinphoneService.getCore() == null || LinphoneService.getCore().equals("") || !LinphoneService.isRegister()) {
 //            LogUtils.e("is register");
 //            baseGetPresenter.presenterBusinessByHeader(HttpRequest.registe, false, "token", cacheUserBean.getToken());
@@ -205,6 +209,11 @@ public class HomeActivity extends BaseTransitionActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+    }
+
+    @Override
+    public boolean isNeedShowNetPoorManyTimes() {
+        return true;
     }
 }
 

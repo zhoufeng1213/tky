@@ -28,7 +28,7 @@ public abstract class BaseHttpRequestFragment extends BaseFragment {
         basePostPresenter = new BaseFragmentPresenter(this);
     }
 
-    public Map<String, String> getParams(String moduleName){
+    public Map<String, String> getParams(String moduleName) {
         return new HashMap<>();
     }
 
@@ -36,13 +36,15 @@ public abstract class BaseHttpRequestFragment extends BaseFragment {
         return new JSONObject();
     }
 
-    public void dealHttpRequestResult(String moduleName, BaseBean result){
+    public void dealHttpRequestResult(String moduleName, BaseBean result) {
 
     }
+
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
 
     }
-    public void dealHttpRequestFail(String moduleName,BaseBean result){
+
+    public void dealHttpRequestFail(String moduleName, BaseBean result) {
 
     }
 

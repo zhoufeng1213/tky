@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,13 +21,13 @@ public class ImageTextButton extends LinearLayout {
     private int mIconResourceId;
 
     public ImageTextButton(Context context) {
-      this(context,null);
+        this(context, null);
     }
 
     public ImageTextButton(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        LayoutInflater.from(context).inflate( R.layout.image_text_button, this);
+        LayoutInflater.from(context).inflate(R.layout.image_text_button, this);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CarImageTextButton);
 
         mIcon = findViewById(R.id.button_icon);

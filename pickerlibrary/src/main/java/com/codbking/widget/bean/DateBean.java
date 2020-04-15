@@ -52,34 +52,34 @@ public class DateBean {
         this.minute = minute;
     }
 
-    private String makeZero(int m){
+    private String makeZero(int m) {
 
-         if(m>9){
-             return  ""+m;
-         }
-        if(m>0){
-            return "0"+m;
+        if (m > 9) {
+            return "" + m;
         }
-        return ""+m;
+        if (m > 0) {
+            return "0" + m;
+        }
+        return "" + m;
     }
 
-    public String getDisplayDate(DateType type){
-        String date="";
-        switch(type){
+    public String getDisplayDate(DateType type) {
+        String date = "";
+        switch (type) {
             case TYPE_ALL:
-                date=year+"-"+makeZero(moth)+"-"+makeZero(day)+" "+makeZero(hour)+":"+makeZero(minute);
-         break;
+                date = year + "-" + makeZero(moth) + "-" + makeZero(day) + " " + makeZero(hour) + ":" + makeZero(minute);
+                break;
             case TYPE_YMDHM:
-                date=year+"-"+makeZero(moth)+"-"+makeZero(day)+" "+makeZero(hour)+":"+makeZero(minute);
+                date = year + "-" + makeZero(moth) + "-" + makeZero(day) + " " + makeZero(hour) + ":" + makeZero(minute);
                 break;
             case TYPE_YMDH:
-                date=year+"-"+makeZero(moth)+"-"+makeZero(day)+" "+makeZero(hour);
+                date = year + "-" + makeZero(moth) + "-" + makeZero(day) + " " + makeZero(hour);
                 break;
             case TYPE_YMD:
-                date=year+"-"+makeZero(moth)+"-"+makeZero(day);
+                date = year + "-" + makeZero(moth) + "-" + makeZero(day);
                 break;
             case TYPE_HM:
-                date=makeZero(hour)+":"+makeZero(minute);
+                date = makeZero(hour) + ":" + makeZero(minute);
                 break;
         }
         return date;

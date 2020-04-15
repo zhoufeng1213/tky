@@ -50,7 +50,7 @@ public abstract class BaseFragment extends Fragment {
                 }
             } else {
                 mRootView = inflater.inflate(getContentViewId(), container, false);
-                ButterKnife.bind(this,mRootView);
+                ButterKnife.bind(this, mRootView);
             }
         } else {
             mRootView = super.onCreateView(inflater, container, savedInstanceState);
@@ -121,18 +121,17 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
-    public void startActivity(Class className,String ...params){
-        Intent intent = new Intent(mContext,className);
-        if(params!=null) {
-            if (params.length>1&&params.length%2==0){
-                for (int i = 0; i <params.length ; i+=2) {
-                    intent.putExtra(params[i],params[i+1]);
+    public void startActivity(Class className, String... params) {
+        Intent intent = new Intent(mContext, className);
+        if (params != null) {
+            if (params.length > 1 && params.length % 2 == 0) {
+                for (int i = 0; i < params.length; i += 2) {
+                    intent.putExtra(params[i], params[i + 1]);
                 }
             }
         }
         startActivity(intent);
     }
-
 
 
 }

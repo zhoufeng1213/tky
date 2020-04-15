@@ -97,6 +97,13 @@ public class DbUtil {
         getDbManager().getDaoSession().getQueryCustomPersonBeanDao().insertOrReplaceInTx(list);
     }
 
+
+    public static void clearCustomPersonList() {
+        if (getDbManager().getDaoSession().getQueryCustomPersonBeanDao() != null) {
+            getDbManager().getDaoSession().getQueryCustomPersonBeanDao().deleteAll();
+        }
+    }
+
     public static List<ContentBean> queryPhoneRecordList(String userId, int page) {
         return getDbManager().getDaoSession().getContentBeanDao().queryBuilder()
                 .where(ContentBeanDao.Properties.UserId.eq(userId))
@@ -106,7 +113,7 @@ public class DbUtil {
                 .list();
     }
 
-    public static List<ContentBean> queryPhoneRecordList(String userId,String dnis,String direction, int page,int size) {
+    public static List<ContentBean> queryPhoneRecordList(String userId, String dnis, String direction, int page, int size) {
         return getDbManager().getDaoSession().getContentBeanDao().queryBuilder()
                 .where(ContentBeanDao.Properties.UserId.eq(userId),
                         ContentBeanDao.Properties.Direction.eq(direction),
@@ -120,7 +127,7 @@ public class DbUtil {
     }
 
 
-    public static List<ContentBean> queryPhoneRecordListByHistory(String userId,String dnis,String direction) {
+    public static List<ContentBean> queryPhoneRecordListByHistory(String userId, String dnis, String direction) {
         return getDbManager().getDaoSession().getContentBeanDao().queryBuilder()
                 .where(ContentBeanDao.Properties.UserId.eq(userId),
                         ContentBeanDao.Properties.Direction.eq(direction),
@@ -169,7 +176,7 @@ public class DbUtil {
         return getDbManager().getDaoSession().getQueryCustomPersonBeanDao().queryBuilder()
                 .where(QueryCustomPersonBeanDao.Properties.Datastatus.eq(true),
                         QueryCustomPersonBeanDao.Properties.Id.eq(id)
-                        )
+                )
 //                .offset(0)
 //                .limit(1000)
                 .unique()
@@ -184,11 +191,11 @@ public class DbUtil {
     public static List<QueryCustomPersonBean> queryCustomPersonBeanAllListByNameOrPhone(String str) {
         QueryBuilder qb = getDbManager().getDaoSession().getQueryCustomPersonBeanDao().queryBuilder();
         return qb.where(QueryCustomPersonBeanDao.Properties.Datastatus.eq(true),
-                qb.or(QueryCustomPersonBeanDao.Properties.RealMobileNumber.like("%"+str+"%"),
-                        QueryCustomPersonBeanDao.Properties.Name.like("%"+str+"%"),
-                        QueryCustomPersonBeanDao.Properties.DisplayNameSpelling.like("%"+str.toUpperCase()+"%")
-                        )
+                qb.or(QueryCustomPersonBeanDao.Properties.RealMobileNumber.like("%" + str + "%"),
+                        QueryCustomPersonBeanDao.Properties.Name.like("%" + str + "%"),
+                        QueryCustomPersonBeanDao.Properties.DisplayNameSpelling.like("%" + str.toUpperCase() + "%")
                 )
+        )
                 .orderAsc(QueryCustomPersonBeanDao.Properties.Letters)
                 .list()
                 ;

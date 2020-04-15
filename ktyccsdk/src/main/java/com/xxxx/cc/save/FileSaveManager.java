@@ -138,18 +138,18 @@ public class FileSaveManager {
         try {
             long currentTime = System.currentTimeMillis();
             long dealTime = currentTime - days * 24 * 60 * 60 * 1000;
-            String dealName =  new SimpleDateFormat("yyyyMMdd").format(new Date(dealTime));
-            LogUtils.e("dealName:"+dealName);
+            String dealName = new SimpleDateFormat("yyyyMMdd").format(new Date(dealTime));
+            LogUtils.e("dealName:" + dealName);
             File dirList = new File(dirPath);
             if (dirList.exists()) {
                 File[] listFiles = dirList.listFiles();
                 if (null != listFiles && listFiles.length > 0) {
                     for (File file : listFiles) {
                         String fileName = file.getName();
-                        LogUtils.e("fileName:"+fileName);
+                        LogUtils.e("fileName:" + fileName);
                         if (fileName.startsWith(dealName)) {
                             LogUtils.e("startsWith:");
-                                paths.add(file.getAbsolutePath());
+                            paths.add(file.getAbsolutePath());
 
                         }
                     }
@@ -158,7 +158,7 @@ public class FileSaveManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LogUtils.e("paths:"+paths.size());
+        LogUtils.e("paths:" + paths.size());
         return paths;
 
     }
@@ -194,7 +194,7 @@ public class FileSaveManager {
                         if (fileName.startsWith(dealName)) {
                             file.delete();
                         }
-                        }
+                    }
 
 
                 }

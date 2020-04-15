@@ -1,6 +1,5 @@
 package com.xxxx.cc.service;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 
 import com.xxxx.cc.R;
 import com.xxxx.cc.ui.CallActivity;
-import com.xxxx.cc.ui.HistoryActivity;
 import com.xxxx.cc.util.TimeUtils;
 
 public class FloatingImageDisplayService extends Service {
@@ -118,7 +116,7 @@ public class FloatingImageDisplayService extends Service {
                     intent.setAction("com.xxxx.cc.callAction");
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                   // releaseService();
+                    // releaseService();
                 }
             });
         }
@@ -152,7 +150,7 @@ public class FloatingImageDisplayService extends Service {
 
         @Override
         public boolean onTouch(final View view, final MotionEvent event) {
-            if(windowManager != null && layoutParams != null){
+            if (windowManager != null && layoutParams != null) {
                 switch (event.getAction()) {
                     case 0:
                         this.x = (int) event.getRawX();
@@ -192,11 +190,11 @@ public class FloatingImageDisplayService extends Service {
             return isActionMove;
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(isStarted)
-        {
+        if (isStarted) {
             releaseService();
         }
     }

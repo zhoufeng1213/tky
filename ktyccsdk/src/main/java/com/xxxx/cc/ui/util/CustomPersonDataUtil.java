@@ -94,7 +94,7 @@ public class CustomPersonDataUtil {
         for (Object key : mapParam.keySet()) {
             okHttpUtils.addParams((String) key, mapParam.get(key) == null ? "" : String.valueOf(mapParam.get(key)));
         }
-        LogUtils.e("url:"+Constans.BASE_URL+HttpRequest.Contant.mineContacts+"，Params:"+mapParam.toString());
+        LogUtils.e("url:" + Constans.BASE_URL + HttpRequest.Contant.mineContacts + "，Params:" + mapParam.toString());
         okHttpUtils
                 .build()
                 .execute(new MyStringCallback() {

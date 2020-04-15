@@ -15,8 +15,7 @@
         android:orientation="vertical"
         app:rv_cornerRadius="@dimen/d4"
         android:layout_marginRight="@dimen/d30"
-        android:layout_marginLeft="@dimen/d30"
-        >
+        android:layout_marginLeft="@dimen/d30">
 
 
         <TextView
@@ -41,8 +40,7 @@
             android:contentDescription="@string/app_name"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/d6"
-            android:layout_marginRight="@dimen/d6"
-            />
+            android:layout_marginRight="@dimen/d6" />
 
 
         <com.flyco.roundview.RoundLinearLayout
@@ -56,8 +54,7 @@
             android:layout_marginRight="@dimen/d25"
             android:layout_marginTop="@dimen/d15"
             app:rv_backgroundColor="@color/c_FAFAFA"
-            app:rv_cornerRadius="@dimen/d8"
-            >
+            app:rv_cornerRadius="@dimen/d8">
 
             <EditText
                 android:id="@+id/user_meno"
@@ -66,11 +63,9 @@
                 android:text="沟通记录内容"
                 android:background="@null"
                 android:textSize="@dimen/textNormal14"
-                android:layout_margin="@dimen/d10"
-                />
+                android:layout_margin="@dimen/d10" />
 
         </com.flyco.roundview.RoundLinearLayout>
-
 
 
         <LinearLayout

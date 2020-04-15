@@ -14,13 +14,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:text="账号:"/>
+            android:text="账号:" />
 
         <EditText
             android:id="@+id/home_et_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="test002@ketianyun.com"/>
+            android:text="test002@ketianyun.com" />
 
     </LinearLayout>
 
@@ -34,13 +34,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:text="密码:"/>
+            android:text="密码:" />
 
         <EditText
             android:id="@+id/home_et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="111111"/>
+            android:text="111111" />
 
     </LinearLayout>
 
@@ -54,13 +54,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:text="登录:"/>
+            android:text="登录:" />
 
         <TextView
             android:id="@+id/home_tv_login_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="未登录"/>
+            android:text="未登录" />
 
     </LinearLayout>
 
@@ -74,13 +74,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:text="联系人:"/>
+            android:text="联系人:" />
 
         <EditText
             android:id="@+id/home_et_contact_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="张三"/>
+            android:text="张三" />
 
     </LinearLayout>
 
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:text="号码:"/>
+            android:text="号码:" />
 
         <EditText
             android:id="@+id/home_et_phone"
@@ -102,8 +102,7 @@
             android:layout_height="wrap_content"
             android:hint="请输入正确格式的电话号码"
             android:text=""
-            android:inputType="phone"
-            />
+            android:inputType="phone" />
 
     </LinearLayout>
 
@@ -122,7 +121,7 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="登录"
-            android:textColor="#fff"/>
+            android:textColor="#fff" />
 
         <TextView
             android:id="@+id/home_tv_login_out"
@@ -133,7 +132,7 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="登出"
-            android:textColor="#fff"/>
+            android:textColor="#fff" />
 
         <TextView
             android:id="@+id/home_tv_call"
@@ -144,7 +143,7 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="拨打"
-            android:textColor="#fff"/>
+            android:textColor="#fff" />
 
         <TextView
             android:id="@+id/home_tv_history"
@@ -155,7 +154,7 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="历史"
-            android:textColor="#fff"/>
+            android:textColor="#fff" />
 
         <TextView
             android:id="@+id/home_tv_history_fragment"
@@ -165,7 +164,7 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="历史tabbar"
-            android:textColor="#fff"/>
+            android:textColor="#fff" />
 
     </LinearLayout>
 
@@ -181,7 +180,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="https://tky.ketianyun.com"/>
+            android:text="https://tky.ketianyun.com" />
 
         <TextView
             android:id="@+id/home_tv_switch_url_host"
@@ -192,7 +191,7 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="切换"
-            android:textColor="#fff"/>
+            android:textColor="#fff" />
 
     </LinearLayout>
 

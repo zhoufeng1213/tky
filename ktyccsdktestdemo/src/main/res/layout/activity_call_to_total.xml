@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d24"
+        android:background="@color/c_42A6FE" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d44"
+        android:background="@color/c_42A6FE"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:paddingLeft="@dimen/d15"
+            android:paddingRight="@dimen/d15"
+            android:src="@drawable/fanhui_white" />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="话务统计"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textNormal16" />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/d15"
+        android:layout_marginTop="@dimen/d10"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="@dimen/d15"
+            android:layout_height="@dimen/d15"
+            android:src="@mipmap/huchu_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当天呼出统计"
+            android:layout_marginLeft="@dimen/d5" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d8"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/d4"
+                app:cardElevation="@dimen/d4"
+                app:cardUseCompatPadding="true">
+
+
+                <LinearLayout
+                    android:layout_width="@dimen/d100"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/d15">
+
+                    <ImageView
+                        android:layout_width="@dimen/d40"
+                        android:layout_height="@dimen/d40"
+                        android:src="@drawable/huchu" />
+
+                    <TextView
+                        android:id="@+id/huchu_number_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d5"
+                        android:text="6666"
+                        android:textColor="@color/c_FDB201"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d3"
+                        android:text="呼出数量"
+                        android:textSize="@dimen/textNormal11" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/d4"
+                app:cardElevation="@dimen/d4"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="@dimen/d100"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/d15">
+
+                    <ImageView
+                        android:layout_width="@dimen/d40"
+                        android:layout_height="@dimen/d40"
+                        android:src="@drawable/huchu2" />
+
+                    <TextView
+                        android:id="@+id/jietong_number_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d5"
+                        android:text="6666"
+                        android:textColor="@color/c_FDB201"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d3"
+                        android:text="接通数量"
+                        android:textSize="@dimen/textNormal11" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/d4"
+                app:cardElevation="@dimen/d4"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="@dimen/d100"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/d15">
+
+                    <ImageView
+                        android:layout_width="@dimen/d40"
+                        android:layout_height="@dimen/d40"
+                        android:src="@drawable/shichang" />
+
+                    <TextView
+                        android:id="@+id/tonghuashichang_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d5"
+                        android:text="12:08:00"
+                        android:textColor="@color/c_FDB201"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d3"
+                        android:text="通话时长"
+                        android:textSize="@dimen/textNormal11" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_line_height"
+        android:layout_marginTop="@dimen/d15"
+        android:background="@color/line_background" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/d15"
+        android:layout_marginTop="@dimen/d10"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="@dimen/d15"
+            android:layout_height="@dimen/d15"
+            android:src="@mipmap/huru_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当天呼入统计"
+            android:layout_marginLeft="@dimen/d5" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d8"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/d4"
+                app:cardElevation="@dimen/d4"
+                app:cardUseCompatPadding="true">
+
+
+                <com.flyco.roundview.RoundLinearLayout
+                    android:layout_width="@dimen/d100"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/d15"
+
+                    >
+
+                    <ImageView
+                        android:layout_width="@dimen/d40"
+                        android:layout_height="@dimen/d40"
+                        android:src="@drawable/huru" />
+
+                    <TextView
+                        android:id="@+id/huru_number_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d5"
+                        android:text="6666"
+                        android:textColor="@color/c_FDB201"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d3"
+                        android:text="呼入数量"
+                        android:textSize="@dimen/textNormal11" />
+
+                </com.flyco.roundview.RoundLinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/d4"
+                app:cardElevation="@dimen/d4"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="@dimen/d100"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/d15">
+
+                    <ImageView
+                        android:layout_width="@dimen/d40"
+                        android:layout_height="@dimen/d40"
+                        android:src="@drawable/huru2" />
+
+                    <TextView
+                        android:id="@+id/jietonghuru_number_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d5"
+                        android:text="6666"
+                        android:textColor="@color/c_FDB201"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d3"
+                        android:text="接通数量"
+                        android:textSize="@dimen/textNormal11" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/d4"
+                app:cardElevation="@dimen/d4"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="@dimen/d100"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/d15">
+
+                    <ImageView
+                        android:layout_width="@dimen/d40"
+                        android:layout_height="@dimen/d40"
+                        android:src="@drawable/huru3" />
+
+                    <TextView
+                        android:id="@+id/weijie_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d5"
+                        android:text="6666"
+                        android:textColor="@color/c_FDB201"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d3"
+                        android:text="未接数量"
+                        android:textSize="@dimen/textNormal11" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

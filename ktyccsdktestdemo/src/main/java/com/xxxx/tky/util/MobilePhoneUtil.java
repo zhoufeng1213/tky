@@ -40,7 +40,7 @@ public class MobilePhoneUtil {
                         cursor.getString(cursor.getColumnIndex(NAME)), phoneNum,
                         TextUtil.getNameFirstChar(cursor.getString(cursor.getColumnIndex(NAME))),
                         TextUtil.getNameToPinyin(cursor.getString(cursor.getColumnIndex(NAME)))
-                        );
+                );
                 phoneDtos.add(phoneDto);
             }
         }

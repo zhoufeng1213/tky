@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.flyco.roundview.RoundTextView;
 import com.xxxx.cc.base.fragment.BaseFragment;
-import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.tky.R;
 import com.xxxx.tky.util.CallPhoneTool;
 

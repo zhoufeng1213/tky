@@ -28,7 +28,8 @@ bintray {
         repo = "ktycc"  // 必填。bintray平台仓库名，必须已经创建过。
         name = "ktycc"  // 必填。仓库里包package的名称，没有的话会自动创建。
         licenses = ["Apache-2.0"] // 首次创建package则必须，否则选填。
-        vcsUrl = gitUrl // 首次创建package则必须，否则选填。这里可以填Repository仓库地址例如 :https://dl.bintray.com/xxxxx/demo 这样的格式
+        vcsUrl = gitUrl
+        // 首次创建package则必须，否则选填。这里可以填Repository仓库地址例如 :https://dl.bintray.com/xxxxx/demo 这样的格式
 //        userOrg = 'ketianyun'    //如果是企业的话要加上这个
         version {
             name = "$versionDefined"

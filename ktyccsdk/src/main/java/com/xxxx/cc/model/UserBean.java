@@ -97,6 +97,7 @@ public class UserBean {
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
+
     public String getEmail() {
         return email;
     }

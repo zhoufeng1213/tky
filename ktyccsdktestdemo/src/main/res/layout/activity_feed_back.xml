@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_gray"
-    android:orientation="vertical"
-   >
+    android:orientation="vertical">
+
     <View
         android:id="@+id/head_empty_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/d24"
         android:background="@color/white" />
+
     <include layout="@layout/common_title" />
 
     <LinearLayout
@@ -79,8 +78,7 @@
                     android:visibility="gone"
                     android:layout_alignParentRight="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/cancel_x"
-                    />
+                    android:src="@mipmap/cancel_x" />
 
             </RelativeLayout>
 

@@ -10,7 +10,6 @@ import com.xxxx.cc.base.activity.BaseActivity;
 import com.xxxx.cc.base.presenter.MyStringCallback;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
-import com.xxxx.cc.util.TextUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.fragment.HistoryFragment;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -65,8 +64,7 @@ public class CallHistoryFragmentActivity extends BaseActivity {
                     public void onResponse(String response, int id) {
 //                        layoutPhoneAddress.setVisibility(View.VISIBLE);
                         LogUtils.i("TAG", response);
-                        if (response != null && !TextUtils.isEmpty(response.trim()))
-                        {
+                        if (response != null && !TextUtils.isEmpty(response.trim())) {
                             try {
                                 JSONObject json = new JSONObject(response);
                                 JSONObject phoneDetail = json.optJSONObject("response").optJSONObject("17620370606").optJSONObject("detail");

@@ -1,7 +1,6 @@
 package com.xxxx.tky.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,8 +21,9 @@ public class GuideActivity extends BaseActivity {
 
     @Override
     public int getLayoutViewId() {
-        return  R.layout.activity_guide;
+        return R.layout.activity_guide;
     }
+
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
@@ -32,6 +32,7 @@ public class GuideActivity extends BaseActivity {
         wv.setWebViewClient(new WebViewClient());
         wv.loadUrl("https://www.ketianyun.com/callcenter/tky/app/help/help.html");
     }
+
     @OnClick(R.id.iv_close)
     public void back(View view) {
         if (AntiShakeUtils.isInvalidClick(view)) {

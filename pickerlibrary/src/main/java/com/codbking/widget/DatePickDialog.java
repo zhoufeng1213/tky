@@ -7,7 +7,8 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.*;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.codbking.widget.bean.DateType;
 
@@ -43,7 +44,7 @@ public class DatePickDialog extends Dialog implements OnChangeLisener {
 
     //设置标题
     public void setTitle(String title) {
-       this.title=title;
+        this.title = title;
     }
 
     //设置模式

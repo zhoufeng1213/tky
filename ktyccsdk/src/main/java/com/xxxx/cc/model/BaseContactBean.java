@@ -147,7 +147,7 @@ public class BaseContactBean<T> {
             this.content = content;
         }
 
-        public  class PageableBean {
+        public class PageableBean {
             /**
              * offset : 0
              * pageNumber : 0
@@ -212,7 +212,7 @@ public class BaseContactBean<T> {
                 this.unpaged = unpaged;
             }
 
-            public  class SortBean {
+            public class SortBean {
                 /**
                  * sorted : true
                  * unsorted : false
@@ -239,7 +239,7 @@ public class BaseContactBean<T> {
             }
         }
 
-        public  class SortBeanX {
+        public class SortBeanX {
             /**
              * $ref : $.page.pageable.sort
              */

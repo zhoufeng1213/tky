@@ -9,7 +9,6 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 
-
 import java.io.File;
 
 /**

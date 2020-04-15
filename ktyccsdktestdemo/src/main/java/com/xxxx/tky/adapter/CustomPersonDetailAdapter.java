@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.xxxx.tky.R;
-import com.xxxx.tky.fragment.AddressBookFragment;
 import com.xxxx.tky.fragment.DialFragment;
-import com.xxxx.tky.fragment.MineFragment;
 import com.xxxx.tky.fragment.WorkFragment;
 
 /**
@@ -20,8 +18,8 @@ import com.xxxx.tky.fragment.WorkFragment;
  * @date 2020/2/6
  * @moduleName
  */
-public class CustomPersonDetailAdapter  extends IndicatorViewPager.IndicatorFragmentPagerAdapter {
-    private String[] tabNames = {"沟通记录","联系历史"};
+public class CustomPersonDetailAdapter extends IndicatorViewPager.IndicatorFragmentPagerAdapter {
+    private String[] tabNames = {"沟通记录", "联系历史"};
     private LayoutInflater inflater;
 
     public CustomPersonDetailAdapter(FragmentManager fragmentManager, Context context) {

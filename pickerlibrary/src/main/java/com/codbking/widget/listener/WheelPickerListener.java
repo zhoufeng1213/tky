@@ -8,5 +8,5 @@ import com.codbking.widget.bean.DateType;
  */
 
 public interface WheelPickerListener {
-     void onSelect(DateType type, DateBean bean);
+    void onSelect(DateType type, DateBean bean);
 }

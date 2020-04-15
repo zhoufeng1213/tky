@@ -245,7 +245,7 @@ public class FloatWindowManager {
     }
 
 
-    public void dismissDialog(){
+    public void dismissDialog() {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }

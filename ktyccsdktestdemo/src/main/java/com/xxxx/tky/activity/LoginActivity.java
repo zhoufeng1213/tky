@@ -134,14 +134,13 @@ public class LoginActivity extends BaseHttpRequestActivity {
         if (!TextUtils.isEmpty(pwd)) {
             pwdEdit.setText(pwd);
         }
-if(!SharedPreferencesUtil.getBoolean(getApplicationContext(),Constans.AGREE_PROTOCOL_TAG))
-{
-    showAgreeDialog();
-}else {
-    //先检测更新
-    baseGetPresenter.presenterBusiness(
-            HttpRequest.Version.checkVersion + BuildConfig.VERSION_NAME, false);
-}
+        if (!SharedPreferencesUtil.getBoolean(getApplicationContext(), Constans.AGREE_PROTOCOL_TAG)) {
+            showAgreeDialog();
+        } else {
+            //先检测更新
+            baseGetPresenter.presenterBusiness(
+                    HttpRequest.Version.checkVersion + BuildConfig.VERSION_NAME, false);
+        }
 //        if (!TextUtils.isEmpty(phoneNum) && !TextUtils.isEmpty(pwd)) {
 //            login();
 //        }
@@ -201,10 +200,10 @@ if(!SharedPreferencesUtil.getBoolean(getApplicationContext(),Constans.AGREE_PROT
                                     public void onFailed(int code, String message) {
                                         dismissDialog();
 //                                                Toast.makeText(mContext, TextUtils.isEmpty(message) ? "登录失败，原因无" : message, Toast.LENGTH_SHORT).show();
-                                       if(code==45003)
-                                           Toast.makeText(mContext, "密码错误", Toast.LENGTH_SHORT).show();
-                                       else
-                                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                                        if (code == 45003)
+                                            Toast.makeText(mContext, "密码错误", Toast.LENGTH_SHORT).show();
+                                        else
+                                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     } else {
@@ -409,9 +408,9 @@ if(!SharedPreferencesUtil.getBoolean(getApplicationContext(),Constans.AGREE_PROT
                 if (AntiShakeUtils.isInvalidClick(view)) {
                     return;
                 }
-              Intent intent = new Intent(LoginActivity.this, CustomServicerActivity.class);
-               intent.putExtra("type", 1);
-              startActivity(intent);
+                Intent intent = new Intent(LoginActivity.this, CustomServicerActivity.class);
+                intent.putExtra("type", 1);
+                startActivity(intent);
             }
 
             @Override
@@ -426,10 +425,10 @@ if(!SharedPreferencesUtil.getBoolean(getApplicationContext(),Constans.AGREE_PROT
                 if (AntiShakeUtils.isInvalidClick(view)) {
                     return;
                 }
-               Intent intent;
+                Intent intent;
                 intent = new Intent(LoginActivity.this, CustomServicerActivity.class);
                 intent.putExtra("type", 2);
-              startActivity(intent);
+                startActivity(intent);
             }
 
             @Override
@@ -448,7 +447,7 @@ if(!SharedPreferencesUtil.getBoolean(getApplicationContext(),Constans.AGREE_PROT
         dialogConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              SharedPreferencesUtil.setBoolean(getApplicationContext(), Constans.AGREE_PROTOCOL_TAG, true);
+                SharedPreferencesUtil.setBoolean(getApplicationContext(), Constans.AGREE_PROTOCOL_TAG, true);
                 sweetAlertDialog.dismiss();
                 baseGetPresenter.presenterBusiness(
                         HttpRequest.Version.checkVersion + BuildConfig.VERSION_NAME, false);

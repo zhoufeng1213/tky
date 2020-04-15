@@ -30,16 +30,16 @@ public class LoginRunnable implements Runnable {
     @Override
     public void run() {
         LogUtils.e("service还没起2");
-        if(LinphoneService.isReady()){
+        if (LinphoneService.isReady()) {
             LogUtils.e("service起来了");
-            LinServiceManager.addListener(new CoreListenerStub(){
+            LinServiceManager.addListener(new CoreListenerStub() {
                 @Override
                 public void onRegistrationStateChanged(Core lc, ProxyConfig cfg, RegistrationState cstate, String message) {
                     super.onRegistrationStateChanged(lc, cfg, cstate, message);
                     if (cstate == RegistrationState.Ok) {
                         LinphoneService.setRegister(true);
                         loginCallBack.onSuccess(ErrorCode.SUCCESS, "登录成功");
-                    }else{
+                    } else {
                         LogUtils.e("注册失败了-----》" + cstate.name());
                         loginCallBack.onFailed(ErrorCode.REGISTER_ERROR, "注册失败");
                     }

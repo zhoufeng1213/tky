@@ -5,12 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <RelativeLayout  android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="@dimen/d44"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/d24"
-        >
-
+        android:layout_marginTop="@dimen/d24">
 
 
         <ImageView
@@ -21,8 +20,7 @@
             android:paddingLeft="@dimen/d15"
             android:paddingRight="@dimen/d15"
             android:layout_centerVertical="true"
-            android:contentDescription="@string/app_name"
-            />
+            android:contentDescription="@string/app_name" />
 
 
         <TextView
@@ -32,17 +30,16 @@
             android:gravity="center"
             android:text="通话记录"
             android:textColor="@color/white"
-            android:textSize="@dimen/textNormal16"
-            />
+            android:textSize="@dimen/textNormal16" />
 
     </RelativeLayout>
+
     <com.lqr.recyclerview.LQRRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:rv_divider_size="@dimen/divider"
-        app:rv_divider_color="@color/line_background"
-        />
+        app:rv_divider_color="@color/line_background" />
 
 
     <TextView
@@ -51,7 +48,6 @@
         android:layout_height="match_parent"
         android:text="暂无"
         android:visibility="gone"
-        android:gravity="center"
-        />
+        android:gravity="center" />
 
 </LinearLayout>

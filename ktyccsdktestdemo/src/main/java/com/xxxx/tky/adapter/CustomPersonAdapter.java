@@ -28,16 +28,16 @@ public class CustomPersonAdapter extends BaseQuickAdapter<QueryCustomPersonBean,
     protected void convert(BaseViewHolder helper, QueryCustomPersonBean item) {
         helper.setText(R.id.name, item.getName());
         helper.setText(R.id.phone, item.getRealMobileNumber());
-        if(!TextUtils.isEmpty(item.getName())){
-            helper.setText(R.id.user_name, item.getName().substring(0,1));
+        if (!TextUtils.isEmpty(item.getName())) {
+            helper.setText(R.id.user_name, item.getName().substring(0, 1));
         }
         RoundTextView textView = helper.getView(R.id.user_name);
         textView.getDelegate().setBackgroundColor(Color.parseColor(CONTACT_COLORS[helper.getAdapterPosition() % CONTACT_COLORS.length]));
-        if(!TextUtils.isEmpty(item.getUpdatetime())){
-            helper.setText(R.id.update_time,item.getUpdatetime());
-            helper.setGone(R.id.update_time,true);
-        }else{
-            helper.setGone(R.id.update_time,false);
+        if (!TextUtils.isEmpty(item.getUpdatetime())) {
+            helper.setText(R.id.update_time, item.getUpdatetime());
+            helper.setGone(R.id.update_time, true);
+        } else {
+            helper.setGone(R.id.update_time, false);
         }
 
     }

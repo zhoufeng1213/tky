@@ -19,7 +19,7 @@ public class QuickIndexBar extends View {
     private Paint mPaint;
     private float mTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14, getResources().getDisplayMetrics());
     private static final String[] LETTERS = new String[]{
-            "#","A", "B", "C", "D", "E", "F", "G", "H",
+            "#", "A", "B", "C", "D", "E", "F", "G", "H",
             "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
             "S", "T", "U", "V", "W", "X", "Y", "Z"
     };

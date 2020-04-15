@@ -100,17 +100,18 @@ public class ContentBean {
     private int waitInIvrSec;
     private int waitInQueueSec;
     private int waitInSec;
-    private boolean isPlay=false;
+    private boolean isPlay = false;
+
     @Generated(hash = 1224615260)
     public ContentBean(Long contentId, String agentUnames, String agentUserName, double alegQuality,
-            String ani, String area, int billingInSec, double blegQuality, String blegUuid,
-            boolean bridged, int chargeMin, String contactName, String context, String createTime,
-            String daSampleCategory, String daSampleDetail, String daSampleName, String daTone,
-            String direction, String dnbr, String dnis, int durationInSec, String hangupCause,
-            String hangupTime, String id, String ivrTime, double lat, double lng, String orgId,
-            String reserved1, String reserved2, int satisfy, boolean transfered, boolean transferee,
-            String updateTime, String userId, String uuid, String recordFile, String reserved5,
-            int waitInBillingSec, int waitInIvrSec, int waitInQueueSec, int waitInSec, boolean isPlay) {
+                       String ani, String area, int billingInSec, double blegQuality, String blegUuid,
+                       boolean bridged, int chargeMin, String contactName, String context, String createTime,
+                       String daSampleCategory, String daSampleDetail, String daSampleName, String daTone,
+                       String direction, String dnbr, String dnis, int durationInSec, String hangupCause,
+                       String hangupTime, String id, String ivrTime, double lat, double lng, String orgId,
+                       String reserved1, String reserved2, int satisfy, boolean transfered, boolean transferee,
+                       String updateTime, String userId, String uuid, String recordFile, String reserved5,
+                       int waitInBillingSec, int waitInIvrSec, int waitInQueueSec, int waitInSec, boolean isPlay) {
         this.contentId = contentId;
         this.agentUnames = agentUnames;
         this.agentUserName = agentUserName;
@@ -156,9 +157,11 @@ public class ContentBean {
         this.waitInSec = waitInSec;
         this.isPlay = isPlay;
     }
+
     @Generated(hash = 1643641106)
     public ContentBean() {
     }
+
     public String getAgentUnames() {
         return agentUnames;
     }
@@ -507,6 +510,7 @@ public class ContentBean {
     public void setContentId(Long contentId) {
         this.contentId = contentId;
     }
+
     public String getContext() {
         return context;
     }
@@ -514,6 +518,7 @@ public class ContentBean {
     public void setContext(String context) {
         this.context = context;
     }
+
     public boolean isPlay() {
         return isPlay;
     }
@@ -521,9 +526,11 @@ public class ContentBean {
     public void setPlay(boolean play) {
         isPlay = play;
     }
+
     public boolean getIsPlay() {
         return this.isPlay;
     }
+
     public void setIsPlay(boolean isPlay) {
         this.isPlay = isPlay;
     }

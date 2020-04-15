@@ -15,7 +15,6 @@ public enum DateType {
     TYPE_HMS("hh:mm:ss");//时、分、秒
 
 
-
     private String format;
 
     DateType(String format) {

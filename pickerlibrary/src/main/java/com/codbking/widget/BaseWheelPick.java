@@ -8,20 +8,19 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
+import com.codbking.widget.genview.GenWheelText;
+import com.codbking.widget.genview.WheelGeneralAdapter;
 import com.codbking.widget.view.OnWheelChangedListener;
 import com.codbking.widget.view.OnWheelScrollListener;
 import com.codbking.widget.view.WheelView;
-import com.codbking.widget.genview.GenWheelText;
-import com.codbking.widget.genview.WheelGeneralAdapter;
 
 /**
  * Created by codbking on 2016/8/11.
  */
- abstract class BaseWheelPick
+abstract class BaseWheelPick
         extends LinearLayout
         implements OnWheelChangedListener
-        , OnWheelScrollListener
-         {
+        , OnWheelScrollListener {
 
     protected int textColor = 0xffdddddd;
     protected int selectColor = 0xff444444;

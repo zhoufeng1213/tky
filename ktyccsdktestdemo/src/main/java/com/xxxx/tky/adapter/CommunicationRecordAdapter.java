@@ -6,10 +6,9 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.xxxx.cc.util.LogUtils;
+import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.tky.R;
-import com.xxxx.cc.model.CommunicationRecordResponseBean;
 
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class CommunicationRecordAdapter extends BaseQuickAdapter<CommunicationRe
         String createTime = bean.getCreateTime();
         if (TextUtils.isEmpty(createTime)) {
             createTime = "";
-        }else{
+        } else {
             createTime = TimeUtils.stringToDate_MD_HMS(createTime);
         }
         helper.setText(R.id.time_text, createTime);

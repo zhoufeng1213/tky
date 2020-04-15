@@ -1,6 +1,5 @@
 package com.xxxx.cc.util;
 
-import android.app.Activity;
 import android.text.TextUtils;
 
 import java.util.ArrayList;

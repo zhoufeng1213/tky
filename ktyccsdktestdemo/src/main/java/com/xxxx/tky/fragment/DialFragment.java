@@ -20,7 +20,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.roundview.RoundLinearLayout;
 import com.flyco.roundview.RoundTextView;
 import com.xxxx.cc.base.fragment.BaseFragment;
-import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.tky.R;

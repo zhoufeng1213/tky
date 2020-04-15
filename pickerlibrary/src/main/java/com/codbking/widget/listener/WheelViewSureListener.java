@@ -5,5 +5,5 @@ package com.codbking.widget.listener;
  */
 
 public interface WheelViewSureListener {
-     public void onSure();
+    public void onSure();
 }

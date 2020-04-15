@@ -2,8 +2,6 @@ package com.xxxx.cc.util;
 
 import android.util.Log;
 
-import com.xxxx.cc.BuildConfig;
-
 
 /**
  * @author zhoufeng
@@ -12,16 +10,16 @@ import com.xxxx.cc.BuildConfig;
 public class LogUtils {
 
     public static void i(String tag, String msg) {
-            Log.i(tag, msg);
+        Log.i(tag, msg);
 
     }
 
     public static void e(String tag, String msg) {
-            Log.e(tag, msg);
+        Log.e(tag, msg);
     }
 
     public static void e(String msg) {
-            Log.e("tag", msg);
+        Log.e("tag", msg);
 
     }
 

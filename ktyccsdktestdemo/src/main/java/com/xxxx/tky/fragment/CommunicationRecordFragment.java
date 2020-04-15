@@ -24,8 +24,8 @@ import com.xxxx.cc.base.fragment.BaseHttpRequestFragment;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.model.CommunicationRecordBean;
+import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.model.CommunicationRecordReturnResultBean;
-import com.xxxx.cc.model.CurrentCallsReturnResultBean;
 import com.xxxx.cc.model.QueryCustomPersonBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.util.LogUtils;
@@ -33,7 +33,6 @@ import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.adapter.CommunicationRecordAdapter;
 import com.xxxx.tky.model.CommunicationRecordRequestBean;
-import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.tky.model.SaveSummaryBean;
 
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
     SmartRefreshLayout srlRefresh;
 
     private CommunicationRecordAdapter communicationRecordAdapter;
-    private List<CommunicationRecordResponseBean>  contentBeanList = new ArrayList<>();
+    private List<CommunicationRecordResponseBean> contentBeanList = new ArrayList<>();
     private int page;
 
     private UserBean cacheUserBean;
@@ -104,7 +103,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                             communicationRecordAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                                 @Override
                                 public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                                    if(R.id.edit_record == view.getId()){
+                                    if (R.id.edit_record == view.getId()) {
                                         //弹出修改框
                                         selectCommunicationRecordResponseBean = contentBeanList.get(position);
                                         showEditDialog();
@@ -163,7 +162,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sweetAlertDialog != null){
+                if (sweetAlertDialog != null) {
                     sweetAlertDialog.dismiss();
                 }
             }
@@ -176,7 +175,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                     showToast("保存的沟通记录不能为空");
                     return;
                 }
-                if(sweetAlertDialog != null){
+                if (sweetAlertDialog != null) {
                     sweetAlertDialog.dismiss();
                 }
 
@@ -200,7 +199,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
         dialogCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sweetAlertDialog != null){
+                if (sweetAlertDialog != null) {
                     sweetAlertDialog.dismiss();
                     selectCommunicationRecordResponseBean = null;
                 }
@@ -237,9 +236,9 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
             requestBean.setSize(COMMON_PAGE_SIZE);
             requestBean.setPhone(queryCustomPersonBean.getRealMobileNumber());
             jsonObject = JSONObject.parseObject(new Gson().toJson(requestBean));
-        }else if(HttpRequest.Contant.saveSummary.equals(moduleName)){
+        } else if (HttpRequest.Contant.saveSummary.equals(moduleName)) {
             SaveSummaryBean saveSummaryBean = new SaveSummaryBean();
-            if(selectCommunicationRecordResponseBean != null && queryCustomPersonBean != null && userMeno != null){
+            if (selectCommunicationRecordResponseBean != null && queryCustomPersonBean != null && userMeno != null) {
                 saveSummaryBean.setCalldetailId(selectCommunicationRecordResponseBean.getCalldetailId());
                 saveSummaryBean.setContactid(queryCustomPersonBean.getId());
                 saveSummaryBean.setPhonenumber(queryCustomPersonBean.getRealMobileNumber());
@@ -276,6 +275,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
 
     CommunicationRecordResponseBean currentCallsCommunicationRecordResponseBean = null;
     boolean isCall = false;
+
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
         if (HttpRequest.CallHistory.calldetailWithCommRecords.equals(moduleName)) {
@@ -328,7 +328,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
 
 //              }
         } else if (HttpRequest.Contant.saveSummary.equals(moduleName) || (HttpRequest.Contant.updateSummary + selectCommunicationRecordResponseBean.getId()).equals(moduleName)) {
-            if(result != null && result.isOk()){
+            if (result != null && result.isOk()) {
                 //刷新数据
                 showToast("保存成功");
                 CommunicationRecordBean responseBean = (new Gson()).fromJson(response, CommunicationRecordBean.class);
@@ -348,7 +348,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
 
     @Override
     public void onDestroy() {
-        if(sweetAlertDialog != null){
+        if (sweetAlertDialog != null) {
             sweetAlertDialog.dismiss();
         }
         super.onDestroy();

@@ -1,11 +1,12 @@
 package com.xxxx.cc.service;
 
-import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Messenger;
 import android.support.annotation.Nullable;
 
+import com.sdk.keepbackground.work.AbsWorkService;
 import com.xxxx.cc.R;
 import com.xxxx.cc.util.LogUtils;
 
@@ -14,6 +15,8 @@ import org.linphone.core.CallParams;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.Factory;
+import org.linphone.core.ProxyConfig;
+import org.linphone.core.RegistrationState;
 import org.linphone.core.tools.Log;
 
 import java.io.File;
@@ -23,7 +26,7 @@ import java.io.InputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class LinphoneService extends Service {
+public class LinphoneService extends AbsWorkService {
 
     private static LinphoneService sInstance;
 
@@ -86,13 +89,24 @@ public class LinphoneService extends Service {
         mCoreListener = new CoreListenerStub() {
             @Override
             public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
-                LogUtils.e("LinphoneService CallState:" + state.name()+",message:"+message);
+                LogUtils.e("LinphoneService CallState:" + state.name() + ",message:" + message);
                 if (state == Call.State.IncomingReceived) {
                     CallParams params = getCore().createCallParams(call);
                     params.enableVideo(false);
                     call.acceptWithParams(params);
                 } else if (state == Call.State.Connected) {
 
+                }
+            }
+
+            @Override
+            public void onRegistrationStateChanged(Core lc, ProxyConfig cfg, RegistrationState cstate, String message) {
+                LogUtils.e("LinphoneService onRegistrationStateChanged:" + cstate.name() + ",message:" + message);
+                if (cstate == RegistrationState.Ok) {
+                    LogUtils.e("LinphoneService onRegistrationStateChanged ok");
+                    LinphoneService.setRegister(true);
+                } else if (cstate == RegistrationState.None || cstate == RegistrationState.Cleared || cstate == RegistrationState.Failed) {
+                    LinphoneService.setRegister(false);
                 }
             }
         };
@@ -122,6 +136,7 @@ public class LinphoneService extends Service {
 
         sInstance = this;
         mCore.start();
+
         TimerTask lTask =
                 new TimerTask() {
                     @Override
@@ -131,6 +146,7 @@ public class LinphoneService extends Service {
                                     @Override
                                     public void run() {
                                         if (mCore != null) {
+//                                            LogUtils.e(" Linphone scheduler   TimerTask ");
                                             mCore.iterate();
                                         }
                                     }
@@ -160,6 +176,41 @@ public class LinphoneService extends Service {
         sInstance = null;
 
         super.onDestroy();
+    }
+
+
+    private boolean mIsRunning;
+
+    @Override
+    public Boolean needStartWorkService() {
+        return true;
+    }
+
+    @Override
+    public void startWork() {
+        mIsRunning = true;
+
+
+    }
+
+    @Override
+    public void stopWork() {
+
+    }
+
+    @Override
+    public Boolean isWorkRunning() {
+        return mIsRunning;
+    }
+
+    @Override
+    public IBinder onBindService(Intent intent, Void aVoid) {
+        return new Messenger(new Handler()).getBinder();
+    }
+
+    @Override
+    public void onServiceKilled() {
+
     }
 
     @Override

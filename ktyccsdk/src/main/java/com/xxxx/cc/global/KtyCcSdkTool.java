@@ -1,13 +1,10 @@
 package com.xxxx.cc.global;
 
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 
 import com.kty.mars.baselibrary.http.LoggerInterceptor;
+import com.sdk.keepbackground.work.DaemonEnv;
 import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.LinphoneService;
@@ -15,6 +12,7 @@ import com.xxxx.cc.ui.CallActivity;
 import com.xxxx.cc.ui.HistoryActivity;
 import com.xxxx.cc.util.LinServiceManager;
 import com.xxxx.cc.util.LogUtils;
+import com.xxxx.cc.util.NetUtil;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.cc.util.db.DbUtil;
@@ -36,7 +34,6 @@ import static com.xxxx.cc.global.Constans.KTY_CC_BASE_URL;
 import static com.xxxx.cc.global.Constans.KTY_CC_BEGIN;
 import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
 import static com.xxxx.cc.global.Constans.VOICE_RECORD_PREFIX;
-import static java.lang.Thread.sleep;
 
 /**
  * @author zhoufeng
@@ -118,29 +115,32 @@ public class KtyCcSdkTool {
         this.headUrl = headUrl;
         //先判断用户是否保存在了本地
         LogUtils.e("callPhone");
-        try {
-            LinServiceManager.hookCall();
-            Object objectBean = SharedPreferencesUtil.getObjectBean(mContext, USERBEAN_SAVE_TAG, UserBean.class);
-            if (objectBean != null) {
-                cacheUserBean = (UserBean) objectBean;
-                //判断service是否已经起来了
-                if (!LinphoneService.isReady()) {
-                    Intent intent = new Intent(mContext, LinphoneService.class);
-                    mContext.startService(intent);
-                    LogUtils.e("重新启动service");
+
+        if (!NetUtil.isNetworkConnected(mContext)) {
+            LogUtils.e("没有网络");
+            ToastUtil.showToast(mContext, "当前没有网络，请检查网络连接");
+        } else {
+            try {
+                LinServiceManager.hookCall();
+                Object objectBean = SharedPreferencesUtil.getObjectBean(mContext, USERBEAN_SAVE_TAG, UserBean.class);
+                if (objectBean != null) {
+                    cacheUserBean = (UserBean) objectBean;
+                    //判断service是否已经起来了
+                    if (!LinphoneService.isReady()) {
+                        Intent intent = new Intent(mContext, LinphoneService.class);
+                        mContext.startService(intent);
+                        LogUtils.e("重新启动service");
+                    }
+                    linphoneServiceCall();
+                } else {
+                    LogUtils.e("objectBean == null");
+                    ToastUtil.showToast(mContext, "objectBean == null");
                 }
-                linphoneServiceCall();
-
-
-            } else {
-                LogUtils.e("objectBean == null");
-                ToastUtil.showToast(mContext, "objectBean == null");
+            } catch (Exception e) {
+                LogUtils.e("Exception：" + e.getMessage());
+                ToastUtil.showToast(mContext, e.getMessage());
             }
-        } catch (Exception e) {
-            LogUtils.e("Exception：" + e.getMessage());
-            ToastUtil.showToast(mContext, e.getMessage());
         }
-
     }
 
     private void linphoneServiceCall() {
@@ -149,17 +149,17 @@ public class KtyCcSdkTool {
                 LogUtils.e("已经注册 LinphoneService");
                 goToCallActivity(mContext, phoneNum, userName, headUrl);
             } else {
-                LogUtils.e("注册 LinphoneService");
+                LogUtils.e("还没注册 LinphoneService，现在开始注册");
                 LinphoneService.getCore().addListener(new CoreListenerStub() {
                     @Override
                     public void onRegistrationStateChanged(Core core, ProxyConfig cfg, RegistrationState
                             state, String message) {
-                        LogUtils.i("linphone_registration", "state:" + state.name() + ", message:" + message);
+                        LogUtils.e("linphoneServiceCall linphone_registration state:" + state.name() + ", message:" + message);
                         if (state == RegistrationState.Ok) {
                             LinServiceManager.removeListener(this);
                             LinphoneService.setRegister(true);
                             goToCallActivity(mContext, phoneNum, userName, headUrl);
-                        } else if (state == RegistrationState.Failed) {
+                        } else if (state == RegistrationState.None || state == RegistrationState.Failed) {
                             LogUtils.e("注册失败了-----》" + state.name());
                             ToastUtil.showToast(mContext, "注册服务失败");
                         }
@@ -184,6 +184,8 @@ public class KtyCcSdkTool {
     }
 
     private void goToCallActivity(Context mContext, String phoneNum, String userName, String headUrl) {
+        //先挂断之前可能因为网络原因没有把之前的电话挂断的电话
+        LinServiceManager.hookCall();
         LogUtils.e("goToCallActivity");
         //开始拨打电话
         Intent intent = new Intent(mContext, CallActivity.class);
@@ -207,5 +209,12 @@ public class KtyCcSdkTool {
         } catch (Exception e) {
             ToastUtil.showToast(context, "请登录");
         }
+    }
+
+
+    public static void startLinPhoneService(Context context) {
+        DaemonEnv.startServiceSafelyWithData(context, LinphoneService.class);
+//        Intent intent = new Intent(context, LinphoneService.class);
+//        context.startService(intent);
     }
 }

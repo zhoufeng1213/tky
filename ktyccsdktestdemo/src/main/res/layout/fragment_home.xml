@@ -5,11 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:focusable="true"
-    android:focusableInTouchMode="true"
-    >
-
-
-
+    android:focusableInTouchMode="true">
 
 
     <LinearLayout
@@ -22,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:text="联系人:"/>
+            android:text="联系人:" />
 
         <EditText
             android:id="@+id/home_et_contact_name"
@@ -44,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:text="号    码:"/>
+            android:text="号    码:" />
 
         <EditText
             android:id="@+id/home_et_phone"
@@ -52,8 +48,7 @@
             android:layout_height="wrap_content"
             android:hint="请输入正确格式的电话号码"
             android:text=""
-            android:inputType="phone"
-            />
+            android:inputType="phone" />
 
     </LinearLayout>
 
@@ -72,9 +67,6 @@
         android:textSize="@dimen/textNormal16"
         app:rv_backgroundColor="@color/c_039fd9"
         app:rv_cornerRadius="@dimen/d5" />
-
-
-
 
 
 </LinearLayout>

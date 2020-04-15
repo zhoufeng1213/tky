@@ -1,7 +1,5 @@
 package com.xxxx.tky.model;
 
-import java.io.File;
-
 /**
  * @author xiuli.liu
  * @date 2020/2/9
@@ -98,9 +96,6 @@ public class UploadlogBean {
     public void setMemo(String memo) {
         this.memo = memo;
     }
-
-
-
 
 
 }

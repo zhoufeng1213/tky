@@ -15,12 +15,8 @@ import org.linphone.core.CallParams;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.Factory;
-import org.linphone.core.PayloadType;
 import org.linphone.core.ProxyConfig;
-import org.linphone.core.RegistrationState;
 import org.linphone.core.TransportType;
-
-import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
 
 /**
  * @author zhoufeng
@@ -38,14 +34,16 @@ public class LinServiceManager {
 
 
     public static void hookCall() {
-//        Core core = LinphoneService.getCore();
-//        if (core != null && core.getCallsNb() > 0) {
-//            Call call = core.getCurrentCall();
-//            if (call == null) {
-//                call = core.getCalls()[0];
-//            }
-//            call.terminate();
-//        }
+        Core core = LinphoneService.getCore();
+        if (core != null && core.getCallsNb() > 0) {
+            Call call = core.getCurrentCall();
+            if (core.getCalls().length > 0) {
+                call = core.getCalls()[0];
+            }
+            if (call != null) {
+                call.terminate();
+            }
+        }
         if (LinphoneService.getCore() != null) {
             LinphoneService.getCore().terminateAllCalls();
         }
@@ -68,7 +66,7 @@ public class LinServiceManager {
     public static Call callPhone(String phoenNum, String contactName) {
         LogUtils.e("callPhone");
         Core core = LinphoneService.getCore();
-        if(core != null){
+        if (core != null) {
             LogUtils.e("core != null");
             Address addressToCall = core.interpretUrl(phoenNum);
             CallParams params = core.createCallParams(null);
@@ -102,23 +100,23 @@ public class LinServiceManager {
         }
     }
 
-    public static void switchAudio(Context mContext,boolean isMianti) {
+    public static void switchAudio(Context mContext, boolean isMianti) {
         if (audioManager == null) {
             audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         }
 
-        if(audioManager != null){
+        if (audioManager != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
             } else {
                 audioManager.setMode(AudioManager.MODE_IN_CALL);
             }
-            if(isMianti && !audioManager.isSpeakerphoneOn()){
+            if (isMianti && !audioManager.isSpeakerphoneOn()) {
                 audioManager.setSpeakerphoneOn(true);
                 audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL,
                         audioManager.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL),
                         AudioManager.STREAM_VOICE_CALL);
-            }else{
+            } else {
                 audioManager.setSpeakerphoneOn(false);
             }
         }
@@ -132,7 +130,7 @@ public class LinServiceManager {
             if (audioManager == null) {
                 audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
             }
-            if(audioManager != null){
+            if (audioManager != null) {
                 audioManager.setMode(AudioManager.MODE_NORMAL);
                 audioManager.setSpeakerphoneOn(false);
             }
@@ -147,13 +145,13 @@ public class LinServiceManager {
         //https://github.com/BelledonneCommunications/linphone-android/issues/85
         //https://github.com/BelledonneCommunications/linphone-android/issues/650
         Core linphoneCore = LinphoneService.getCore();
-        if (linphoneCore != null){
+        if (linphoneCore != null) {
             ProxyConfig[] proxyConfigList = linphoneCore.getProxyConfigList();
 
-            if(proxyConfigList != null && proxyConfigList.length > 0){
+            if (proxyConfigList != null && proxyConfigList.length > 0) {
 
                 LogUtils.e("linphone_unregistration", "proxyConfig to remove, size:" + proxyConfigList.length);
-                for(ProxyConfig proxyConfig : proxyConfigList){
+                for (ProxyConfig proxyConfig : proxyConfigList) {
                     //Set proxyConfig Expires
                     proxyConfig.edit();
                     proxyConfig.enableRegister(false);
@@ -167,8 +165,8 @@ public class LinServiceManager {
             }
         }
         AuthInfo[] authInfos = LinphoneService.getCore().getAuthInfoList();
-        if(authInfos != null && authInfos.length > 0){
-            for (AuthInfo authInfo:authInfos){
+        if (authInfos != null && authInfos.length > 0) {
+            for (AuthInfo authInfo : authInfos) {
                 linphoneCore.removeAuthInfo(authInfo);
             }
         }
@@ -208,6 +206,7 @@ public class LinServiceManager {
 
 //            PayloadType[] setCodecs = new PayloadType[]{payloadType[0], payloadType[3], payloadType[4]};
 //            LinphoneService.getCore().setAudioPayloadTypes(setCodecs);
+            LinphoneService.getCore().setStunServer("stun1.ketianyun.com:3478");
             LinphoneService.getCore().setDnsServers(dnsServers);
             LinphoneService.getCore().setMaxCalls(1);
             LinphoneService.getCore().setUserAgent("SIP Agent", "1.0");
@@ -216,13 +215,13 @@ public class LinServiceManager {
         }
     }
 
-    public static void unRegisterOnlineLinPhone(UserBean cacheUserBean,boolean isExit) {
-        if (cacheUserBean != null&&cacheUserBean.getCcUserInfo()!=null) {
+    public static void unRegisterOnlineLinPhone(UserBean cacheUserBean, boolean isExit) {
+        if (cacheUserBean != null && cacheUserBean.getCcUserInfo() != null) {
 
             if (LinphoneService.getCore() != null) {
                 if (LinphoneService.isRegister()) {
                     unRegisterLinPhone();
-                    if(isExit) {
+                    if (isExit) {
                         LogUtils.e("完全退出");
                         android.os.Process.killProcess(android.os.Process.myPid());
                         System.exit(0);

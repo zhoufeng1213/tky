@@ -17,7 +17,6 @@ import com.lqr.adapter.LQRViewHolderForRecyclerView;
 import com.lqr.recyclerview.LQRRecyclerView;
 import com.xxxx.cc.base.fragment.BaseFragment;
 import com.xxxx.tky.R;
-import com.xxxx.tky.activity.BaseTransitionActivity;
 import com.xxxx.tky.activity.ContactDetailActivity;
 import com.xxxx.tky.activity.SearchPersonActivity;
 import com.xxxx.tky.contant.Contant;
@@ -60,7 +59,7 @@ public class AddressBookFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(Contant.contactUserNameList == null){
+        if (Contant.contactUserNameList == null) {
             contactUserNameList = MobilePhoneUtil.getMobilePhoneList(mContext);
             //根据字母排序
             Collections.sort(contactUserNameList, new Comparator<ContactUserName>() {
@@ -70,7 +69,7 @@ public class AddressBookFragment extends BaseFragment {
                 }
             });
             Contant.contactUserNameList = contactUserNameList;
-        }else{
+        } else {
             contactUserNameList = Contant.contactUserNameList;
         }
 
@@ -84,7 +83,7 @@ public class AddressBookFragment extends BaseFragment {
                     showLetter(letter);
                     for (int i = 0; i < contactUserNameList.size(); i++) {
                         ContactUserName friend = contactUserNameList.get(i);
-                        if(!TextUtils.isEmpty(friend.getDisplayNameSpelling())){
+                        if (!TextUtils.isEmpty(friend.getDisplayNameSpelling())) {
                             String c = friend.getDisplayNameSpelling().charAt(0) + "";
                             if (c.equalsIgnoreCase(letter)) {
                                 mRvContacts.moveToPosition(i);
@@ -108,15 +107,15 @@ public class AddressBookFragment extends BaseFragment {
 
     public static final String[] CONTACT_COLORS = {"#1a96fe", "#fd8645", "#FEA342", "#ACA9F5", "#F23B3B"};
 
-    private void initAdapter(){
+    private void initAdapter() {
         LQRAdapterForRecyclerView adapter = new LQRAdapterForRecyclerView<ContactUserName>(mContext, contactUserNameList,
                 R.layout.item_contact) {
             @Override
             public void convert(LQRViewHolderForRecyclerView helper, ContactUserName item, int position) {
                 try {
                     helper.setText(R.id.name, item.getName());
-                    if(!TextUtils.isEmpty(item.getName())){
-                        helper.setText(R.id.name_letter, item.getName().substring(0,1));
+                    if (!TextUtils.isEmpty(item.getName())) {
+                        helper.setText(R.id.name_letter, item.getName().substring(0, 1));
                     }
 
 
@@ -155,7 +154,7 @@ public class AddressBookFragment extends BaseFragment {
                 return;
             }
             Intent intent = new Intent(mContext, ContactDetailActivity.class);
-            intent.putExtra("data",contactUserNameList.get(i));
+            intent.putExtra("data", contactUserNameList.get(i));
             startActivity(intent);
         });
 
@@ -170,8 +169,8 @@ public class AddressBookFragment extends BaseFragment {
         mTvLetter.setVisibility(View.GONE);
     }
 
-    @OnClick({R.id.search_layout,R.id.search_edit})
-    public void clickSearch(View view){
+    @OnClick({R.id.search_layout, R.id.search_edit})
+    public void clickSearch(View view) {
         if (AntiShakeUtils.isInvalidClick(view)) {
             return;
         }

@@ -106,18 +106,19 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
     Button mBtAfbCommit;
     private ProgressDialog progressDialog;
     private UserBean cacheUserBean;
-   private String logZipPath;
+    private String logZipPath;
     private String logPath;
-   private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd_HH:mm");
-   boolean isRequestok=true;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd_HH:mm");
+    boolean isRequestok = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
         ButterKnife.bind(this);
-        logCachePath=getApplicationContext().getExternalCacheDir()+"/logCache/";
-        logCacheFile=logCachePath+"/logCacheFile/";
-        logPath=getApplicationContext().getExternalCacheDir()+"/log/";
+        logCachePath = getApplicationContext().getExternalCacheDir() + "/logCache/";
+        logCacheFile = logCachePath + "/logCacheFile/";
+        logPath = getApplicationContext().getExternalCacheDir() + "/log/";
         initData();
         initView();
         initLongClick();
@@ -171,7 +172,7 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
                 } else {
                     mEdAfbProblem.setText(mEdAfbProblem.getText().toString().substring(0, maxLenght));
                     mEdAfbProblem.setSelection(mEdAfbProblem.length());
-                    Toast.makeText(getApplicationContext(),"文字被截取,因为文字已经超出最大限制(" + (length - maxLenght) + "个)!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "文字被截取,因为文字已经超出最大限制(" + (length - maxLenght) + "个)!", Toast.LENGTH_SHORT).show();
                 }
                 if (length > 0 && length <= maxLenght) {
                     mBtAfbCommit.setEnabled(true);
@@ -203,6 +204,7 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
     String[] mPicLocalArray = new String[5];
     private String logCachePath;
     private String logCacheFile;
+
     @OnClick({R.id.iv_close, R.id.iv_afb_cancel_1, R.id.iv_afb_1, R.id.rl_afb_iv_1, R.id.iv_afb_cancel_2, R.id.iv_afb_2, R.id.rl_afb_iv_2, R.id.iv_afb_cancel_3, R.id.iv_afb_3, R.id.rl_afb_iv_3, R.id.iv_afb_cancel_4, R.id.iv_afb_4, R.id.rl_afb_iv_4, R.id.iv_afb_cancel_5, R.id.iv_afb_5, R.id.rl_afb_iv_5, R.id.ll_afb_phone_email, R.id.bt_afb_commit})
     public void onClick(View v) {
         int i = v.getId();
@@ -231,38 +233,34 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
             addPic(5);
 
         } else if (i == R.id.bt_afb_commit) {
-            ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             progressDialog.setMessage("上传中...");
             progressDialog.show();
-                for (int i1 = 0; i1 < mPicLocalArray.length; i1++) {
-                    if (mPicLocalArray[i1] != null)
-                        FileUtils.copy(mPicLocalArray[i1], logCacheFile);
+            for (int i1 = 0; i1 < mPicLocalArray.length; i1++) {
+                if (mPicLocalArray[i1] != null) {
+                    FileUtils.copy(mPicLocalArray[i1], logCacheFile);
                 }
-                    FileUtils.copyFolder(logPath, logCacheFile+"logs");
-
-                String fileTime = simpleDateFormat.format(new Date()).toString().replace(":", "");
-                logZipPath = logCachePath+"this_is_guid_" + fileTime+".zip";
+            }
+            FileUtils.copyFolder(logPath, logCacheFile + "logs");
+            String fileTime = simpleDateFormat.format(new Date()).toString().replace(":", "");
+            logZipPath = logCachePath + "this_is_guid_" + fileTime + ".zip";
             try {
                 FileUtils.zip(logCacheFile, logZipPath);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            File zipFile= new File(logZipPath);
-            if(zipFile.exists()) {
+            File zipFile = new File(logZipPath);
+            if (zipFile.exists()) {
                 basePostPresenter.post_file(
                         HttpRequest.uploadlog, zipFile,
                         "token", cacheUserBean.getToken(),
                         "Content-Type", "application/json"
                 );
-            }
-            else
-            {
+            } else {
                 progressDialog.dismiss();
-                ToastUtil.showToast(getApplicationContext(),"没有对应的log文件");
+                ToastUtil.showToast(getApplicationContext(), "没有对应的log文件");
             }
-            }
-
-
+        }
 
 
     }
@@ -377,11 +375,11 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
 
                     new AlertDialog.Builder(FeedBackActivity.this).setTitle("您的建议已提交，感谢您的反馈")
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                }
-                            }
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            finish();
+                                        }
+                                    }
                             ).show();
 
 
@@ -389,8 +387,8 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
 
                 case 10002:
                     //图片更新成功
-                  String message = (String) msg.obj;
-                    ToastUtil.showToast(getApplicationContext(),"上传失败："+message);
+                    String message = (String) msg.obj;
+                    ToastUtil.showToast(getApplicationContext(), "上传失败：" + message);
                     progressDialog.dismiss();
                     break;
 
@@ -416,7 +414,7 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FLAG_CHOOSE_IMG && resultCode == RESULT_OK) {
-            String picPath="";
+            String picPath = "";
             if (data != null) {
                 Uri uri = data.getData();
                 if (!TextUtils.isEmpty(uri.getAuthority())) {
@@ -441,10 +439,10 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
                 if (!TextUtils.isEmpty(picPath)) {
                     Bitmap b = BitmapFactory.decodeFile(picPath);
                     mPicLocalArray[currentPic - 1] = picPath;
-                  //  UploadImageUtils.uploadHeadImage(picPath, b, "", oss, this, "详情图上传", mHandler);
+                    //  UploadImageUtils.uploadHeadImage(picPath, b, "", oss, this, "详情图上传", mHandler);
                     changeStatus(new File(picPath));
                 } else {
-                    ToastUtil.showToast(getApplicationContext(),"图片选择失败");
+                    ToastUtil.showToast(getApplicationContext(), "图片选择失败");
                 }
 
             }
@@ -470,7 +468,7 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
                 if (grantResults[0] == PermissionChecker.PERMISSION_GRANTED) {
                     showSelectPictureMenu(this);
                 } else {
-                   // ToastUtils.showLong(getString(R.string.add_detail_premission));
+                    // ToastUtils.showLong(getString(R.string.add_detail_premission));
                 }
                 break;
 
@@ -575,10 +573,10 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
         com.alibaba.fastjson.JSONObject jsonObject = new com.alibaba.fastjson.JSONObject();
         if (HttpRequest.uploadlog.equals(moduleName)) {
             UploadlogBean requestBean = new UploadlogBean();
-            requestBean.setAppVersion( PackageUtils.getVersionName(this));
+            requestBean.setAppVersion(PackageUtils.getVersionName(this));
             requestBean.setMemo(mEdAfbProblem.getText().toString().trim());
             requestBean.setOs("Android");
-            requestBean.setOsVersion( android.os.Build.VERSION.RELEASE);
+            requestBean.setOsVersion(android.os.Build.VERSION.RELEASE);
             requestBean.setUserAccount(cacheUserBean.getUsername());
             requestBean.setUserEmail(cacheUserBean.getEmail());
             requestBean.setUserId(cacheUserBean.getUserId());
@@ -593,13 +591,13 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
     @Override
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
-      FileUtils.deleteDirectory(logCachePath);
-        if(result == null) return;
+        FileUtils.deleteDirectory(logCachePath);
+        if (result == null) return;
         if (HttpRequest.uploadlog.equals(moduleName)) {
             Message message = new Message();
             Bundle bundle = new Bundle();
             message.what = 10002;
-            message.obj=result.getMessage();
+            message.obj = result.getMessage();
             message.setData(bundle);
             if (mHandler != null) {
                 mHandler.handleMessage(message);
@@ -609,7 +607,7 @@ public class FeedBackActivity extends BaseHttpRequestActivity implements View.On
 
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
-     LogUtils.i("tag","请求数据 " + response);
+        LogUtils.i("tag", "请求数据 " + response);
         if (HttpRequest.uploadlog.equals(moduleName)) {
             FileUtils.deleteDirectory(logCachePath);
             Message message = new Message();

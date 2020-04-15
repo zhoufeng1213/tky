@@ -22,10 +22,10 @@ public class CallUtil {
     public static void restartConferenceActivityToOtherActivity(Activity activity) {
         String meetingActivityName = "com.xxxx.cc.ui.CallActivity";
         //判断现在的activity中是否包含会议activity
-        if ( activity != null && ActivityUtil.isHasActivityByName(meetingActivityName) && !(activity.getPackageName() + "." + activity.getLocalClassName()).contains(meetingActivityName)) {
+        if (activity != null && ActivityUtil.isHasActivityByName(meetingActivityName) && !(activity.getPackageName() + "." + activity.getLocalClassName()).contains(meetingActivityName)) {
             LogUtils.e("还在打电话，重新进入电话界面1");
             if (!FloatWindowManager.getInstance().checkPermission(activity) && !FloatingImageDisplayService.isStarted
-            && CallActivity.isReturnCall
+                    && CallActivity.isReturnCall
             ) {
                 LogUtils.e("还在打电话，重新进入电话界面2");
                 activity.startActivity(new Intent(activity, CallActivity.class));

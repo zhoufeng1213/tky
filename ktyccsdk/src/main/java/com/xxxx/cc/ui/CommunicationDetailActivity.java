@@ -318,7 +318,7 @@ public class CommunicationDetailActivity extends BaseHttpRequestActivity {
         });
     }
 
-    private void clickAudioToPlay(ContentBean bean, String url, final ImageView ivPlayStop, final ProgressBar pb){
+    private void clickAudioToPlay(ContentBean bean, String url, final ImageView ivPlayStop, final ProgressBar pb) {
         final String currentPlayPath = MediaManager.getDataSource();
         String cacheUrl = "";
         totalSec = bean.getBillingInSec();
@@ -395,13 +395,13 @@ public class CommunicationDetailActivity extends BaseHttpRequestActivity {
                         public void accept(Boolean aBoolean) {
                             if (!aBoolean) {
                                 ToastUtil.showToast(mContext, "权限被禁止，请允许");
-                            }else{
-                                clickAudioToPlay(bean,url,ivPlayStop,pb);
+                            } else {
+                                clickAudioToPlay(bean, url, ivPlayStop, pb);
                             }
                         }
                     });
-        }else{
-            clickAudioToPlay(bean,url,ivPlayStop,pb);
+        } else {
+            clickAudioToPlay(bean, url, ivPlayStop, pb);
         }
     }
 
@@ -409,7 +409,7 @@ public class CommunicationDetailActivity extends BaseHttpRequestActivity {
     private CommuncationDetailAdapter.OnPlayAudioListener onPlayAudioListener = new CommuncationDetailAdapter.OnPlayAudioListener() {
         @Override
         public void onPlayAudio(ContentBean bean, String url, final ImageView ivPlayStop, final ProgressBar pb) {
-            requestPermissionToPlay(bean,url,ivPlayStop,pb);
+            requestPermissionToPlay(bean, url, ivPlayStop, pb);
         }
     };
 
@@ -590,9 +590,9 @@ public class CommunicationDetailActivity extends BaseHttpRequestActivity {
 
         //先把本地数据查询出来
         List<ContentBean> list = DbUtil.queryPhoneRecordList(cacheUserBean.getUserId(),
-                parentContentBean.getDnis(),"OUTBOUND",
+                parentContentBean.getDnis(), "OUTBOUND",
                 page, Constans.COMMON_LOAD_PAGE_SIZE);
-        if(list != null && list.size() > 0){
+        if (list != null && list.size() > 0) {
             historyResponseBeanList.addAll(list);
             historyAdapter.notifyDataSetChanged();
         }

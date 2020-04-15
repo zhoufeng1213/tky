@@ -9,7 +9,6 @@
     </style>
 
 
-
     <style name="dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>

@@ -57,15 +57,14 @@
             app:text_state="让本人客户安全放心" />
 
         <com.xxxx.tky.view.ImageTextButton
-            android:id="@+id/_bt"
+            android:id="@+id/hwtj_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/d10"
             android:layout_marginTop="@dimen/d10"
-            android:visibility="invisible"
-            app:icon="@mipmap/customer_icon"
-            app:text="我的客户"
-            app:text_state="让本人客户安全放心" />
+            app:icon="@mipmap/main_hwtj"
+            app:text="话务统计"
+            app:text_state="让绩效考核更简单" />
 
     </LinearLayout>
 

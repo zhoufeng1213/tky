@@ -20,8 +20,7 @@
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                />
+                android:layout_gravity="center_horizontal" />
 
             <TextView
                 android:id="@+id/txtMsg"
@@ -31,8 +30,7 @@
                 android:gravity="center_horizontal"
                 android:textColor="#fff"
                 android:textSize="20sp"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
         </LinearLayout>
 
     </com.flyco.roundview.RoundRelativeLayout>

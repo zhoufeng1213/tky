@@ -72,7 +72,8 @@ public class HistoryActivity extends BaseHttpRequestActivity {
     private long endTime = System.currentTimeMillis();
     private long beginTime = 0;
     private boolean isFirstRefrush = true;
-    MediaPlayer mediaPlayer=null;
+    MediaPlayer mediaPlayer = null;
+
     @Override
     public int getLayoutViewId() {
         return R.layout.activity_history;
@@ -133,15 +134,15 @@ public class HistoryActivity extends BaseHttpRequestActivity {
         }
     }
 
-    private void loadMore(){
+    private void loadMore() {
         page++;
-        List<ContentBean> list = DbUtil.queryPhoneRecordList(cacheUserBean.getUserId(),page);
-        if(list != null && list.size() > 0){
+        List<ContentBean> list = DbUtil.queryPhoneRecordList(cacheUserBean.getUserId(), page);
+        if (list != null && list.size() > 0) {
             srlRefresh.finishLoadMore();
             srlRefresh.finishRefresh();
             historyResponseBeanList.addAll(list);
             historyAdapter.notifyDataSetChanged();
-        }else{
+        } else {
             basePostPresenter.presenterBusinessByHeader(
                     HttpRequest.CallHistory.callHistory,
                     false,
@@ -151,9 +152,9 @@ public class HistoryActivity extends BaseHttpRequestActivity {
         }
     }
 
-    private void refrush(){
+    private void refrush() {
         page = 0;
-        if(!isFirstRefrush){
+        if (!isFirstRefrush) {
             endTime = System.currentTimeMillis();
             historyResponseBeanList.clear();
             historyAdapter.notifyDataSetChanged();
@@ -170,7 +171,7 @@ public class HistoryActivity extends BaseHttpRequestActivity {
     }
 
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         recycler.setLayoutManager(new LinearLayoutManager(this));
         historyAdapter = new HistoryAdapter(historyResponseBeanList);
         historyAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -178,7 +179,7 @@ public class HistoryActivity extends BaseHttpRequestActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //拨打电话
                 ContentBean contentBean = historyResponseBeanList.get(position);
-                KtyCcSdkTool.getInstance().callPhone(mContext,contentBean.getDnis(),
+                KtyCcSdkTool.getInstance().callPhone(mContext, contentBean.getDnis(),
                         contentBean.getContactName(),
                         ""
                 );
@@ -189,7 +190,7 @@ public class HistoryActivity extends BaseHttpRequestActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (view.getId() == R.id.iv_call_record) {
                     LogUtils.e("iv_call_record");
-                    Uri uri= Uri.parse(Constans.FILES_URL + historyResponseBeanList.get(position).getRecordFile());
+                    Uri uri = Uri.parse(Constans.FILES_URL + historyResponseBeanList.get(position).getRecordFile());
                     mediaPlayer = create(uri);
                     mediaPlayer.start();
                 }
@@ -209,7 +210,7 @@ public class HistoryActivity extends BaseHttpRequestActivity {
         });
     }
 
-    public  MediaPlayer create( Uri uri) {
+    public MediaPlayer create(Uri uri) {
 
         if (mediaPlayer != null) {
             LogUtils.e("stop");
@@ -221,10 +222,10 @@ public class HistoryActivity extends BaseHttpRequestActivity {
         return mediaPlayer;
     }
 
-    private void loadData(){
+    private void loadData() {
         //判断是否存在begin
-        String beginStr = SharedPreferencesUtil.getValue(mContext,KTY_CC_BEGIN);
-        if(!TextUtils.isEmpty(beginStr)){
+        String beginStr = SharedPreferencesUtil.getValue(mContext, KTY_CC_BEGIN);
+        if (!TextUtils.isEmpty(beginStr)) {
             try {
                 beginTime = Long.valueOf(beginStr);
             } catch (Exception e) {
@@ -232,10 +233,10 @@ public class HistoryActivity extends BaseHttpRequestActivity {
             }
         }
 
-        if(beginTime >0){
+        if (beginTime > 0) {
             //先把本地数据查询出来
-            List<ContentBean> list = DbUtil.queryPhoneRecordList(cacheUserBean.getUserId(),page);
-            if(list != null && list.size() > 0){
+            List<ContentBean> list = DbUtil.queryPhoneRecordList(cacheUserBean.getUserId(), page);
+            if (list != null && list.size() > 0) {
                 historyResponseBeanList.addAll(list);
                 historyAdapter.notifyDataSetChanged();
             }
@@ -299,14 +300,14 @@ public class HistoryActivity extends BaseHttpRequestActivity {
                     if (historyResponseBeanList != null &&
                             historyResponseBean.getPage() != null &&
                             historyResponseBean.getPage().getContent() != null
-                    && historyResponseBean.getPage().getContent().size() > 0) {
-                        SharedPreferencesUtil.save(mContext,KTY_CC_BEGIN,String.valueOf(endTime));
+                            && historyResponseBean.getPage().getContent().size() > 0) {
+                        SharedPreferencesUtil.save(mContext, KTY_CC_BEGIN, String.valueOf(endTime));
                         SharedPreferencesUtil.save(mContext, VOICE_RECORD_PREFIX, historyResponseBean.getRecordPrefix());
                         //把查询到的直接添加到数据库
                         saveData(historyResponseBean.getPage().getContent());
-                        if(page == 0){
-                            historyResponseBeanList.addAll(0,historyResponseBean.getPage().getContent());
-                        }else{
+                        if (page == 0) {
+                            historyResponseBeanList.addAll(0, historyResponseBean.getPage().getContent());
+                        } else {
                             historyResponseBeanList.addAll(historyResponseBean.getPage().getContent());
                         }
 
@@ -319,7 +320,7 @@ public class HistoryActivity extends BaseHttpRequestActivity {
     }
 
 
-    private void saveData(List<ContentBean> list){
+    private void saveData(List<ContentBean> list) {
         ThreadTask.getInstance().executorDBThread(new Runnable() {
             @Override
             public void run() {

@@ -32,7 +32,7 @@ public abstract class BaseTransitionActivity extends BaseHttpRequestActivity {
     private boolean mHasBeginDrag = false;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         long id = intent.getLongExtra("_fromActivity", -1);
@@ -149,7 +149,7 @@ public abstract class BaseTransitionActivity extends BaseHttpRequestActivity {
     }
 
     private void initAfterSetContentView() {
-        ViewGroup rootView = (ViewGroup)getWindow().getDecorView().findViewById(android.R.id.content);
+        ViewGroup rootView = (ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content);
         if (rootView != null && rootView.getChildCount() != 0) {
             View container = rootView.getChildAt(0);
             rootView.removeView(container);
@@ -200,13 +200,13 @@ public abstract class BaseTransitionActivity extends BaseHttpRequestActivity {
                 int action = event.getAction();
                 if (action == MotionEvent.ACTION_MOVE) {
                     if (mHasBeginDrag) {
-                        int delta = (int)(event.getX() - mDownX);
-                        transition.setProgress(1f - delta / (float)mWrapperView.getMeasuredWidth());
+                        int delta = (int) (event.getX() - mDownX);
+                        transition.setProgress(1f - delta / (float) mWrapperView.getMeasuredWidth());
                     }
                 } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
                     if (mHasBeginDrag) {
-                        int delta = (int)(event.getX() - mDownX);
-                        float progress = 1f - delta / (float)mWrapperView.getMeasuredWidth();
+                        int delta = (int) (event.getX() - mDownX);
+                        float progress = 1f - delta / (float) mWrapperView.getMeasuredWidth();
                         if (progress < 0.7f) {
                             transition.gotoCeil();
                         } else {

@@ -6,7 +6,7 @@ package com.xxxx.cc.global;
  * @moduleName
  */
 public class Constans {
-    public static final String AGREE_PROTOCOL_TAG ="AGREE_PROTOCOL_TAG" ;
+    public static final String AGREE_PROTOCOL_TAG = "AGREE_PROTOCOL_TAG";
     public static String BASE_URL = "https://tky.ketianyun.com";
     public static String APK_NAME = "tky.apk";
     public static String FILES_URL = "https://files.ketianyun.com";
@@ -14,7 +14,8 @@ public class Constans {
     public static final String VOICE_RECORD_PREFIX = "VOICE_RECORD_PREFIX";
     public static final String KTY_CC_BASE_URL = "KTY_CC_BASE_URL";
     public static final String KTY_CC_BEGIN = "KTY_CC_BEGIN";
-    public static final String KTY_CUSTOM_BEGIN = "KTY_CUSTOM_BEGIN";
+    //    public static final String KTY_CUSTOM_BEGIN = "KTY_CUSTOM_BEGIN";
+    public static final String KTY_CUSTOM_BEGIN = "KTY_CUSTOM_BEGIN_NEW";
 
     public static final int COMMON_PAGE_SIZE = 20;
     public static final int COMMON_LOAD_PAGE_SIZE = 300;

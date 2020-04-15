@@ -1,25 +1,14 @@
 package com.xxxx.cc.ui.adapter;
 
-import android.content.Context;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.ImageButton;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.xxxx.cc.R;
-import com.xxxx.cc.global.Constans;
-import com.xxxx.cc.global.GlobalApplication;
 import com.xxxx.cc.model.ContentBean;
-import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.TimeUtils;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -46,9 +35,11 @@ public class HistoryAdapter extends BaseQuickAdapter<ContentBean, BaseViewHolder
         helper.setText(R.id.tv_start_time, createTime);
         int durationTime = item.getDurationInSec();
         helper.setText(R.id.tv_call_duration, "通话时长 " + TimeUtils.getWatchTime1(durationTime));
-        if (item.getDirection() != null && item.getDirection().equals("OUTBOUND"))
-            helper.setText(R.id.tv_direction, "呼出");
-        else helper.setText(R.id.tv_direction, "呼入");
+        String direction = "呼出";
+        if (item.getDirection() != null && item.getDirection().equals("INBOUND")) {
+            direction = "呼入";
+        }
+        helper.setText(R.id.tv_direction, direction);
         if (item.getDaSampleName() != null) {
             helper.setText(R.id.tv_state, item.getDaSampleName());
         } else {
@@ -81,10 +72,9 @@ public class HistoryAdapter extends BaseQuickAdapter<ContentBean, BaseViewHolder
 //                        recordBt.setImageResource(R.mipmap.play);
 //                    }
 //
-              }
+        }
 
     }
-
 
 
 }

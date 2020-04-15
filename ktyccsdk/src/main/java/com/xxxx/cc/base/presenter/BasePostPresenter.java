@@ -15,22 +15,14 @@ import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
 import com.xxxx.cc.util.ToastUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.builder.PostFileBuilder;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
 import com.zhy.http.okhttp.builder.PostStringBuilder;
-
 
 import java.io.File;
 import java.util.Map;
 
 import okhttp3.Call;
-
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 import static java.lang.String.valueOf;
 
@@ -100,7 +92,7 @@ public class BasePostPresenter {
                 }
             }
         }
-       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
+        LogUtils.e("url:" + Constans.BASE_URL + moduleName + "，Params:" + mActivity.getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(mActivity.getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -113,17 +105,14 @@ public class BasePostPresenter {
                         if (e != null) {
                             try {
                                 BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                                if(baseBean.getCode()==45009)
-                                {
-                                    ToastUtil.showToast(mActivity,"您的登录身份已过期，请退出重新登录");
-                                }
-                                else {
+                                if (baseBean.getCode() == 45009) {
+                                    ToastUtil.showToast(mActivity, "您的登录身份已过期，请退出重新登录");
+                                } else {
                                     mActivity.dealHttpRequestFail(moduleName, baseBean);
                                 }
-                            }catch (JSONException ex)
-                            {
+                            } catch (JSONException ex) {
 
-                                BaseBean baseBean=new BaseBean();
+                                BaseBean baseBean = new BaseBean();
                                 baseBean.setMessage(e.getMessage());
                                 mActivity.dealHttpRequestFail(moduleName, baseBean);
                             }
@@ -135,7 +124,7 @@ public class BasePostPresenter {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        LogUtils.e("tag","onResponse:"+response);
+                        LogUtils.e("tag", "onResponse:" + response);
                         try {
                             if (isShowDialog) {
                                 mActivity.dismissDialog();
@@ -172,7 +161,7 @@ public class BasePostPresenter {
             mActivity.dealHttpRequestFail(moduleName, baseBean);
             return;
         }
-       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
+        LogUtils.e("url:" + Constans.BASE_URL + moduleName + "，Params:" + mActivity.getHttpRequestParams(moduleName).toString());
         OkHttpUtils
                 .postString()
                 .url(Constans.BASE_URL + moduleName)
@@ -184,8 +173,8 @@ public class BasePostPresenter {
                     public void onError(Call call, Exception e, int id) {
                         mActivity.dismissDialog();
                         if (e != null) {
-                        BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                        mActivity.dealHttpRequestFail(moduleName, baseBean);
+                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                            mActivity.dealHttpRequestFail(moduleName, baseBean);
 
                         }
 
@@ -201,7 +190,7 @@ public class BasePostPresenter {
                             if (!TextUtils.isEmpty(response)) {
                                 BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
                                 if (baseBean.isOk()) {
-                                    mActivity.dealHttpRequestResult(moduleName, baseBean,response);
+                                    mActivity.dealHttpRequestResult(moduleName, baseBean, response);
                                 } else {
                                     mActivity.dismissDialog();
                                     mActivity.dealHttpRequestFail(moduleName, baseBean);
@@ -221,7 +210,7 @@ public class BasePostPresenter {
                 });
     }
 
-    public void post_file(final String moduleName, File file,String... headers) {
+    public void post_file(final String moduleName, File file, String... headers) {
         //判断网络是否可用
         if (!NetUtil.isNetworkConnected(mActivity)) {
             mActivity.dismissDialog();
@@ -240,15 +229,16 @@ public class BasePostPresenter {
                 }
             }
         }
-       LogUtils.e("url:"+Constans.BASE_URL + moduleName+"，Params:"+mActivity.getHttpRequestParams(moduleName).toString());
-        Map<String, String> params = JSONObject.parseObject(mActivity.getHttpRequestParams(moduleName).toString(), new TypeReference<Map<String, String>>(){});
-        okHttpUtils.addFile("file",file.getName(),file)
+        LogUtils.e("url:" + Constans.BASE_URL + moduleName + "，Params:" + mActivity.getHttpRequestParams(moduleName).toString());
+        Map<String, String> params = JSONObject.parseObject(mActivity.getHttpRequestParams(moduleName).toString(), new TypeReference<Map<String, String>>() {
+        });
+        okHttpUtils.addFile("file", file.getName(), file)
                 .params(params)
                 .build()
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Log.e("tag","e.getMessage():"+e.getMessage());
+                        Log.e("tag", "e.getMessage():" + e.getMessage());
                         mActivity.dismissDialog();
                         if (e != null) {
                             BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
@@ -260,7 +250,7 @@ public class BasePostPresenter {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e("tag","onResponse:"+response);
+                        Log.e("tag", "onResponse:" + response);
                         try {
                             if (isShowDialog) {
                                 mActivity.dismissDialog();

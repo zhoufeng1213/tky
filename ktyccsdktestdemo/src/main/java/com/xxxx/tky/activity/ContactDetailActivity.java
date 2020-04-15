@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.flyco.roundview.RoundTextView;
 import com.xxxx.cc.base.activity.BaseActivity;
-import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.tky.R;
 import com.xxxx.tky.model.ContactUserName;
 import com.xxxx.tky.util.AntiShakeUtils;
@@ -67,14 +66,14 @@ public class ContactDetailActivity extends BaseActivity {
     }
 
     @OnClick({R.id.bohao_layout})
-    public void call(View view){
+    public void call(View view) {
         if (AntiShakeUtils.isInvalidClick(view)) {
             return;
         }
-        if(
+        if (
                 !TextUtils.isEmpty(contactUserName.getName()) &&
                         !TextUtils.isEmpty(contactUserName.getPhoneNumber())
-        ){
+        ) {
             CallPhoneTool.getInstance().callPhone(mContext, contactUserName.getPhoneNumber(),
                     contactUserName.getName()
             );

@@ -58,13 +58,12 @@ android {
 
 }
 greendao {
-    schemaVersion 6 //版本
+    schemaVersion 7 //版本
     daoPackage 'com.kty.cc.db.gen' // 一般为app包名+生成文件的文件夹名
     targetGenDir 'src/main/java' //生成文件路径
 }
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-
+    api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     api 'com.android.support:appcompat-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -111,6 +110,11 @@ dependencies {
     api 'org.greenrobot:greendao:3.2.2'
     api 'org.greenrobot:greendao-generator:3.2.2'
     api 'com.github.promeg:tinypinyin:2.0.3'
+    api 'com.fly.sweet.dialog:sweet-custom-dialog:1.0.0'
+    api 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
+    api 'com.github.weilinhu:mylibaray:1.0'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    api 'io.reactivex.rxjava2:rxjava:2.2.6'
 //    api 'com.github.codbking:PickTime:v1.0.1'
 //    configurations.all {
 //        resolutionStrategy {
