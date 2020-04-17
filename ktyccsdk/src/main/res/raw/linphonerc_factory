@@ -25,6 +25,21 @@ enable_basic_to_client_group_chat_room_migration=0
 enable_simple_group_chat_message_state=0
 aggregate_imdn=1
 notify_each_friend_individually_when_presence_received=0
+add_missing_audio_codecs=0
+
+#https://github.com/BelledonneCommunications/linphone-iphone/issues/280
+#Our sip server supports PCUM, PCMA audio codec
+[audio_codec_0]
+mime=PCMU
+rate=8000
+channels=1
+enabled=1
+
+[audio_codec_1]
+mime=PCMA
+rate=8000
+channels=1
+enabled=1
 
 [app]
 activation_code_length=4
