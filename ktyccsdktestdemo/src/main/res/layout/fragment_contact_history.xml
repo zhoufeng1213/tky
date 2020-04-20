@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/d44"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/d24">
+        android:layout_marginTop="@dimen/d24"
+        android:visibility="gone"
+        >
 
 
         <ImageView

@@ -12,6 +12,7 @@ import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.model.CallTotalCountBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.util.SharedPreferencesUtil;
+import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.tky.R;
 import com.xxxx.tky.util.AntiShakeUtils;
 
@@ -83,7 +84,7 @@ public class CallTotalCountActivity extends BaseHttpRequestActivity {
         if (callTotalCountBean != null) {
             huchuNumberTextview.setText(String.valueOf(callTotalCountBean.getCalloutCount()));
             jietongNumberTextview.setText(String.valueOf(callTotalCountBean.getSuccessCallOutCount()));
-            tonghuashichangTextview.setText(String.valueOf(callTotalCountBean.getTotalCallOutTime()));
+            tonghuashichangTextview.setText(TimeUtils.getTimeBySecond(callTotalCountBean.getTotalCallOutTime()));
             huruNumberTextview.setText(String.valueOf(callTotalCountBean.getCallinCount()));
             jietonghuruNumberTextview.setText(String.valueOf(callTotalCountBean.getSuccessCallInCount()));
             weijieTextview.setText(String.valueOf(callTotalCountBean.getMisscallInCount()));

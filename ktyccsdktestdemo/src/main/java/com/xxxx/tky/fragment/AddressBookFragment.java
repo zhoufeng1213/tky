@@ -55,10 +55,10 @@ public class AddressBookFragment extends BaseFragment {
     }
 
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         if (Contant.contactUserNameList == null) {
             contactUserNameList = MobilePhoneUtil.getMobilePhoneList(mContext);
             //根据字母排序
@@ -102,7 +102,6 @@ public class AddressBookFragment extends BaseFragment {
                 hideLetter();
             }
         });
-
     }
 
     public static final String[] CONTACT_COLORS = {"#1a96fe", "#fd8645", "#FEA342", "#ACA9F5", "#F23B3B"};

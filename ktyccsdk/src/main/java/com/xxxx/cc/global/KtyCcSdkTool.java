@@ -47,6 +47,7 @@ public class KtyCcSdkTool {
     private String phoneNum;
     private String userName;
     private String headUrl;
+    private String customUserId;
     UserBean cacheUserBean;
 
     private KtyCcSdkTool() {
@@ -108,11 +109,13 @@ public class KtyCcSdkTool {
     /**
      * 拨打电话
      */
-    public void callPhone(Context mContext, String phoneNum, String userName, String headUrl) {
+    public void callPhone(Context mContext, String phoneNum, String userName, String headUrl,
+                          String customUserId) {
         this.mContext = mContext;
         this.phoneNum = phoneNum;
         this.userName = userName;
         this.headUrl = headUrl;
+        this.customUserId = customUserId;
         //先判断用户是否保存在了本地
         LogUtils.e("callPhone");
 
@@ -147,7 +150,7 @@ public class KtyCcSdkTool {
         if (LinphoneService.getCore() != null) {
             if (LinphoneService.isRegister()) {
                 LogUtils.e("已经注册 LinphoneService");
-                goToCallActivity(mContext, phoneNum, userName, headUrl);
+                goToCallActivity(mContext, phoneNum, userName, headUrl,customUserId);
             } else {
                 LogUtils.e("还没注册 LinphoneService，现在开始注册");
                 LinphoneService.getCore().addListener(new CoreListenerStub() {
@@ -158,7 +161,7 @@ public class KtyCcSdkTool {
                         if (state == RegistrationState.Ok) {
                             LinServiceManager.removeListener(this);
                             LinphoneService.setRegister(true);
-                            goToCallActivity(mContext, phoneNum, userName, headUrl);
+                            goToCallActivity(mContext, phoneNum, userName, headUrl,customUserId);
                         } else if (state == RegistrationState.None || state == RegistrationState.Failed) {
                             LogUtils.e("注册失败了-----》" + state.name());
                             ToastUtil.showToast(mContext, "注册服务失败");
@@ -183,7 +186,8 @@ public class KtyCcSdkTool {
         mDemoInterface = callPhoneInterface;
     }
 
-    private void goToCallActivity(Context mContext, String phoneNum, String userName, String headUrl) {
+    private void goToCallActivity(Context mContext, String phoneNum, String userName,
+                                  String headUrl,String customUserId) {
         //先挂断之前可能因为网络原因没有把之前的电话挂断的电话
         LinServiceManager.hookCall();
         LogUtils.e("goToCallActivity");
@@ -192,6 +196,7 @@ public class KtyCcSdkTool {
         intent.putExtra("phoneNum", phoneNum);
         intent.putExtra("name", userName);
         intent.putExtra("headUrl", headUrl);
+        intent.putExtra("customUserId", customUserId);
         intent.putExtra("linPhoneRegistStatus", true);
         mContext.startActivity(intent);
     }

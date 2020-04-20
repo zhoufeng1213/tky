@@ -77,10 +77,10 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
         return R.layout.fragment_communication_record;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         srlRefresh.setEnableLoadMore(true);
         srlRefresh.setEnableRefresh(false);
         srlRefresh.setEnableLoadMoreWhenContentNotFull(false);
@@ -91,7 +91,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                 cacheUserBean = (UserBean) objectBean;
             }
 
-            if (cacheUserBean != null) {
+            if (cacheUserBean != null && recycler != null) {
                 if (getArguments() != null) {
                     String data = getArguments().getString("data");
                     if (!TextUtils.isEmpty(data)) {
@@ -138,7 +138,6 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
             e.printStackTrace();
         }
     }
-
 
     private SweetAlertDialog sweetAlertDialog;
     private EditText userMeno;
@@ -291,6 +290,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                             historyResponseBean.getData().getContent() != null
                             && historyResponseBean.getData().getContent().size() > 0) {
                         contentBeanList.clear();
+                        communicationRecordAdapter.notifyDataSetChanged();
                         contentBeanList.addAll(historyResponseBean.getData().getContent());
                         LogUtils.e("isCall:" + isCall);
                         if (isCall && currentCallsCommunicationRecordResponseBean != null) {

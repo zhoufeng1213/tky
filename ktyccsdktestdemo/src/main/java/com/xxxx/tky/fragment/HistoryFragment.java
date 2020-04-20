@@ -85,6 +85,11 @@ public class HistoryFragment extends BaseHttpRequestFragment {
         srlRefresh = view.findViewById(R.id.srl_refresh);
         lMainContainer = view.findViewById(R.id.ll_main_container);
         mIvBack = view.findViewById(R.id.iv_close);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         srlRefresh.setEnableLoadMore(true);
         srlRefresh.setEnableRefresh(true);
@@ -124,7 +129,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
                         //拨打电话
                         ContentBean contentBean = historyResponseBeanList.get(position);
                         CallPhoneTool.getInstance().callPhone(mContext, contentBean.getDnis(),
-                                contentBean.getContactName()
+                                contentBean.getContactName(),""
                         );
                     }
                 });

@@ -66,12 +66,6 @@
                     android:textIsSelectable="true"
                     android:textSize="@dimen/textNormal13" />
 
-                <ImageView
-                    android:id="@+id/call_phone_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d10"
-                    android:src="@drawable/dianhua_white2" />
 
             </LinearLayout>
 
@@ -237,12 +231,23 @@
 
         <ImageView
             android:id="@+id/go_to_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/d50"
+            android:layout_height="@dimen/d50"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/d40"
             android:layout_marginRight="@dimen/d15"
             android:src="@drawable/edit" />
+
+
+        <ImageView
+            android:id="@+id/call_phone_btn"
+            android:layout_width="@dimen/d35"
+            android:layout_height="@dimen/d35"
+            android:layout_toLeftOf="@id/go_to_detail"
+            android:layout_marginTop="@dimen/d48"
+            android:layout_marginRight="@dimen/d10"
+            android:src="@drawable/dianhua_white3" />
+
 
     </RelativeLayout>
 

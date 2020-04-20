@@ -75,7 +75,7 @@ public class ContactDetailActivity extends BaseActivity {
                         !TextUtils.isEmpty(contactUserName.getPhoneNumber())
         ) {
             CallPhoneTool.getInstance().callPhone(mContext, contactUserName.getPhoneNumber(),
-                    contactUserName.getName()
+                    contactUserName.getName(),""
             );
         }
     }

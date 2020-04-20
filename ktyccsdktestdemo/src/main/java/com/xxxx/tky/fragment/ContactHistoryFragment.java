@@ -56,14 +56,14 @@ public class ContactHistoryFragment extends BaseFragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         Object objectBean = SharedPreferencesUtil.getObjectBean(mContext, USERBEAN_SAVE_TAG, UserBean.class);
         if (objectBean != null) {
             cacheUserBean = (UserBean) objectBean;
         }
         try {
-            if (getArguments() != null && cacheUserBean != null) {
+            if (getArguments() != null && cacheUserBean != null && recyclerView != null) {
                 String data = getArguments().getString("data");
                 if (!TextUtils.isEmpty(data)) {
                     queryCustomPersonBean = JSON.parseObject(data, QueryCustomPersonBean.class);

@@ -181,7 +181,7 @@ public class HistoryActivity extends BaseHttpRequestActivity {
                 ContentBean contentBean = historyResponseBeanList.get(position);
                 KtyCcSdkTool.getInstance().callPhone(mContext, contentBean.getDnis(),
                         contentBean.getContactName(),
-                        ""
+                        "",""
                 );
             }
         });

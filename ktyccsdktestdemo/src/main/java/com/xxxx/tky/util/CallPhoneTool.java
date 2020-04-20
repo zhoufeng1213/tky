@@ -26,6 +26,7 @@ import okhttp3.Call;
 import okhttp3.MediaType;
 
 import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
+import static com.xxxx.cc.global.HttpRequest.Contant.updateLastCallTime;
 
 
 public class CallPhoneTool {
@@ -35,6 +36,7 @@ public class CallPhoneTool {
     private UserBean cacheUserBean;
     private String phoneNum;
     private String userName;
+    private String customeUserId;
 
     private CallPhoneTool() {
 
@@ -57,10 +59,11 @@ public class CallPhoneTool {
     /**
      * 拨打电话
      */
-    public void callPhone(Context mContext, String phoneNum, String userName) {
+    public void callPhone(Context mContext, String phoneNum, String userName,String customeUserId) {
         this.mContext = mContext;
         this.phoneNum = phoneNum;
         this.userName = userName;
+        this.customeUserId = customeUserId;
         Object objectBean = SharedPreferencesUtil.getObjectBean(mContext, USERBEAN_SAVE_TAG, UserBean.class);
         if (objectBean != null) {
             cacheUserBean = (UserBean) objectBean;
@@ -76,7 +79,7 @@ public class CallPhoneTool {
                 }
                 KtyCcSdkTool.getInstance().callPhone(mContext, phoneNum,
                         userName,
-                        ""
+                        "",customeUserId
                 );
 
             }
@@ -145,11 +148,14 @@ public class CallPhoneTool {
                             if (!TextUtils.isEmpty(response)) {
                                 BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
                                 if (baseBean.isOk()) {
-                                    showToast("呼叫成功，请注意接听电话");
 
+                                    dealHttpRequestFail(moduleName,baseBean);
                                 } else {
                                     LogUtils.e("呼叫失败 http 4");
-                                    showToast("呼叫失败");
+                                    if(baseBean != null && TextUtils.isEmpty(baseBean.getMessage())){
+                                        baseBean.setMessage("呼叫失败");
+                                    }
+                                    dealHttpRequestFail(moduleName,baseBean);
                                 }
                             } else {
                                 showToast("服务器无响应");
@@ -169,16 +175,37 @@ public class CallPhoneTool {
 
     public JSONObject getHttpRequestParams(String moduleName) {
         JSONObject jsonObject = new JSONObject();
-        MakecallBean makecallBean = new MakecallBean();
-        makecallBean.setCaller(cacheUserBean.getMobile());
-        makecallBean.setCallee(phoneNum);
-        makecallBean.setName(userName);
-        makecallBean.setAppname("android");
-        jsonObject = JSONObject.parseObject(new Gson().toJson(makecallBean));
+        if(HttpRequest.makecallExternal.equals(moduleName)) {
+            MakecallBean makecallBean = new MakecallBean();
+            makecallBean.setCaller(cacheUserBean.getMobile());
+            makecallBean.setCallee(phoneNum);
+            makecallBean.setName(userName);
+            makecallBean.setAppname("android");
+            jsonObject = JSONObject.parseObject(new Gson().toJson(makecallBean));
+        }
         return jsonObject;
     }
 
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
+        if(HttpRequest.makecallExternal.equals(moduleName)) {
+            showToast(result.getMessage());
+            if(!TextUtils.isEmpty(customeUserId)){
+                doPostByHeaders(
+                        (updateLastCallTime + "/"+ customeUserId),
+                        "token", cacheUserBean.getToken(),
+                        "Content-Type", "application/json"
+                );
+            }
+        }else if((updateLastCallTime + "/"+ customeUserId).equals(moduleName)){
+            LogUtils.e("更新客户电话时间成功");
+        }
+    }
 
+    public void dealHttpRequestSuccess(String moduleName, BaseBean result) {
+        if(HttpRequest.makecallExternal.equals(moduleName)){
+            showToast("呼叫成功，请注意接听电话");
+        }else if((updateLastCallTime + "/"+ customeUserId).equals(moduleName)){
+            LogUtils.e("更新客户电话时间失败");
+        }
     }
 }

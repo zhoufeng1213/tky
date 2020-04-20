@@ -60,7 +60,7 @@ public class HomeFragment extends BaseFragment {
 //        );
 
         CallPhoneTool.getInstance().callPhone(mContext, homeEtPhone.getText().toString().trim(),
-                homeEtContactName.getText().toString().trim()
+                homeEtContactName.getText().toString().trim(),""
         );
     }
 

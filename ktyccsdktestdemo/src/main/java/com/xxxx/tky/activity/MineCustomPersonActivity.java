@@ -258,7 +258,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
 //            List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanList(page);
             List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllList();
             if (list != null && list.size() > 0) {
-//                LogUtils.e("我的客户："+new Gson().toJson(list));
+                LogUtils.e("我的客户："+new Gson().toJson(list));
                 historyResponseBeanList.addAll(list);
                 mAdapter.notifyDataSetChanged();
             }
@@ -430,6 +430,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
         }
         if (!TextUtils.isEmpty(searchEdit.getText().toString().trim())) {
             List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllListByNameOrPhone(searchEdit.getText().toString().trim());
+            LogUtils.e("查询的数组："+new Gson().toJson(list));
             if (list != null && list.size() > 0) {
                 historyResponseBeanList.clear();
                 mAdapter.notifyDataSetChanged();

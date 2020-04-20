@@ -200,7 +200,7 @@ public class DialFragment extends BaseFragment {
         }
         if (!TextUtils.isEmpty(phoneNumTextView.getText().toString().trim())) {
             CallPhoneTool.getInstance().callPhone(mContext, phoneNumTextView.getText().toString().trim(),
-                    ""
+                    "",""
             );
         } else {
             ToastUtil.showToast(mContext, "请输入手机号");

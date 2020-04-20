@@ -201,7 +201,8 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
         }
         if (queryCustomPersonBean != null && !TextUtils.isEmpty(queryCustomPersonBean.getRealMobileNumber())) {
             CallPhoneTool.getInstance().callPhone(mContext, queryCustomPersonBean.getRealMobileNumber(),
-                    queryCustomPersonBean.getName()
+                    queryCustomPersonBean.getName(),
+                    queryCustomPersonBean.getId()
             );
         }
 

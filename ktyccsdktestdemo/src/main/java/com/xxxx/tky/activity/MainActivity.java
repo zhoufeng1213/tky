@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 //            return;
 //        }
         CallPhoneTool.getInstance().callPhone(this, homeEtPhone.getText().toString().trim(),
-                homeEtContactName.getText().toString().trim()
+                homeEtContactName.getText().toString().trim(),""
         );
     }
 

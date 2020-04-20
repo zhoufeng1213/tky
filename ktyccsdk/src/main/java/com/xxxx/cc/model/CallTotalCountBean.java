@@ -31,8 +31,8 @@ public class CallTotalCountBean {
     private String startTime;
     private int successCallInCount;
     private int successCallOutCount;
-    private int totalCallInTime;
-    private int totalCallOutTime;
+    private long totalCallInTime;
+    private long totalCallOutTime;
     private String userId;
 
     public int getCallinCount() {
@@ -107,19 +107,19 @@ public class CallTotalCountBean {
         this.successCallOutCount = successCallOutCount;
     }
 
-    public int getTotalCallInTime() {
+    public long getTotalCallInTime() {
         return totalCallInTime;
     }
 
-    public void setTotalCallInTime(int totalCallInTime) {
+    public void setTotalCallInTime(long totalCallInTime) {
         this.totalCallInTime = totalCallInTime;
     }
 
-    public int getTotalCallOutTime() {
+    public long getTotalCallOutTime() {
         return totalCallOutTime;
     }
 
-    public void setTotalCallOutTime(int totalCallOutTime) {
+    public void setTotalCallOutTime(long totalCallOutTime) {
         this.totalCallOutTime = totalCallOutTime;
     }
 

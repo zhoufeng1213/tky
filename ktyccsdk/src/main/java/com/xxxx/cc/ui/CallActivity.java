@@ -56,6 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
+import static com.xxxx.cc.global.HttpRequest.Contant.updateLastCallTime;
 import static com.xxxx.cc.global.HttpRequest.makecallInternal;
 
 public class CallActivity extends BaseHttpRequestActivity {
@@ -86,6 +87,9 @@ public class CallActivity extends BaseHttpRequestActivity {
     private CommunicationRecordResponseBean mCommunicationRecordResponseBean;
 
     public static boolean isReturnCall;
+
+
+    private String customUserId;
 
     @Override
     public int getLayoutViewId() {
@@ -155,7 +159,7 @@ public class CallActivity extends BaseHttpRequestActivity {
         ImmersionBar.with(this).init();
         findView();
         initListener();
-
+        customUserId = getIntent().getStringExtra("customUserId");
         boolean linPhoneRegistStatus = getIntent().getBooleanExtra("linPhoneRegistStatus", false);
         phoneNum = getIntent().getStringExtra("phoneNum");
         if (linPhoneRegistStatus && !TextUtils.isEmpty(phoneNum)) {
@@ -310,47 +314,69 @@ public class CallActivity extends BaseHttpRequestActivity {
     @Override
     public JSONObject getHttpRequestParams(String moduleName) {
         JSONObject jsonObject = new JSONObject();
-        MakecallBean makecallBean = new MakecallBean();
-        makecallBean.setCaller(cacheUserBean.getCcUserInfo().getExtensionNo());
-        makecallBean.setCallee(phoneNum);
-        makecallBean.setName(userContactName);
-        makecallBean.setAppname("android");
-        jsonObject = JSONObject.parseObject(new Gson().toJson(makecallBean));
+        if(makecallInternal.equals(moduleName)){
+            MakecallBean makecallBean = new MakecallBean();
+            makecallBean.setCaller(cacheUserBean.getCcUserInfo().getExtensionNo());
+            makecallBean.setCallee(phoneNum);
+            makecallBean.setName(userContactName);
+            makecallBean.setAppname("android");
+            jsonObject = JSONObject.parseObject(new Gson().toJson(makecallBean));
+        }
         return jsonObject;
     }
 
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
-        if (!TextUtils.isEmpty(response)) {
-            LinServiceManager.switchAudio(mContext, false);
-            Message msg = new Message();
-            msg.what = 1;
-            handler.sendMessage(msg);
-            mCommunicationRecordResponseBean = new CommunicationRecordResponseBean();
-            JSONObject json = (JSONObject) result.getData();
-            mCommunicationRecordResponseBean.setCalldetailId(json.getString("uuid"));
+        if(makecallInternal.equals(moduleName)) {
+            if (!TextUtils.isEmpty(response)) {
+                LinServiceManager.switchAudio(mContext, false);
+                Message msg = new Message();
+                msg.what = 1;
+                handler.sendMessage(msg);
+                mCommunicationRecordResponseBean = new CommunicationRecordResponseBean();
+                JSONObject json = (JSONObject) result.getData();
+                mCommunicationRecordResponseBean.setCalldetailId(json.getString("uuid"));
+
+                //直接调用更新电话时间
+                if(!TextUtils.isEmpty(customUserId)){
+                    LogUtils.e("当前请求的token："+ cacheUserBean.getToken());
+                    basePostPresenter.presenterBusinessByHeader(
+                            (updateLastCallTime + "/"+ customUserId),
+                            "token", cacheUserBean.getToken(),
+                            "Content-Type", "application/json"
+                    );
+                }
+            }
+        }else if((updateLastCallTime + "/"+ customUserId).equals(moduleName)){
+            LogUtils.e("更新客户电话时间成功");
+
         }
     }
 
     @Override
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
-        LogUtils.e("呼叫失败1：" + result.toString());
-        LogUtils.e("呼叫失败1：code:" + result.getCode() + ",message:" + result.getMessage());
-        if (result.getMessage() != null) {
-            LogUtils.e("呼叫失败 http1");
-            if (result.getCode() == 0 && "timeout".equals(result.getMessage())) {
-                //说明当前网络不行，但是网没断
+        if(makecallInternal.equals(moduleName)) {
+            LogUtils.e("呼叫失败1：" + result.toString());
+            LogUtils.e("呼叫失败1：code:" + result.getCode() + ",message:" + result.getMessage());
+            if (result.getMessage() != null) {
+                LogUtils.e("呼叫失败 http1");
+                if (result.getCode() == 0 && "timeout".equals(result.getMessage())) {
+                    //说明当前网络不行，但是网没断
 //                ToastUtil.showToast(mContext,"当前网络较差，请更换网络或者到网络好");
-                netErrorDialog();
+                    netErrorDialog();
+                } else {
+                    showToast(result.getMessage());
+                    hookCall();
+                }
             } else {
-                showToast(result.getMessage());
+                LogUtils.e("呼叫失败 http2");
+                showToast("呼叫失败");
                 hookCall();
             }
-        } else {
-            LogUtils.e("呼叫失败 http2");
-            showToast("呼叫失败");
-            hookCall();
+        }else if((updateLastCallTime + "/"+ customUserId).equals(moduleName)){
+            LogUtils.e("更新客户电话时间失败:"+result.getMessage());
+            LogUtils.e(result.toString());
         }
     }
 

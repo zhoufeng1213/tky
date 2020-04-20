@@ -166,12 +166,12 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         showNetPoorToastLength++;
         if (isNeedShowNetPoorManyTimes()) {
             if (showNetPoorToastLength < 151 && showNetPoorToastLength % 15 == 0 && mContext != null) {
-                ToastUtil.showToastShort(mContext, "当前网络较差，请更换网络或者到网络好的地方");
+                ToastUtil.showToastShort(mContext, "当前网络信号较差，请更换网络或者到网络好的地方");
             }
         } else {
             if (!isNetSignPoor) {
                 isNetSignPoor = true;
-                showToast("当前网络较差，请更换网络或者到网络好的地方");
+                showToast("当前网络信号较差，请更换网络或者到网络好的地方");
             }
         }
     }

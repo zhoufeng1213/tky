@@ -232,4 +232,31 @@ public class TimeUtils {
     }
 
 
+    public static String getTimeBySecond(long m) {
+
+        if(m < 60) {//秒
+
+            return "00:"+NumFormat(0) + ":" + NumFormat(m);
+        }
+
+        if(m < 3600) {//分
+
+            return "00:"+NumFormat(m / 60) + ":" + NumFormat(m % 60);
+        }
+
+        if(m < 3600 * 24) {//时
+            return NumFormat(m / 60 / 60) + ":" + NumFormat(m / 60 % 60) + ":" + NumFormat(m % 60);
+        }
+        return "00:00:00";
+    }
+
+    public static String NumFormat(long i) {
+        if(String.valueOf(i).length() < 2) {
+            return "0"+i;
+        }else {
+            return String.valueOf(i);
+        }
+    }
+
+
 }

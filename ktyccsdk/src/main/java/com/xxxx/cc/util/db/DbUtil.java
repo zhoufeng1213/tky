@@ -1,6 +1,7 @@
 package com.xxxx.cc.util.db;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.kty.cc.db.gen.ContentBeanDao;
 import com.kty.cc.db.gen.FileDownloadVODao;
@@ -12,6 +13,8 @@ import com.xxxx.cc.model.QueryCustomPersonBean;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -153,7 +156,8 @@ public class DbUtil {
     public static List<QueryCustomPersonBean> queryCustomPersonBeanList(int page) {
         return getDbManager().getDaoSession().getQueryCustomPersonBeanDao().queryBuilder()
                 .where(QueryCustomPersonBeanDao.Properties.Datastatus.eq(true))
-                .orderAsc(QueryCustomPersonBeanDao.Properties.Letters)
+                .orderAsc(QueryCustomPersonBeanDao.Properties.Pinyin)
+//                .orderRaw(" Pinyin *1 ")
                 .offset(page * Constans.COMMON_PAGE_SIZE)
                 .limit(Constans.COMMON_PAGE_SIZE)
                 .list()
@@ -162,13 +166,41 @@ public class DbUtil {
 
 
     public static List<QueryCustomPersonBean> queryCustomPersonBeanAllList() {
-        return getDbManager().getDaoSession().getQueryCustomPersonBeanDao().queryBuilder()
+        List<QueryCustomPersonBean> list = getDbManager().getDaoSession().getQueryCustomPersonBeanDao().queryBuilder()
                 .where(QueryCustomPersonBeanDao.Properties.Datastatus.eq(true))
-                .orderAsc(QueryCustomPersonBeanDao.Properties.Letters)
+                .orderAsc(QueryCustomPersonBeanDao.Properties.Pinyin)
+//                .orderRaw(" Pinyin *1 ")
 //                .offset(0)
 //                .limit(1000)
-                .list()
-                ;
+                .list();
+        Collections.sort(list, new Comparator<QueryCustomPersonBean>() {
+            @Override
+            public int compare(QueryCustomPersonBean o1, QueryCustomPersonBean o2) {
+                int pinyinNum1 = 0;
+                try {
+                    pinyinNum1 = Integer.valueOf(o1.getPinyin());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                int pinyinNum2 = 0;
+                try {
+                    pinyinNum2 = Integer.valueOf(o2.getPinyin());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(!TextUtils.isEmpty(o1.getPinyin()) && !TextUtils.isEmpty(o2.getPinyin())
+                && (o1.getPinyin().substring(0,1)).equals(o2.getPinyin().substring(0,1))
+                ){
+                    if(pinyinNum1 == 0 && pinyinNum2 == 0){
+                        return o1.getPinyin().compareTo(o2.getPinyin());
+                    }
+                    return pinyinNum1- pinyinNum2;
+                }
+                return o1.getPinyin().compareTo(o2.getPinyin());
+
+            }
+        });
+        return list;
     }
 
 
@@ -190,15 +222,44 @@ public class DbUtil {
 
     public static List<QueryCustomPersonBean> queryCustomPersonBeanAllListByNameOrPhone(String str) {
         QueryBuilder qb = getDbManager().getDaoSession().getQueryCustomPersonBeanDao().queryBuilder();
-        return qb.where(QueryCustomPersonBeanDao.Properties.Datastatus.eq(true),
+        List<QueryCustomPersonBean> list =  qb.where(QueryCustomPersonBeanDao.Properties.Datastatus.eq(true),
                 qb.or(QueryCustomPersonBeanDao.Properties.RealMobileNumber.like("%" + str + "%"),
                         QueryCustomPersonBeanDao.Properties.Name.like("%" + str + "%"),
                         QueryCustomPersonBeanDao.Properties.DisplayNameSpelling.like("%" + str.toUpperCase() + "%")
                 )
         )
-                .orderAsc(QueryCustomPersonBeanDao.Properties.Letters)
+                .orderAsc(QueryCustomPersonBeanDao.Properties.Pinyin)
+//                .orderRaw(" Pinyin *1 ")
                 .list()
                 ;
+        Collections.sort(list, new Comparator<QueryCustomPersonBean>() {
+            @Override
+            public int compare(QueryCustomPersonBean o1, QueryCustomPersonBean o2) {
+                int pinyinNum1 = 0;
+                try {
+                    pinyinNum1 = Integer.valueOf(o1.getPinyin());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                int pinyinNum2 = 0;
+                try {
+                    pinyinNum2 = Integer.valueOf(o2.getPinyin());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(!TextUtils.isEmpty(o1.getPinyin()) && !TextUtils.isEmpty(o2.getPinyin())
+                        && (o1.getPinyin().substring(0,1)).equals(o2.getPinyin().substring(0,1))
+                ){
+                    if(pinyinNum1 == 0 && pinyinNum2 == 0){
+                        return o1.getPinyin().compareTo(o2.getPinyin());
+                    }
+                    return pinyinNum1- pinyinNum2;
+                }
+                return o1.getPinyin().compareTo(o2.getPinyin());
+
+            }
+        });
+        return list;
     }
 
     private static DbManager getDbManager() {
