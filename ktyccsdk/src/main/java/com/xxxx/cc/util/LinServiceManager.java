@@ -182,7 +182,7 @@ public class LinServiceManager {
             mAccountCreator.setUsername(userBean.getCcUserInfo().getExtensionNo());
             mAccountCreator.setDomain(userBean.getCcUserInfo().getDomain());
             mAccountCreator.setPassword(userBean.getCcUserInfo().getExtensionPassword());
-            mAccountCreator.setTransport(TransportType.Tls);
+            mAccountCreator.setTransport(TransportType.Tcp);
 
             ProxyConfig cfg = mAccountCreator.createProxyConfig();
             String username = userBean.getCcUserInfo().getExtensionNo();
