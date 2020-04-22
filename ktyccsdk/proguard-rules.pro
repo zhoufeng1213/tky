@@ -153,7 +153,7 @@
 
 #-----------------------全局混淆-----------------------
 #除了项目目录，其他都不混淆②
--keep class !com.kty.cc.** {*;}
+-keep class !com.xxxx.cc.** {*;}
 -dontwarn **
 #-------------------------------------------项目定义区-------------------------------------------------
 
@@ -170,13 +170,14 @@
 -dontwarn org.apache.**
 
 ##ktycc
--keep class com.kty.cc.model.**{*;}
--keep class com.kty.cc.global.KtyCcNetUtil{*;}
--keep class com.kty.cc.global.KtyCcNetUtil.LoginCallBack{*;}
--keep class com.kty.cc.global.KtyCcOptionsUtil{*;}
--keep class com.kty.cc.global.KtyCcSdkTool{*;}
--keep class com.kty.cc.db.**{*;}
--keep class com.kty.cc.callback.LoginCallBack{*;}
+-keep class com.xxxx.cc.model.**{*;}
+-keep class com.xxxx.cc.global.SdkTool{*;}
+#-keep class com.xxxx.cc.global.KtyCcNetUtil{*;}
+#-keep class com.xxxx.cc.global.KtyCcOptionsUtil{*;}
+#-keep class com.xxxx.cc.global.KtyCcSdkTool{*;}
+-keep class com.xxxx.cc.db.**{*;}
+-keep class com.xxxx.cc.callback.LoginCallBack{*;}
+-keep class com.xxxx.cc.callback.CallPhoneBack{*;}
 
 
 -keep class org.greenrobot.greendao.**{*;}

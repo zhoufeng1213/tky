@@ -43,7 +43,7 @@ android {
         userOrg = 'fengjianzhu1213'
         groupId = 'com.kty.sdk'
         artifactId = 'ktycc'
-        publishVersion = '1.0.8'
+        publishVersion = '1.0.9'
         archivesPath = '../build/outputs/aar' //指定将要上传的压缩包路径，如果不写则默认上传系统生成的jar和aar
         archivesName = 'ktyccsdk-release'  //指定将要上传的压缩包所含的关键字，如果不写，默认过滤artifactId
         desc = 'ktycc'
@@ -84,6 +84,7 @@ dependencies {
     implementation 'com.kty.sdk:baselibrary:0.2.4'
 
 
+
     //http
     api 'com.zhy:okhttputils:2.6.2'
     //权限
@@ -111,6 +112,7 @@ dependencies {
     api 'org.greenrobot:greendao-generator:3.2.2'
     api 'com.github.promeg:tinypinyin:2.0.3'
     api 'com.fly.sweet.dialog:sweet-custom-dialog:1.0.0'
+    api 'com.fly.keepalive:keepalive:1.0.0'
     api 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     api 'com.github.weilinhu:mylibaray:1.0'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'

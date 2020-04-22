@@ -7,7 +7,6 @@ sip_port=-1
 sip_tcp_port=-1
 sip_tls_port=-1
 media_encryption=none
-in_call_timeout=60
 
 [video]
 size=vga
@@ -22,7 +21,6 @@ history_max_size=100
 
 [rtp]
 audio_jitt_comp=160
-nortp_timeout=30
 
 [sound]
 el_sustain=50

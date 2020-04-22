@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.kty.mars.baselibrary.http.LoggerInterceptor;
 import com.sdk.keepbackground.work.DaemonEnv;
+import com.xxxx.cc.callback.CallPhoneBack;
 import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.LinphoneService;
@@ -50,6 +51,8 @@ public class KtyCcSdkTool {
     private String customUserId;
     UserBean cacheUserBean;
 
+    public static CallPhoneBack callPhoneBack;
+
     private KtyCcSdkTool() {
 
     }
@@ -73,6 +76,7 @@ public class KtyCcSdkTool {
     public void initKtyCcSdk(Context context) {
         initNetConfig();
         DbUtil.init(context);
+        startLinPhoneService(context);
     }
 
     private void initNetConfig() {
@@ -110,12 +114,13 @@ public class KtyCcSdkTool {
      * 拨打电话
      */
     public void callPhone(Context mContext, String phoneNum, String userName, String headUrl,
-                          String customUserId) {
+                          String customUserId,CallPhoneBack callBack) {
         this.mContext = mContext;
         this.phoneNum = phoneNum;
         this.userName = userName;
         this.headUrl = headUrl;
         this.customUserId = customUserId;
+        callPhoneBack = callBack;
         //先判断用户是否保存在了本地
         LogUtils.e("callPhone");
 
@@ -130,8 +135,7 @@ public class KtyCcSdkTool {
                     cacheUserBean = (UserBean) objectBean;
                     //判断service是否已经起来了
                     if (!LinphoneService.isReady()) {
-                        Intent intent = new Intent(mContext, LinphoneService.class);
-                        mContext.startService(intent);
+                        startLinPhoneService(mContext);
                         LogUtils.e("重新启动service");
                     }
                     linphoneServiceCall();

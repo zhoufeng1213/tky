@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.xxxx.cc.base.presenter.MyStringCallback;
+import com.xxxx.cc.callback.CallPhoneBack;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.KtyCcSdkTool;
@@ -79,7 +80,17 @@ public class CallPhoneTool {
                 }
                 KtyCcSdkTool.getInstance().callPhone(mContext, phoneNum,
                         userName,
-                        "",customeUserId
+                        "", customeUserId, new CallPhoneBack() {
+                            @Override
+                            public void onSuccess(String callId) {
+
+                            }
+
+                            @Override
+                            public void onFailed(String message) {
+
+                            }
+                        }
                 );
 
             }
@@ -136,10 +147,8 @@ public class CallPhoneTool {
                         if (e != null) {
                             BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
                             dealHttpRequestFail(moduleName, baseBean);
-
                         }
                     }
-
 
                     @Override
                     public void onResponse(String response, int id) {
@@ -148,8 +157,7 @@ public class CallPhoneTool {
                             if (!TextUtils.isEmpty(response)) {
                                 BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
                                 if (baseBean.isOk()) {
-
-                                    dealHttpRequestFail(moduleName,baseBean);
+                                    dealHttpRequestSuccess(moduleName,baseBean);
                                 } else {
                                     LogUtils.e("呼叫失败 http 4");
                                     if(baseBean != null && TextUtils.isEmpty(baseBean.getMessage())){
@@ -189,6 +197,14 @@ public class CallPhoneTool {
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         if(HttpRequest.makecallExternal.equals(moduleName)) {
             showToast(result.getMessage());
+        }else if((updateLastCallTime + "/"+ customeUserId).equals(moduleName)){
+            LogUtils.e("更新客户电话时间失败");
+        }
+    }
+
+    public void dealHttpRequestSuccess(String moduleName, BaseBean result) {
+        if(HttpRequest.makecallExternal.equals(moduleName)){
+            showToast("呼叫成功，请注意接听电话");
             if(!TextUtils.isEmpty(customeUserId)){
                 doPostByHeaders(
                         (updateLastCallTime + "/"+ customeUserId),
@@ -197,15 +213,8 @@ public class CallPhoneTool {
                 );
             }
         }else if((updateLastCallTime + "/"+ customeUserId).equals(moduleName)){
-            LogUtils.e("更新客户电话时间成功");
-        }
-    }
 
-    public void dealHttpRequestSuccess(String moduleName, BaseBean result) {
-        if(HttpRequest.makecallExternal.equals(moduleName)){
-            showToast("呼叫成功，请注意接听电话");
-        }else if((updateLastCallTime + "/"+ customeUserId).equals(moduleName)){
-            LogUtils.e("更新客户电话时间失败");
+            LogUtils.e("更新客户电话时间成功");
         }
     }
 }

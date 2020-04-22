@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="账号:" />
+
+        <EditText
+            android:id="@+id/home_et_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="密码:" />
+
+        <EditText
+            android:id="@+id/home_et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="登录:" />
+
+        <TextView
+            android:id="@+id/home_tv_login_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未登录" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="联系人:" />
+
+        <EditText
+            android:id="@+id/home_et_contact_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="张三" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="号码:" />
+
+        <EditText
+            android:id="@+id/home_et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入正确格式的电话号码"
+            android:text=""
+            android:inputType="phone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/home_tv_login_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/shape_home_btn_bg"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="登录"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/home_tv_login_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/shape_home_btn_bg"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="登出"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/home_tv_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/shape_home_btn_bg"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="拨打"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/home_tv_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/shape_home_btn_bg"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="历史"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/home_tv_history_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_home_btn_bg"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="历史tabbar"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/home_et_host"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="https://tky.ketianyun.com" />
+
+        <TextView
+            android:id="@+id/home_tv_switch_url_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/shape_home_btn_bg"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="切换"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

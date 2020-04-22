@@ -25,6 +25,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.xxxx.cc.R;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
+import com.xxxx.cc.callback.CallPhoneBack;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.global.GlobalApplication;
 import com.xxxx.cc.global.HttpRequest;
@@ -181,7 +182,17 @@ public class HistoryActivity extends BaseHttpRequestActivity {
                 ContentBean contentBean = historyResponseBeanList.get(position);
                 KtyCcSdkTool.getInstance().callPhone(mContext, contentBean.getDnis(),
                         contentBean.getContactName(),
-                        "",""
+                        "", "", new CallPhoneBack() {
+                            @Override
+                            public void onSuccess(String callId) {
+
+                            }
+
+                            @Override
+                            public void onFailed(String message) {
+
+                            }
+                        }
                 );
             }
         });

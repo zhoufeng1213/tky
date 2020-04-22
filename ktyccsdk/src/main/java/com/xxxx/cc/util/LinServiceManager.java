@@ -189,13 +189,20 @@ public class LinServiceManager {
             String domain = userBean.getCcUserInfo().getDomain();
             String sipAddressStr = "sip:" + username + '@' + domain;
             String password = userBean.getCcUserInfo().getExtensionPassword();
-            String proxyAddressStr = "sip:" + userBean.getCcServerProxy();
+
             String[] dnsServers = {"223.5.5.5", "114.114.114.114"};
             int expire = 128;
 
+            String proxyAddressStr = "sip:" + userBean.getCcServerProxy();
+            LogUtils.e("proxyAddressStr:"+proxyAddressStr);
+            Address proxyAddress = Factory.instance().createAddress(proxyAddressStr);
+            proxyAddress.setTransport(TransportType.Tcp);
+
             cfg.setIdentityAddress(LinphoneService.getCore().createAddress(sipAddressStr));
-            cfg.setServerAddr(proxyAddressStr);
-            cfg.setRoute(proxyAddressStr);
+//            cfg.setServerAddr(proxyAddressStr);
+            cfg.setServerAddr(proxyAddress.asStringUriOnly());
+//            cfg.setRoute(proxyAddressStr);
+//            cfg.setRoute(proxyAddress.asStringUriOnly());
             cfg.enableRegister(true);
             cfg.setExpires(expire);
 

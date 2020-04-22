@@ -11,10 +11,10 @@
             <option value="$PROJECT_DIR$/ktyccsdk" />
             <option value="$PROJECT_DIR$/ktyccsdktestdemo" />
             <option value="$PROJECT_DIR$/pickerlibrary" />
+            <option value="$PROJECT_DIR$/testdemo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>

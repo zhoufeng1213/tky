@@ -173,7 +173,7 @@ public class CallActivity extends BaseHttpRequestActivity {
             //先请求权限
             requestPermission(phoneNum);
 //            callPhone(phoneNum);
-            getPhoneAddress();
+//            getPhoneAddress();
         } else {
             LogUtils.e("呼叫失败1");
             showToast("呼叫失败");
@@ -181,61 +181,61 @@ public class CallActivity extends BaseHttpRequestActivity {
         }
     }
 
-    private void getPhoneAddress() {
-        //判断网络是否可用
-        if (!NetUtil.isNetworkConnected(this)) {
-            LogUtils.e("没有网络");
-            return;
-        }
-        GetBuilder okHttpUtils = OkHttpUtils.get();
-        okHttpUtils.url(check_phone_url);
-        okHttpUtils.addParams("tel", phoneNum);
-        okHttpUtils.build()
-                .execute(new MyStringCallback() {
-                    @Override
-                    public void onError(okhttp3.Call call, Exception e, int id) {
-                        LogUtils.e("Exception：" + e.getMessage());
-                        layoutPhoneAddress.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        LogUtils.e("response：" + response);
-                        layoutPhoneAddress.setVisibility(View.GONE);
-                        if (response != null && !TextUtils.isEmpty(response.trim())) {
-                            try {
-                                JSONObject json = JSON.parseObject(response);
-                                if (!json.getJSONObject("response").toJSONString().equals("{}")) {
-                                    JSONObject phoneDetail = json.getJSONObject("response").getJSONObject(phoneNum).getJSONObject("detail");
-                                    String province = phoneDetail.getString("province");
-                                    JSONArray area = phoneDetail.getJSONArray("area");
-                                    String city = "";
-                                    String showText = "";
-                                    if (null != area && area.size() > 0) {
-                                        city = area.getJSONObject(0).getString("city");
-                                    }
-                                    if (!TextUtils.isEmpty(province)) {
-                                        showText = province + " " + city;
-                                    } else {
-                                        showText = city;
-                                    }
-
-                                    if (!TextUtils.isEmpty(showText)) {
-                                        layoutPhoneAddress.setVisibility(View.VISIBLE);
-                                        tvPhoneAddress.setText(showText);
-                                    }
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-
-                    }
-                });
-
-    }
+//    private void getPhoneAddress() {
+//        //判断网络是否可用
+//        if (!NetUtil.isNetworkConnected(this)) {
+//            LogUtils.e("没有网络");
+//            return;
+//        }
+//        GetBuilder okHttpUtils = OkHttpUtils.get();
+//        okHttpUtils.url(check_phone_url);
+//        okHttpUtils.addParams("tel", phoneNum);
+//        okHttpUtils.build()
+//                .execute(new MyStringCallback() {
+//                    @Override
+//                    public void onError(okhttp3.Call call, Exception e, int id) {
+//                        LogUtils.e("Exception：" + e.getMessage());
+//                        layoutPhoneAddress.setVisibility(View.GONE);
+//                    }
+//
+//                    @Override
+//                    public void onResponse(String response, int id) {
+//                        LogUtils.e("response：" + response);
+//                        layoutPhoneAddress.setVisibility(View.GONE);
+//                        if (response != null && !TextUtils.isEmpty(response.trim())) {
+//                            try {
+//                                JSONObject json = JSON.parseObject(response);
+//                                if (!json.getJSONObject("response").toJSONString().equals("{}")) {
+//                                    JSONObject phoneDetail = json.getJSONObject("response").getJSONObject(phoneNum).getJSONObject("detail");
+//                                    String province = phoneDetail.getString("province");
+//                                    JSONArray area = phoneDetail.getJSONArray("area");
+//                                    String city = "";
+//                                    String showText = "";
+//                                    if (null != area && area.size() > 0) {
+//                                        city = area.getJSONObject(0).getString("city");
+//                                    }
+//                                    if (!TextUtils.isEmpty(province)) {
+//                                        showText = province + " " + city;
+//                                    } else {
+//                                        showText = city;
+//                                    }
+//
+//                                    if (!TextUtils.isEmpty(showText)) {
+//                                        layoutPhoneAddress.setVisibility(View.VISIBLE);
+//                                        tvPhoneAddress.setText(showText);
+//                                    }
+//                                }
+//
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                        }
+//
+//                    }
+//                });
+//
+//    }
 
     private String[] needPermissions = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -337,6 +337,10 @@ public class CallActivity extends BaseHttpRequestActivity {
                 JSONObject json = (JSONObject) result.getData();
                 mCommunicationRecordResponseBean.setCalldetailId(json.getString("uuid"));
 
+                if(KtyCcSdkTool.callPhoneBack != null){
+                    KtyCcSdkTool.callPhoneBack.onSuccess(json.getString("uuid"));
+                }
+
                 //直接调用更新电话时间
                 if(!TextUtils.isEmpty(customUserId)){
                     LogUtils.e("当前请求的token："+ cacheUserBean.getToken());
@@ -359,6 +363,10 @@ public class CallActivity extends BaseHttpRequestActivity {
         if(makecallInternal.equals(moduleName)) {
             LogUtils.e("呼叫失败1：" + result.toString());
             LogUtils.e("呼叫失败1：code:" + result.getCode() + ",message:" + result.getMessage());
+
+            if(KtyCcSdkTool.callPhoneBack != null){
+                KtyCcSdkTool.callPhoneBack.onFailed(result == null ?"":result.getMessage());
+            }
             if (result.getMessage() != null) {
                 LogUtils.e("呼叫失败 http1");
                 if (result.getCode() == 0 && "timeout".equals(result.getMessage())) {
