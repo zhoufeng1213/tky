@@ -222,7 +222,9 @@ public class KtyCcSdkTool {
 
 
     public static void startLinPhoneService(Context context) {
-        DaemonEnv.startServiceSafelyWithData(context, LinphoneService.class);
+        if (!LinphoneService.isReady()) {
+            DaemonEnv.startServiceSafely(context, LinphoneService.class);
+        }
 //        Intent intent = new Intent(context, LinphoneService.class);
 //        context.startService(intent);
     }

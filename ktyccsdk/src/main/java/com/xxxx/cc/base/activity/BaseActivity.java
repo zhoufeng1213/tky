@@ -195,10 +195,10 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!LinphoneService.isReady()) {
-            Intent intent = new Intent(mContext, LinphoneService.class);
-            mContext.startService(intent);
-        }
+//        if (!LinphoneService.isReady()) {
+//            Intent intent = new Intent(mContext, LinphoneService.class);
+//            mContext.startService(intent);
+//        }
     }
 
     protected void setStatusBar() {
