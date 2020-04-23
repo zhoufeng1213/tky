@@ -2,6 +2,11 @@ package com.xxxx.cc.ui.adapter;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -21,6 +26,8 @@ public class HistoryAdapter extends BaseQuickAdapter<ContentBean, BaseViewHolder
         super(R.layout.item_communication_history_v1, data);
 
     }
+
+    private CommuncationDetailAdapter.OnPlayAudioListener onPlayAudioListener;
 
     @Override
     protected void convert(BaseViewHolder helper, ContentBean item) {
@@ -61,20 +68,45 @@ public class HistoryAdapter extends BaseQuickAdapter<ContentBean, BaseViewHolder
             helper.setTextColor(R.id.tv_call_duration, mContext.getResources().getColor(R.color.c_FDB201));
         }
         if (item.getRecordFile() != null && !item.equals("")) {
+            String recordFile = item.getRecordFile();
+            String reserved5 = item.getReserved5();
+            ImageButton recordBt = helper.itemView.findViewById(R.id.iv_call_record);
+            helper.setGone(R.id.iv_call_record, (!TextUtils.isEmpty(recordFile) && !TextUtils.isEmpty(reserved5)));
+            ProgressBar progressBar = helper.getView(R.id.pb);
+            RelativeLayout rv=helper.itemView.findViewById(R.id.iv_play_rl);
+            rv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onPlayAudioListener != null) {
+                        onPlayAudioListener.onPlayAudio(item,
+                                TextUtils.isEmpty(reserved5) ? recordFile : reserved5,
+                                recordBt, progressBar
+                        );
+                    }
+                }
+            });
+            recordBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onPlayAudioListener != null) {
+                        onPlayAudioListener.onPlayAudio(item,
+                                TextUtils.isEmpty(reserved5) ? recordFile : reserved5,
+                                recordBt, progressBar
+                        );
+                    }
+                }
+            });
 
-//            ImageButton recordBt = helper.itemView.findViewById(R.id.iv_call_record);
-//            recordBt.setVisibility(View.VISIBLE);
-//            if(item.isPlay()){
-//                        recordBt.setImageResource(R.mipmap.pause);
-//                    }else
-//                    {
-//
-//                        recordBt.setImageResource(R.mipmap.play);
-//                    }
-//
+            if (item.isPlay()) {
+                recordBt.setImageResource(R.drawable.ic_svg_voice_pause);
+            } else {
+                recordBt.setImageResource(R.drawable.ic_svg_voice_play);
+            }
         }
 
     }
 
-
+    public void setOnPlayAudioListener(CommuncationDetailAdapter.OnPlayAudioListener onPlayAudioListener) {
+        this.onPlayAudioListener = onPlayAudioListener;
+    }
 }

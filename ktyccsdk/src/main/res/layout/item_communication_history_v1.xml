@@ -113,16 +113,30 @@
                 android:text="通话时长  08:45:21"
                 android:textColor="@color/c_42A6FE"
                 android:textSize="@dimen/textNormal10" />
-
-            <ImageButton
-                android:id="@+id/iv_call_record"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <RelativeLayout
+                android:id="@+id/iv_play_rl"
+                android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/d10"
-                android:layout_gravity="center"
-                android:background="@null"
-                android:visibility="gone"
-                android:src="@mipmap/play" />
+                android:layout_height="wrap_content">
+                <ImageButton
+                    android:id="@+id/iv_call_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    android:background="@null"
+                    android:src="@drawable/ic_svg_voice_play" />
+                <ProgressBar
+                    android:id="@+id/pb"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                   android:layout_centerInParent="true"
+                    android:layout_marginRight="30dp"
+                    android:indeterminateDrawable="@drawable/ic_loading"
+                    android:visibility="gone"
+                    tools:ignore="UnusedAttribute" />
+            </RelativeLayout>
+
 
 
         </LinearLayout>

@@ -211,7 +211,8 @@ public class KtyCcSdkTool {
         try {
             Object objectBean = SharedPreferencesUtil.getObjectBean(context, USERBEAN_SAVE_TAG, UserBean.class);
             if (objectBean != null) {
-                context.startActivity(new Intent(context, HistoryActivity.class));
+//                context.startActivity(new Intent(context, HistoryActivity.class));
+                ToastUtil.showToast(context, "go historyActivity");
             } else {
                 ToastUtil.showToast(context, "请登录");
             }
