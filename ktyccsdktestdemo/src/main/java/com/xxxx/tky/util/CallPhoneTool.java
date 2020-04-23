@@ -90,6 +90,11 @@ public class CallPhoneTool {
                             public void onFailed(String message) {
 
                             }
+
+                            @Override
+                            public void watchPhoneStatus(int status) {
+
+                            }
                         }
                 );
 

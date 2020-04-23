@@ -107,6 +107,65 @@ public class KtyCcNetUtil {
                 });
     }
 
+    public static void loginBySdk(Context context, String userName, String pwd, LoginCallBack loginCallBack) {
+        if (loginCallBack == null) {
+            ToastUtil.showToast(context, "loginCallBack 不能为null");
+            return;
+        }
+        //判断网络是否可用
+        if (!NetUtil.isNetworkConnected(context)) {
+            loginCallBack.onFailed(ErrorCode.NOT_NET_ERROR, "网络连接失败，请检查网络");
+            return;
+        }
+        PostStringBuilder okHttpUtils = OkHttpUtils.postString();
+        okHttpUtils.url(Constans.BASE_URL + HttpRequest.Login.postLoginUrl);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", userName);
+        jsonObject.put("password", pwd);
+        jsonObject.put("userAgent", SystemUtils.getDeviceModel());
+        jsonObject.put("appVersion", PackageUtils.getVersionName(context));
+        jsonObject.put("os", "Android_SDK");
+        jsonObject.put("osVersion", SystemUtils.getOSVersion());
+        LogUtils.e("url:" + HttpRequest.Login.postLoginUrl + "，Params:" + jsonObject.toString());
+        okHttpUtils.content(jsonObject.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new MyStringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                        loginCallBack.onFailed(baseBean.getCode(), baseBean.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        if (!TextUtils.isEmpty(response)) {
+                            //把用户数据保存起来
+                            try {
+                                BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
+                                if (baseBean != null) {
+                                    if (baseBean.isOk()) {
+                                        dealLoginSuccess(context, baseBean);
+                                        loginCallBack.onSuccess(ErrorCode.SUCCESS, "登录成功");
+                                        //判断是否已经启动service了
+//                                        dealLinkLinPhone(context,baseBean,loginCallBack);
+
+                                    } else {
+                                        loginCallBack.onFailed(baseBean.getCode(), baseBean.getMessage());
+                                    }
+                                } else {
+                                    loginCallBack.onFailed(ErrorCode.INTERNAL_SERVER_ERROR, "服务器错误");
+                                }
+                            } catch (Exception e) {
+                                loginCallBack.onFailed(ErrorCode.INTERNAL_SERVER_ERROR, "服务器错误");
+                            }
+                        } else {
+                            loginCallBack.onFailed(ErrorCode.INTERNAL_SERVER_ERROR, "服务器错误");
+                        }
+                    }
+                });
+    }
+
 
     private static void dealLoginSuccess(Context context, BaseBean baseBean) {
         UserBean userBean = JSON.parseObject(baseBean.getData().toString(), UserBean.class);

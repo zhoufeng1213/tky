@@ -9,4 +9,5 @@ public interface CallPhoneBack {
     public void onSuccess(String callId);
 
     public void onFailed(String message);
+    public void watchPhoneStatus(int status);
 }

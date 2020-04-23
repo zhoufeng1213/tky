@@ -492,6 +492,11 @@ public class CallActivity extends BaseHttpRequestActivity {
             LogUtils.e("CallActivity, onCallStateChanged, CallState:" + state.name() + ", message:" + message);
             if (state == Call.State.End) {
                 LogUtils.e("CallActivity, onCallStateChanged, 进入了End2");
+
+                if(KtyCcSdkTool.callPhoneBack != null){
+                    KtyCcSdkTool.callPhoneBack.watchPhoneStatus(2);
+                }
+
                 hook = true;
                 isReturnCall = false;
                 if (floatingImageDisplayService != null) {

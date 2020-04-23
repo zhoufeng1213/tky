@@ -110,6 +110,14 @@ public class KtyCcSdkTool {
         DbUtil.clearDb();
     }
 
+    public void clearPhone(Context context){
+        Object objectBean = SharedPreferencesUtil.getObjectBean(context, USERBEAN_SAVE_TAG, UserBean.class);
+        if (objectBean != null) {
+            cacheUserBean = (UserBean) objectBean;
+            LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
+        }
+    }
+
     /**
      * 拨打电话
      */

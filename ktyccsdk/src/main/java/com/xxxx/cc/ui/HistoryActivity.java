@@ -192,6 +192,11 @@ public class HistoryActivity extends BaseHttpRequestActivity {
                             public void onFailed(String message) {
 
                             }
+
+                            @Override
+                            public void watchPhoneStatus(int status) {
+
+                            }
                         }
                 );
             }

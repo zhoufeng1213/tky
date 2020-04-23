@@ -15,10 +15,10 @@ auto_net_state_mon=1
 auto_answer_replacing_calls=1
 ping_with_options=0
 use_cpim=1
-in_call_timeout=60
+in_call_timeout=0
 
 [rtp]
-nortp_timeout=60
+nortp_timeout=0
 
 [video]
 displaytype=MSAndroidTextureDisplay

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 
 import com.sdk.keepbackground.work.AbsWorkService;
 import com.xxxx.cc.R;
+import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.util.LogUtils;
 
 import org.linphone.core.Call;
@@ -94,6 +95,10 @@ public class LinphoneService extends AbsWorkService {
                     CallParams params = getCore().createCallParams(call);
                     params.enableVideo(false);
                     call.acceptWithParams(params);
+
+                    if(KtyCcSdkTool.callPhoneBack != null){
+                        KtyCcSdkTool.callPhoneBack.watchPhoneStatus(1);
+                    }
                 } else if (state == Call.State.Connected) {
 
                 }

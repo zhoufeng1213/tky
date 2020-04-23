@@ -21,7 +21,7 @@ public class SdkTool {
     }
 
     public static void login(Context context, String userName, String pwd, LoginCallBack loginCallBack){
-        KtyCcNetUtil.login(context, userName, pwd, loginCallBack);
+        KtyCcNetUtil.loginBySdk(context, userName, pwd, loginCallBack);
     }
 
     public static void callPhone(Context mContext, String phoneNum, String userName, String headUrl, CallPhoneBack callPhoneBack){
@@ -38,6 +38,7 @@ public class SdkTool {
 
     public static void unRegister(Context context){
         KtyCcSdkTool.getInstance().unRegister(context);
+        KtyCcSdkTool.getInstance().clearPhone(context);
     }
 
 }

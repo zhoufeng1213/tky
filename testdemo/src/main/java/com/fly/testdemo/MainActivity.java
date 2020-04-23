@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.xxxx.cc.callback.CallPhoneBack;
 import com.xxxx.cc.callback.LoginCallBack;
 import com.xxxx.cc.global.SdkTool;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -101,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFailed(String message) {
 //                        LogUtils.e("SdkTool","拨打电话失败:");
+                    }
+
+                    @Override
+                    public void watchPhoneStatus(int status) {
+//                        LogUtils.e("当前拨打电话的状态:"+status );
                     }
                 }
         );
