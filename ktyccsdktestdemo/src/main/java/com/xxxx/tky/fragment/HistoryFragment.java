@@ -713,7 +713,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
                 case 258:
                     Bundle data = msg.getData();
                     long progress = data.getLong("PROGRESS");
-                    int duration = data.getInt("DURATION");
+                    long duration = data.getLong("DURATION");
                     seekBar.setMax(totalSec);
                     if (progress > 0L && totalSec > 0) {
                         progress /= 1000L;
