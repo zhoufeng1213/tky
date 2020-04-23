@@ -37,8 +37,8 @@ public class SdkTool {
     }
 
     public static void unRegister(Context context){
-        KtyCcSdkTool.getInstance().unRegister(context);
         KtyCcSdkTool.getInstance().clearPhone(context);
+        KtyCcSdkTool.getInstance().unRegister(context);
     }
 
 }
