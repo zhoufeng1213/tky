@@ -67,11 +67,12 @@ public class HistoryAdapter extends BaseQuickAdapter<ContentBean, BaseViewHolder
             helper.setImageResource(R.id.iv_call_photo, R.mipmap.icon_call_fail);
             helper.setTextColor(R.id.tv_call_duration, mContext.getResources().getColor(R.color.c_FDB201));
         }
-        if (item.getRecordFile() != null && !item.equals("")) {
+        helper.setGone(R.id.iv_call_record,false);
+        if (item.getRecordFile() != null && !item.getReserved5().equals("")) {
             String recordFile = item.getRecordFile();
             String reserved5 = item.getReserved5();
-            ImageButton recordBt = helper.itemView.findViewById(R.id.iv_call_record);
             helper.setGone(R.id.iv_call_record, (!TextUtils.isEmpty(recordFile) && !TextUtils.isEmpty(reserved5)));
+            ImageButton recordBt = helper.itemView.findViewById(R.id.iv_call_record);
             ProgressBar progressBar = helper.getView(R.id.pb);
             RelativeLayout rv=helper.itemView.findViewById(R.id.iv_play_rl);
             rv.setOnClickListener(new View.OnClickListener() {
