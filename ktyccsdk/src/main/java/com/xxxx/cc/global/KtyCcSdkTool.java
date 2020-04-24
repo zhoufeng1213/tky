@@ -76,7 +76,7 @@ public class KtyCcSdkTool {
     public void initKtyCcSdk(Context context) {
         initNetConfig();
         DbUtil.init(context);
-        startLinPhoneService(context);
+//        startLinPhoneService(context);
     }
 
     private void initNetConfig() {

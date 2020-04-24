@@ -10,6 +10,7 @@ import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.model.ContentBean;
 import com.xxxx.cc.model.FileDownloadVO;
 import com.xxxx.cc.model.QueryCustomPersonBean;
+import com.xxxx.cc.util.TextUtil;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -176,31 +177,39 @@ public class DbUtil {
         Collections.sort(list, new Comparator<QueryCustomPersonBean>() {
             @Override
             public int compare(QueryCustomPersonBean o1, QueryCustomPersonBean o2) {
-                int pinyinNum1 = 0;
-                try {
-                    pinyinNum1 = Integer.valueOf(o1.getPinyin());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-                int pinyinNum2 = 0;
-                try {
-                    pinyinNum2 = Integer.valueOf(o2.getPinyin());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if(!TextUtils.isEmpty(o1.getPinyin()) && !TextUtils.isEmpty(o2.getPinyin())
-                && (o1.getPinyin().substring(0,1)).equals(o2.getPinyin().substring(0,1))
-                ){
-                    if(pinyinNum1 == 0 && pinyinNum2 == 0){
-                        return o1.getPinyin().compareTo(o2.getPinyin());
-                    }
-                    return pinyinNum1- pinyinNum2;
-                }
-                return o1.getPinyin().compareTo(o2.getPinyin());
-
+               return compareQueryCustomPerson(o1,o2);
             }
         });
         return list;
+    }
+
+
+    private static int compareQueryCustomPerson(QueryCustomPersonBean o1, QueryCustomPersonBean o2){
+        int pinyinNum1 = 0;
+        if(TextUtil.isNumeric(o1.getPinyin())){
+            try {
+                pinyinNum1 = Integer.valueOf(o1.getPinyin());
+            } catch (Exception e) {
+//                    e.printStackTrace();
+            }
+        }
+        int pinyinNum2 = 0;
+        if(TextUtil.isNumeric(o2.getPinyin())){
+            try {
+                pinyinNum2 = Integer.valueOf(o2.getPinyin());
+            } catch (Exception e) {
+//                    e.printStackTrace();
+            }
+        }
+        if(!TextUtils.isEmpty(o1.getPinyin()) && !TextUtils.isEmpty(o2.getPinyin())
+                && (o1.getPinyin().substring(0,1)).equals(o2.getPinyin().substring(0,1))
+        ){
+            if(pinyinNum1 == 0 && pinyinNum2 == 0){
+                return o1.getPinyin().compareTo(o2.getPinyin());
+            }
+            return pinyinNum1- pinyinNum2;
+        }
+        return o1.getPinyin().compareTo(o2.getPinyin());
     }
 
 
@@ -235,27 +244,7 @@ public class DbUtil {
         Collections.sort(list, new Comparator<QueryCustomPersonBean>() {
             @Override
             public int compare(QueryCustomPersonBean o1, QueryCustomPersonBean o2) {
-                int pinyinNum1 = 0;
-                try {
-                    pinyinNum1 = Integer.valueOf(o1.getPinyin());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-                int pinyinNum2 = 0;
-                try {
-                    pinyinNum2 = Integer.valueOf(o2.getPinyin());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if(!TextUtils.isEmpty(o1.getPinyin()) && !TextUtils.isEmpty(o2.getPinyin())
-                        && (o1.getPinyin().substring(0,1)).equals(o2.getPinyin().substring(0,1))
-                ){
-                    if(pinyinNum1 == 0 && pinyinNum2 == 0){
-                        return o1.getPinyin().compareTo(o2.getPinyin());
-                    }
-                    return pinyinNum1- pinyinNum2;
-                }
-                return o1.getPinyin().compareTo(o2.getPinyin());
+                return compareQueryCustomPerson(o1,o2);
 
             }
         });

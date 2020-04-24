@@ -175,9 +175,9 @@ public class KtyCcNetUtil {
         dealCache(context, userBean);
         dealCustomCache(context, userBean);
         //去配置linphone的参数
-        if (!LinphoneService.isReady()) {
-            KtyCcSdkTool.startLinPhoneService(context);
-        }
+//        if (!LinphoneService.isReady()) {
+//            KtyCcSdkTool.startLinPhoneService(context);
+//        }
     }
 
 

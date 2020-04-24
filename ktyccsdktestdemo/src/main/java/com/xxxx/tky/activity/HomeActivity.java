@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sdk.keepbackground.work.DaemonEnv;
 import com.shizhefei.view.indicator.FixedIndicatorView;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 import com.shizhefei.view.indicator.transition.OnTransitionTextListener;
@@ -197,7 +198,9 @@ public class HomeActivity extends BaseTransitionActivity {
                 firstTime = secondTime;
                 return true;
             } else {
+
                 finish();
+                DaemonEnv.sendStopWorkBroadcast(this);
                 LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, true);
                 return false;
             }

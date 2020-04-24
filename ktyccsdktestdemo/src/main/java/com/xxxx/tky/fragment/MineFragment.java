@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.flyco.roundview.RoundTextView;
+import com.sdk.keepbackground.work.DaemonEnv;
 import com.xxxx.cc.base.fragment.BaseFragment;
 import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.global.PackageUtils;
@@ -93,9 +94,9 @@ public class MineFragment extends BaseFragment {
             LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
             KtyCcSdkTool.getInstance().unRegister(mActivity);
             startActivity(LoginActivity.class);
+            DaemonEnv.sendStopWorkBroadcast(mActivity);
             if (getActivity() != null) {
                 getActivity().finish();
-
             }
         } else if (i == R.id.feedback_layout) {
 

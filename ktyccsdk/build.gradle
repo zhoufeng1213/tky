@@ -43,7 +43,7 @@ android {
         userOrg = 'fengjianzhu1213'
         groupId = 'com.kty.sdk'
         artifactId = 'ktycc'
-        publishVersion = '1.0.11'
+        publishVersion = '1.0.12'
         archivesPath = '../build/outputs/aar' //指定将要上传的压缩包路径，如果不写则默认上传系统生成的jar和aar
         archivesName = 'ktyccsdk-release'  //指定将要上传的压缩包所含的关键字，如果不写，默认过滤artifactId
         desc = 'ktycc'

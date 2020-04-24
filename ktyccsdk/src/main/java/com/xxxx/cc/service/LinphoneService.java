@@ -200,7 +200,7 @@ public class LinphoneService extends AbsWorkService {
 
     @Override
     public void stopWork() {
-
+        mIsRunning = false;
     }
 
     @Override
@@ -215,7 +215,8 @@ public class LinphoneService extends AbsWorkService {
 
     @Override
     public void onServiceKilled() {
-        System.exit(0);
+        mIsRunning = false;
+//        System.exit(0);
     }
 
     @Override
