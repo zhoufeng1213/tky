@@ -36,13 +36,13 @@
 
     </RelativeLayout>
 
-    <com.lqr.recyclerview.LQRRecyclerView
-        android:id="@+id/recycler_view"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_new"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:rv_divider_size="@dimen/divider"
-        app:rv_divider_color="@color/line_background" />
-
+        app:rv_divider_color="@color/line_background"
+        />
 
     <TextView
         android:id="@+id/empty_text_view"

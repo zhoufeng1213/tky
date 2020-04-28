@@ -13,7 +13,9 @@
         android:layout_centerVertical="true"
         android:contentDescription="@string/app_name"
         android:paddingLeft="@dimen/d15"
-        android:paddingRight="@dimen/d15"
+        android:paddingRight="@dimen/d25"
+        android:paddingTop="@dimen/d8"
+        android:paddingBottom="@dimen/d8"
         android:src="@drawable/fanhui" />
 
 

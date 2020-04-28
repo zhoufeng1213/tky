@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.xxxx.cc.model.ContentBean;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.tky.R;
 
@@ -25,6 +26,7 @@ public class CallHistoryAdapter extends BaseQuickAdapter<ContentBean, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder helper, ContentBean bean) {
+        LogUtils.e("nover...");
         String createTime = bean.getCreateTime();
         if (TextUtils.isEmpty(createTime)) {
             createTime = "";

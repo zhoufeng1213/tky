@@ -110,7 +110,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
             personBeanData = getIntent().getStringExtra("data");
             if (!TextUtils.isEmpty(personBeanData)) {
                 mFragments.add(CommunicationRecordFragment.newInstance(personBeanData));
-                mFragments.add(ContactHistoryFragment.newInstance(personBeanData));
+               mFragments.add(ContactHistoryFragment.newInstance(personBeanData));
                 queryCustomPersonBean = JSON.parseObject(personBeanData, QueryCustomPersonBean.class);
                 if (queryCustomPersonBean != null) {
                     setViewData();

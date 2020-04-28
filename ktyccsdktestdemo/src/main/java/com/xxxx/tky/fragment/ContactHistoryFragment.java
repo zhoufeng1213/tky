@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -32,8 +33,8 @@ import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
  * @moduleName
  */
 public class ContactHistoryFragment extends BaseFragment {
-    @BindView(R.id.recycler_view)
-    LQRRecyclerView recyclerView;
+    @BindView(R.id.recycler_view_new)
+    RecyclerView recyclerViewNew;
     @BindView(R.id.empty_text_view)
     TextView emptyTextView;
 
@@ -48,6 +49,7 @@ public class ContactHistoryFragment extends BaseFragment {
         bundle.putString("data", data);
         fragment.setArguments(bundle);
         return fragment;
+
     }
 
     @Override
@@ -63,7 +65,7 @@ public class ContactHistoryFragment extends BaseFragment {
             cacheUserBean = (UserBean) objectBean;
         }
         try {
-            if (getArguments() != null && cacheUserBean != null && recyclerView != null) {
+            if (getArguments() != null && cacheUserBean != null && recyclerViewNew != null) {
                 String data = getArguments().getString("data");
                 if (!TextUtils.isEmpty(data)) {
                     queryCustomPersonBean = JSON.parseObject(data, QueryCustomPersonBean.class);
@@ -71,14 +73,14 @@ public class ContactHistoryFragment extends BaseFragment {
                         List<ContentBean> list = DbUtil.queryPhoneRecordListByHistory(cacheUserBean.getUserId(),
                                 queryCustomPersonBean.getRealMobileNumber(), "OUTBOUND");
                         if (list != null && list.size() > 0) {
-                            recyclerView.setVisibility(View.VISIBLE);
+
                             emptyTextView.setVisibility(View.GONE);
                             historyAdapter = new CallHistoryAdapter(list);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-                            recyclerView.setAdapter(historyAdapter);
-
+                            recyclerViewNew.setLayoutManager(new LinearLayoutManager(mContext));
+                            recyclerViewNew.setAdapter(historyAdapter);
+                            recyclerViewNew.setVisibility(View.VISIBLE);
                         } else {
-                            recyclerView.setVisibility(View.GONE);
+                            recyclerViewNew.setVisibility(View.GONE);
                             emptyTextView.setVisibility(View.VISIBLE);
                         }
                     }
@@ -87,6 +89,7 @@ public class ContactHistoryFragment extends BaseFragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
 
