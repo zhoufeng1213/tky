@@ -231,7 +231,7 @@ public class KtyCcSdkTool {
 
 
     public static void startLinPhoneService(Context context) {
-        if (!LinphoneService.isReady()) {
+        if (!LinphoneService.isReady() && context != null) {
             DaemonEnv.startServiceSafely(context, LinphoneService.class);
         }
 //        Intent intent = new Intent(context, LinphoneService.class);
