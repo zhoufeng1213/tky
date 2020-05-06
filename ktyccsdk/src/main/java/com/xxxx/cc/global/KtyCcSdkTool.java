@@ -22,6 +22,7 @@ import com.zhy.http.okhttp.cookie.CookieJarImpl;
 import com.zhy.http.okhttp.cookie.store.MemoryCookieStore;
 import com.zhy.http.okhttp.https.HttpsUtils;
 
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 import org.linphone.core.ProxyConfig;
@@ -88,6 +89,7 @@ public class KtyCcSdkTool {
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
 //                .cookieJar(cookieJar)
                 .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
+                .hostnameVerifier(new AllowAllHostnameVerifier())
                 //其他配置
                 .build();
         OkHttpUtils.initClient(okHttpClient);

@@ -209,11 +209,14 @@ ImageView settingImage;
                                     @Override
                                     public void onFailed(int code, String message) {
                                         dismissDialog();
+                                        if(!TextUtils.isEmpty(message)){
+                                            if (code == 45003)
+                                                Toast.makeText(mContext, "密码错误", Toast.LENGTH_SHORT).show();
+                                            else
+                                                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                                        }
 //                                                Toast.makeText(mContext, TextUtils.isEmpty(message) ? "登录失败，原因无" : message, Toast.LENGTH_SHORT).show();
-                                        if (code == 45003)
-                                            Toast.makeText(mContext, "密码错误", Toast.LENGTH_SHORT).show();
-                                        else
-                                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+
                                     }
                                 });
                     } else {

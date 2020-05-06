@@ -74,8 +74,14 @@ public class KtyCcNetUtil {
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                        loginCallBack.onFailed(baseBean.getCode(), baseBean.getMessage());
+                        try {
+                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                            loginCallBack.onFailed(baseBean.getCode(), baseBean.getMessage());
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                            loginCallBack.onFailed(-11111,"");
+                        }
+
                     }
 
                     @Override
@@ -133,8 +139,12 @@ public class KtyCcNetUtil {
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                        loginCallBack.onFailed(baseBean.getCode(), baseBean.getMessage());
+                        try {
+                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                            loginCallBack.onFailed(baseBean.getCode(), baseBean.getMessage());
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
                     }
 
                     @Override
@@ -168,12 +178,16 @@ public class KtyCcNetUtil {
 
 
     private static void dealLoginSuccess(Context context, BaseBean baseBean) {
-        UserBean userBean = JSON.parseObject(baseBean.getData().toString(), UserBean.class);
-        LogUtils.e(JSON.toJSONString(userBean));
-        SharedPreferencesUtil.saveObjectBean(context, userBean, USERBEAN_SAVE_TAG);
-        DbUtil.init(context);
-        dealCache(context, userBean);
-        dealCustomCache(context, userBean);
+        try {
+            UserBean userBean = JSON.parseObject(baseBean.getData().toString(), UserBean.class);
+            LogUtils.e(JSON.toJSONString(userBean));
+            SharedPreferencesUtil.saveObjectBean(context, userBean, USERBEAN_SAVE_TAG);
+            DbUtil.init(context);
+            dealCache(context, userBean);
+            dealCustomCache(context, userBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //去配置linphone的参数
 //        if (!LinphoneService.isReady()) {
 //            KtyCcSdkTool.startLinPhoneService(context);

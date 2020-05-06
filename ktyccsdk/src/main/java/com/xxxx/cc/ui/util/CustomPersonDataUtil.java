@@ -105,7 +105,11 @@ public class CustomPersonDataUtil {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        dealResult(response);
+                        try {
+                            dealResult(response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }
