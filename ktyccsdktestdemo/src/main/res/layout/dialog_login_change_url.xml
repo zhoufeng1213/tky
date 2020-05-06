@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    <!--删除通用 暂时没有封装类-->
+
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:rv_backgroundColor="@color/white"
+        android:orientation="vertical"
+        app:rv_cornerRadius="@dimen/d4"
+        android:paddingLeft="@dimen/d20"
+        android:paddingRight="@dimen/d20">
+
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="切换地址"
+            android:layout_marginTop="@dimen/d15"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:textColor="@color/c_353841"
+            android:textSize="@dimen/textNormal16"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+
+        <com.xw.repo.XEditText
+            android:id="@+id/phone_num_edit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d45"
+            android:layout_marginLeft="@dimen/d25"
+            android:layout_marginRight="@dimen/d25"
+            android:layout_marginTop="@dimen/d15"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/textNormal16"
+            android:hint="输入地址"
+            android:background="@null"
+            android:inputType="text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/color_divide"
+            android:layout_marginRight="@dimen/d25"
+            android:layout_marginLeft="@dimen/d25"
+            android:layout_marginBottom="@dimen/d5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/d40"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:layout_marginTop="@dimen/d5"
+            android:layout_marginBottom="@dimen/d5"
+            android:gravity="center">
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/dialog_confirm"
+                android:layout_width="@dimen/d100"
+                android:layout_height="match_parent"
+                android:minHeight="@dimen/d30"
+                android:layout_margin="@dimen/d10"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/white"
+                app:rv_cornerRadius="@dimen/d4"
+                app:rv_backgroundColor="@color/c_2f9cf6" />
+
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/dialog_cancel"
+                android:layout_width="@dimen/d100"
+                android:layout_height="match_parent"
+                android:minHeight="@dimen/d30"
+                android:gravity="center"
+                android:layout_margin="@dimen/d10"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                app:rv_cornerRadius="@dimen/d4"
+                app:rv_backgroundColor="@color/c_f23b3b" />
+
+        </LinearLayout>
+
+
+    </com.flyco.roundview.RoundLinearLayout>
+
+
+</LinearLayout>

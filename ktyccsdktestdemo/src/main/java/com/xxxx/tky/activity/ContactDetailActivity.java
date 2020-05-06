@@ -80,5 +80,13 @@ public class ContactDetailActivity extends BaseActivity {
         }
     }
 
+ @OnClick({R.id.back_close})
+    public void backClose(View view) {
+        if (AntiShakeUtils.isInvalidClick(view)) {
+            return;
+        }
+       finish();
+    }
+
 
 }

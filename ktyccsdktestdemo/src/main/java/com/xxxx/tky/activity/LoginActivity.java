@@ -21,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import com.xxxx.cc.global.KtyCcNetUtil;
 import com.xxxx.cc.global.KtyCcOptionsUtil;
 import com.xxxx.cc.global.PackageUtils;
 import com.xxxx.cc.model.BaseBean;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.tky.BuildConfig;
@@ -85,6 +87,8 @@ public class LoginActivity extends BaseHttpRequestActivity {
     TextView homeTvSwitchUrlHost;
     @BindView(R.id.tv_app_version)
     TextView tvVersion;
+@BindView(R.id.setting_image)
+ImageView settingImage;
 
     private RxPermissions rxPermissions;
 
@@ -138,6 +142,11 @@ public class LoginActivity extends BaseHttpRequestActivity {
         if (!SharedPreferencesUtil.getBoolean(getApplicationContext(), Constans.AGREE_PROTOCOL_TAG)) {
             showAgreeDialog();
         } else {
+            //判断是否有地址
+            String address = SharedPreferencesUtil.getValue(mContext, Constans.TKY_CHANGE_URL);
+            if(!TextUtils.isEmpty(address)){
+                KtyCcOptionsUtil.switchHostOption(mContext, address);
+            }
             //先检测更新
             baseGetPresenter.presenterBusiness(
                     HttpRequest.Version.checkVersion + BuildConfig.VERSION_NAME, false);
@@ -227,6 +236,64 @@ public class LoginActivity extends BaseHttpRequestActivity {
 
         KtyCcOptionsUtil.switchHostOption(mContext, homeEtHost.getText().toString().trim());
     }
+
+    @OnClick(R.id.setting_image)
+    public void settingImage(View view) {
+        if (AntiShakeUtils.isInvalidClick(view)) {
+            return;
+        }
+        //弹出输入网址
+        showChangeUrlDialog();
+
+    }
+
+    private  SweetAlertDialog sweetAlertDialog;
+    /**
+     * 显示call自己
+     */
+    private void showChangeUrlDialog() {
+        sweetAlertDialog = new SweetAlertDialog(mContext);
+        View dialogView = LayoutInflater.from(mContext)
+                .inflate(R.layout.dialog_login_change_url, null, false);
+        sweetAlertDialog.setCustomView(dialogView);
+        sweetAlertDialog.setCanceledOnTouchOutside(true);
+        sweetAlertDialog.setCancelable(true);
+
+        RoundTextView dialogConfirm = dialogView.findViewById(R.id.dialog_confirm);
+        RoundTextView dialogCancel = dialogView.findViewById(R.id.dialog_cancel);
+
+        EditText editText = dialogView.findViewById(R.id.phone_num_edit);
+        String address = SharedPreferencesUtil.getValue(mContext, Constans.TKY_CHANGE_URL);
+        if (!TextUtils.isEmpty(address)) {
+            LogUtils.e("当前保存的请求地址：" + address);
+            editText.setText(address);
+        }else{
+            editText.setText(Constans.BASE_URL);
+        }
+
+        dialogConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sweetAlertDialog != null) {
+                    sweetAlertDialog.dismiss();
+                }
+                KtyCcOptionsUtil.switchHostOption(mContext, editText.getText().toString().trim());
+                SharedPreferencesUtil.save(mContext,Constans.TKY_CHANGE_URL,editText.getText().toString().trim());
+            }
+        });
+
+        dialogCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sweetAlertDialog != null) {
+                    sweetAlertDialog.dismiss();
+                }
+            }
+        });
+
+        sweetAlertDialog.show();
+    }
+
 
     @Override
     public void dealHttpRequestFail(String moduleName, BaseBean result) {

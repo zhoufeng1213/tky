@@ -160,30 +160,38 @@ public class BaseGetPresenter {
                     public void onError(Call call, Exception e, int id) {
                         mActivity.dismissDialog();
                         LogUtils.e("Message:" + e.getMessage());
-                        if (e != null) {
-                            BaseBean baseBean;
-                            try {
-                                baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                            } catch (JSONException exception) {
-                                baseBean = new BaseBean();
-                                baseBean.setMessage(e.getMessage());
+                        try {
+                            if (e != null) {
+                                BaseBean baseBean;
+                                try {
+                                    baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                                } catch (JSONException exception) {
+                                    baseBean = new BaseBean();
+                                    baseBean.setMessage(e.getMessage());
+                                }
+
+
+                                mActivity.dealHttpRequestFail(moduleName, baseBean);
+
                             }
-
-
-                            mActivity.dealHttpRequestFail(moduleName, baseBean);
-
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
                         }
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
                         mActivity.dismissDialog();
-                        BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
-                        if (baseBean.isOk()) {
-                            mActivity.dealHttpRequestResult(moduleName, baseBean, response);
-                        } else {
-//                            mActivity.showToast(baseBean.getResMsg() != null ? baseBean.getResMsg() : "请检查网络连接");
-                            mActivity.dealHttpRequestFail(moduleName, baseBean);
+                        try {
+                            BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
+                            if (baseBean.isOk()) {
+                                mActivity.dealHttpRequestResult(moduleName, baseBean, response);
+                            } else {
+    //                            mActivity.showToast(baseBean.getResMsg() != null ? baseBean.getResMsg() : "请检查网络连接");
+                                mActivity.dealHttpRequestFail(moduleName, baseBean);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                 });

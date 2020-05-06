@@ -172,10 +172,14 @@ public class BasePostPresenter {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         mActivity.dismissDialog();
-                        if (e != null) {
-                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                            mActivity.dealHttpRequestFail(moduleName, baseBean);
+                        try {
+                            if (e != null) {
+                                BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                                mActivity.dealHttpRequestFail(moduleName, baseBean);
 
+                            }
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
                         }
 
                     }
@@ -240,10 +244,14 @@ public class BasePostPresenter {
                     public void onError(Call call, Exception e, int id) {
                         Log.e("tag", "e.getMessage():" + e.getMessage());
                         mActivity.dismissDialog();
-                        if (e != null) {
-                            BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
-                            mActivity.dealHttpRequestFail(moduleName, baseBean);
+                        try {
+                            if (e != null) {
+                                BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                                mActivity.dealHttpRequestFail(moduleName, baseBean);
 
+                            }
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
                         }
                     }
 

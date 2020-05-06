@@ -21,4 +21,6 @@ public class Constans {
     public static final int COMMON_LOAD_PAGE_SIZE = 300;
     public static final String SP_DEFINED_ITEM_KEY = "sp_defined_item_key";
 
+    public static final String TKY_CHANGE_URL = "TKY_CHANGE_URL";
+
 }
