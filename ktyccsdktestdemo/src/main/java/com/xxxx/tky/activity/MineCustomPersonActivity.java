@@ -258,7 +258,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
 //            List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanList(page);
             List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllList();
             if (list != null && list.size() > 0) {
-                LogUtils.e("我的客户："+new Gson().toJson(list));
+//                LogUtils.e("我的客户："+new Gson().toJson(list));
                 historyResponseBeanList.addAll(list);
                 mAdapter.notifyDataSetChanged();
             }
@@ -343,7 +343,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                             //直接去数据库重新查找数据
 //                            List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanList(page);
                             List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllList();
-                            LogUtils.i("tag", "数据库查询到的： " + list.size());
+//                            LogUtils.i("tag", "数据库查询到的： " + list.size());
                             historyResponseBeanList.clear();
                             mAdapter.notifyDataSetChanged();
                             if (list != null && list.size() > 0) {
@@ -353,7 +353,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                         } else {
                             historyResponseBeanList.addAll(historyResponseBean.getPage().getContent());
 //                            showMineCustomPersonBeanList.addAll(getShowMineCustomPersonBeanList(historyResponseBean.getPage().getContent()));
-                            LogUtils.i("tag", "后台返回的： " + historyResponseBeanList);
+//                            LogUtils.i("tag", "后台返回的： " + historyResponseBeanList);
                         }
                         mAdapter.notifyDataSetChanged();
                     }
@@ -430,7 +430,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
         }
         if (!TextUtils.isEmpty(searchEdit.getText().toString().trim())) {
             List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllListByNameOrPhone(searchEdit.getText().toString().trim());
-            LogUtils.e("查询的数组："+new Gson().toJson(list));
+//            LogUtils.e("查询的数组："+new Gson().toJson(list));
             if (list != null && list.size() > 0) {
                 historyResponseBeanList.clear();
                 mAdapter.notifyDataSetChanged();

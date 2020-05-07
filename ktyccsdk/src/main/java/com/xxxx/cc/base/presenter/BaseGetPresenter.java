@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.global.Constans;
+import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.NetUtil;
@@ -112,7 +113,12 @@ public class BaseGetPresenter {
 
                         @Override
                         public void onResponse(String response, int id) {
-                            Log.e("tag", "onResponse:" + response);
+                            if(!HttpRequest.Contant.getSubItem.equals(moduleName)
+                            && !HttpRequest.Contant.mineContacts.equals(moduleName)
+                            ){
+                                Log.e("tag", "onResponse:" + response);
+                            }
+
                             try {
                                 mActivity.dismissDialog();
                                 BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
