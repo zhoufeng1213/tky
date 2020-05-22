@@ -205,7 +205,6 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                     helper.setText(R.id.user_name, item.getName());
                     helper.setText(R.id.update_time, TimeUtils.stringToDate_MD_HMS(item.getUpdatetime()));
                     helper.setText(R.id.phone_num, item.getRealMobileNumber());
-                    helper.setText(R.id.last_call_time, TimeUtils.stringToDate_MD_HMS(item.getLastCallTime()));
 
                     TextView letter = helper.getView(R.id.tvLetter);
                     letter.setText(item.getLetters());
@@ -225,6 +224,8 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                             }
                         }
                     }
+
+                    helper.setText(R.id.last_call_time, TimeUtils.stringToDate_MD_HMS(item.getLastCallTime()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
