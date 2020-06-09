@@ -31,8 +31,17 @@ public class UserBean {
     private String username;
     private String mobile;
     private String email;
+    private Integer siteEnableAppSipCall;
     private List<String> sitePermisson;
     private List<String> userPermission;
+
+    public Integer getSiteEnableAppSipCall() {
+        return siteEnableAppSipCall;
+    }
+
+    public void setSiteEnableAppSipCall(Integer siteEnableAppSipCall) {
+        this.siteEnableAppSipCall = siteEnableAppSipCall;
+    }
 
     public String getCcServerProxy() {
         return ccServerProxy;

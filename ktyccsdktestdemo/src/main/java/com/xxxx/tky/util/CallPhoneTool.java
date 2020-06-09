@@ -70,36 +70,42 @@ public class CallPhoneTool {
             cacheUserBean = (UserBean) objectBean;
         }
         ButtomCallDialog.Builder builder = new ButtomCallDialog.Builder(mContext);
-        builder.addMenu("网络拨号", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.cancel();
-                if (cacheUserBean.getCcUserInfo() == null || cacheUserBean.getCcUserInfo().getExtensionNo() == null || cacheUserBean.getCcUserInfo().getExtensionNo().equals("")) {
-                    showToast("请联系管理员配置分机号,然后退出重新登录");
-                    return;
+        if (cacheUserBean != null && cacheUserBean.getSiteEnableAppSipCall() != null && cacheUserBean.getSiteEnableAppSipCall() ==0) {
+            LogUtils.e("---》需要隐藏网络拨号");
+        }else{
+            builder.addMenu("网络拨号", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                    if (cacheUserBean.getCcUserInfo() == null || cacheUserBean.getCcUserInfo().getExtensionNo() == null || cacheUserBean.getCcUserInfo().getExtensionNo().equals("")) {
+                        showToast("请联系管理员配置分机号,然后退出重新登录");
+                        return;
+                    }
+                    KtyCcSdkTool.getInstance().callPhone(mContext, phoneNum,
+                            userName,
+                            "", customeUserId, new CallPhoneBack() {
+                                @Override
+                                public void onSuccess(String callId) {
+
+                                }
+
+                                @Override
+                                public void onFailed(String message) {
+
+                                }
+
+                                @Override
+                                public void watchPhoneStatus(int status) {
+
+                                }
+                            }
+                    );
+
                 }
-                KtyCcSdkTool.getInstance().callPhone(mContext, phoneNum,
-                        userName,
-                        "", customeUserId, new CallPhoneBack() {
-                            @Override
-                            public void onSuccess(String callId) {
+            });
+        }
 
-                            }
-
-                            @Override
-                            public void onFailed(String message) {
-
-                            }
-
-                            @Override
-                            public void watchPhoneStatus(int status) {
-
-                            }
-                        }
-                );
-
-            }
-        }).addMenu("双呼拨号", new View.OnClickListener() {
+       builder.addMenu("双呼拨号", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.cancel();
