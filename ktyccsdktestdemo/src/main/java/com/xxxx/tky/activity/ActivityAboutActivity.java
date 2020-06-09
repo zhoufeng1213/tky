@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.xxxx.cc.base.activity.BaseActivity;
 import com.xxxx.cc.global.PackageUtils;
 import com.xxxx.tky.R;
@@ -29,11 +30,11 @@ public class ActivityAboutActivity extends BaseActivity implements View.OnClickL
         iv_close.setOnClickListener(this);
         tvTitle = findViewById(R.id.tv_title);
         tvTitle.setText("关于");
-        userImage = (TextView) findViewById(R.id.user_image);
-        tvVersion = (TextView) findViewById(R.id.tv_version);
-        btnFuwuxieyi = (TextView) findViewById(R.id.btn_fuwuxieyi);
-        btnYinsi = (TextView) findViewById(R.id.btn_yinsi);
-        companyName = (TextView) findViewById(R.id.company_name);
+        userImage = findViewById(R.id.user_image);
+        tvVersion = findViewById(R.id.tv_version);
+        btnFuwuxieyi = findViewById(R.id.btn_fuwuxieyi);
+        btnYinsi = findViewById(R.id.btn_yinsi);
+        companyName = findViewById(R.id.company_name);
         btnFuwuxieyi.setOnClickListener(this);
         btnYinsi.setOnClickListener(this);
         String appVersion = PackageUtils.getVersionName(getApplicationContext());
@@ -50,7 +51,7 @@ public class ActivityAboutActivity extends BaseActivity implements View.OnClickL
     }
 
     private View getHeadEmptyView() {
-        return (View) findViewById(R.id.head_empty_view);
+        return findViewById(R.id.head_empty_view);
     }
 
     @Override

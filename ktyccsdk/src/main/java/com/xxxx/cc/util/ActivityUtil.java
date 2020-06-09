@@ -1,5 +1,6 @@
 package com.xxxx.cc.util;
 
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -14,13 +15,17 @@ import java.util.List;
 public class ActivityUtil {
 
     public static List<String> activityList = new ArrayList<>();
-
+    public static List<AppCompatActivity> activities=new ArrayList<>();
     public static void addActivity(String name) {
         if (activityList != null) {
             activityList.add(name);
         }
     }
-
+    public static void addActivity(AppCompatActivity activity) {
+        if (activities != null) {
+            activities.add(activity);
+        }
+    }
     public static void removeActivity(String name) {
         if (activityList != null && !TextUtils.isEmpty(name)) {
             Iterator<String> iterator = activityList.iterator();
@@ -32,7 +37,11 @@ public class ActivityUtil {
             }
         }
     }
-
+    public static void removeActivity(AppCompatActivity activity) {
+        if (activities != null) {
+            activities.remove(activity);
+        }
+    }
 
     public static boolean isHasActivityByName(String name) {
         boolean result = false;

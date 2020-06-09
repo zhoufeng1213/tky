@@ -148,6 +148,7 @@ public class KtyCcSdkTool {
                         startLinPhoneService(mContext);
                         LogUtils.e("重新启动service");
                     }
+                    LinphoneService.getInstance().socketEmit();
                     linphoneServiceCall();
                 } else {
                     LogUtils.e("objectBean == null");

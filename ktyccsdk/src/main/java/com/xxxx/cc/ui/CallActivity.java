@@ -22,38 +22,40 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.xxxx.cc.R;
+
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
-import com.xxxx.cc.base.presenter.MyStringCallback;
+import com.xxxx.cc.global.KtyCcOptionsUtil;
 import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.model.BaseBean;
 import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.model.MakecallBean;
+import com.xxxx.cc.model.SocketLoginResponseBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.FloatingImageDisplayService;
 import com.xxxx.cc.util.LinServiceManager;
 import com.xxxx.cc.util.LogUtils;
-import com.xxxx.cc.util.NetUtil;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.TimeUtils;
+import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.cc.util.rom.FloatWindowManager;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.builder.GetBuilder;
 
 import org.greenrobot.greendao.annotation.NotNull;
+import org.json.JSONException;
 import org.linphone.core.Call;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
 import static com.xxxx.cc.global.HttpRequest.Contant.updateLastCallTime;
@@ -90,7 +92,8 @@ public class CallActivity extends BaseHttpRequestActivity {
 
 
     private String customUserId;
-
+    public static boolean needUnRegisterLinphone=false;
+    public static boolean callActivityIsShowing=false;
     @Override
     public int getLayoutViewId() {
         return R.layout.activity_communication;
@@ -179,6 +182,8 @@ public class CallActivity extends BaseHttpRequestActivity {
             showToast("呼叫失败");
             finish();
         }
+
+
     }
 
 //    private void getPhoneAddress() {
@@ -285,7 +290,10 @@ public class CallActivity extends BaseHttpRequestActivity {
 
     }
 
+
     private void callPhone(String phoenNum) {
+
+
         LogUtils.e("CallActivity, callPhone:" + phoenNum);
         LinServiceManager.addListener(mCoreListener);
         //下面的代码一定都要设置，并且在configureAccountActivity中的设置也不能少
@@ -314,7 +322,7 @@ public class CallActivity extends BaseHttpRequestActivity {
     @Override
     public JSONObject getHttpRequestParams(String moduleName) {
         JSONObject jsonObject = new JSONObject();
-        if(makecallInternal.equals(moduleName)){
+        if (makecallInternal.equals(moduleName)) {
             MakecallBean makecallBean = new MakecallBean();
             makecallBean.setCaller(cacheUserBean.getCcUserInfo().getExtensionNo());
             makecallBean.setCallee(phoneNum);
@@ -327,7 +335,7 @@ public class CallActivity extends BaseHttpRequestActivity {
 
     @Override
     public void dealHttpRequestResult(String moduleName, BaseBean result, String response) {
-        if(makecallInternal.equals(moduleName)) {
+        if (makecallInternal.equals(moduleName)) {
             if (!TextUtils.isEmpty(response)) {
                 LinServiceManager.switchAudio(mContext, false);
                 Message msg = new Message();
@@ -337,21 +345,21 @@ public class CallActivity extends BaseHttpRequestActivity {
                 JSONObject json = (JSONObject) result.getData();
                 mCommunicationRecordResponseBean.setCalldetailId(json.getString("uuid"));
 
-                if(KtyCcSdkTool.callPhoneBack != null){
+                if (KtyCcSdkTool.callPhoneBack != null) {
                     KtyCcSdkTool.callPhoneBack.onSuccess(json.getString("uuid"));
                 }
 
                 //直接调用更新电话时间
-                if(!TextUtils.isEmpty(customUserId)){
-                    LogUtils.e("当前请求的token："+ cacheUserBean.getToken());
+                if (!TextUtils.isEmpty(customUserId)) {
+                    LogUtils.e("当前请求的token：" + cacheUserBean.getToken());
                     basePostPresenter.presenterBusinessByHeader(
-                            (updateLastCallTime + "/"+ customUserId),
+                            (updateLastCallTime + "/" + customUserId),
                             "token", cacheUserBean.getToken(),
                             "Content-Type", "application/json"
                     );
                 }
             }
-        }else if((updateLastCallTime + "/"+ customUserId).equals(moduleName)){
+        } else if ((updateLastCallTime + "/" + customUserId).equals(moduleName)) {
             LogUtils.e("更新客户电话时间成功");
 
         }
@@ -360,12 +368,12 @@ public class CallActivity extends BaseHttpRequestActivity {
     @Override
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
-        if(makecallInternal.equals(moduleName)) {
+        if (makecallInternal.equals(moduleName)) {
             LogUtils.e("呼叫失败1：" + result.toString());
             LogUtils.e("呼叫失败1：code:" + result.getCode() + ",message:" + result.getMessage());
 
-            if(KtyCcSdkTool.callPhoneBack != null){
-                KtyCcSdkTool.callPhoneBack.onFailed(result == null ?"":result.getMessage());
+            if (KtyCcSdkTool.callPhoneBack != null) {
+                KtyCcSdkTool.callPhoneBack.onFailed(result == null ? "" : result.getMessage());
             }
             if (result.getMessage() != null) {
                 LogUtils.e("呼叫失败 http1");
@@ -382,8 +390,8 @@ public class CallActivity extends BaseHttpRequestActivity {
                 showToast("呼叫失败");
                 hookCall();
             }
-        }else if((updateLastCallTime + "/"+ customUserId).equals(moduleName)){
-            LogUtils.e("更新客户电话时间失败:"+result.getMessage());
+        } else if ((updateLastCallTime + "/" + customUserId).equals(moduleName)) {
+            LogUtils.e("更新客户电话时间失败:" + result.getMessage());
             LogUtils.e(result.toString());
         }
     }
@@ -396,6 +404,7 @@ public class CallActivity extends BaseHttpRequestActivity {
     }
 
     public void hookCall() {
+
         hook = true;
         isReturnCall = false;
         LinServiceManager.hookCall();
@@ -493,7 +502,7 @@ public class CallActivity extends BaseHttpRequestActivity {
             if (state == Call.State.End) {
                 LogUtils.e("CallActivity, onCallStateChanged, 进入了End2");
 
-                if(KtyCcSdkTool.callPhoneBack != null){
+                if (KtyCcSdkTool.callPhoneBack != null) {
                     KtyCcSdkTool.callPhoneBack.watchPhoneStatus(2);
                 }
 
@@ -539,6 +548,7 @@ public class CallActivity extends BaseHttpRequestActivity {
         if (permission) {
             FloatWindowManager.getInstance().dismissDialog();
         }
+        callActivityIsShowing=true;
     }
 
     @Override
@@ -559,6 +569,17 @@ public class CallActivity extends BaseHttpRequestActivity {
 
     @Override
     protected void onDestroy() {
+        callActivityIsShowing=false;
+        if(needUnRegisterLinphone){
+            needUnRegisterLinphone=false;
+            Object objectBean = SharedPreferencesUtil.getObjectBean(this, USERBEAN_SAVE_TAG, UserBean.class);
+            if (objectBean != null) {
+                UserBean   cacheUserBean = (UserBean) objectBean;
+                LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
+                LogUtils.e("socket msg unRegisterOnlineLinPhone");
+                ToastUtil.showToast(this,"已注销linphone");
+            }
+        }
         super.onDestroy();
         LogUtils.e("onDestroy ");
         ImmersionBar.with(this).destroy();

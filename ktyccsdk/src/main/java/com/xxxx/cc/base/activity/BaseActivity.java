@@ -1,24 +1,39 @@
 package com.xxxx.cc.base.activity;
 
+import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.WifiInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.SignalStrength;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.fly.sweet.dialog.SweetAlertDialog;
 import com.flyco.roundview.RoundTextView;
 import com.gyf.barlibrary.ImmersionBar;
 import com.kty.mars.baselibrary.util.StatusBarUtil;
+import com.sdk.keepbackground.work.DaemonEnv;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.xxxx.cc.R;
 import com.xxxx.cc.base.widget.LoadingDialog;
+
+import com.xxxx.cc.global.KtyCcSdkTool;
+import com.xxxx.cc.global.SdkTool;
+import com.xxxx.cc.model.UserBean;
+import com.xxxx.cc.service.FloatingImageDisplayService;
 import com.xxxx.cc.service.LinphoneService;
 import com.xxxx.cc.util.ActivityUtil;
 import com.xxxx.cc.util.CallUtil;
@@ -30,6 +45,8 @@ import com.zhanshow.mylibrary.network.NetWorkUtils;
 import com.zhanshow.mylibrary.phonestate.MyPhoneStateListener;
 import com.zhanshow.mylibrary.phonestate.PhoneStateUtils;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -37,12 +54,14 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
+
 
 /**
  * Created by zhoufeng on 15/4/2.
  */
 public abstract class BaseActivity extends RxAppCompatActivity {
-
+    public static final String SOCKET_CLICK_OUT = "SOCKET_CLICK_OUT";
     public Context mContext;
     public boolean network = true;
 
@@ -62,6 +81,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         initViewBeforeSetContentView();
         setContentView(getLayoutViewId());
         ActivityUtil.addActivity(this.getPackageName() + "." + this.getLocalClassName());
+        ActivityUtil.addActivity(this);
         ButterKnife.bind(this);
         mContext = this;
 
@@ -122,7 +142,70 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         listenMobileSign();
 
         initView(savedInstanceState);
+        IntentFilter intentFilter = new IntentFilter(BaseActivity.SOCKET_CLICK_OUT);
+        registerReceiver(broadcastReceiver, intentFilter);
+
     }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String meetingActivityName = "com.xxxx.cc.ui.CallActivity";
+            if(ActivityUtil.activities==null||ActivityUtil.activities.isEmpty()){
+                return;
+            }
+            AppCompatActivity firstActivity=null;//非打电话页面的第一个页面
+            if(ActivityUtil.activities.get(ActivityUtil.activities.size()-1).getLocalClassName().contains(meetingActivityName)){
+                if(ActivityUtil.activities.size()>1){
+                    firstActivity=ActivityUtil.activities.get(ActivityUtil.activities.size()-2);
+                }
+            }else {
+                firstActivity=ActivityUtil.activities.get(ActivityUtil.activities.size()-1);
+            }
+            if(firstActivity!=null){
+                if(firstActivity.getLocalClassName().equals(BaseActivity.this.getLocalClassName())){
+//                    showExitDialog();
+                    ToastUtil.showToast(BaseActivity.this,"已注销linphone");
+                }
+            }
+        }
+    };
+    private void showExitDialog(){
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("该帐号已在其他端登录，请退出");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+
+        final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        //重写“确定”，截取监听
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(FloatingImageDisplayService.isStarted){
+                    ToastUtil.showToast(BaseActivity.this,"正在通话中，请结束通话后，再退出登录");
+                }else {
+                    SdkTool.unRegister(mContext);
+//            startActivity(this,LoginActivity.class);
+                    DaemonEnv.sendStopWorkBroadcast(BaseActivity.this);
+                    dialog.dismiss();
+                    exitApp();
+                }
+
+            }
+        });
+    }
+
 
 
     private void listenMobileSign() {
@@ -200,7 +283,12 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 //            mContext.startService(intent);
 //        }
     }
-
+    protected void exitApp() {
+        //需要退出app时，调用此方法
+        for (AppCompatActivity baseActivity : ActivityUtil.activities) {
+            baseActivity.finish();
+        }
+    }
     protected void setStatusBar() {
 
         StatusBarUtil.setRootViewFitsSystemWindows(this, true);
@@ -347,6 +435,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onDestroy() {
         ActivityUtil.removeActivity(this.getPackageName() + "." + this.getLocalClassName());
+        ActivityUtil.removeActivity(this);
         dismissDialog();
         if (isAddImmersionBar()) {
             ImmersionBar.with(this).destroy();
@@ -356,6 +445,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         }
         if (netErrorSweetAlertDialog != null) {
             netErrorSweetAlertDialog.dismiss();
+        }
+        if(broadcastReceiver!=null){
+            unregisterReceiver(broadcastReceiver);
         }
         super.onDestroy();
     }
