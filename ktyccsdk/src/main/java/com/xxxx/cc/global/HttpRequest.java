@@ -13,6 +13,7 @@ public class HttpRequest {
     }
 
     public static class CallHistory {
+        public static String pushCallHistory = "/sdk/api/v1/callHistory/push";
         public static String callHistory = "/sdk/api/v1/callHistory";
         public static String currentCalls = "/sdk/api/v1/callHistory/currentCalls/";
         public static String calldetailWithCommRecords = "/sdk/api/v1/callHistory/calldetailWithCommRecords";

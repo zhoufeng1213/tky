@@ -225,7 +225,19 @@ public class SystemUtils {
         NativePhoneNumber = telephonyManager.getLine1Number();
         return NativePhoneNumber;
     }
-
+//    private static boolean hasSim(Context context) {
+//
+//        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+//        String operator = tm.getSimOperator();
+//        if (TextUtils.isEmpty(operator)) {
+//            return false;
+//        }
+//        return true;
+//    }
+    public static boolean hasSim(Context context) {
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return tm.getSimState() == TelephonyManager.SIM_STATE_READY;
+    }
     /**
      * 返回手机服务商名字
      */

@@ -143,68 +143,74 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
     private EditText userMeno;
 
     public void showEditDialog() {
-        if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) return;
-        sweetAlertDialog = new SweetAlertDialog(mContext);
-        View dialogView = LayoutInflater.from(mContext)
-                .inflate(R.layout.dialog_edit, null, false);
-        sweetAlertDialog.setCustomView(dialogView);
-
-        RoundTextView dialogConfirm = dialogView.findViewById(R.id.dialog_confirm);
-        RoundTextView dialogCancel = dialogView.findViewById(R.id.dialog_cancel);
-        ImageView ivClose = dialogView.findViewById(R.id.iv_close);
-        userMeno = dialogView.findViewById(R.id.user_meno);
-
-        if (selectCommunicationRecordResponseBean != null && !TextUtils.isEmpty(selectCommunicationRecordResponseBean.getCommunication())) {
-            userMeno.setText(selectCommunicationRecordResponseBean.getCommunication());
-            userMeno.setSelection(selectCommunicationRecordResponseBean.getCommunication().length());
-        }
-        ivClose.setOnClickListener(new View.OnClickListener() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                if (sweetAlertDialog != null) {
-                    sweetAlertDialog.dismiss();
-                }
-            }
-        });
+            public void run() {
+                if (sweetAlertDialog != null && sweetAlertDialog.isShowing()) return;
+                sweetAlertDialog = new SweetAlertDialog(mContext);
+                View dialogView = LayoutInflater.from(mContext)
+                        .inflate(R.layout.dialog_edit, null, false);
+                sweetAlertDialog.setCustomView(dialogView);
 
-        dialogConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (userMeno != null && userMeno.getText().toString().trim().equals("")) {
-                    showToast("保存的沟通记录不能为空");
-                    return;
-                }
-                if (sweetAlertDialog != null) {
-                    sweetAlertDialog.dismiss();
-                }
+                RoundTextView dialogConfirm = dialogView.findViewById(R.id.dialog_confirm);
+                RoundTextView dialogCancel = dialogView.findViewById(R.id.dialog_cancel);
+                ImageView ivClose = dialogView.findViewById(R.id.iv_close);
+                userMeno = dialogView.findViewById(R.id.user_meno);
 
-                if (cacheUserBean != null && selectCommunicationRecordResponseBean != null && selectCommunicationRecordResponseBean.getCalldetailId() != null) {
-                    if (selectCommunicationRecordResponseBean.getId() != null) {
-                        basePostPresenter.presenterBusinessByHeader(HttpRequest.Contant.updateSummary + selectCommunicationRecordResponseBean.getId(), true,
-                                "token", cacheUserBean.getToken());
-
-                    } else {
-                        basePostPresenter.presenterBusinessByHeader(HttpRequest.Contant.saveSummary, true,
-                                "token", cacheUserBean.getToken());
+                if (selectCommunicationRecordResponseBean != null && !TextUtils.isEmpty(selectCommunicationRecordResponseBean.getCommunication())) {
+                    userMeno.setText(selectCommunicationRecordResponseBean.getCommunication());
+                    userMeno.setSelection(selectCommunicationRecordResponseBean.getCommunication().length());
+                }
+                ivClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (sweetAlertDialog != null) {
+                            sweetAlertDialog.dismiss();
+                        }
                     }
+                });
+
+                dialogConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (userMeno != null && userMeno.getText().toString().trim().equals("")) {
+                            showToast("保存的沟通记录不能为空");
+                            return;
+                        }
+                        if (sweetAlertDialog != null) {
+                            sweetAlertDialog.dismiss();
+                        }
+
+                        if (cacheUserBean != null && selectCommunicationRecordResponseBean != null && selectCommunicationRecordResponseBean.getCalldetailId() != null) {
+                            if (selectCommunicationRecordResponseBean.getId() != null) {
+                                basePostPresenter.presenterBusinessByHeader(HttpRequest.Contant.updateSummary + selectCommunicationRecordResponseBean.getId(), true,
+                                        "token", cacheUserBean.getToken());
+
+                            } else {
+                                basePostPresenter.presenterBusinessByHeader(HttpRequest.Contant.saveSummary, true,
+                                        "token", cacheUserBean.getToken());
+                            }
 
 
-                } else {
-                    showToast("未能查询到您的本次通话记录，保存沟通记录失败");
-                }
+                        } else {
+                            showToast("未能查询到您的本次通话记录，保存沟通记录失败");
+                        }
+                    }
+                });
+
+                dialogCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (sweetAlertDialog != null) {
+                            sweetAlertDialog.dismiss();
+                            selectCommunicationRecordResponseBean = null;
+                        }
+                    }
+                });
+                sweetAlertDialog.show();
             }
         });
 
-        dialogCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (sweetAlertDialog != null) {
-                    sweetAlertDialog.dismiss();
-                    selectCommunicationRecordResponseBean = null;
-                }
-            }
-        });
-        sweetAlertDialog.show();
     }
 
     @Override

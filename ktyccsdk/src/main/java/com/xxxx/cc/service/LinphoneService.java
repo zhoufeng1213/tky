@@ -1,15 +1,39 @@
 package com.xxxx.cc.service;
 
+import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Messenger;
+import android.provider.CallLog;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 import com.sdk.keepbackground.work.AbsWorkService;
 import com.xxxx.cc.R;
+import com.xxxx.cc.base.presenter.MyStringCallback;
+import com.xxxx.cc.global.Constans;
+import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.KtyCcSdkTool;
+import com.xxxx.cc.model.CallHistoryBean;
+import com.xxxx.cc.model.CommunicationRecordResponseBean;
+import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.util.LogUtils;
+import com.xxxx.cc.util.SharedPreferencesUtil;
+import com.xxxx.cc.util.SystemUtils;
+import com.xxxx.cc.util.ThreadTask;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.builder.PostStringBuilder;
 
 import org.linphone.core.Call;
 import org.linphone.core.CallParams;
@@ -24,8 +48,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
+import okhttp3.MediaType;
+
+import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
 
 public class LinphoneService extends AbsWorkService {
 
@@ -38,6 +69,7 @@ public class LinphoneService extends AbsWorkService {
     private CoreListenerStub mCoreListener;
 
     private boolean isRegister;
+    private TelephonyManager telephonyManager;
 
     public static boolean isReady() {
         return sInstance != null;
@@ -67,6 +99,9 @@ public class LinphoneService extends AbsWorkService {
         return sInstance.mCore;
     }
 
+    private MyPhoneListener myPhoneListener;
+    public static boolean startTelFromCall;
+    public static String callBySystemUUID;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -96,7 +131,7 @@ public class LinphoneService extends AbsWorkService {
                     params.enableVideo(false);
                     call.acceptWithParams(params);
 
-                    if(KtyCcSdkTool.callPhoneBack != null){
+                    if (KtyCcSdkTool.callPhoneBack != null) {
                         KtyCcSdkTool.callPhoneBack.watchPhoneStatus(1);
                     }
                 } else if (state == Call.State.Connected) {
@@ -129,6 +164,15 @@ public class LinphoneService extends AbsWorkService {
         mCore.addListener(mCoreListener);
         // Core is ready to be configured
         configureCore();
+        //监听电话
+        telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        myPhoneListener = new MyPhoneListener();
+        if (telephonyManager != null) {
+            LogUtils.e("ccservice telephony listen");
+            telephonyManager.listen(myPhoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+        }
+//        CallstatusReciver callstatusReciver=new CallstatusReciver();
+//        registerReceiver(callstatusReciver)
     }
 
     @Override
@@ -174,6 +218,10 @@ public class LinphoneService extends AbsWorkService {
             mCore.removeListener(mCoreListener);
             mCore.stop();
         }
+        if (telephonyManager != null && myPhoneListener != null) {
+            telephonyManager.listen(myPhoneListener, PhoneStateListener.LISTEN_NONE);
+        }
+
         // A stopped Core can be started again
         // To ensure resources are freed, we must ensure it will be garbage collected
         mCore = null;
@@ -260,4 +308,118 @@ public class LinphoneService extends AbsWorkService {
         lOutputStream.close();
         lInputStream.close();
     }
+
+
+    //获取通话记录
+    private void getContentCallLog(Context context) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, // 查询通话记录的URI
+                new String[]{"_id", CallLog.Calls.CACHED_NAME, CallLog.Calls.NUMBER, CallLog.Calls.DATE, CallLog.Calls.DURATION, CallLog.Calls.TYPE}
+                , null, null, CallLog.Calls.DEFAULT_SORT_ORDER// 按照时间逆序排列，最近打的最先显示
+        );
+        CallHistoryBean callHistoryBean=null;
+        while (cursor.moveToNext()) {
+            callHistoryBean = new CallHistoryBean();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            callHistoryBean.setContactName(cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)));  //姓名
+            callHistoryBean.setDnis(cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)));  //号码
+
+            int billingInSec = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.DURATION));//获取通话时长，值为多少秒
+            callHistoryBean.setBillingInSec(billingInSec);
+            callHistoryBean.setDuration((int) (offHook - idle) / 1000);
+            callHistoryBean.setCreateTime(dateFormat.format(idle-billingInSec*1000));
+            callHistoryBean.setHangupTime(dateFormat.format(idle));
+            callHistoryBean.setBridgeTime(dateFormat.format(idle-billingInSec*1000));
+//            long dateLong = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)); //获取通话日期
+
+            break;
+        }
+        if(callHistoryBean!=null){
+
+            callHistoryBean.setCallId(callBySystemUUID);
+            callHistoryBean.setAni(SystemUtils.getNativePhoneNumber(this));
+            callHistoryBean.setArea("");
+
+            Object objectBean = SharedPreferencesUtil.getObjectBean(this, USERBEAN_SAVE_TAG, UserBean.class);
+            UserBean cacheUserBean=null;
+            if (objectBean != null) {
+                cacheUserBean = (UserBean) objectBean;
+            }
+            if (cacheUserBean == null) {
+                return;
+            }
+            callHistoryBean.setUserId(cacheUserBean.getUserId());
+            callHistoryBean.setAgentUserName(cacheUserBean.getUname());
+            callHistoryBean.setOrgId(cacheUserBean.getOrgId());
+
+
+            requestPost(callHistoryBean,cacheUserBean.getToken());
+        }
+    }
+
+
+
+    private void requestPost(CallHistoryBean callHistoryBean,String token) {
+        PostStringBuilder okHttpUtils = OkHttpUtils.postString();
+        okHttpUtils.url(Constans.BASE_URL + HttpRequest.CallHistory.pushCallHistory);
+        //添加header
+        okHttpUtils.addHeader("token", token);
+        okHttpUtils.addHeader("Content-Type", "application/json");
+
+        okHttpUtils
+                .content(JSONObject.parseObject(new Gson().toJson(callHistoryBean)).toJSONString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new MyStringCallback() {
+                    @Override
+                    public void onError(okhttp3.Call call, Exception e, int id) {
+                        LogUtils.e("加载失败");
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        LogUtils.e("上传通话记录成功");
+                    }
+                });
+    }
+
+
+    private long offHook;
+    private long idle;
+
+    class MyPhoneListener extends PhoneStateListener {
+
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+            super.onCallStateChanged(state, incomingNumber);
+            switch (state) {
+                //空闲
+                case TelephonyManager.CALL_STATE_IDLE:
+                    if (startTelFromCall) {
+                        startTelFromCall = false;
+                        idle = System.currentTimeMillis();
+                        getContentCallLog(LinphoneService.this);
+
+
+                    }
+                    LogUtils.e("ccservice", "CALL_STATE_IDLE");
+                    break;
+                case TelephonyManager.CALL_STATE_RINGING:
+                    LogUtils.e("ccservice", "CALL_STATE_RINGING");
+                    break;
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    if (startTelFromCall) {
+                        offHook = System.currentTimeMillis();
+                    }
+                    LogUtils.e("ccservice", "CALL_STATE_OFFHOOK");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
 }

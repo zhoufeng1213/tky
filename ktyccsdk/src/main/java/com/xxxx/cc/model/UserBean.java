@@ -21,7 +21,10 @@ public class UserBean {
      * userPermission : ["cc"]
      * username : test002@ketianyun.com
      */
-
+    private static final String SIP_CALL="siteEnableAppSipCall";
+    private static final String DOUBLE_CALL="siteEnableAppDoubleCall";
+    private static final String SIM_CALL="siteEnableAppSimCall";
+    private boolean[] siteEnables;
     private String ccServerProxy;
     private CcUserInfoBean ccUserInfo;
     private String fromUser;
@@ -34,13 +37,40 @@ public class UserBean {
     private Integer siteEnableAppSipCall;
     private List<String> sitePermisson;
     private List<String> userPermission;
-
+    private String uname;
     public Integer getSiteEnableAppSipCall() {
         return siteEnableAppSipCall;
     }
 
+    public boolean[] getSiteEnables() {
+        siteEnables =new boolean[3];
+        if(sitePermisson!=null&&!sitePermisson.isEmpty()){
+            for(String s:sitePermisson){
+                if(s!=null&&s.equals(SIP_CALL)){
+                    siteEnables[0]=true;
+                }else if(s!=null&&s.equals(DOUBLE_CALL)){
+                    siteEnables[1]=true;
+                }else if(s!=null&&s.equals(SIM_CALL)){
+                    siteEnables[2]=true;
+                }
+            }
+        }
+
+        return siteEnables;
+    }
+
+
+
     public void setSiteEnableAppSipCall(Integer siteEnableAppSipCall) {
         this.siteEnableAppSipCall = siteEnableAppSipCall;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 
     public String getCcServerProxy() {

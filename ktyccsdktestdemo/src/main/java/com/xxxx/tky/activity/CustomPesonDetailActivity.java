@@ -85,7 +85,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
     TextView zyTvValue;
     @BindView(R.id.zidingyi_layout)
     LinearLayout zidingyiLayout;
-
+    public static boolean callFromCustomPesonDetailActivity;//从当前activity启动，如果用sim卡拨号，要先创建uuid
     private QueryCustomPersonBean queryCustomPersonBean;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String personBeanData;
@@ -200,6 +200,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
             return;
         }
         if (queryCustomPersonBean != null && !TextUtils.isEmpty(queryCustomPersonBean.getRealMobileNumber())) {
+            callFromCustomPesonDetailActivity=true;
             CallPhoneTool.getInstance().callPhone(mContext, queryCustomPersonBean.getRealMobileNumber(),
                     queryCustomPersonBean.getName(),
                     queryCustomPersonBean.getId()

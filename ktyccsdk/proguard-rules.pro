@@ -188,3 +188,5 @@
 -keep class **$Properties
 -keepclassmembers class **$Properties {*;}
 -dontwarn rx.**
+
+-keepresourcefiles assets/io/michaelrocks/libphonenumber/android/**
