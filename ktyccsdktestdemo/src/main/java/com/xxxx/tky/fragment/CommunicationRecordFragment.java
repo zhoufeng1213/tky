@@ -193,7 +193,7 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
 
 
                         } else {
-                            showToast("未能查询到您的本次，保存沟通记录失败");
+                            showToast("未能查询到您的本次通话记录，保存沟通记录失败");
                         }
                     }
                 });

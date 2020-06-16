@@ -25,6 +25,7 @@ import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.LinphoneService;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.TimeUtils;
+import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.cc.util.db.DbUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.fragment.CommunicationRecordFragment;
@@ -216,7 +217,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
 
                 @Override
                 public void onError() {
-
+                    ToastUtil.showToast(CustomPesonDetailActivity.this,"通话记录上传失败");
                 }
             });
 
