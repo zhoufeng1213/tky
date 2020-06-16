@@ -1,12 +1,10 @@
 package com.xxxx.cc.service;
 
 import android.Manifest;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteException;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Messenger;
@@ -15,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
@@ -26,12 +23,10 @@ import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.model.CallHistoryBean;
-import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.SystemUtils;
-import com.xxxx.cc.util.ThreadTask;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostStringBuilder;
 
@@ -50,10 +45,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.UUID;
+
 import okhttp3.MediaType;
 
 import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
@@ -61,7 +55,6 @@ import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
 public class LinphoneService extends AbsWorkService {
 
     private static LinphoneService sInstance;
-
     private Handler mHandler;
     private Timer mTimer;
 
@@ -100,8 +93,11 @@ public class LinphoneService extends AbsWorkService {
     }
 
     private MyPhoneListener myPhoneListener;
-    public static boolean startTelFromCall;
+    public static boolean startTelFromCall;//SIM卡打电话
+    public static String telUserName;//从CustomPesonDetailActivit启动打电话，如果用sim卡拨号，上传通话记录用此名字
+    public static String telNum;//从CustomPesonDetailActivit启动打电话，如果用sim卡拨号，上传通话记录用此名字
     public static String callBySystemUUID;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -309,42 +305,61 @@ public class LinphoneService extends AbsWorkService {
         lInputStream.close();
     }
 
+    private void getContentCallLogDelay() {
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                getContentCallLog();
+            }
+        }, 1000);
+    }
+
+    private boolean hasPostDealy;
 
     //获取通话记录
-    private void getContentCallLog(Context context) {
+    private void getContentCallLog() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, // 查询通话记录的URI
+        Cursor cursor = getContentResolver().query(CallLog.Calls.CONTENT_URI, // 查询通话记录的URI
                 new String[]{"_id", CallLog.Calls.CACHED_NAME, CallLog.Calls.NUMBER, CallLog.Calls.DATE, CallLog.Calls.DURATION, CallLog.Calls.TYPE}
                 , null, null, CallLog.Calls.DEFAULT_SORT_ORDER// 按照时间逆序排列，最近打的最先显示
         );
-        CallHistoryBean callHistoryBean=null;
+        CallHistoryBean callHistoryBean = null;
         while (cursor.moveToNext()) {
             callHistoryBean = new CallHistoryBean();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            if (LinphoneService.telUserName != null) {
+                callHistoryBean.setContactName(LinphoneService.telUserName);  //姓名
+                LinphoneService.telUserName = null;
+            } else {
+                callHistoryBean.setContactName(cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)));  //姓名
+            }
 
-            callHistoryBean.setContactName(cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)));  //姓名
             callHistoryBean.setDnis(cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)));  //号码
 
             int billingInSec = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.DURATION));//获取通话时长，值为多少秒
             callHistoryBean.setBillingInSec(billingInSec);
             callHistoryBean.setDuration((int) (offHook - idle) / 1000);
-            callHistoryBean.setCreateTime(dateFormat.format(idle-billingInSec*1000));
+            callHistoryBean.setCreateTime(dateFormat.format(idle - billingInSec * 1000));
             callHistoryBean.setHangupTime(dateFormat.format(idle));
-            callHistoryBean.setBridgeTime(dateFormat.format(idle-billingInSec*1000));
+            callHistoryBean.setBridgeTime(dateFormat.format(idle - billingInSec * 1000));
 //            long dateLong = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)); //获取通话日期
 
             break;
         }
-        if(callHistoryBean!=null){
 
+        if (callHistoryBean != null) {
+            if (!telNum.contains(callHistoryBean.getDnis()) && !hasPostDealy) {
+                getContentCallLogDelay();
+                hasPostDealy = true;
+                return;
+            }
             callHistoryBean.setCallId(callBySystemUUID);
             callHistoryBean.setAni(SystemUtils.getNativePhoneNumber(this));
             callHistoryBean.setArea("");
 
             Object objectBean = SharedPreferencesUtil.getObjectBean(this, USERBEAN_SAVE_TAG, UserBean.class);
-            UserBean cacheUserBean=null;
+            UserBean cacheUserBean = null;
             if (objectBean != null) {
                 cacheUserBean = (UserBean) objectBean;
             }
@@ -356,13 +371,12 @@ public class LinphoneService extends AbsWorkService {
             callHistoryBean.setOrgId(cacheUserBean.getOrgId());
 
 
-            requestPost(callHistoryBean,cacheUserBean.getToken());
+            requestPost(callHistoryBean, cacheUserBean.getToken());
         }
     }
 
 
-
-    private void requestPost(CallHistoryBean callHistoryBean,String token) {
+    private void requestPost(CallHistoryBean callHistoryBean, String token) {
         PostStringBuilder okHttpUtils = OkHttpUtils.postString();
         okHttpUtils.url(Constans.BASE_URL + HttpRequest.CallHistory.pushCallHistory);
         //添加header
@@ -376,16 +390,35 @@ public class LinphoneService extends AbsWorkService {
                 .execute(new MyStringCallback() {
                     @Override
                     public void onError(okhttp3.Call call, Exception e, int id) {
+                        if(upLoadContentCall!=null){
+                            upLoadContentCall.onError();
+                        }
+
                         LogUtils.e("加载失败");
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
+                        if(upLoadContentCall!=null){
+                            upLoadContentCall.onResponse();
+                        }
                         LogUtils.e("上传通话记录成功");
                     }
                 });
     }
 
+    private UpLoadContentCall upLoadContentCall;
+
+
+    public void setUpLoadContentCall(UpLoadContentCall upLoadContentCall) {
+        this.upLoadContentCall = upLoadContentCall;
+    }
+
+    public interface UpLoadContentCall {
+        void onResponse();
+
+        void onError();
+    }
 
     private long offHook;
     private long idle;
@@ -401,8 +434,8 @@ public class LinphoneService extends AbsWorkService {
                     if (startTelFromCall) {
                         startTelFromCall = false;
                         idle = System.currentTimeMillis();
-                        getContentCallLog(LinphoneService.this);
-
+                        hasPostDealy = false;
+                        getContentCallLogDelay();
 
                     }
                     LogUtils.e("ccservice", "CALL_STATE_IDLE");

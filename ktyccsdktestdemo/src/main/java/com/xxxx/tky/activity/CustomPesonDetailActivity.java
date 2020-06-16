@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.google.gson.Gson;
 import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.global.HttpRequest;
@@ -21,6 +22,7 @@ import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.model.CustomDefinedBean;
 import com.xxxx.cc.model.QueryCustomPersonBean;
 import com.xxxx.cc.model.UserBean;
+import com.xxxx.cc.service.LinphoneService;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.cc.util.db.DbUtil;
@@ -36,6 +38,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -85,12 +88,13 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
     TextView zyTvValue;
     @BindView(R.id.zidingyi_layout)
     LinearLayout zidingyiLayout;
-    public static boolean callFromCustomPesonDetailActivity;//从当前activity启动，如果用sim卡拨号，要先创建uuid
+
     private QueryCustomPersonBean queryCustomPersonBean;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private String personBeanData;
+    public String personBeanData;
     private UserBean cacheUserBean;
     private List<CustomDefinedBean> customDefinedBeans = new ArrayList<>();
+    private CommunicationRecordResponseBean mCommunicationRecordResponseBean;//仅给sim卡使用
 
     @Override
     public int getLayoutViewId() {
@@ -110,7 +114,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
             personBeanData = getIntent().getStringExtra("data");
             if (!TextUtils.isEmpty(personBeanData)) {
                 mFragments.add(CommunicationRecordFragment.newInstance(personBeanData));
-               mFragments.add(ContactHistoryFragment.newInstance(personBeanData));
+                mFragments.add(ContactHistoryFragment.newInstance(personBeanData));
                 queryCustomPersonBean = JSON.parseObject(personBeanData, QueryCustomPersonBean.class);
                 if (queryCustomPersonBean != null) {
                     setViewData();
@@ -119,6 +123,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
                 String[] titles = {"沟通记录", "通话记录"};
                 viewPager.setOffscreenPageLimit(2);
                 tabLayout.setViewPager(viewPager, titles, this, mFragments);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -150,6 +155,9 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
     @Override
     protected void onResume() {
         super.onResume();
+        if(LinphoneService.startTelFromCall&&mCommunicationRecordResponseBean!=null){
+            goToCall(mCommunicationRecordResponseBean);
+        }
         //查找本地的数据库
         if (isFirstLoad) {
             isFirstLoad = false;
@@ -200,7 +208,30 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
             return;
         }
         if (queryCustomPersonBean != null && !TextUtils.isEmpty(queryCustomPersonBean.getRealMobileNumber())) {
-            callFromCustomPesonDetailActivity=true;
+            LinphoneService.getInstance().setUpLoadContentCall(new LinphoneService.UpLoadContentCall() {
+                @Override
+                public void onResponse() {
+                    ((ContactHistoryFragment) mFragments.get(1)).loadData();
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
+
+            CallPhoneTool.getInstance().setCallPhoneBySim(new CallPhoneTool.CallPhoneBySim() {
+                @Override
+                public void onCall() {
+                    LinphoneService.callBySystemUUID = UUID.randomUUID().toString();
+                    mCommunicationRecordResponseBean = new CommunicationRecordResponseBean();
+                    mCommunicationRecordResponseBean.setCalldetailId(LinphoneService.callBySystemUUID);
+                    if (KtyCcSdkTool.getInstance().mDemoInterface != null && mCommunicationRecordResponseBean != null) {
+                        KtyCcSdkTool.getInstance().mDemoInterface.goToCall(mCommunicationRecordResponseBean);
+                    }
+                }
+            });
+
             CallPhoneTool.getInstance().callPhone(mContext, queryCustomPersonBean.getRealMobileNumber(),
                     queryCustomPersonBean.getName(),
                     queryCustomPersonBean.getId()
@@ -328,5 +359,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
     protected void onDestroy() {
         super.onDestroy();
         KtyCcSdkTool.getInstance().setmCallPhoneInterface(null);
+        CallPhoneTool.getInstance().setCallPhoneBySim(null);
+        LinphoneService.getInstance().setUpLoadContentCall(null);
     }
 }

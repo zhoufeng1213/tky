@@ -27,16 +27,20 @@ public class CallHistoryAdapter extends BaseQuickAdapter<ContentBean, BaseViewHo
     @Override
     protected void convert(BaseViewHolder helper, ContentBean bean) {
         LogUtils.e("nover...");
-        String createTime = bean.getCreateTime();
-        if (TextUtils.isEmpty(createTime)) {
-            createTime = "";
-        } else {
-            createTime = TimeUtils.stringToDate_MD_HM(createTime);
+        try {
+            String createTime = bean.getCreateTime();
+            if (TextUtils.isEmpty(createTime)) {
+                createTime = "";
+            } else {
+                createTime = TimeUtils.stringToDate_MD_HM(createTime);
+            }
+            helper.setText(R.id.time_text, createTime);
+            helper.setText(R.id.phone_area, bean.getArea());
+            helper.setText(R.id.phone_num, bean.getDnis());
+            helper.setText(R.id.time_duration, TimeUtils.getDurationTime(bean.getBillingInSec()));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        helper.setText(R.id.time_text, createTime);
-        helper.setText(R.id.phone_area, bean.getArea());
-        helper.setText(R.id.phone_num, bean.getDnis());
-        helper.setText(R.id.time_duration, TimeUtils.getDurationTime(bean.getBillingInSec()));
     }
 
 }

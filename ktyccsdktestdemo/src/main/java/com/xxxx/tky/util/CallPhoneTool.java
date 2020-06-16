@@ -3,26 +3,19 @@ package com.xxxx.tky.util;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.CallLog;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xxxx.cc.base.presenter.MyStringCallback;
 import com.xxxx.cc.callback.CallPhoneBack;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.global.KtyCcSdkTool;
 import com.xxxx.cc.model.BaseBean;
-import com.xxxx.cc.model.CommunicationRecordResponseBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.LinphoneService;
 import com.xxxx.cc.util.LogUtils;
@@ -30,15 +23,11 @@ import com.xxxx.cc.util.NetUtil;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.SystemUtils;
 import com.xxxx.cc.util.ToastUtil;
-import com.xxxx.tky.activity.CustomPesonDetailActivity;
 import com.xxxx.tky.model.MakecallBean;
 import com.xxxx.tky.view.ButtomCallDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostStringBuilder;
 
-import java.util.UUID;
-
-import io.reactivex.functions.Consumer;
 import okhttp3.Call;
 import okhttp3.MediaType;
 
@@ -54,7 +43,7 @@ public class CallPhoneTool {
     private String phoneNum;
     private String userName;
     private String customeUserId;
-
+    public CallPhoneBySim callPhoneBySim;
     private CallPhoneTool() {
 
     }
@@ -188,15 +177,11 @@ public class CallPhoneTool {
 
     private void call(Context context, String telPhone) {
         try {
-            if (CustomPesonDetailActivity.callFromCustomPesonDetailActivity) {//从CustomPensonDetail来的通过手机sim拨号的需要先创建uuid
-                CustomPesonDetailActivity.callFromCustomPesonDetailActivity=false;
-                LinphoneService.callBySystemUUID = UUID.randomUUID().toString();
-                CommunicationRecordResponseBean mCommunicationRecordResponseBean = new CommunicationRecordResponseBean();
-                mCommunicationRecordResponseBean.setCalldetailId(LinphoneService.callBySystemUUID);
-                if (KtyCcSdkTool.getInstance().mDemoInterface != null && mCommunicationRecordResponseBean != null) {
-                    KtyCcSdkTool.getInstance().mDemoInterface.goToCall(mCommunicationRecordResponseBean);
-                }
+            if(callPhoneBySim!=null){
+                callPhoneBySim.onCall();
             }
+            LinphoneService.telUserName =userName;
+            LinphoneService.telNum =telPhone;
             LinphoneService.startTelFromCall = true;
             Intent intent = new Intent(Intent.ACTION_CALL);
             Uri uri = Uri.parse(telPhone);
@@ -207,6 +192,10 @@ public class CallPhoneTool {
         }
     }
 
+
+    public void setCallPhoneBySim(CallPhoneBySim callPhoneBySim) {
+        this.callPhoneBySim = callPhoneBySim;
+    }
 
     private void doPostByHeaders(String moduleName, String... headers) {
         //判断网络是否可用
@@ -309,5 +298,7 @@ public class CallPhoneTool {
             LogUtils.e("更新客户电话时间成功");
         }
     }
-
+    public interface CallPhoneBySim{
+        void onCall();
+    }
 }

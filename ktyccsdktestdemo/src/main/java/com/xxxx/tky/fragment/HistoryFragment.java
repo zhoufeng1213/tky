@@ -104,6 +104,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
     private boolean isPlaying;
     private int totalSec;
     private MediaPlayer mediaPlayer;
+
     @Override
     public int getContentViewId() {
         return R.layout.fragment_history;
@@ -164,13 +165,13 @@ public class HistoryFragment extends BaseHttpRequestFragment {
                 historyAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        if(layoutPlayVoice.getVisibility()==View.VISIBLE){
+                        if (layoutPlayVoice.getVisibility() == View.VISIBLE) {
                             colseBottom();
                         }
                         //拨打电话
                         ContentBean contentBean = historyResponseBeanList.get(position);
                         CallPhoneTool.getInstance().callPhone(mContext, contentBean.getDnis(),
-                                contentBean.getContactName(),""
+                                contentBean.getContactName(), ""
                         );
                     }
                 });
@@ -299,7 +300,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
             requestBean.setPage(page);
             requestBean.setSize(COMMON_PAGE_SIZE);
             requestBean.setUserIds(userIdArrays);
-            requestBean.setBegin(beginTime);
+            requestBean.setBegin(beginTime-1000*60);
             requestBean.setEnd(endTime);
             jsonObject = JSONObject.parseObject(new Gson().toJson(requestBean));
         }
@@ -369,7 +370,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
         @Override
         public void onClick(View v) {
             int i = v.getId();
-            if (i ==R.id.iv_close) {
+            if (i == R.id.iv_close) {
                 close();
             } else if (i == com.xxxx.cc.R.id.iv_close_bottom) {
                 colseBottom();
@@ -398,6 +399,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
         }
 
     }
+
     private void playChanged(final String localPath, final int resid, final boolean b) {
         ThreadTask.getInstance().executorDBThread(new Runnable() {
             @Override
@@ -408,7 +410,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
                     if (!TextUtils.isEmpty(url)) {
                         final ViewCacheVO viewCacheVO = mViewMapCache.get(url);
                         if (viewCacheVO != null) {
-                           getActivity().runOnUiThread(new Runnable() {
+                            getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     viewCacheVO.getIvPlay().setImageResource(resid);
@@ -422,6 +424,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
             }
         }, 10);
     }
+
     public void close() {
         if (isPlaying) {
             MediaManager.stop();
@@ -433,6 +436,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
         }
 
     }
+
     public void colseBottom() {
         if (MediaManager.getMediaPlayer().isPlaying()) {
             MediaManager.getMediaPlayer().stop();
@@ -735,7 +739,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
 
     private long getCurrentPosition() {
         try {
-            if (this.mediaPlayer != null && this.mediaPlayer.isPlaying() ) {
+            if (this.mediaPlayer != null && this.mediaPlayer.isPlaying()) {
                 return this.mediaPlayer.getCurrentPosition();
             }
         } catch (Exception e) {
@@ -747,7 +751,7 @@ public class HistoryFragment extends BaseHttpRequestFragment {
 
     private int getDuration() {
         try {
-            if (this.mediaPlayer != null && this.mediaPlayer.isPlaying() ) {
+            if (this.mediaPlayer != null && this.mediaPlayer.isPlaying()) {
                 return this.mediaPlayer.getDuration();
             }
         } catch (Exception e) {

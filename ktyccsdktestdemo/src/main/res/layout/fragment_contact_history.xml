@@ -35,14 +35,29 @@
             android:textSize="@dimen/textNormal16" />
 
     </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_new"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:rv_divider_size="@dimen/divider"
-        app:rv_divider_color="@color/line_background"
-        />
+        android:layout_height="match_parent">
+        <com.scwang.smartrefresh.header.MaterialHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:rv_divider_size="@dimen/divider"
+            app:rv_divider_color="@color/line_background"
+            />
+
+
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <TextView
         android:id="@+id/empty_text_view"
