@@ -224,8 +224,10 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                             }
                         }
                     }
+                    if(item!=null&&item.getLastCallTime()!=null){
+                        helper.setText(R.id.last_call_time, TimeUtils.stringToDate_MD_HMS(item.getLastCallTime()));
+                    }
 
-                    helper.setText(R.id.last_call_time, TimeUtils.stringToDate_MD_HMS(item.getLastCallTime()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

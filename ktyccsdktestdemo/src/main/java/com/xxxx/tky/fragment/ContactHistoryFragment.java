@@ -159,6 +159,11 @@ public class ContactHistoryFragment extends BaseHttpRequestFragment {
 
     }
     public void loadData() {
+        if(historyAdapter==null||basePostPresenter==null){
+            LogUtils.e("historyAdapter==null||basePostPresenter==null");
+            return;
+
+        }
         //判断是否存在begin
         String beginStr = SharedPreferencesUtil.getValue(mContext, KTY_CC_BEGIN);
         if (!TextUtils.isEmpty(beginStr)) {
