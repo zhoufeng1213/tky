@@ -27,7 +27,8 @@ public class MyApplicaiton extends GlobalApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        KtyCcOptionsUtil.init(this, "https://tky.ketianyun.com");
+       KtyCcOptionsUtil.init(this, "https://tky.ketianyun.com");
+//        KtyCcOptionsUtil.init(this, "https://cc-test2.ketianyun.com");
         KtyCcSdkTool.getInstance().initKtyCcSdk(this);
         LibContext.getInstance().init(this, false);
         String logPath = getApplicationContext().getExternalCacheDir() + "/log/";

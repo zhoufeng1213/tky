@@ -7,7 +7,10 @@ package com.xxxx.cc.global;
  */
 public class Constans {
     public static final String AGREE_PROTOCOL_TAG = "AGREE_PROTOCOL_TAG";
-    public static String BASE_URL = "https://tky.ketianyun.com";
+
+   public static String BASE_URL = "https://tky.ketianyun.com";
+//    public static String BASE_URL = "https://cc-test2.ketianyun.com";
+
     public static String APK_NAME = "tky.apk";
     public static String FILES_URL = "https://files.ketianyun.com";
     public static final String USERBEAN_SAVE_TAG = "KYT_SIP_USERBEAN";

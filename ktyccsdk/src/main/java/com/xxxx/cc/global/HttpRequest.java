@@ -6,7 +6,10 @@ package com.xxxx.cc.global;
  * @moduleName
  */
 public class HttpRequest {
-
+    public static class Register {
+        public static String registerUrl = "/sdk/api/v1/register";
+        public static String smsUrl = "/sdk/api/v1/sms";
+    }
     public static class Login {
         public static String loginUser = "/sdk/api/v1/authentication";
         public static String postLoginUrl = "/sdk/api/v1/login";
@@ -20,6 +23,7 @@ public class HttpRequest {
     }
 
     public static class Contant {
+        public static String uploadContacts = "/sdk/api/v1/contacts/uploadContactToAgent";
         public static String mineContacts = "/sdk/api/v1/contacts/mine";
         public static String communicationRecord = "/sdk/api/v1/callHistory/commRecords";
         public static String update = "/sdk/api/v1/contacts/update/";

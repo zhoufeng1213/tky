@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@null"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:rv_backgroundColor="@color/white"
+        android:layout_marginLeft="@dimen/d40"
+        android:layout_marginRight="@dimen/d40"
+        app:rv_cornerRadius="@dimen/d10">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/custom_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingTop="8dip"
+                android:paddingBottom="8dip"
+                android:text="手动添加"
+                android:textColor="#007AFF"
+                android:textSize="17sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/gray_button_background" />
+
+            <TextView
+                android:id="@+id/contact_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingTop="8dip"
+                android:paddingBottom="8dip"
+                android:text="从通讯录导入"
+                android:textColor="#007AFF"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+    </com.flyco.roundview.RoundRelativeLayout>
+
+
+</LinearLayout>

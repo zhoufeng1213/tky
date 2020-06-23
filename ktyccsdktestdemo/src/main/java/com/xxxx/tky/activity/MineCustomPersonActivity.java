@@ -1,16 +1,21 @@
 package com.xxxx.tky.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fly.sweet.dialog.SweetAlertDialog;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lqr.adapter.LQRAdapterForRecyclerView;
@@ -24,6 +29,7 @@ import com.xxxx.cc.base.activity.BaseHttpRequestActivity;
 import com.xxxx.cc.global.Constans;
 import com.xxxx.cc.global.HttpRequest;
 import com.xxxx.cc.model.BaseBean;
+import com.xxxx.cc.model.ContactBean;
 import com.xxxx.cc.model.CustomPersonRequestBean;
 import com.xxxx.cc.model.CustomPersonReturnResultBean;
 import com.xxxx.cc.model.QueryCustomPersonBean;
@@ -32,9 +38,11 @@ import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.TextUtil;
 import com.xxxx.cc.util.TimeUtils;
+import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.cc.util.db.DbUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.util.AntiShakeUtils;
+import com.xxxx.tky.util.MobilePhoneUtil;
 import com.xxxx.tky.widget.QuickIndexBar;
 
 import java.util.ArrayList;
@@ -224,7 +232,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                             }
                         }
                     }
-                    if(item!=null&&item.getLastCallTime()!=null){
+                    if (item != null && item.getLastCallTime() != null) {
                         helper.setText(R.id.last_call_time, TimeUtils.stringToDate_MD_HMS(item.getLastCallTime()));
                     }
 
@@ -268,27 +276,6 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
         }
     }
 
-//
-//    private List<ShowMineCustomPersonBean> getShowMineCustomPersonBeanList(List<QueryCustomPersonBean> list){
-//        List<ShowMineCustomPersonBean> tempList = new ArrayList<>();
-//        if(list != null && list.size() > 0){
-//            for(QueryCustomPersonBean bean : list){
-//                if(bean != null){
-//                    tempList.add(new ShowMineCustomPersonBean(
-//                            bean.getId(),
-//                            bean.getName(),
-//                            bean.getRealMobileNumber(),
-//                            "",
-//                            bean.getUpdatetime(),
-//                            TextUtil.getNameFirstChar(bean.getName()),
-//                            TextUtil.getNameToPinyin(bean.getName())
-//                    ));
-//                }
-//            }
-//        }
-//        return tempList;
-//    }
-
 
     @Override
     public JSONObject getHttpRequestParams(String moduleName) {
@@ -297,8 +284,13 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
             CustomPersonRequestBean requestBean = new CustomPersonRequestBean();
             requestBean.setPage(page);
             requestBean.setSize(COMMON_LOAD_PAGE_SIZE);
-            requestBean.setStarttime(beginTime);
-            requestBean.setEndtime(endTime);
+            if(beginTime>60*60*1000){
+                requestBean.setStarttime(beginTime-60*60*1000);
+            }else {
+                requestBean.setStarttime(beginTime);
+            }
+
+            requestBean.setEndtime(endTime+60*60*1000);
             jsonObject = JSONObject.parseObject(new Gson().toJson(requestBean));
         }
         return jsonObject;
@@ -309,7 +301,10 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
         super.dealHttpRequestFail(moduleName, result);
         if (HttpRequest.Contant.getSubItem.equals(moduleName)) {
 //            SharedPreferencesUtil.save(getApplicationContext(), Constans.SP_DEFINED_ITEM_KEY, "");
-        } else {
+        } else if(HttpRequest.Contant.uploadContacts.equals(moduleName)){
+            dismissDialog();
+            ToastUtil.showToast(MineCustomPersonActivity.this,"上传通讯录失败");
+        }else {
             srlRefresh.finishLoadMore();
             srlRefresh.finishRefresh();
         }
@@ -326,10 +321,8 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
             if (!TextUtils.isEmpty(response)) {
                 CustomPersonReturnResultBean historyResponseBean = (new Gson()).fromJson(response, CustomPersonReturnResultBean.class);
                 if (historyResponseBean.getCode() == 0) {
-                    if (historyResponseBeanList != null &&
-                            historyResponseBean.getPage() != null &&
-                            historyResponseBean.getPage().getContent() != null
-                            && historyResponseBean.getPage().getContent().size() > 0) {
+                    if (historyResponseBeanList != null && historyResponseBean.getPage() != null &&
+                            historyResponseBean.getPage().getContent() != null && historyResponseBean.getPage().getContent().size() > 0) {
                         SharedPreferencesUtil.save(mContext, KTY_CC_BEGIN, String.valueOf(endTime));
 
                         List<QueryCustomPersonBean> tempList = new ArrayList<>();
@@ -372,6 +365,16 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
 //                LogUtils.i("zwmn", "获取item失败");
                 SharedPreferencesUtil.save(getApplicationContext(), Constans.SP_DEFINED_ITEM_KEY, "");
             }
+        }else if(HttpRequest.Contant.uploadContacts.equals(moduleName)){
+            if(result.getCode()==200||result.getCode()==0){
+                refreshData();
+                ToastUtil.showToast(MineCustomPersonActivity.this,"上传成功");
+            }else if(result.getCode()==10002){
+                refreshData();
+                ToastUtil.showToast(MineCustomPersonActivity.this,"部分号码已存在，未上传");
+            }else {
+                ToastUtil.showToast(MineCustomPersonActivity.this,result.getMessage());
+            }
         }
     }
 
@@ -398,8 +401,45 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
         if (AntiShakeUtils.isInvalidClick(view)) {
             return;
         }
+        showSelectDialog();
 //        startActivity(CustomAddActivity.class);
-        startActivityForResult(new Intent(this, CustomAddActivity.class), ADD_CUSTOM_FOR_RESULT_CODE);
+//
+    }
+
+    private SweetAlertDialog sweetAlertDialog;
+    private AlertDialog mAlertDialog;
+
+    public void showSelectDialog() {
+        sweetAlertDialog = new SweetAlertDialog(mContext);
+        View dialogView = LayoutInflater.from(mContext)
+                .inflate(R.layout.dialog_upload_custom, null, false);
+        sweetAlertDialog.setCustomView(dialogView);
+
+
+        dialogView.findViewById(R.id.custom_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sweetAlertDialog.dismiss();
+                startActivityForResult(new Intent(MineCustomPersonActivity.this, CustomAddActivity.class), ADD_CUSTOM_FOR_RESULT_CODE);
+            }
+        });
+        dialogView.findViewById(R.id.contact_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sweetAlertDialog.dismiss();
+                uploadContactToAgent();
+            }
+        });
+        sweetAlertDialog.setCanceledOnTouchOutside(true);
+        sweetAlertDialog.show();
+    }
+
+    private void uploadContactToAgent() {
+        List<ContactBean> contacts = MobilePhoneUtil.getMobilePhoneContactBeans(MineCustomPersonActivity.this);
+        String content=JSONArray.parse(new Gson().toJson(contacts)).toString();
+        basePostPresenter.presenterBusinessByHeaderWithContent( HttpRequest.Contant.uploadContacts,content,
+                "token", cacheUserBean.getToken());
+
     }
 
     private void refreshData() {
@@ -477,7 +517,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                 }
             } else {
                 List<QueryCustomPersonBean> list = DbUtil.queryCustomPersonBeanAllList();
-                if (list != null && list.size() > 0) {
+                if (list != null) {
                     historyResponseBeanList.clear();
                     mAdapter.notifyDataSetChanged();
                     historyResponseBeanList.addAll(list);
@@ -485,6 +525,7 @@ public class MineCustomPersonActivity extends BaseHttpRequestActivity {
                 }
             }
         }
+        refreshData();
     }
 
 

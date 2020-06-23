@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
+import com.xxxx.cc.model.ContactBean;
 import com.xxxx.tky.model.ContactUserName;
 
 import java.util.ArrayList;
@@ -41,6 +42,21 @@ public class MobilePhoneUtil {
                         TextUtil.getNameFirstChar(cursor.getString(cursor.getColumnIndex(NAME))),
                         TextUtil.getNameToPinyin(cursor.getString(cursor.getColumnIndex(NAME)))
                 );
+                phoneDtos.add(phoneDto);
+            }
+        }
+        return phoneDtos;
+    }
+    //获取所有联系人
+    public static List<ContactBean> getMobilePhoneContactBeans(Context context) {
+        List<ContactBean> phoneDtos = new ArrayList<>();
+        ContentResolver cr = context.getContentResolver();
+        if (cr != null) {
+            Cursor cursor = cr.query(phoneUri, new String[]{ID, NUM, NAME}, null, null, null);
+            while (cursor != null && cursor.moveToNext()) {
+                String phoneNum = cursor.getString(cursor.getColumnIndex(NUM));
+                phoneNum = TextUtil.getTextRemoveSpace(phoneNum);
+                ContactBean phoneDto = new ContactBean(cursor.getString(cursor.getColumnIndex(NAME)), phoneNum);
                 phoneDtos.add(phoneDto);
             }
         }

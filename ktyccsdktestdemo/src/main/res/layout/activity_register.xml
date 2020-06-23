@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/image_login_blue_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/close_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fanhui_white"
+        android:padding="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="@dimen/d15"
+        android:layout_marginTop="@dimen/d30"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/login_top1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="95dp"
+            android:layout_height="75dp"
+            android:src="@mipmap/tky_logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d5"
+            android:text="注册"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/login_body"
+        android:layout_width="match_parent"
+        android:layout_height="352dp"
+        android:layout_marginLeft="@dimen/d20"
+        android:layout_marginTop="@dimen/d25"
+        android:layout_marginRight="@dimen/d20"
+        android:background="@drawable/shape_login_white_bg"
+        android:orientation="vertical"
+        android:layout_below="@id/login_top1"
+        >
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d60"
+            android:layout_marginTop="@dimen/d10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/d17"
+                android:layout_height="@dimen/d20"
+                android:layout_marginLeft="@dimen/d23"
+                android:src="@mipmap/account" />
+
+
+
+
+            <com.xw.repo.XEditText
+                android:id="@+id/phone_num_edit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/d30"
+
+                android:layout_marginLeft="@dimen/d25"
+                android:layout_marginRight="@dimen/d15"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/input_telphone"
+                android:inputType="phone"
+                android:paddingLeft="@dimen/d5"
+                android:textSize="@dimen/textNormal13" />
+            <TextView
+                android:paddingTop="@dimen/d8"
+                android:paddingBottom="@dimen/d8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:id="@+id/send_message"
+                android:text="@string/text_telphone_message"
+                android:textColor="@color/blue_btn_bg_color"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_marginLeft="@dimen/d25"
+            android:layout_marginRight="@dimen/d25"
+            android:background="@color/color_divide" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d60"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/d17"
+                android:layout_height="@dimen/d20"
+                android:layout_marginLeft="@dimen/d23"
+                android:src="@mipmap/message_sure" />
+
+
+
+
+            <com.xw.repo.XEditText
+                android:id="@+id/message_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/d30"
+                android:layout_marginLeft="@dimen/d25"
+                android:layout_marginRight="@dimen/d25"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/input_telphone_message"
+                android:inputType="number"
+                android:paddingLeft="@dimen/d5"
+                android:textSize="@dimen/textNormal13" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_marginLeft="@dimen/d25"
+            android:layout_marginRight="@dimen/d25"
+            android:background="@color/color_divide" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d60"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/d17"
+                android:layout_height="@dimen/d20"
+                android:layout_marginLeft="@dimen/d23"
+                android:src="@mipmap/nickname" />
+
+
+
+
+            <com.xw.repo.XEditText
+                android:id="@+id/nickName_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/d30"
+                android:layout_marginLeft="@dimen/d25"
+                android:layout_marginRight="@dimen/d25"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入昵称(两位及以上)"
+                android:inputType="text"
+                android:paddingLeft="@dimen/d5"
+                android:textSize="@dimen/textNormal13" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_marginLeft="@dimen/d25"
+            android:layout_marginRight="@dimen/d25"
+            android:background="@color/color_divide" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d60"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/d17"
+                android:layout_height="@dimen/d20"
+                android:layout_marginLeft="@dimen/d23"
+                android:src="@mipmap/password" />
+
+
+
+
+            <com.xw.repo.XEditText
+                android:id="@+id/pwd_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/d30"
+                android:layout_marginLeft="@dimen/d25"
+                android:layout_marginRight="@dimen/d25"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入密码（6-20位）"
+                android:inputType="textPassword"
+                android:paddingLeft="@dimen/d5"
+                android:textSize="@dimen/textNormal13" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:layout_marginLeft="@dimen/d25"
+            android:layout_marginRight="@dimen/d25"
+            android:background="@color/color_divide" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d60"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/d17"
+                android:layout_height="@dimen/d20"
+                android:layout_marginLeft="@dimen/d23"
+                android:src="@mipmap/sure_password" />
+
+
+
+
+            <com.xw.repo.XEditText
+                android:id="@+id/pwd_sure_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/d30"
+                android:layout_marginLeft="@dimen/d25"
+                android:layout_marginRight="@dimen/d25"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/text_sure_password"
+                android:inputType="textPassword"
+                android:paddingLeft="@dimen/d5"
+                android:textSize="@dimen/textNormal13" />
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/register_button"
+        android:layout_width="@dimen/d240"
+        android:layout_height="54dp"
+        android:layout_marginTop="-30dp"
+        android:background="@drawable/shape_login_blue_bg"
+        android:gravity="center"
+        android:text="注册"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_below="@id/login_body"
+        android:layout_centerHorizontal="true"
+        />
+
+
+</RelativeLayout>

@@ -93,17 +93,22 @@ public class ContactHistoryFragment extends BaseHttpRequestFragment {
                     if (queryCustomPersonBean != null) {
                         historyResponseBeanList = DbUtil.queryPhoneRecordListByHistory(cacheUserBean.getUserId(),
                                 queryCustomPersonBean.getRealMobileNumber(), "OUTBOUND");
-                        if (historyResponseBeanList != null && historyResponseBeanList.size() > 0) {
+//                        if (historyResponseBeanList != null && historyResponseBeanList.size() > 0) {
+//
+//                            emptyTextView.setVisibility(View.GONE);
+//                            historyAdapter = new CallHistoryAdapter(historyResponseBeanList);
+//                            recyclerViewNew.setLayoutManager(new LinearLayoutManager(mContext));
+//                            recyclerViewNew.setAdapter(historyAdapter);
+//                            recyclerViewNew.setVisibility(View.VISIBLE);
+//                        } else {
+//                            recyclerViewNew.setVisibility(View.GONE);
+//                            emptyTextView.setVisibility(View.VISIBLE);
+//                        }
+                        historyAdapter = new CallHistoryAdapter(historyResponseBeanList);
+                        recyclerViewNew.setLayoutManager(new LinearLayoutManager(mContext));
+                        recyclerViewNew.setAdapter(historyAdapter);
+                        recyclerViewNew.setVisibility(View.VISIBLE);
 
-                            emptyTextView.setVisibility(View.GONE);
-                            historyAdapter = new CallHistoryAdapter(historyResponseBeanList);
-                            recyclerViewNew.setLayoutManager(new LinearLayoutManager(mContext));
-                            recyclerViewNew.setAdapter(historyAdapter);
-                            recyclerViewNew.setVisibility(View.VISIBLE);
-                        } else {
-                            recyclerViewNew.setVisibility(View.GONE);
-                            emptyTextView.setVisibility(View.VISIBLE);
-                        }
                     }
                 }
             }
@@ -142,7 +147,7 @@ public class ContactHistoryFragment extends BaseHttpRequestFragment {
 //                    }
 //
 //                    isFirstRefrush = false;
-                    endTime=System.currentTimeMillis();
+                    endTime = System.currentTimeMillis();
                     basePostPresenter.presenterBusinessByHeader(
                             HttpRequest.CallHistory.callHistory,
                             false,
@@ -158,11 +163,11 @@ public class ContactHistoryFragment extends BaseHttpRequestFragment {
         }
 
     }
+
     public void loadData() {
-        if(historyAdapter==null||basePostPresenter==null){
+        if (historyAdapter == null || basePostPresenter == null) {
             LogUtils.e("historyAdapter==null||basePostPresenter==null");
             return;
-
         }
         //判断是否存在begin
         String beginStr = SharedPreferencesUtil.getValue(mContext, KTY_CC_BEGIN);
@@ -181,6 +186,7 @@ public class ContactHistoryFragment extends BaseHttpRequestFragment {
                 historyAdapter.notifyDataSetChanged();
             }
         }
+
         basePostPresenter.presenterBusinessByHeader(
                 HttpRequest.CallHistory.callHistory,
                 false,
@@ -188,14 +194,16 @@ public class ContactHistoryFragment extends BaseHttpRequestFragment {
                 "Content-Type", "application/json"
         );
     }
+
     @Override
     public JSONObject getHttpRequestParams(String moduleName) {
         JSONObject jsonObject = new JSONObject();
+        endTime=System.currentTimeMillis();
         if (HttpRequest.CallHistory.callHistory.equals(moduleName)) {
             ArrayList<String> userIdArrays = new ArrayList<>();
             userIdArrays.add(cacheUserBean.getUserId());
             HistoryRequestBean requestBean = new HistoryRequestBean();
-            if(queryCustomPersonBean!=null){
+            if (queryCustomPersonBean != null) {
                 requestBean.setDnis(queryCustomPersonBean.getMobile());
             }
             requestBean.setPage(page);
@@ -254,6 +262,7 @@ public class ContactHistoryFragment extends BaseHttpRequestFragment {
 
         }
     }
+
     private void saveData(List<ContentBean> list) {
         ThreadTask.getInstance().executorDBThread(new Runnable() {
             @Override

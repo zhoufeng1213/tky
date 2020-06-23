@@ -47,6 +47,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 
 import okhttp3.MediaType;
 
@@ -95,7 +96,7 @@ public class LinphoneService extends AbsWorkService {
     private MyPhoneListener myPhoneListener;
     public static boolean startTelFromCall;//SIM卡打电话
     public static String telUserName;//从CustomPesonDetailActivit启动打电话，如果用sim卡拨号，上传通话记录用此名字
-    public static String telNum;//从CustomPesonDetailActivit启动打电话，如果用sim卡拨号，上传通话记录用此名字
+    public static String telNum;//sim卡拨打的电话，用来对比第一条通话记录
     public static String callBySystemUUID;
 
     @Nullable
@@ -339,7 +340,7 @@ public class LinphoneService extends AbsWorkService {
 
             int billingInSec = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.DURATION));//获取通话时长，值为多少秒
             callHistoryBean.setBillingInSec(billingInSec);
-            callHistoryBean.setDuration((int) (offHook - idle) / 1000);
+            callHistoryBean.setDuration((int) (idle-offHook) / 1000);
             callHistoryBean.setCreateTime(dateFormat.format(idle - billingInSec * 1000));
             callHistoryBean.setHangupTime(dateFormat.format(idle));
             callHistoryBean.setBridgeTime(dateFormat.format(idle - billingInSec * 1000));
@@ -353,6 +354,9 @@ public class LinphoneService extends AbsWorkService {
                 getContentCallLogDelay();
                 hasPostDealy = true;
                 return;
+            }
+            if(callBySystemUUID==null){
+                LinphoneService.callBySystemUUID = UUID.randomUUID().toString();
             }
             callHistoryBean.setCallId(callBySystemUUID);
             callHistoryBean.setAni(SystemUtils.getNativePhoneNumber(this));

@@ -24,6 +24,7 @@ import com.xxxx.tky.activity.FeedBackActivity;
 import com.xxxx.tky.activity.LoginActivity;
 import com.xxxx.tky.contant.Contant;
 import com.xxxx.tky.util.AntiShakeUtils;
+import com.xxxx.tky.util.TextUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -68,7 +69,12 @@ public class MineFragment extends BaseFragment {
             cacheUserBean = (UserBean) objectBean;
             if (!TextUtils.isEmpty(cacheUserBean.getUsername())) {
                 userImage.setText(cacheUserBean.getUsername().substring(0, 1));
-                userName.setText(cacheUserBean.getUsername());
+                if(!TextUtils.isEmpty(cacheUserBean.getUname())){
+                    userName.setText(cacheUserBean.getUname());
+                }else {
+                    userName.setText(cacheUserBean.getUsername());
+                }
+
             }
         }
         String appVersion = PackageUtils.getVersionName(mActivity);

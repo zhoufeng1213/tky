@@ -65,12 +65,98 @@ public class BasePostPresenter {
         doPostByHeaders(moduleName, headers);
     }
 
+    public void presenterBusinessByHeaderWithContent(String moduleName, String content, String... headers) {
+        mActivity.showDialog();
+        doPostByHeadersWithContent(moduleName, content, headers);
+    }
+
     public void presenterBusinessByHeader(String moduleName, boolean isShowDialog, String... headers) {
         this.isShowDialog = isShowDialog;
         if (isShowDialog) {
             mActivity.showDialog();
         }
         doPostByHeaders(moduleName, headers);
+    }
+
+    private void doPostByHeadersWithContent(final String moduleName, final String content, String... headers) {
+        //判断网络是否可用
+        if (!NetUtil.isNetworkConnected(mActivity)) {
+            mActivity.dismissDialog();
+            BaseBean baseBean = new BaseBean();
+            baseBean.setMessage("网络连接失败，请检查网络");
+            mActivity.dealHttpRequestFail(moduleName, baseBean);
+            return;
+        }
+        PostStringBuilder okHttpUtils = OkHttpUtils.postString();
+        okHttpUtils.url(Constans.BASE_URL + moduleName);
+        //添加header
+        if (headers != null) {
+            if (headers.length > 1 && headers.length % 2 == 0) {
+                for (int i = 0; i < headers.length; i += 2) {
+                    okHttpUtils.addHeader(valueOf(headers[i]), valueOf(headers[i + 1]));
+                }
+            }
+        }
+        LogUtils.e("url:" + Constans.BASE_URL + moduleName + "，Params:" + content);
+        okHttpUtils
+                .content(content)
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new MyStringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        LogUtils.e("e.getMessage():" + e.getMessage());
+                        mActivity.dismissDialog();
+                        if (e != null) {
+                            try {
+                                BaseBean baseBean = JSON.parseObject(e.getMessage(), BaseBean.class);
+                                if (baseBean.getCode() == 45009) {
+                                    ToastUtil.showToast(mActivity, "您的登录身份已过期，请退出重新登录");
+                                } else {
+                                    mActivity.dealHttpRequestFail(moduleName, baseBean);
+                                }
+                            } catch (JSONException ex) {
+
+                                BaseBean baseBean = new BaseBean();
+                                baseBean.setMessage(e.getMessage());
+                                mActivity.dealHttpRequestFail(moduleName, baseBean);
+                            }
+
+
+                        }
+                    }
+
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        LogUtils.e("tag", "onResponse:" + response);
+                        try {
+                            if (isShowDialog) {
+                                mActivity.dismissDialog();
+                            }
+                            if (!TextUtils.isEmpty(response)) {
+                                BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
+                                if (baseBean.getCode() == 200 || baseBean.getCode() == 10002) {
+                                    mActivity.dealHttpRequestResult(moduleName, baseBean, response);
+                                } else {
+
+                                    mActivity.dismissDialog();
+                                    mActivity.dealHttpRequestFail(moduleName, baseBean);
+                                }
+
+                            } else {
+                                mActivity.dismissDialog();
+                                mActivity.showToast("服务器无响应");
+                                mActivity.dealHttpRequestFail(moduleName, null);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            mActivity.dismissDialog();
+                            mActivity.showToast("请检查网络连接");
+                            mActivity.dealHttpRequestFail(moduleName, null);
+                        }
+                    }
+                });
     }
 
     private void doPostByHeaders(final String moduleName, String... headers) {

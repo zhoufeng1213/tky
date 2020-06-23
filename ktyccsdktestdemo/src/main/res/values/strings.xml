@@ -7,8 +7,14 @@
     <string name="find_new_version">发现新版本</string>
     <string name="text_call_system">呼叫中心系统</string>
     <string name="input_username">请输入账号</string>
+    <string name="input_telphone">请输入手机号(账号)</string>
     <string name="input_password">请输入密码</string>
     <string name="text_username">账号</string>
+    <string name="text_telphone">手机号</string>
+    <string name="text_telphone_message">获取验证码</string>
+    <string name="input_telphone_message">请输入验证码</string>
+    <string name="text_sure_password">请再次输入密码</string>
+
     <string name="text_password">密码</string>
     <string name="text_history_call">历史通话</string>
     <string name="agree_content">&#160;&#160;&#160;&#160;欢迎您使用广州科天视畅信息科技有限公司（以下简称“我们”）“天客云”呼叫中心产品及相关软件（以下统称“服务”）！\n

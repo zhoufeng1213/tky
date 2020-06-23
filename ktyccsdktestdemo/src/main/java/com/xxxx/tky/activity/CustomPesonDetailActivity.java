@@ -23,6 +23,7 @@ import com.xxxx.cc.model.CustomDefinedBean;
 import com.xxxx.cc.model.QueryCustomPersonBean;
 import com.xxxx.cc.model.UserBean;
 import com.xxxx.cc.service.LinphoneService;
+import com.xxxx.cc.util.LogUtils;
 import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.TimeUtils;
 import com.xxxx.cc.util.ToastUtil;
@@ -45,6 +46,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.xxxx.cc.global.Constans.USERBEAN_SAVE_TAG;
+import static com.xxxx.cc.global.HttpRequest.Contant.updateLastCallTime;
 
 /**
  * @author zhoufeng
@@ -156,7 +158,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
     @Override
     protected void onResume() {
         super.onResume();
-        if(LinphoneService.startTelFromCall&&mCommunicationRecordResponseBean!=null){
+        if (LinphoneService.startTelFromCall && mCommunicationRecordResponseBean != null) {
             goToCall(mCommunicationRecordResponseBean);
         }
         //查找本地的数据库
@@ -217,7 +219,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
 
                 @Override
                 public void onError() {
-                    ToastUtil.showToast(CustomPesonDetailActivity.this,"通话记录上传失败");
+                    ToastUtil.showToast(CustomPesonDetailActivity.this, "通话记录上传失败");
                 }
             });
 
@@ -229,6 +231,15 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
                     mCommunicationRecordResponseBean.setCalldetailId(LinphoneService.callBySystemUUID);
                     if (KtyCcSdkTool.getInstance().mDemoInterface != null && mCommunicationRecordResponseBean != null) {
                         KtyCcSdkTool.getInstance().mDemoInterface.goToCall(mCommunicationRecordResponseBean);
+                    }
+                    //直接调用更新电话时间
+                    if (!TextUtils.isEmpty(queryCustomPersonBean.getId())) {
+                        LogUtils.e("当前请求的token：" + cacheUserBean.getToken());
+                        basePostPresenter.presenterBusinessByHeader(
+                                (updateLastCallTime + "/" + queryCustomPersonBean.getId()),
+                                "token", cacheUserBean.getToken(),
+                                "Content-Type", "application/json"
+                        );
                     }
                 }
             });
@@ -275,6 +286,10 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
     @Override
     public void dealHttpRequestFail(String moduleName, BaseBean result) {
         super.dealHttpRequestFail(moduleName, result);
+        if ((updateLastCallTime + "/" + queryCustomPersonBean.getId()).equals(moduleName)) {
+            LogUtils.e("更新客户电话时间失败");
+
+        }
 
     }
 
@@ -315,6 +330,9 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
                 }
 
             }
+        } else if ((updateLastCallTime + "/" + queryCustomPersonBean.getId()).equals(moduleName)) {
+            LogUtils.e("更新客户电话时间成功");
+
         }
 
 

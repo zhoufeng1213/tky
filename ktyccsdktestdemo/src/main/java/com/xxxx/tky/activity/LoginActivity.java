@@ -87,8 +87,10 @@ public class LoginActivity extends BaseHttpRequestActivity {
     TextView homeTvSwitchUrlHost;
     @BindView(R.id.tv_app_version)
     TextView tvVersion;
-@BindView(R.id.setting_image)
-ImageView settingImage;
+    @BindView(R.id.register_button)
+    TextView registerTx;
+    @BindView(R.id.setting_image)
+    ImageView settingImage;
 
     private RxPermissions rxPermissions;
 
@@ -144,7 +146,7 @@ ImageView settingImage;
         } else {
             //判断是否有地址
             String address = SharedPreferencesUtil.getValue(mContext, Constans.TKY_CHANGE_URL);
-            if(!TextUtils.isEmpty(address)){
+            if (!TextUtils.isEmpty(address)) {
                 KtyCcOptionsUtil.switchHostOption(mContext, address);
             }
             //先检测更新
@@ -209,7 +211,7 @@ ImageView settingImage;
                                     @Override
                                     public void onFailed(int code, String message) {
                                         dismissDialog();
-                                        if(!TextUtils.isEmpty(message)){
+                                         if (!TextUtils.isEmpty(message)) {
                                             if (code == 45003)
                                                 Toast.makeText(mContext, "密码错误", Toast.LENGTH_SHORT).show();
                                             else
@@ -250,7 +252,28 @@ ImageView settingImage;
 
     }
 
-    private  SweetAlertDialog sweetAlertDialog;
+    @OnClick(R.id.register_button)
+    public void gotoRegister(View view) {
+        if (AntiShakeUtils.isInvalidClick(view)) {
+            return;
+        }
+        Intent intent=new Intent(this,RegisterActivity.class);
+        startActivityForResult(intent,101);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==101&&data!=null){
+
+            String userName=data.getStringExtra("phone");
+            phoneNumEdit.setTextEx(userName);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private SweetAlertDialog sweetAlertDialog;
+
     /**
      * 显示call自己
      */
@@ -270,7 +293,7 @@ ImageView settingImage;
         if (!TextUtils.isEmpty(address)) {
             LogUtils.e("当前保存的请求地址：" + address);
             editText.setText(address);
-        }else{
+        } else {
             editText.setText(Constans.BASE_URL);
         }
 
@@ -281,7 +304,7 @@ ImageView settingImage;
                     sweetAlertDialog.dismiss();
                 }
                 KtyCcOptionsUtil.switchHostOption(mContext, editText.getText().toString().trim());
-                SharedPreferencesUtil.save(mContext,Constans.TKY_CHANGE_URL,editText.getText().toString().trim());
+                SharedPreferencesUtil.save(mContext, Constans.TKY_CHANGE_URL, editText.getText().toString().trim());
             }
         });
 

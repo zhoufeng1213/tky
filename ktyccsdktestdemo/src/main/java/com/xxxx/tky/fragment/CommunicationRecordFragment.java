@@ -297,7 +297,12 @@ public class CommunicationRecordFragment extends BaseHttpRequestFragment {
                             && historyResponseBean.getData().getContent().size() > 0) {
                         contentBeanList.clear();
                         communicationRecordAdapter.notifyDataSetChanged();
-                        contentBeanList.addAll(historyResponseBean.getData().getContent());
+                        List<CommunicationRecordResponseBean> remoteList = historyResponseBean.getData().getContent();
+                        for(CommunicationRecordResponseBean bean:remoteList){
+                            if(bean.callDetailDTO!=null){
+                                contentBeanList.add(bean);
+                            }
+                        }
                         LogUtils.e("isCall:" + isCall);
                         if (isCall && currentCallsCommunicationRecordResponseBean != null) {
                             contentBeanList.add(0, currentCallsCommunicationRecordResponseBean);
