@@ -60,6 +60,8 @@ public class WorkFragment extends BaseFragment {
             return;
         }
         Intent intent = new Intent(getContext(), GuideActivity.class);
+        intent.putExtra(GuideActivity.TITLE_NAME,"使用指南");
+        intent.putExtra(GuideActivity.WEB_URL,"https://www.ketianyun.com/callcenter/tky/app/help/help.html");
 //            intent.setAction("android.intent.action.VIEW");
 //            Uri content_url = Uri.parse("https://www.ketianyun.com/callcenter/tky/app/help/help.html");//此处填链接
 //            intent.setData(content_url);

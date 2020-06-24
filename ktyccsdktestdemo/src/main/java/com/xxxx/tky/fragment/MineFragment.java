@@ -21,6 +21,7 @@ import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.tky.R;
 import com.xxxx.tky.activity.ActivityAboutActivity;
 import com.xxxx.tky.activity.FeedBackActivity;
+import com.xxxx.tky.activity.GuideActivity;
 import com.xxxx.tky.activity.LoginActivity;
 import com.xxxx.tky.contant.Contant;
 import com.xxxx.tky.util.AntiShakeUtils;
@@ -69,9 +70,9 @@ public class MineFragment extends BaseFragment {
             cacheUserBean = (UserBean) objectBean;
             if (!TextUtils.isEmpty(cacheUserBean.getUsername())) {
                 userImage.setText(cacheUserBean.getUsername().substring(0, 1));
-                if(!TextUtils.isEmpty(cacheUserBean.getUname())){
+                if (!TextUtils.isEmpty(cacheUserBean.getUname())) {
                     userName.setText(cacheUserBean.getUname());
-                }else {
+                } else {
                     userName.setText(cacheUserBean.getUsername());
                 }
 
@@ -114,5 +115,20 @@ public class MineFragment extends BaseFragment {
             startActivity(intent);
         }
 
+    }
+
+    @OnClick({R.id.online_layout})
+    public void startOnLineWeb(View view) {
+        if (AntiShakeUtils.isInvalidClick(view)) {
+            return;
+        }
+        Intent intent = new Intent(getContext(), GuideActivity.class);
+        intent.putExtra(GuideActivity.TITLE_NAME, "在线客服");
+        String url = "https://tky.ketianyun.com/im/text/4028838b5ac815e3015ac81645f90000.html?visitorID=";
+        if (!TextUtils.isEmpty(cacheUserBean.getUserId())) {
+            url += cacheUserBean.getUserId();
+        }
+        intent.putExtra(GuideActivity.WEB_URL, url);
+        startActivity(intent);
     }
 }
