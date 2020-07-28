@@ -51,6 +51,7 @@
         <activity android:name="com.xxxx.tky.activity.ActivityAboutActivity" />
         <activity android:name="com.xxxx.tky.activity.CustomServicerActivity" />
         <activity android:name="com.xxxx.tky.activity.RegisterActivity" />
+        <activity android:name="com.xxxx.tky.activity.MineDetailActivity" />
         <activity
             android:name="com.xxxx.tky.activity.CustomPersonDetailToDetailActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />

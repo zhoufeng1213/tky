@@ -23,6 +23,7 @@ import com.xxxx.tky.activity.ActivityAboutActivity;
 import com.xxxx.tky.activity.FeedBackActivity;
 import com.xxxx.tky.activity.GuideActivity;
 import com.xxxx.tky.activity.LoginActivity;
+import com.xxxx.tky.activity.MineDetailActivity;
 import com.xxxx.tky.contant.Contant;
 import com.xxxx.tky.util.AntiShakeUtils;
 import com.xxxx.tky.util.TextUtil;
@@ -65,15 +66,23 @@ public class MineFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         Object objectBean = SharedPreferencesUtil.getObjectBean(mContext, USERBEAN_SAVE_TAG, UserBean.class);
         if (objectBean != null) {
             cacheUserBean = (UserBean) objectBean;
             if (!TextUtils.isEmpty(cacheUserBean.getUsername())) {
-                userImage.setText(cacheUserBean.getUsername().substring(0, 1));
+
                 if (!TextUtils.isEmpty(cacheUserBean.getUname())) {
                     userName.setText(cacheUserBean.getUname());
+                    userImage.setText(cacheUserBean.getUname().substring(0, 1));
                 } else {
                     userName.setText(cacheUserBean.getUsername());
+                    userImage.setText(cacheUserBean.getUsername().substring(0, 1));
                 }
 
             }
@@ -86,7 +95,7 @@ public class MineFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.log_out_button, R.id.feedback_layout, R.id.about_layout})
+    @OnClick({R.id.log_out_button, R.id.feedback_layout, R.id.about_layout,R.id.user_layout})
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.log_out_button) {
@@ -112,6 +121,9 @@ public class MineFragment extends BaseFragment {
         } else if (i == R.id.about_layout) {
 
             Intent intent = new Intent(mContext, ActivityAboutActivity.class);
+            startActivity(intent);
+        }else if(i==R.id.user_layout){
+            Intent intent = new Intent(mContext, MineDetailActivity.class);
             startActivity(intent);
         }
 

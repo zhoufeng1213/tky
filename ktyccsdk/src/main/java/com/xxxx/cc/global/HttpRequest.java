@@ -6,6 +6,9 @@ package com.xxxx.cc.global;
  * @moduleName
  */
 public class HttpRequest {
+    public static class Update {
+        public static String updateUrl = "/sdk/api/v1/user/update";
+    }
     public static class Register {
         public static String registerUrl = "/sdk/api/v1/register";
         public static String smsUrl = "/sdk/api/v1/sms";

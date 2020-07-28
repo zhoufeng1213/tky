@@ -11,8 +11,11 @@ buildscript {
         maven {
             url "https://linphone.org/snapshots/maven_repository/"
         }
-        maven {
-            url "https://linphone.org/releases/maven_repository/"
+//        maven {
+//            url "https://linphone.org/releases/maven_repository/"
+//        }
+        flatDir {
+            dirs '../repositories'
         }
         maven {
             url "http://sdk.ketianyun.com:8081/repository/marsrepo"
@@ -47,13 +50,15 @@ allprojects {
 //        }
         google()
         jcenter()
-
+        flatDir {
+            dirs '../repositories'
+        }
         maven {
             url "https://linphone.org/snapshots/maven_repository/"
         }
-        maven {
-            url "https://linphone.org/releases/maven_repository/"
-        }
+//        maven {
+//            url "https://linphone.org/releases/maven_repository/"
+//        }
         maven {
             url "http://sdk.ketianyun.com:8081/repository/marsrepo"
         }

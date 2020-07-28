@@ -37,7 +37,8 @@ import org.linphone.core.CoreListenerStub;
 import org.linphone.core.Factory;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.RegistrationState;
-import org.linphone.core.tools.Log;
+import org.linphone.mediastream.Log;
+//import org.linphone.core.tools.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -213,7 +214,8 @@ public class LinphoneService extends AbsWorkService {
         }
         if (mCore != null) {
             mCore.removeListener(mCoreListener);
-            mCore.stop();
+            mCore.stopDtmf();
+//            mCore.stop();
         }
         if (telephonyManager != null && myPhoneListener != null) {
             telephonyManager.listen(myPhoneListener, PhoneStateListener.LISTEN_NONE);
