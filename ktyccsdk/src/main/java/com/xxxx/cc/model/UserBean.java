@@ -24,6 +24,7 @@ public class UserBean {
     private static final String SIP_CALL="siteEnableAppSipCall";
     private static final String DOUBLE_CALL="siteEnableAppDoubleCall";
     private static final String SIM_CALL="siteEnableAppSimCall";
+    private static final String API_CALL="siteEnableAppApiDoubleCall";
     private boolean[] siteEnables;
     private String ccServerProxy;
     private CcUserInfoBean ccUserInfo;
@@ -43,7 +44,7 @@ public class UserBean {
     }
 
     public boolean[] getSiteEnables() {
-        siteEnables =new boolean[3];
+        siteEnables =new boolean[4];
         if(sitePermisson!=null&&!sitePermisson.isEmpty()){
             for(String s:sitePermisson){
                 if(s!=null&&s.equals(SIP_CALL)){
@@ -52,6 +53,8 @@ public class UserBean {
                     siteEnables[1]=true;
                 }else if(s!=null&&s.equals(SIM_CALL)){
                     siteEnables[2]=true;
+                }else if(s!=null&&s.equals(API_CALL)){
+                    siteEnables[3]=true;
                 }
             }
         }

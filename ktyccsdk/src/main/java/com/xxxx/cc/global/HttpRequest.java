@@ -45,6 +45,7 @@ public class HttpRequest {
         public static String checkVersion = "/sdk/api/v1/version/android/";
     }
 
+    public static String xiangyunCallApi= "/callInfo/call/xcall";
     public static String makecallExternal = "/sdk/api/v1/makecall/external";
     public static String makecallInternal = "/sdk/api/v1/makecall/internal";
     public static String uploadlog = "/sdk/api/v1/uploadlog/upload";

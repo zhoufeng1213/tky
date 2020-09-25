@@ -37,6 +37,7 @@ import org.linphone.core.CoreListenerStub;
 import org.linphone.core.Factory;
 import org.linphone.core.ProxyConfig;
 import org.linphone.core.RegistrationState;
+import org.linphone.core.ToneID;
 import org.linphone.mediastream.Log;
 //import org.linphone.core.tools.Log;
 
@@ -160,6 +161,8 @@ public class LinphoneService extends AbsWorkService {
         mCore = Factory.instance()
                 .createCore(basePath + "/.linphonerc", basePath + "/linphonerc", this);
         mCore.addListener(mCoreListener);
+//        mCore.setCallErrorTone(ToneID.CallWaiting, mRingSoundFile);
+
         // Core is ready to be configured
         configureCore();
         //监听电话
@@ -286,6 +289,7 @@ public class LinphoneService extends AbsWorkService {
             }
         }
         mCore.setUserCertificatesPath(userCerts);
+
     }
 
     private void copyIfNotExist(int ressourceId, String target) throws IOException {

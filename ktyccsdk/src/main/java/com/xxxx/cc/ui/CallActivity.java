@@ -6,6 +6,11 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -52,6 +57,7 @@ import org.linphone.core.Call;
 import org.linphone.core.Core;
 import org.linphone.core.CoreListenerStub;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +91,9 @@ public class CallActivity extends BaseHttpRequestActivity {
     private static final String TAG = "CallActivity";
     private UserBean cacheUserBean;
     private CommunicationRecordResponseBean mCommunicationRecordResponseBean;
+    private MediaPlayer mediaPlayer;
 
+    private String ringAssetsPath="hangup.wav";
     public static boolean isReturnCall;
 
 
@@ -492,7 +500,7 @@ public class CallActivity extends BaseHttpRequestActivity {
             LogUtils.e("CallActivity, onCallStateChanged, CallState:" + state.name() + ", message:" + message);
             if (state == Call.State.End) {
                 LogUtils.e("CallActivity, onCallStateChanged, 进入了End2");
-
+                startSystemLongRing();
                 if(KtyCcSdkTool.callPhoneBack != null){
                     KtyCcSdkTool.callPhoneBack.watchPhoneStatus(2);
                 }
@@ -502,7 +510,8 @@ public class CallActivity extends BaseHttpRequestActivity {
                 if (floatingImageDisplayService != null) {
                     floatingImageDisplayService.releaseService();
                 }
-                finish();
+
+
             }
         }
     };
@@ -556,6 +565,52 @@ public class CallActivity extends BaseHttpRequestActivity {
             }
         }
     }
+    public void startSystemLongRing() {
+        AssetFileDescriptor fd = null;
+        if (mediaPlayer == null && ringAssetsPath != null && !ringAssetsPath.equals("")) {
+            try {
+                fd = this.getAssets().openFd(ringAssetsPath);
+                if (fd != null) {
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setDataSource(fd.getFileDescriptor(), fd.getStartOffset(), fd.getLength());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (mediaPlayer != null) {
+            try {
+//                mediaPlayer.setVolume(currentVoice,currentVoice);
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mediaPlayer.prepareAsync();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mediaPlayer.setLooping(false);
+
+                    mediaPlayer.start();
+                }
+            });
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    });
+                }
+            });
+
+        }
+
+
+    }
 
     @Override
     protected void onDestroy() {
@@ -570,6 +625,14 @@ public class CallActivity extends BaseHttpRequestActivity {
         if (mBound) {
             unbindService(conn);
             mBound = false;
+        }
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+
+            mediaPlayer.release();
+            mediaPlayer = null;
         }
 //        LinServiceManager.unRegisterOnlineLinPhone(cacheUserBean, false);
     }

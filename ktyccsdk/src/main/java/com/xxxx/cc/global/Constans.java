@@ -9,6 +9,7 @@ public class Constans {
     public static final String AGREE_PROTOCOL_TAG = "AGREE_PROTOCOL_TAG";
 
    public static String BASE_URL = "https://tky.ketianyun.com";
+   public static String XIANGYUN_BASE_URL = "https://tky.ketianyun.com";
 //    public static String BASE_URL = "https://cc-test2.ketianyun.com";
 
     public static String APK_NAME = "tky.apk";

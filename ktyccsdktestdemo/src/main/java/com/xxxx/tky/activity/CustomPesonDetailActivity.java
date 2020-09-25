@@ -222,6 +222,19 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
                     ToastUtil.showToast(CustomPesonDetailActivity.this, "通话记录上传失败");
                 }
             });
+            CallPhoneTool.getInstance().setCallPhoneFromDetailActivity(new CallPhoneTool.CallPhoneFromDetailActivity() {
+                @Override
+                public void onCall(String sessionId) {
+                    if(!TextUtils.isEmpty(sessionId)){
+                        mCommunicationRecordResponseBean = new CommunicationRecordResponseBean();
+                        mCommunicationRecordResponseBean.setCalldetailId(sessionId);
+                        if (KtyCcSdkTool.getInstance().mDemoInterface != null && mCommunicationRecordResponseBean != null) {
+                            KtyCcSdkTool.getInstance().mDemoInterface.goToCall(mCommunicationRecordResponseBean);
+                        }
+                    }
+
+                }
+            });
 
             CallPhoneTool.getInstance().setCallPhoneBySim(new CallPhoneTool.CallPhoneBySim() {
                 @Override
@@ -379,6 +392,7 @@ public class CustomPesonDetailActivity extends BaseHttpRequestActivity implement
         super.onDestroy();
         KtyCcSdkTool.getInstance().setmCallPhoneInterface(null);
         CallPhoneTool.getInstance().setCallPhoneBySim(null);
+        CallPhoneTool.getInstance().setCallPhoneFromDetailActivity(null);
         LinphoneService.getInstance().setUpLoadContentCall(null);
     }
 }

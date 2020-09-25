@@ -24,6 +24,7 @@ import com.xxxx.cc.util.SharedPreferencesUtil;
 import com.xxxx.cc.util.SystemUtils;
 import com.xxxx.cc.util.ToastUtil;
 import com.xxxx.tky.model.MakecallBean;
+import com.xxxx.tky.model.XiangyuncallBean;
 import com.xxxx.tky.view.ButtomCallDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostStringBuilder;
@@ -44,6 +45,8 @@ public class CallPhoneTool {
     private String userName;
     private String customeUserId;
     public CallPhoneBySim callPhoneBySim;
+    public CallPhoneFromDetailActivity callPhoneFromDetailActivity;
+
     private CallPhoneTool() {
 
     }
@@ -128,11 +131,25 @@ public class CallPhoneTool {
                     dialog.cancel();
                     LogUtils.e("Mobile:" + cacheUserBean.getMobile());
                     if (cacheUserBean.getMobile() == null || cacheUserBean.getMobile().equals("")) {
-                        showToast("请前往我的--个人信息页面配置手机号");
+                        showToast("请前往我的个人信息页面配置手机号");
                         return;
                     }
-                    doPostByHeaders(
+                    doPostByHeaders(Constans.BASE_URL,
                             HttpRequest.makecallExternal,
+                            "token", cacheUserBean.getToken(),
+                            "Content-Type", "application/json"
+                    );
+                }
+            });
+        }
+        if (siteEnables != null && siteEnables[3]) {
+            builder.addMenu("API拨号", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                    LogUtils.e("Mobile:" + cacheUserBean.getMobile());
+                    doPostByHeaders(Constans.BASE_URL,
+                            HttpRequest.xiangyunCallApi,
                             "token", cacheUserBean.getToken(),
                             "Content-Type", "application/json"
                     );
@@ -177,11 +194,11 @@ public class CallPhoneTool {
 
     private void call(Context context, String telPhone) {
         try {
-            if(callPhoneBySim!=null){
+            if (callPhoneBySim != null) {
                 callPhoneBySim.onCall();
             }
-            LinphoneService.telUserName =userName;
-            LinphoneService.telNum =telPhone;
+            LinphoneService.telUserName = userName;
+            LinphoneService.telNum = telPhone;
             LinphoneService.startTelFromCall = true;
             Intent intent = new Intent(Intent.ACTION_CALL);
             Uri uri = Uri.parse(telPhone);
@@ -192,12 +209,13 @@ public class CallPhoneTool {
         }
     }
 
-
     public void setCallPhoneBySim(CallPhoneBySim callPhoneBySim) {
         this.callPhoneBySim = callPhoneBySim;
     }
-
-    private void doPostByHeaders(String moduleName, String... headers) {
+    public void setCallPhoneFromDetailActivity(CallPhoneFromDetailActivity callPhoneFromDetailActivity) {
+        this.callPhoneFromDetailActivity = callPhoneFromDetailActivity;
+    }
+    private void doPostByHeaders(String baseUrl, String moduleName, String... headers) {
         //判断网络是否可用
         if (!NetUtil.isNetworkConnected(mContext)) {
             BaseBean baseBean = new BaseBean();
@@ -207,7 +225,7 @@ public class CallPhoneTool {
             return;
         }
         PostStringBuilder okHttpUtils = OkHttpUtils.postString();
-        okHttpUtils.url(Constans.BASE_URL + moduleName);
+        okHttpUtils.url(baseUrl + moduleName);
         //添加header
         if (headers != null) {
             if (headers.length > 1 && headers.length % 2 == 0) {
@@ -216,7 +234,7 @@ public class CallPhoneTool {
                 }
             }
         }
-        LogUtils.e("url:" + Constans.BASE_URL + moduleName + "，Params:" + getHttpRequestParams(moduleName).toString());
+        LogUtils.e("url:" + baseUrl + moduleName + "，Params:" + getHttpRequestParams(moduleName).toString());
         okHttpUtils
                 .content(getHttpRequestParams(moduleName).toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
@@ -239,7 +257,11 @@ public class CallPhoneTool {
                                 BaseBean baseBean = JSON.parseObject(response, BaseBean.class);
                                 if (baseBean.isOk()) {
                                     dealHttpRequestSuccess(moduleName, baseBean);
-                                } else {
+                                } else if (baseBean.getCode() == 200 && moduleName.equals(HttpRequest.xiangyunCallApi)) {
+                                    dealHttpRequestSuccess(moduleName, baseBean);
+                                } else if (baseBean.getCode() == 400 && moduleName.equals(HttpRequest.xiangyunCallApi)) {
+                                    dealHttpRequestFail(moduleName, baseBean);
+                                }else {
                                     LogUtils.e("呼叫失败 http 4");
                                     if (baseBean != null && TextUtils.isEmpty(baseBean.getMessage())) {
                                         baseBean.setMessage("呼叫失败");
@@ -271,6 +293,9 @@ public class CallPhoneTool {
             makecallBean.setName(userName);
             makecallBean.setAppname("android");
             jsonObject = JSONObject.parseObject(new Gson().toJson(makecallBean));
+        } else if (HttpRequest.xiangyunCallApi.equals(moduleName)) {
+            XiangyuncallBean xiangyuncallBean = new XiangyuncallBean(phoneNum);
+            jsonObject = JSONObject.parseObject(new Gson().toJson(xiangyuncallBean));
         }
         return jsonObject;
     }
@@ -280,6 +305,13 @@ public class CallPhoneTool {
             showToast(result.getMessage());
         } else if ((updateLastCallTime + "/" + customeUserId).equals(moduleName)) {
             LogUtils.e("更新客户电话时间失败");
+        } else if (HttpRequest.xiangyunCallApi.equals(moduleName)) {
+            try {
+                JSONObject jsonObject= (JSONObject) result.getData();
+                showToast(jsonObject.getString("msg"));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -287,18 +319,51 @@ public class CallPhoneTool {
         if (HttpRequest.makecallExternal.equals(moduleName)) {
             showToast("呼叫成功，请注意接听电话");
             if (!TextUtils.isEmpty(customeUserId)) {
-                doPostByHeaders(
+                doPostByHeaders(Constans.BASE_URL,
                         (updateLastCallTime + "/" + customeUserId),
                         "token", cacheUserBean.getToken(),
                         "Content-Type", "application/json"
                 );
             }
+            try {
+                JSONObject jsonObject= (JSONObject) result.getData();
+                if(callPhoneFromDetailActivity!=null){
+                    callPhoneFromDetailActivity.onCall(jsonObject.getString("uuid"));
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         } else if ((updateLastCallTime + "/" + customeUserId).equals(moduleName)) {
 
             LogUtils.e("更新客户电话时间成功");
+        }else if(HttpRequest.xiangyunCallApi.equals(moduleName)){
+            try {
+                JSONObject jsonObject= (JSONObject) result.getData();
+                if(jsonObject.getBoolean("success")){
+                    showToast("呼叫成功，请注意接听电话");
+                    if(callPhoneFromDetailActivity!=null){
+                        callPhoneFromDetailActivity.onCall(jsonObject.getString("sessionId"));
+                    }
+                    if (!TextUtils.isEmpty(customeUserId)) {
+                        doPostByHeaders(Constans.BASE_URL,
+                                (updateLastCallTime + "/" + customeUserId),
+                                "token", cacheUserBean.getToken(),
+                                "Content-Type", "application/json"
+                        );
+                    }
+                }else {
+                    showToast(jsonObject.getString("msg"));
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
-    public interface CallPhoneBySim{
+
+    public interface CallPhoneBySim {
         void onCall();
+    }
+    public interface CallPhoneFromDetailActivity {
+        void onCall(String sessionId);
     }
 }
