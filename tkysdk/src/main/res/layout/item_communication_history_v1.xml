@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    tools:ignore="InOrMmUsage">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d15"
+        android:layout_marginBottom="@dimen/d10"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/iv_call_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/d20"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/icon_call_ok" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_call_photo"
+            android:layout_marginLeft="@dimen/d10"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_call_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张三"
+                android:textColor="@color/c_3D4249"
+                android:visibility="gone"
+                android:textSize="@dimen/textNormal14" />
+
+            <TextView
+                android:id="@+id/tv_call_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:text="12345677888"
+                android:textColor="@color/c_BEC2CA"
+                android:textSize="@dimen/textNormal16" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_direction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="挂断"
+                    android:textColor="@color/c_BEC2CA"
+                    android:textSize="@dimen/textNormal10" />
+
+                <TextView
+                    android:id="@+id/tv_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="挂断"
+                    android:layout_marginLeft="@dimen/d7"
+                    android:textColor="@color/c_BEC2CA"
+                    android:textSize="@dimen/textNormal10" />
+
+                <TextView
+                    android:id="@+id/tv_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d7"
+                    android:text="挂断"
+                    android:textColor="@color/c_BEC2CA"
+                    android:textSize="@dimen/textNormal10" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d10"
+            android:layout_marginRight="@dimen/d20"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/icon_call_time"
+                android:drawablePadding="@dimen/d3"
+                android:text="09:00 12-20"
+                android:textColor="@color/c_BEC2CA"
+                android:textSize="@dimen/textNormal10" />
+
+            <TextView
+                android:id="@+id/tv_call_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d10"
+                android:text="通话时长  08:45:21"
+                android:textColor="@color/c_42A6FE"
+                android:textSize="@dimen/textNormal10" />
+            <RelativeLayout
+                android:id="@+id/iv_play_rl"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/d10"
+                android:layout_height="wrap_content">
+                <ImageButton
+                    android:id="@+id/iv_call_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    android:background="@null"
+                    android:src="@drawable/ic_svg_voice_play" />
+                <ProgressBar
+                    android:id="@+id/pb"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                   android:layout_centerInParent="true"
+                    android:layout_marginRight="30dp"
+                    android:indeterminateDrawable="@drawable/ic_loading"
+                    android:visibility="gone"
+                    tools:ignore="UnusedAttribute" />
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="91dp"
+        android:background="#EBEBEB" />
+
+
+</LinearLayout>

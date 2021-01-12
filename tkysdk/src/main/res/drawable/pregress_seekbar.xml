@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <!--进度条的整体背景颜色-->
+        <shape>
+            <corners android:radius="5dp" />
+            <solid android:color="#fff0f0f0" />
+        </shape>
+    </item>
+
+
+    <item android:id="@android:id/secondaryProgress">
+        <!--二级进度条的颜色-->
+        <clip>
+            <shape>
+                <corners android:radius="5dp" />
+                <solid android:color="#2BB3FE" />
+            </shape>
+        </clip>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <!--级进度条的颜色，即进度条当前已经滑过面积的颜色-->
+        <clip>
+            <shape>
+                <solid android:color="#2BB3FE" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

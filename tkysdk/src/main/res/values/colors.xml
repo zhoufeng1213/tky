@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="f_4077f0">#4077f0</color>
+    <color name="f_f03535">#f03535</color>
+    <color name="color_divide">#e8e8e8</color><!--分割线-->
+    <color name="color_text_main">#333333</color><!--主要文字，标题，小标题-->
+    <color name="color_text_describe">#999999</color><!--描述性文字-->
+    <color name="color_main_bule">#1a96fe</color><!--主色，部分标题栏，按钮背景-->
+    <color name="c_A0A0A0">#A0A0A0</color>
+    <color name="c_BEC2CA">#BEC2CA</color>
+    <color name="c_3D4249">#3D4249</color>
+    <color name="c_42A6FE">#42A6FE</color>
+    <color name="c_FDB201">#FDB201</color>
+    <color name="p100_light_dark">#ff363435</color>
+    <color name="p70_light_dark">#B3363435</color>
+    <color name="p100_line_bg">#EBEBEB</color>
+</resources>

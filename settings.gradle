@@ -1,2 +1,3 @@
 //include ':app'
-include ':ktyccsdk', ':ktyccsdktestdemo', ':pickerlibrary', ':testdemo'
+include ':ktyccsdk', ':ktyccsdktestdemo', ':pickerlibrary', ':testdemo',':tkysdk',':tkydemo'
+

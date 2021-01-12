@@ -14,6 +14,8 @@
             <option value="$PROJECT_DIR$/ktyccsdktestdemo" />
             <option value="$PROJECT_DIR$/pickerlibrary" />
             <option value="$PROJECT_DIR$/testdemo" />
+            <option value="$PROJECT_DIR$/tkydemo" />
+            <option value="$PROJECT_DIR$/tkysdk" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

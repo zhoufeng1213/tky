@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    <!--删除通用 暂时没有封装类-->
+
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:layout_width="@dimen/d240"
+        android:layout_height="wrap_content"
+        app:rv_backgroundColor="@color/white"
+        android:orientation="vertical"
+        app:rv_cornerRadius="@dimen/d4"
+        android:paddingLeft="@dimen/d20"
+        android:paddingRight="@dimen/d20"
+        android:gravity="center_horizontal">
+
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="当前网络较差，请更换网络或者到网络好的地方"
+            android:layout_marginTop="@dimen/d15"
+            android:layout_marginLeft="@dimen/d15"
+            android:layout_marginRight="@dimen/d15"
+            android:textColor="@color/black"
+            android:gravity="center" />
+
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/dialog_confirm"
+            android:layout_width="@dimen/d100"
+            android:layout_height="match_parent"
+            android:minHeight="@dimen/d30"
+            android:layout_marginTop="@dimen/d20"
+            android:layout_marginBottom="@dimen/d10"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white"
+            app:rv_cornerRadius="@dimen/d4"
+            app:rv_backgroundColor="@color/c_42A6FE" />
+
+    </com.flyco.roundview.RoundLinearLayout>
+
+
+</LinearLayout>

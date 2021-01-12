@@ -24,6 +24,9 @@ buildscript {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
         maven { url "https://jitpack.io" }
+        maven {
+            url 'http://sdk.ketianyun.com:8081/repository/sdkrepo/'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
@@ -66,6 +69,9 @@ allprojects {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
         maven { url "https://jitpack.io" }
+        maven {
+            url 'http://sdk.ketianyun.com:8081/repository/sdkrepo/'
+        }
 
     }
     tasks.withType(Javadoc) {
@@ -81,3 +87,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply from: "config.gradle"
