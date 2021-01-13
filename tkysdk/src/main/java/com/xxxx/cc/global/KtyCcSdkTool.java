@@ -150,7 +150,7 @@ public class KtyCcSdkTool {
     /**
      * 拨打电话
      */
-    public void callPhone(@NonNull Context mContext, @NonNull String phoneNum, @NonNull String userName, @NonNull String headUrl,
+    public void callPhone(@NonNull Context mContext, @NonNull String phoneNum, String userName, @NonNull String headUrl,
                           @NonNull String customUserId, @NonNull CallPhoneBack callBack,String extendedData) {
         this.mContext = mContext;
         this.phoneNum = phoneNum;

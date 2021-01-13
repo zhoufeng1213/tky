@@ -18,7 +18,7 @@ public class SdkTool {
         KtyCcNetUtil.loginBySdk(context, userName, pwd, loginCallBack);
     }
 
-    public static void callPhone(@NonNull Context mContext, @NonNull String phoneNum, @NonNull String userName,String extendedData, @NonNull CallPhoneBack callBack){
+    public static void callPhone(@NonNull Context mContext, @NonNull String phoneNum, String userName,String extendedData, @NonNull CallPhoneBack callBack){
         KtyCcSdkTool.getInstance().callPhone(mContext, phoneNum, userName, "","",callBack,extendedData);
     }
     public static void hookCall(){
