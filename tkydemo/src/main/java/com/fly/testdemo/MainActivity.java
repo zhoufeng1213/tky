@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,9 +18,6 @@ import com.xxxx.cc.callback.CallPhoneBack;
 import com.xxxx.cc.callback.LoginCallBack;
 import com.xxxx.cc.global.SdkTool;
 import com.xxxx.cc.model.UserBean;
-import com.xxxx.cc.util.LogUtils;
-import com.xxxx.cc.util.ToastUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        LogUtils.e("requestPermission2");
+        Log.e("tag","requestPermission2");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         boolean hasPermissionDismiss = false;
         if (996 == requestCode) {
@@ -144,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             }
             //如果有权限没有被允许
             if (hasPermissionDismiss) {
-                ToastUtil.showToast(this, "权限被禁止，请允许");
+                Toast.makeText(MainActivity.this,"权限被禁止，请允许",Toast.LENGTH_SHORT).show();
                 finish();
             } else {
                 callPhone();
@@ -159,17 +157,17 @@ public class MainActivity extends AppCompatActivity {
                 new CallPhoneBack() {
                     @Override
                     public void onSuccess(String callId) {
-                        LogUtils.e("SdkToolCallback", "callid:" + callId);
+                        Log.e("tag","SdkToolCallback"+ "callid:" + callId);
                     }
 
                     @Override
                     public void onFailed(String message) {
-                        LogUtils.e("SdkToolCallback", "拨打电话失败:" + message);
+                        Log.e("tag","SdkToolCallback"+"拨打电话失败:" + message);
                     }
 
                     @Override
                     public void watchPhoneStatus(int status) {
-                        LogUtils.e("SdkToolCallback", "当前拨打电话的状态:" + status);
+                        Log.e("tag","SdkToolCallback"+"当前拨打电话的状态:" + status);
                     }
                 }
         );

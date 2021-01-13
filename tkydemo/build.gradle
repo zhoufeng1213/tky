@@ -48,10 +48,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    //   implementation project(':tkysdk')
+//       implementation project(':tkysdk')
 //    implementation 'com.kty.sdk:ktycc:1.0.0'
 
-    implementation 'com.tky.sip:mobile:TKY-Android-20210112'
+    implementation 'com.tky.sip:mobile:TKY-Android-20210113'
 }
 
 configurations.all {
